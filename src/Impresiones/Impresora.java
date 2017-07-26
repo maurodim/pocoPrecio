@@ -407,7 +407,7 @@ public class Impresora {
             pagina.drawString(articulo.getDescripcionArticulo(), 40,columna);
             cann=String.valueOf(articulo.getCantidad());
             costo=String.valueOf(articulo.getPrecioDeCosto());
-            venta=String.valueOf(articulo.getPrecioUnitario());
+            venta=Numeros.ConvetirNumeroDosDigitos(articulo.getPrecioUnitario());
             pagina.drawString(cann, 250,columna);
             //pagina.drawString(costo,330,columna);
             pagina.drawString(venta,410,columna);
