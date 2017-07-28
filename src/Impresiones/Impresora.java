@@ -418,7 +418,7 @@ public class Impresora {
         }
         columna=columna + 20;
         pagina.setFont(fuente6);
-        pagina.drawString("PRECIO TOTAL :"+String.valueOf(caja.getMontoTotal()),250,columna);
+        pagina.drawString("PRECIO TOTAL :"+Numeros.ConvetirNumeroDosDigitos(caja.getMontoTotal()),250,columna);
         
         
         pagina.dispose();

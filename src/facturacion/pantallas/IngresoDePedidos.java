@@ -934,7 +934,7 @@ private void agregarRenglonTabla(){
             //Double valor=(pedidos.getCantidad() * precioUnitario);
             valor=valor * cliT.getCoeficienteListaDeprecios();
             pedidos.setPrecioUnitario(valor);
-            String val=String.valueOf(valor);
+            String val=Numeros.ConvetirNumeroDosDigitos(valor);
             montoTotal=montoTotal + valor;
             fila[3]=val;
             busC.addRow(fila);
