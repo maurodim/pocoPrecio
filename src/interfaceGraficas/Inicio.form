@@ -18,6 +18,7 @@
                   <KeyStroke key="Ctrl+R"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Rubros"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem8ActionPerformed"/>
@@ -29,6 +30,7 @@
                   <KeyStroke key="Ctrl+L"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Listas de Precios"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem9ActionPerformed"/>
@@ -40,6 +42,7 @@
                   <KeyStroke key="Ctrl+S"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Sucursales"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem10ActionPerformed"/>
@@ -51,6 +54,7 @@
                   <KeyStroke key="Ctrl+D"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Depositos"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem11ActionPerformed"/>
@@ -78,9 +82,19 @@
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem24">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Blanquear Base"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem24ActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem26">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Generar Archivo Bk"/>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem26ActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>
@@ -99,6 +113,7 @@
                   <KeyStroke key="Ctrl+I"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Ingreso de Mercaderia"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem6ActionPerformed"/>
@@ -129,6 +144,7 @@
                   <KeyStroke key="Ctrl+V"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Generar Remito Interno"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem18ActionPerformed"/>
@@ -137,7 +153,17 @@
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem19">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Administracion Stock Por Deposito"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem27">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Subir desde Excell"/>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem27ActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>
@@ -197,6 +223,7 @@
                   <KeyStroke key="Ctrl+Z"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Recibir Remito Interno"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem17ActionPerformed"/>
@@ -223,6 +250,7 @@
                   <KeyStroke key="Ctrl+G"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Cambiar de Usuario"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem1ActionPerformed"/>
@@ -233,6 +261,7 @@
         <Menu class="javax.swing.JMenu" name="jMenu5">
           <Properties>
             <Property name="text" type="java.lang.String" value="Parametros"/>
+            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
@@ -267,6 +296,7 @@
         <Menu class="javax.swing.JMenu" name="jMenu6">
           <Properties>
             <Property name="text" type="java.lang.String" value="Clientes"/>
+            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem20">
@@ -282,6 +312,7 @@
         <Menu class="javax.swing.JMenu" name="jMenu7">
           <Properties>
             <Property name="text" type="java.lang.String" value="Gastos Fijos"/>
+            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem22">

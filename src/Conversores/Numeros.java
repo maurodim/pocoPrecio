@@ -6,7 +6,6 @@ package Conversores;
 
 import interfaceGraficas.Inicio;
 import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -106,19 +105,5 @@ public class Numeros {
         System.out.println(" rsultado "+num);
         Double dd=Double.parseDouble(num);
         return dd;
-    }
-    
-    public static Integer ConvertirStringAInteger(String num){
-        num=num.replace(".0","");
-        //System.out.println(" rsultado "+num);
-        Integer dd=Integer.parseInt(num);
-        return dd;
-    }
-    public static String ConvertirNumeroExcell(Double num){
-        DecimalFormatSymbols simbolo=new DecimalFormatSymbols();
-        simbolo.setDecimalSeparator(',');
-        DecimalFormat formato=new DecimalFormat("####.#",simbolo);
-        doble=formato.format(num);
-        return doble;
     }
 }

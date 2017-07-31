@@ -6,6 +6,7 @@
 
 package Excel;
 
+import Configuracion.Propiedades;
 import interfaceGraficas.Inicio;
 import interfaces.Transaccionable;
 import java.io.FileNotFoundException;
@@ -337,6 +338,9 @@ public class InformeDiarioStock {
             celda8=fila.createCell(8);
             celda8.setCellType(HSSFCell.CELL_TYPE_NUMERIC);
             celda8.setCellValue(rs.getInt("id"));
+            celda8=fila.createCell(9);
+            celda8.setCellType(HSSFCell.CELL_TYPE_STRING);
+            celda8.setCellValue(rs.getString("observaciones"));
         }
             
             
@@ -344,7 +348,7 @@ public class InformeDiarioStock {
         
 
 //texto+="\r\n";
-        String ruta="C://Informes//"+Inicio.fechaDia+"_"+Inicio.usuario.getNombre()+" - informeDeStock.xls";
+        String ruta=Inicio.fechaDia+"_"+Inicio.usuario.getNombre()+" - informeDeStock.xls";
         String nombree=Inicio.fechaDia+"_"+Inicio.usuario.getNombre()+" - informeDeStock.xls";
         try {
             FileOutputStream elFichero=new FileOutputStream(ruta);
@@ -355,7 +359,7 @@ public class InformeDiarioStock {
                 Mail mail=new Mail();
                 mail.setDetalleListado(nombree);
                 mail.setDireccionFile(ruta);
-                mail.setAsunto("Informe de cierre de caja "+Inicio.fechaDia+" Sucursal: PocoPrecio 1 ");
+                mail.setAsunto("Informe de cierre de caja "+Inicio.fechaDia+" Sucursal: "+Propiedades.getNOMBRECOMERCIO());
                 mail.enviarMailRepartoCargaCompleta();
             } catch (IOException ex) {
                 Logger.getLogger(InformeMensual.class.getName()).log(Level.SEVERE, null, ex);

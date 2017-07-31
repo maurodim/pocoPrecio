@@ -122,10 +122,11 @@ public class Inicio extends javax.swing.JFrame {
         //Actualiza actu=new Actualiza();
         //actu.start();
         
+        /*
         new Thread(new Actualiza()).start();
         Actualiza1 actu1=new Actualiza1();
         actu1.execute();
-        
+        */
         //}
         initComponents();
         Image icon=new ImageIcon(getClass().getResource("/imagen/icono.png")).getImage();
@@ -177,12 +178,14 @@ public class Inicio extends javax.swing.JFrame {
         jMenuItem14 = new javax.swing.JMenuItem();
         jMenuItem21 = new javax.swing.JMenuItem();
         jMenuItem24 = new javax.swing.JMenuItem();
+        jMenuItem26 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem12 = new javax.swing.JMenuItem();
         jMenuItem13 = new javax.swing.JMenuItem();
         jMenuItem18 = new javax.swing.JMenuItem();
         jMenuItem19 = new javax.swing.JMenuItem();
+        jMenuItem27 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
@@ -227,6 +230,7 @@ public class Inicio extends javax.swing.JFrame {
 
         jMenuItem8.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem8.setText("Rubros");
+        jMenuItem8.setEnabled(false);
         jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem8ActionPerformed(evt);
@@ -236,6 +240,7 @@ public class Inicio extends javax.swing.JFrame {
 
         jMenuItem9.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem9.setText("Listas de Precios");
+        jMenuItem9.setEnabled(false);
         jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem9ActionPerformed(evt);
@@ -245,6 +250,7 @@ public class Inicio extends javax.swing.JFrame {
 
         jMenuItem10.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem10.setText("Sucursales");
+        jMenuItem10.setEnabled(false);
         jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem10ActionPerformed(evt);
@@ -254,6 +260,7 @@ public class Inicio extends javax.swing.JFrame {
 
         jMenuItem11.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem11.setText("Depositos");
+        jMenuItem11.setEnabled(false);
         jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem11ActionPerformed(evt);
@@ -279,6 +286,7 @@ public class Inicio extends javax.swing.JFrame {
         jMenu1.add(jMenuItem21);
 
         jMenuItem24.setText("Blanquear Base");
+        jMenuItem24.setEnabled(false);
         jMenuItem24.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem24ActionPerformed(evt);
@@ -286,12 +294,22 @@ public class Inicio extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem24);
 
+        jMenuItem26.setText("Generar Archivo Bk");
+        jMenuItem26.setEnabled(false);
+        jMenuItem26.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem26ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem26);
+
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Stock");
 
         jMenuItem6.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem6.setText("Ingreso de Mercaderia");
+        jMenuItem6.setEnabled(false);
         jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem6ActionPerformed(evt);
@@ -314,6 +332,7 @@ public class Inicio extends javax.swing.JFrame {
 
         jMenuItem18.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem18.setText("Generar Remito Interno");
+        jMenuItem18.setEnabled(false);
         jMenuItem18.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem18ActionPerformed(evt);
@@ -322,7 +341,17 @@ public class Inicio extends javax.swing.JFrame {
         jMenu2.add(jMenuItem18);
 
         jMenuItem19.setText("Administracion Stock Por Deposito");
+        jMenuItem19.setEnabled(false);
         jMenu2.add(jMenuItem19);
+
+        jMenuItem27.setText("Subir desde Excell");
+        jMenuItem27.setEnabled(false);
+        jMenuItem27.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem27ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem27);
 
         jMenuBar1.add(jMenu2);
 
@@ -367,6 +396,7 @@ public class Inicio extends javax.swing.JFrame {
 
         jMenuItem17.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Z, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem17.setText("Recibir Remito Interno");
+        jMenuItem17.setEnabled(false);
         jMenuItem17.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem17ActionPerformed(evt);
@@ -388,6 +418,7 @@ public class Inicio extends javax.swing.JFrame {
 
         jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem1.setText("Cambiar de Usuario");
+        jMenuItem1.setEnabled(false);
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem1ActionPerformed(evt);
@@ -398,6 +429,7 @@ public class Inicio extends javax.swing.JFrame {
         jMenuBar1.add(jMenu4);
 
         jMenu5.setText("Parametros");
+        jMenu5.setEnabled(false);
 
         jMenuItem15.setText("Tipos de Accesos");
         jMenuItem15.addActionListener(new java.awt.event.ActionListener() {
@@ -422,6 +454,7 @@ public class Inicio extends javax.swing.JFrame {
         jMenuBar1.add(jMenu5);
 
         jMenu6.setText("Clientes");
+        jMenu6.setEnabled(false);
 
         jMenuItem20.setText("Modificacion de clientes");
         jMenuItem20.addActionListener(new java.awt.event.ActionListener() {
@@ -434,6 +467,7 @@ public class Inicio extends javax.swing.JFrame {
         jMenuBar1.add(jMenu6);
 
         jMenu7.setText("Gastos Fijos");
+        jMenu7.setEnabled(false);
 
         jMenuItem22.setText("Administracion de Gastos Fijos");
         jMenuItem22.addActionListener(new java.awt.event.ActionListener() {
@@ -721,6 +755,18 @@ public class Inicio extends javax.swing.JFrame {
         //System.out.println(bb.GenerarArchivos());
     }//GEN-LAST:event_formWindowClosing
 
+    private void jMenuItem26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem26ActionPerformed
+        Backapear bck=new BackUp();
+        bck.GenerarArchivos();
+    }//GEN-LAST:event_jMenuItem26ActionPerformed
+
+    private void jMenuItem27ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem27ActionPerformed
+        AbmArticulosExcell abm=new AbmArticulosExcell();
+        jDesktopPane1.add(abm);
+        abm.setVisible(true);
+        abm.toFront();
+    }//GEN-LAST:event_jMenuItem27ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -805,6 +851,8 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem23;
     private javax.swing.JMenuItem jMenuItem24;
     private javax.swing.JMenuItem jMenuItem25;
+    private javax.swing.JMenuItem jMenuItem26;
+    private javax.swing.JMenuItem jMenuItem27;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;

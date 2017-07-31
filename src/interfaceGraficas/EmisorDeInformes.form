@@ -262,8 +262,14 @@
           </Properties>
         </Component>
         <Component class="datechooser.beans.DateChooserCombo" name="dateChooserCombo5">
+          <Properties>
+            <Property name="dch_enabled" type="boolean" value="false"/>
+          </Properties>
         </Component>
         <Component class="datechooser.beans.DateChooserCombo" name="dateChooserCombo6">
+          <Properties>
+            <Property name="dch_enabled" type="boolean" value="false"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="jButton3">
           <Properties>
@@ -271,6 +277,7 @@
               <Image iconType="3" name="/imagen/excel_icone.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Emitir Informe de Ranking de Articulos"/>
+            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton3ActionPerformed"/>

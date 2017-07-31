@@ -31,5 +31,7 @@ public interface Backapear {
     public Boolean RecuperarArchivos(String archivo,String base);
     public Boolean HacerBackUpGeneral();
     public Boolean RecuperarBackUpGeneral();
+    public Boolean InstalarBase();
+    public Boolean VerificarInstalacionDeBase();
     
 }

@@ -150,6 +150,7 @@ public class IngresoNtaCred extends javax.swing.JInternalFrame {
         jLabel2.setForeground(new java.awt.Color(0, 0, 153));
 
         jButton1.setText("IMPRIMIR");
+        jButton1.setEnabled(false);
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -625,7 +626,7 @@ public class IngresoNtaCred extends javax.swing.JInternalFrame {
                  //System.err.println("MONTO TOTAL "+montoTotal);
                  this.jLabel8.setText("");
                  this.jTable2.removeAll();
-                this.jButton1.setVisible(true);
+                this.jButton1.setVisible(false);
             this.jTextField1.setText("");
             this.jTextField2.setText("");
             this.jTextField1.requestFocus();
@@ -954,7 +955,7 @@ private void agregarRenglonTabla(){
         if(detalleDelPedido.size()==0){
             this.jButton1.setEnabled(false);
         }else{
-            this.jButton1.setEnabled(true);
+            this.jButton1.setEnabled(false);
         }
 }
 private void montrarMonto(){

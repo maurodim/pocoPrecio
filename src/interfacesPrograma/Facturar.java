@@ -18,10 +18,12 @@ public interface Facturar {
     public Object leer(Object oob);
     public void imprimirComprobante(int tipoComprobante,Object oob);
     public ArrayList listadoBusqueda(String criterio);
+    public ArrayList listadoBusquedaMayorista(String criterio);
     public Boolean guardarNuevoCliente(Object cliente);
     public Boolean modificarDatosDelCliente(Object cliente);
     public ArrayList listarClientes(String nombre);
     public Object cargarPorCodigoDeBarra(String codigoDeBarra);
+    public Object cargarPorCodigoDeBarraMayorista(String codigoDeBarra);
     public Integer leerNumeroDeComprobanteSiguiente(Integer numeroComprobante);
     public Object cargarPorCodigoAsignado(Integer id);
     

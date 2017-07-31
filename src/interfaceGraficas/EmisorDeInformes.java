@@ -10,7 +10,6 @@ import Excel.InformeMensual;
 import Excel.InformeProveedores;
 import Excel.InformesCajas;
 import Excel.IvaVentas;
-import Excel.LeerExcel;
 import Fiscal.ArchivoCiti;
 import java.net.URISyntaxException;
 import java.sql.SQLException;
@@ -172,8 +171,13 @@ public class EmisorDeInformes extends javax.swing.JInternalFrame {
 
         jLabel6.setText("Hasta :");
 
+        dateChooserCombo5.setEnabled(false);
+
+        dateChooserCombo6.setEnabled(false);
+
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/excel_icone.png"))); // NOI18N
         jButton3.setText("Emitir Informe de Ranking de Articulos");
+        jButton3.setEnabled(false);
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -456,15 +460,12 @@ public class EmisorDeInformes extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        
-        /*
-        AjustarACiti citi=new AjustarACiti();
+            AjustarACiti citi=new AjustarACiti();
         try {
             citi.Ajustar();
         } catch (SQLException ex) {
             Logger.getLogger(EmisorDeInformes.class.getName()).log(Level.SEVERE, null, ex);
         }
-                */
     }//GEN-LAST:event_jButton7ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

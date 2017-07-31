@@ -623,12 +623,14 @@ public class Comprobantes implements Facturar{
         if(comp.getFiscal()==1){
             
         }else{
+            
         Impresora impresion=new Impresora();
         try {
             impresion.ImprimiComprobante(comp);
         } catch (IOException ex) {
             Logger.getLogger(Comprobantes.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
         }
         
         }else{
@@ -783,6 +785,16 @@ public class Comprobantes implements Facturar{
     @Override
     public Object cargarPorCodigoAsignado(Integer id) {
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public ArrayList listadoBusquedaMayorista(String criterio) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Object cargarPorCodigoDeBarraMayorista(String codigoDeBarra) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

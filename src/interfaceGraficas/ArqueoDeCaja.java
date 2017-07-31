@@ -427,8 +427,13 @@ public class ArqueoDeCaja extends javax.swing.JInternalFrame {
         
         caj.CerrarCaja(cajas);
         caj.ArquearCaja(Inicio.caja);
+        
+
         Impresora impresion=new Impresora();
         impresion.ImprimirCierreDeCaja(Cajas.getListadoCajas());
+        
+        
+        
         //this.dispose();
         //ACA DEBE EMITIR EL INFORME DE STOCK PARA CONTROL Y MANDAR EL MAIL CON EL MISMO INFORME
         InformeDiarioStock info=new InformeDiarioStock();
@@ -442,11 +447,12 @@ public class ArqueoDeCaja extends javax.swing.JInternalFrame {
         }
         */
         try {
+            info.GenerrarInformeStock();
          Cierre actu=new Cierre();
          Thread hilo=new Thread(actu);
          hilo.start();
          actu.run();
-            info.GenerrarInformeStock();
+            
         } catch (SQLException ex) {
             Logger.getLogger(ArqueoDeCaja.class.getName()).log(Level.SEVERE, null, ex);
         }finally{

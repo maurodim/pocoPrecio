@@ -49,19 +49,10 @@ public class Actualiza1 extends SwingWorker{
                 
                 
                 
-                
+                try {
                     //Process aplicacion;
                     //aplicacion.exec("java -jar C:/Gestor/ActualizadorPocoPrecio.jar");
-                    
-                    /*
-                try {
                     Process aplicacion=Runtime.getRuntime().exec("cmd java -jar c:/Gestor/ActualizadorPocoPrecio.jar");
-                    } catch (IOException ex) {
-                    Logger.getLogger(Actualiza1.class.getName()).log(Level.SEVERE, null, ex);
-                    JOptionPane.showMessageDialog(null,"error al ejecutar actualizacion "+ex);
-                }
-                    */
-                    
                     /*
                     InputStreamReader entrada = new InputStreamReader(aplicacion.getInputStream());
             BufferedReader stdInput = new BufferedReader(entrada);
@@ -77,7 +68,10 @@ public class Actualiza1 extends SwingWorker{
             	System.out.println("No se a producido ninguna salida");
             }
                             */
-                
+                } catch (IOException ex) {
+                    Logger.getLogger(Actualiza1.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(null,"error al ejecutar actualizacion "+ex);
+                }
                 
             }
            // timer.start();

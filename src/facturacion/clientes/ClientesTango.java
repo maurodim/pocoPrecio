@@ -780,5 +780,15 @@ public class ClientesTango implements Busquedas,Facturar,Adeudable{
        GuardarNumeroRecibo();
        return factProv;
     }
+
+    @Override
+    public ArrayList listadoBusquedaMayorista(String criterio) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Object cargarPorCodigoDeBarraMayorista(String codigoDeBarra) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
         
 }

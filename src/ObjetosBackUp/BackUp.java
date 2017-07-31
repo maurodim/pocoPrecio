@@ -5,6 +5,8 @@
  */
 package ObjetosBackUp;
 
+
+import Configuracion.Propiedades;
 import interfaces.Transaccionable;
 import java.io.BufferedReader;
 import java.io.File;
@@ -714,9 +716,10 @@ public class BackUp implements Backapear{
 
     @Override
     public String GenerarArchivos() {
-        String archivoDestino="SubIva/bkPocoPrecio.sql";
+        String archivoDestino="Configuracion/"+Propiedades.getBD()+".sql";
         try {
-            Process p=Runtime.getRuntime().exec("C:/xampp/mysql/bin/mysqldump -h localhost -u pocoprecio -p  pocoprecio2");
+            String sente="C:/xampp/mysql/bin/mysqldump -h localhost -u "+Propiedades.getUSUARIO()+" -p"+Propiedades.getCLAVE()+" "+Propiedades.getBD();
+            Process p=Runtime.getRuntime().exec(sente);
             InputStream is=p.getInputStream();
             FileOutputStream fos=new FileOutputStream(archivoDestino);
             byte[] buffer=new byte[1000];
@@ -746,7 +749,8 @@ public class BackUp implements Backapear{
     public Boolean RecuperarArchivos(String archivo, String base) {
         Boolean veridi=false;
         try {
-            Process p=Runtime.getRuntime().exec("c:/xampp/mysql/bin/mysql -u cam -paaa001B cam");
+            Process p=Runtime.getRuntime().exec("c:/xampp/mysql/bin/mysql -u "+Propiedades.getUSUARIO()+" -p"+Propiedades.getCLAVE()+" "+Propiedades.getBD());
+            System.out.println(Propiedades.getUSUARIO()+" -- "+Propiedades.getARCHIVOBK()+" -- "+archivo);
             OutputStream os=p.getOutputStream();
             FileInputStream fis=new FileInputStream(archivo);
             byte[] buffer=new byte[1000];
@@ -763,6 +767,16 @@ public class BackUp implements Backapear{
             Logger.getLogger(BackUp.class.getName()).log(Level.SEVERE, null, ex);
         }
         return veridi;
+    }
+
+    @Override
+    public Boolean InstalarBase() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Boolean VerificarInstalacionDeBase() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     

@@ -41,11 +41,8 @@ public class ArticulosAbm extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
@@ -58,32 +55,6 @@ public class ArticulosAbm extends javax.swing.JInternalFrame {
         setResizable(true);
         setTitle("Alta, Baja y modificacion de Articulos");
 
-        MiModeloTablaArticulos modelArticulos=new MiModeloTablaArticulos();
-        Facturar fact=new Articulos();
-        listadoA=fact.listadoBusqueda("");
-        Iterator list=listadoA.listIterator();
-        jTable1.setModel(modelArticulos);
-        modelArticulos.addColumn("CODIGO");
-        modelArticulos.addColumn("DESCRIPCION");
-        modelArticulos.addColumn("STOCK");
-        modelArticulos.addColumn("STOCK MIN");
-        modelArticulos.addColumn("COSTO");
-        modelArticulos.addColumn("P. VENTA");
-        modelArticulos.addColumn("SERVICIO");
-        Object[] fila=new Object[7];
-        while(list.hasNext()){
-            Articulos articulos=(Articulos)list.next();
-            fila[0]=articulos.getCodigoAsignado();
-            fila[1]=articulos.getDescripcionArticulo();
-            fila[2]=articulos.getStockActual();
-            fila[3]=articulos.getStockMinimo();
-            fila[4]=articulos.getPrecioDeCosto();
-            fila[5]=articulos.getPrecioUnitarioNeto();
-            fila[6]=articulos.getPrecioServicio();
-            modelArticulos.addRow(fila);
-        }
-        jScrollPane1.setViewportView(jTable1);
-
         jButton1.setText("Nuevo Articulo");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -92,13 +63,6 @@ public class ArticulosAbm extends javax.swing.JInternalFrame {
         });
 
         jButton3.setText("Alertas");
-
-        jButton4.setText("Modificar Articulo");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
-            }
-        });
 
         jLabel1.setText("Ingrese descripcion de articulo");
 
@@ -142,14 +106,11 @@ public class ArticulosAbm extends javax.swing.JInternalFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 743, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 197, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 308, Short.MAX_VALUE)
                     .addComponent(jTextField1)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jTextField2)
@@ -161,28 +122,22 @@ public class ArticulosAbm extends javax.swing.JInternalFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 495, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton4)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton3)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel2)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton3)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2)
+                .addGap(18, 18, 18)
+                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(211, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -204,16 +159,6 @@ public class ArticulosAbm extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        Articulos articulo=(Articulos)listadoA.get(this.jTable1.getSelectedRow());
-        //System.out.println(" codigo elegido "+articulo.getCodigoAsignado());
-        ArticulosMod articM=new ArticulosMod(articulo);
-        Inicio.jDesktopPane1.add(articM);
-        articM.setVisible(true);
-        articM.toFront();
-        
-    }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         ArticulosMod articMo=new ArticulosMod();
@@ -249,6 +194,8 @@ public class ArticulosAbm extends javax.swing.JInternalFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         InformeArticulos informe=new InformeArticulos();
         try {
+            Facturar fart=new Articulos();
+            listadoA=fart.listadoBusqueda("");
             informe.GenerarInforme(listadoA);
         } catch (SQLException ex) {
             Logger.getLogger(ArticulosAbm.class.getName()).log(Level.SEVERE, null, ex);
@@ -259,6 +206,8 @@ public class ArticulosAbm extends javax.swing.JInternalFrame {
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         PlanillaStock planilla=new PlanillaStock();
         try {
+            Facturar fart=new Articulos();
+            listadoA=fart.listadoBusqueda("");
             planilla.GenerarInforme(listadoA);
         } catch (SQLException ex) {
             Logger.getLogger(ArticulosAbm.class.getName()).log(Level.SEVERE, null, ex);
@@ -266,10 +215,10 @@ public class ArticulosAbm extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton5ActionPerformed
     public void agregarRenglon(){
         MiModeloTablaArticulos busC=new MiModeloTablaArticulos();
-        this.jTable1.removeAll();
+        //this.jTable1.removeAll();
         Double montoTotal=0.00;
         //ArrayList listadoPedidos=new ArrayList();
-        this.jTable1.setModel(busC);
+        //this.jTable1.setModel(busC);
         Articulos pedidos=null;
         busC.addColumn("CODIGO");
         busC.addColumn("DESCRIPCION");
@@ -319,13 +268,10 @@ public class ArticulosAbm extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables

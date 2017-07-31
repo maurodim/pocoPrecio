@@ -61,7 +61,7 @@ public class BkDeConeccion implements Backpeable{
         Boolean verif=false;
         Transaccionable tra=new Conecciones();
         System.out.println(sql);
-            verif=tra.guardarRegistro(sql);
+            //verif=tra.guardarRegistro(sql);
         
         return verif;
     }
@@ -284,7 +284,7 @@ public class BkDeConeccion implements Backpeable{
             File archivo=null;
         FileReader fr=null;
         BufferedReader br=null;
-         archivo = new File ("C:\\Gestion\\idEquipo.txt");
+         archivo = new File ("idEquipo.txt");
          if(archivo.exists()){
          fr = new FileReader (archivo);
          br = new BufferedReader(fr);

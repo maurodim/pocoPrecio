@@ -5,9 +5,13 @@
  */
 package interfaceGraficas;
 
+import Excel.LeerExcel;
 import Excel.LeerIva;
 import Excel.pdfsJavaGenerador;
 import java.io.File;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -16,12 +20,12 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  *
  * @author mauro
  */
-public class AbmIva extends javax.swing.JInternalFrame {
+public class AbmArticulosExcell extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form AbmIva
      */
-    public AbmIva() {
+    public AbmArticulosExcell() {
         initComponents();
         this.jFileChooser1.setVisible(false);
     }
@@ -43,7 +47,7 @@ public class AbmIva extends javax.swing.JInternalFrame {
         setMaximizable(true);
         setTitle("Libro IVA");
 
-        jFileChooser1.setCurrentDirectory(new java.io.File("C:\\Users\\mauro\\Documents\\NetBeansProjects\\PocoPrecio"));
+        jFileChooser1.setCurrentDirectory(new java.io.File("C:\\Users\\mauro\\Pictures"));
         jFileChooser1.setDialogTitle("Seleccion de Origen de Datos");
         jFileChooser1.setOpaque(true);
 
@@ -115,35 +119,16 @@ public class AbmIva extends javax.swing.JInternalFrame {
         }
         System.out.println(seleccionado);
         String period=null;
-        if(JOptionPane.showConfirmDialog(this,"Procesa el archivo seleccionado?","Aplicar Origen",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE)==1){
-        }else{
-            LeerIva iva=new LeerIva();
-            period=JOptionPane.showInputDialog(this,"Ingrese periodo");
-            iva.leerArchivo(seleccionado,period);
-        }
-        /*
+        
         LeerExcel leer=new LeerExcel();
         try {
-            leer.leerExcel1("SubIva/iva ventas marzo2.xls");
+            leer.leerExcel1(seleccionado);
         } catch (SQLException ex) {
             Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
         }
-        */
         
-        if(JOptionPane.showConfirmDialog(this,"Genera el pdf del periodo Procesado?","Generar PDF",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE)==1){
-            }else{
-            
-            if(period!=null){
-                
-            }else{
-                period=JOptionPane.showInputDialog(this,"Ingrese periodo");
-            }
-            pdfsJavaGenerador pd=new pdfsJavaGenerador();
-            pd.setPeriodo(period);
-            pd.run();
-               
-        }
         this.jFileChooser1.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 
 

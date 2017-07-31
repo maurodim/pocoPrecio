@@ -5,6 +5,7 @@
 package objetos;
 
 import Actualizaciones.ErroresConeccionRemota;
+import Configuracion.Propiedades;
 import com.mysql.jdbc.exceptions.MySQLNonTransientConnectionException;
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 import interfaceGraficas.Inicio;
@@ -47,10 +48,10 @@ public class Conecciones implements Transaccionable{
                     
                     
                     
-                    dataSource.setUser("comercial");//maurodim
-                    dataSource.setDatabaseName("comercial");//maurodim_lseriea
-                    dataSource.setPassword("Sistema002");//mau*2012
-                    dataSource.setServerName("localhost");//201.235.253.65
+                    dataSource.setUser(Propiedades.getUSUARIO());//maurodim
+                    dataSource.setDatabaseName(Propiedades.getBD());//maurodim_lseriea
+                    dataSource.setPassword(Propiedades.getCLAVE());//mau*2012
+                    dataSource.setServerName(Propiedades.getSERVER());//201.235.253.65
                     con=dataSource.getConnection();
                     
                     //con=null;

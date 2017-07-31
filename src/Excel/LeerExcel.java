@@ -8,10 +8,14 @@ package Excel;
 import Conversores.Numeros;
 import interfaces.Transaccionable;
 import java.io.FileInputStream;
+import static java.lang.Thread.sleep;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import objetos.ConeccionLocal;
 
@@ -89,240 +93,138 @@ private void printToConsole(List cellDataList)
     ArrayList lstArt=new ArrayList();
     String unidadDeMedida="";
     Double peso=0.00;
-    
-    Integer porc=0;
-     String barra = null;
-        String descripcion = null;
-        String rubro = null;
-        String talle1 = null;
-        String talle2 = null;
-        String talle3 = null;
-        String talle4 = null;
-        String talle5 = null;
-        String talle6 = null;
-        String talle7 = null;
-        String talle8 = null;
-        String talle9 = null;
-        String precio = null;
-        String talle=null;
-        String sentencia="insert into articulos (BARRAS,NOMBRE,SERVICIO,COSTO,PRECIO) value ";
-        
-        
+    ResultSet rs;
+    sql="";
     for (int i = 0; i < cellDataList.size(); i++)
     {
         List cellTempList = (List) cellDataList.get(i);
         
         
+        String descrip="";
+        String comprobante = null;
+       String fecha = null;
+       String numeroF = null;
+       String idCliente = null;
+       String cliente = null;
+       String condicion = null;
+       String cuit = null;
+       String neto = null;
+       String iva = null;
+       String total = null;
+       String espacio;
+       Integer aa=0;
+       String periodo="2016-03";
+       Integer numero=0;
+       String comparativo;
+       Integer guardar=0;
+       String tipoComprobante = null;
+       String fecha1 = null;
+       String numeroComprobante = null;
+       String rubro = null;
+       String descripcion = null;
+       String descripcion1;
+       Double totD=0.00;
        
-        int alerta=0;
+       Integer id=0;
        
         for (int j = 0; j < cellTempList.size(); j++)
         {
             HSSFCell hssfCell = (HSSFCell) cellTempList.get(j);
             String stringCellValue = hssfCell.toString();
             //System.err.println("Contenido: "+j+" "+stringCellValue);
-            //descripcion="";
-            //if(i > 0){
+            descrip="";
+            if(i > 0){
                 switch (j){
                     case 0:
-                        //numeroComprobante=stringCellValue;
-                        //descrip=String.valueOf(stringCellValue);
-                        
-                        //rubro=stringCellValue;
-                        int hallado=stringCellValue.indexOf("L");
-                        if(hallado > -1){
-                            rubro=stringCellValue;
-                            alerta=1;
-                            System.out.println(j+" / RUBRO: "+rubro);
+                        if(stringCellValue.equals("")){
+                            rubro="NN";
                         }else{
-                            porc=Numeros.ConvertirStringAInteger(stringCellValue);
-                            barra=String.valueOf(porc);
-                            alerta=0;
-                            System.out.println(j+" / BARRA: "+barra);
+                            rubro=stringCellValue;
+                            descrip=String.valueOf(stringCellValue);
                         }
+                        //System.out.println("rubro: "+j+" "+stringCellValue);
                         break;
                     case 1:
-                        System.out.println(j+" / "+stringCellValue);
-                        //System.out.println("nombre: "+j+" "+stringCellValue);
+                        descripcion="";
+                        if(stringCellValue.equals("")){
+                            //System.out.println("Precio: "+j+" VACIO");
+                            guardar=1;
+                        }else{
                         descripcion=stringCellValue;
+                        //System.out.println("descripcion: "+j+" "+stringCellValue);
+                            guardar=0;
+                        }
                         break;
                     case 2:
-                        System.out.println(j+" / "+stringCellValue);
-                        //System.out.println("rfid: "+j+" "+stringCellValue);
-                        if(alerta==1){
-                            porc=Numeros.ConvertirStringAInteger(stringCellValue);
-                            talle1=String.valueOf(porc);
-                            //talle1=stringCellValue;
+                        descripcion1="";
+                        if(stringCellValue.equals("")){
                             
                         }else{
-                            precio=stringCellValue;
-                            talle=talle1;
+                        descripcion1=stringCellValue;
+                        descripcion=descripcion+" "+descripcion1;
+                        descripcion=descripcion.replaceAll("'"," ");
                         }
+                        //System.out.println("descripcion2: "+j+" "+stringCellValue);
                         break;
                     case 3:
-                        System.out.println(j+" / "+stringCellValue);
-                        //System.out.println("Direccion: "+j+" "+stringCellValue);
-                        if(alerta==1){
-                            porc=Numeros.ConvertirStringAInteger(stringCellValue);
-                            talle2=String.valueOf(porc);
-                            //talle2=stringCellValue;
-                            
+                        if(stringCellValue.equals("")){
+                            System.out.println("Precio: "+j+" VACIO");
+                            totD=0.00;
                         }else{
-                            precio=stringCellValue;
+                            total=stringCellValue;
+                            total=total.substring(1);
+                            totD=Numeros.ConvertirStringADouble(total);
+                            total=Numeros.ConvetirNumeroDosDigitos(totD);
                             
-                            talle=talle2;
                         }
-                        break;
-                    case 4:
-                        System.out.println(j+" / "+stringCellValue);
-                        //System.out.println("Teelfono: "+j+" "+stringCellValue);
-                        if(alerta==1){
-                            if(stringCellValue.equals("")){
-                                
-                            }else{
-                            porc=Numeros.ConvertirStringAInteger(stringCellValue);
-                            talle3=String.valueOf(porc);
+                        if(guardar==0){
+                        System.out.println("Rubro: "+rubro+" Descripcion "+descripcion);
+                        System.out.println("Precio: "+j+" "+stringCellValue);
+                        sql="insert into articulos (nombre,precio,rubron) values ('"+descripcion+"',"+totD+",'"+rubro+"')";
+                        tra.guardarRegistro(sql);
+                        /*
+                        sql="select last_insert_id()";
+                        rs=tra.leerConjuntoDeRegistros(sql);
+                        id=0;
+                            try {
+                                while(rs.next()){
+                                    id=rs.getInt(1);
+                                }
+                                //rs.close();
+                                sql="update articulos set barras="+id+" where id="+id;
+                                tra.guardarRegistro(sql);
+                            } catch (SQLException ex) {
+                                Logger.getLogger(LeerExcel.class.getName()).log(Level.SEVERE, null, ex);
                             }
-                            //talle3=stringCellValue;
-                            
-                        }else{
-                            precio=stringCellValue;
-                            talle=talle3;
+                            */
                         }
-                        break;
-                    case 5:
-                        System.out.println(j+" / "+stringCellValue);
-                        //System.out.println("Mail: "+j+" "+stringCellValue);
-                        if(alerta==1){
-                            if(stringCellValue.equals("")){
-                                
-                            }else{
-                            porc=Numeros.ConvertirStringAInteger(stringCellValue);
-                            talle4=String.valueOf(porc);
-                            }
-                            //talle4=stringCellValue;
-                            
-                        }else{
-                            precio=stringCellValue;
-                            talle=talle4;
-                        }
-                        
-                        break;
-                    case 6:
-                        System.out.println(j+" / "+stringCellValue);
-                        if(alerta==1){
-                            if(stringCellValue.equals("")){
-                                
-                            }else{
-                            porc=Numeros.ConvertirStringAInteger(stringCellValue);
-                            talle5=String.valueOf(porc);
-                            //talle5=stringCellValue;
-                            }
-                            
-                        }else{
-                            precio=stringCellValue;
-                            talle=talle5;
-                        }
-                        //fila++;
-                        break;
-                    case 7:
-                        System.out.println(j+" / "+stringCellValue);
-                        //tra.guardarRegistro(sql);
-                        if(alerta==1){
-                            if(stringCellValue.equals("")){
-                                
-                            }else{
-                            porc=Numeros.ConvertirStringAInteger(stringCellValue);
-                            talle6=String.valueOf(porc);
-                            }
-                            //talle6=stringCellValue;
-                            
-                        }else{
-                            precio=stringCellValue;
-                            talle=talle6;
-                        }
-                        break;
-                    case 8:
-                        System.out.println(j+" / "+stringCellValue);
-                        //fila++;
-                        if(alerta==1){
-                            if(stringCellValue.equals("")){
-                                
-                            }else{
-                            porc=Numeros.ConvertirStringAInteger(stringCellValue);
-                            talle7=String.valueOf(porc);
-                            }
-                            //talle7=stringCellValue;
-                            
-                        }else{
-                            precio=stringCellValue;
-                            talle=talle7;
-                        }
-                        break;
-                    case 9:
-                        System.out.println(j+" / "+stringCellValue);
-                        //fila++;
-                        if(alerta==1){
-                            if(stringCellValue.equals("")){
-                                
-                            }else{
-                            porc=Numeros.ConvertirStringAInteger(stringCellValue);
-                            talle8=String.valueOf(porc);
-                            }
-                            //talle8=stringCellValue;
-                            
-                        }else{
-                            precio=stringCellValue;
-                            talle=talle8;
-                        }
-                        break;
-                    case 10:
-                        System.out.println(j+" / "+stringCellValue);
-                        //fila++;
-                        if(alerta==1){
-                            if(stringCellValue.equals("")){
-                                
-                            }else{
-                            porc=Numeros.ConvertirStringAInteger(stringCellValue);
-                            talle9=String.valueOf(porc);
-                            }
-                            //talle9=stringCellValue;
-                            
-                        }else{
-                            precio=stringCellValue;
-                            talle=talle9;
-                        }
-                        
-                        break;
-                        
-                }
-                if (j > 1){
-                    if(alerta== 0){
-                        System.out.println(precio);
-                        if(precio.equals("")){
-                        }else{
-                            sentencia+="('"+rubro+barra+talle+"','"+descripcion+" Talle:"+talle+"',0,0,"+precio+"),";
-                            precio=null;
-                        }
-                    
+                {
+                    try {
+                        sleep(15);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(LeerExcel.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
-                //System.out.println("CODIGO: "+rubro+barra+talle+" $ "+precio);
+                        break;
+                    default:
+                        System.out.println(sql);
+                        //tra.guardarRegistro(sql);
+                        fila++;
+                        break;
+                        
+                }
                 
                 
-            //}
-            //System.err.println("FINAL");
+                
+            }
             
             //fac.modificar(cliente);
             
         }
         
-        
-        System.out.println("  FINAL DE RENGLON");
-        barra=null;
-        fila++;
     }
-    System.err.println(sentencia);
+    sql="update articulos set barras=id";
+    tra.guardarRegistro(sql);
     JOptionPane.showMessageDialog(null,"PROCESO EXITOSO \n CANTIDAD DE FILAS PROCESADAS "+fila);
    }
 }

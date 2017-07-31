@@ -5,7 +5,6 @@
 package objetos;
 
 import Compras.Proveedores;
-import Configuracion.Propiedades;
 import Depositos.Depositos;
 import Sucursales.Cajas;
 import Sucursales.ListasDePrecios;
@@ -38,23 +37,23 @@ import javax.swing.JOptionPane;
  *
  * @author mauro
  */
-public class ConeccionLocal implements Transaccionable{
+public class ConeccionInstalacion implements Transaccionable{
     private Connection con;
     private PreparedStatement st;
     private String driver1="org.apache.derby.jdbc.EmbeddedDriver";
 
-    public ConeccionLocal() {
+    public ConeccionInstalacion() {
               MysqlDataSource dataSource=new MysqlDataSource();
 		try{
 			//Class.forName(driver1).newInstance();
-                    dataSource.setUser(Propiedades.getUSUARIO());//maurodim
-                    dataSource.setDatabaseName(Propiedades.getBD());//maurodim_lseriea
-                    dataSource.setPassword(Propiedades.getCLAVE());//mau*2012
-                    dataSource.setServerName(Propiedades.getSERVER());//201.235.253.65
+                    dataSource.setUser("root");//maurodim
+                    dataSource.setDatabaseName("information_schema");//maurodim_lseriea
+                    dataSource.setPassword("");//mau*2012
+                    dataSource.setServerName("localhost");//201.235.253.65
                     con=dataSource.getConnection();
                 //st=dbConnection.createStatement();
             } catch (SQLException ex) {
-                Logger.getLogger(ConeccionLocal.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ConeccionInstalacion.class.getName()).log(Level.SEVERE, null, ex);
             }
 
         
@@ -258,10 +257,11 @@ public class ConeccionLocal implements Transaccionable{
                     
                      JOptionPane.showMessageDialog(null,"BASE DE DATOS CORRECTAMENTE CREADA");
         } catch (SQLException ex) {
-            Logger.getLogger(ConeccionLocal.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ConeccionInstalacion.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ConeccionLocal.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ConeccionInstalacion.class.getName()).log(Level.SEVERE, null, ex);
         }
+        //return dbConnection;
         //return dbConnection;
     }
 }

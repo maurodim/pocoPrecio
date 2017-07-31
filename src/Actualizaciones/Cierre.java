@@ -5,6 +5,8 @@
  */
 package Actualizaciones;
 
+import ObjetosBackUp.BackUp;
+import ObjetosBackUp.Backapear;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -23,6 +25,10 @@ public class Cierre implements Runnable{
     }
     @Override
     public void run() {
+        Backapear bb=new BackUp();
+        bb.GenerarArchivos();
+        
+        /*
         try{
             BkDeConeccion1 bk=new BkDeConeccion1();
             bk.procesosDeCierre();
@@ -37,6 +43,7 @@ public class Cierre implements Runnable{
                 Logger.getLogger(Actualiza.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        */
     }
     
 }

@@ -4,6 +4,7 @@
  */
 package Excel;
 
+import Conversores.Numeros;
 import interfaceGraficas.Inicio;
 import interfaces.Transaccionable;
 import java.io.FileNotFoundException;
@@ -24,6 +25,7 @@ import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.DataFormat;
 import org.apache.poi.ss.usermodel.IndexedColors;
 
 /**
@@ -63,16 +65,25 @@ public class InformesCajas {
         fuente.setFontName(fuente.FONT_ARIAL);
         fuente.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
         String form=null;
+        String porcentajeG=JOptionPane.showInputDialog("Ingrese porcentaje de ganancia estimada");
+        Double porcentaje=Numeros.ConvertirStringADouble(porcentajeG);
+        Double resultado;
+        Double totalisados;
+        porcentaje=porcentaje / 100;
         //String sql="select id,nombre,(select sum(movimientosarticulos.cantidad) from movimientosarticulos where movimientosarticulos.idarticulo=articulos.id and movimientosarticulos.fecha between '"+desde+"' and '"+hasta+"')as stock,(select sum(movimientosarticulos.cantidad) from movimientosarticulos where movimientosarticulos.fecha between '"+desde+"' and '"+hasta+"' and movimientosarticulos.idarticulo=articulos.id)as cantidadVendida from articulos";
-       String sql="select *,sum(cantidad)as cantidadT,sum(precioDeCosto)as costoT,sum(precioDeVenta)as ventaT,(select articulos.NOMBRE from articulos where articulos.ID=movimientosarticulos.idArticulo)as descripcion from movimientosarticulos where fecha between '"+desde+"' and '"+hasta+"' group by idArticulo order by cantidadT";
+       String sql="select *,sum(cantidad)as cantidadT,sum(precioDeCosto * cantidad)as costoT,sum(precioDeVenta)as ventaT,(select articulos.NOMBRE from articulos where articulos.ID=movimientosarticulos.idArticulo)as descripcion from movimientosarticulos where fecha between '"+desde+"' and '"+hasta+"' group by idArticulo order by cantidadT";
         System.out.println(sql);
         Transaccionable tra=new ConeccionLocal();
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
         HSSFCellStyle titulo=libro.createCellStyle();
+        HSSFCellStyle celdaSt=null;
+        DataFormat format=libro.createDataFormat();
         titulo.setFont(fuente);
         //titulo.setFillBackgroundColor((short)22);
         titulo.setFillForegroundColor(IndexedColors.YELLOW.getIndex());
         titulo.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+        celdaSt=libro.createCellStyle();
+        celdaSt.setDataFormat(format.getFormat("$ #,##0.00"));
         //for(int a=0;a < 100;a++){
         int col=0;
         int a=0;
@@ -89,13 +100,19 @@ public class InformesCajas {
             celda2.setCellValue("Unidades Vendidas");
             celda3=fila.createCell(3);
             celda3.setCellStyle(titulo);
-            celda3.setCellValue("Costo");
+            celda3.setCellValue("Precio de Costo");
             celda4=fila.createCell(4);
             celda4.setCellStyle(titulo);
-            celda4.setCellValue("Venta");
+            celda4.setCellValue("Precio de Venta");
             celda5=fila.createCell(5);
             celda5.setCellStyle(titulo);
             celda5.setCellValue("Fecha");
+            celda6=fila.createCell(6);
+            celda6.setCellStyle(titulo);
+            celda6.setCellValue("Ganancia Estimada");
+            celda7=fila.createCell(7);
+            celda7.setCellStyle(titulo);
+            celda7.setCellValue("Ganancia del "+porcentajeG+" %");
             }
             while(rs.next()){
             a++;
@@ -109,6 +126,7 @@ public class InformesCajas {
                     break;
             }
             fila=hoja.createRow(a);
+            resultado=0.00;
             celda=fila.createCell(0);
             ttx=ttx;
             Double anterior=0.00;
@@ -129,18 +147,55 @@ public class InformesCajas {
             //vendido=(rs.getDouble("cantidadT")) * -1;
             //actual=rs.getDouble("stock");
             celda3.setCellType(HSSFCell.CELL_TYPE_NUMERIC);
-            celda3.setCellValue(rs.getDouble("costoT") * vendido);
+            celda3.setCellValue(rs.getDouble("costoT") * (-1));
+            celda3.setCellStyle(celdaSt);
             celda4=fila.createCell(4);
+            
             //vendido=(rs.getDouble("cantidadT")) * -1;
             //actual=rs.getDouble("stock");
             celda4.setCellType(HSSFCell.CELL_TYPE_NUMERIC);
-            celda4.setCellValue(rs.getDouble("ventaT") * vendido);
+            celda4.setCellValue(rs.getDouble("ventaT"));
+            celda4.setCellStyle(celdaSt);
             celda5=fila.createCell(5);
             //vendido=(rs.getDouble("cantidadVendida")) * -1;
             celda5.setCellType(HSSFCell.CELL_TYPE_STRING);
             celda5.setCellValue(rs.getString("fecha"));
+            celda6=fila.createCell(6);
+            celda6.setCellType(HSSFCell.CELL_TYPE_NUMERIC);
+            if(rs.getDouble("costoT")==0.00){
+                totalisados=rs.getDouble("ventaT");
+                resultado=totalisados * porcentaje;
+            }else{
+                resultado=rs.getDouble("ventaT");
+                
+                totalisados=rs.getDouble("costoT") * (-1);
+                resultado=resultado - totalisados;
+            }
+            celda6.setCellValue(resultado);
+            celda6.setCellStyle(celdaSt);
+            celda7=fila.createCell(7);
+            celda7.setCellType(HSSFCell.CELL_TYPE_NUMERIC);
+            totalisados=rs.getDouble("ventaT");
+            resultado=totalisados * porcentaje;
+            celda7.setCellStyle(celdaSt);
+            celda7.setCellValue(resultado);
 
         }
+            
+            /*
+            
+            CIERRE DE HOJA
+            */
+            
+             hoja.autoSizeColumn((short)0);
+        hoja.autoSizeColumn((short)1);
+        hoja.autoSizeColumn((short)2);
+        hoja.autoSizeColumn((short)3);
+        hoja.autoSizeColumn((short)4);
+        hoja.autoSizeColumn((short)5);
+        hoja.autoSizeColumn((short)6);
+        hoja.autoSizeColumn((short)7);
+        
             //rs.close();
         
             // hoja 2
@@ -348,6 +403,9 @@ public class InformesCajas {
             celda8=fila.createCell(8);
             celda8.setCellType(HSSFCell.CELL_TYPE_NUMERIC);
             celda8.setCellValue(rs.getInt("id"));
+            celda8=fila.createCell(9);
+            celda8.setCellType(HSSFCell.CELL_TYPE_STRING);
+            celda8.setCellValue(rs.getString("observaciones"));
         }
             
             
@@ -355,7 +413,7 @@ public class InformesCajas {
         
 
 //texto+="\r\n";
-        String ruta="C://Informes//"+Inicio.fechaDia+"_"+Inicio.usuario.getNombre()+" - informeMensual.xls";
+        String ruta=Inicio.fechaDia+"_"+Inicio.usuario.getNombre()+" - informeMensual.xls";
         String nombree=Inicio.fechaDia+"_"+Inicio.usuario.getNombre()+" - informeMenusual.xls";
         try {
             FileOutputStream elFichero=new FileOutputStream(ruta);

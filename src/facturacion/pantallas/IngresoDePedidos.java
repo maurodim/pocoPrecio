@@ -61,7 +61,9 @@ public class IngresoDePedidos extends javax.swing.JInternalFrame {
         //cliT=(ClientesTango)oob;
         //comp.setCliente(cliT);
         initComponents();
-        this.jLabel6.setText(cliT.getRazonSocial());
+        //this.jLabel6.setText(cliT.getRazonSocial());
+        this.jLabel6.setVisible(false);
+        this.jRadioButton2.setSelected(true);
         this.jLabel7.setVisible(false);
         this.jTextField4.setVisible(false);
         this.jCheckBox1.setVisible(false);
@@ -80,14 +82,12 @@ public class IngresoDePedidos extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        tipoClientes = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         MiModeloTablaFacturacion facturas=new MiModeloTablaFacturacion();
         jTable1 = new javax.swing.JTable();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
         jTextField3 = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jCheckBox2 = new javax.swing.JCheckBox();
@@ -96,7 +96,6 @@ public class IngresoDePedidos extends javax.swing.JInternalFrame {
         jLabel4 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jTextField2 = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
@@ -105,9 +104,15 @@ public class IngresoDePedidos extends javax.swing.JInternalFrame {
         jLabel8 = new javax.swing.JLabel();
         jCheckBox1 = new javax.swing.JCheckBox();
         jLabel9 = new javax.swing.JLabel();
+        jRadioButton1 = new javax.swing.JRadioButton();
+        jRadioButton2 = new javax.swing.JRadioButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
+        jButton2 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
 
         setClosable(true);
         setIconifiable(true);
@@ -143,23 +148,11 @@ public class IngresoDePedidos extends javax.swing.JInternalFrame {
         jTable1.setModel(facturas);
         jScrollPane1.setViewportView(jTable1);
 
-        jLabel1.setText("TOTAL FACTURA :");
-
-        jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 0, 153));
-
         jButton1.setText("IMPRIMIR");
         jButton1.setEnabled(false);
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
-            }
-        });
-
-        jButton2.setText("Eliminar Item");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
             }
         });
 
@@ -178,15 +171,9 @@ public class IngresoDePedidos extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 773, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 773, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addGap(250, 250, 250)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(168, 168, 168)
@@ -201,19 +188,14 @@ public class IngresoDePedidos extends javax.swing.JInternalFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 81, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5)
                     .addComponent(jCheckBox2))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(jButton1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton1)
                 .addGap(15, 15, 15))
         );
 
@@ -239,9 +221,8 @@ public class IngresoDePedidos extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel6.setText("jLabel6");
-
         jButton3.setText("Ingresar Cliente");
+        jButton3.setEnabled(false);
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -256,6 +237,7 @@ public class IngresoDePedidos extends javax.swing.JInternalFrame {
         });
 
         jButton5.setText("Nuevo Cliente");
+        jButton5.setEnabled(false);
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton5ActionPerformed(evt);
@@ -281,6 +263,23 @@ public class IngresoDePedidos extends javax.swing.JInternalFrame {
 
         jLabel9.setText("PRESIONE F4 PARA IMPRIMIR");
 
+        tipoClientes.add(jRadioButton1);
+        jRadioButton1.setText("Mayorista");
+        jRadioButton1.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jRadioButton1StateChanged(evt);
+            }
+        });
+
+        tipoClientes.add(jRadioButton2);
+        jRadioButton2.setSelected(true);
+        jRadioButton2.setText("Cons Final");
+        jRadioButton2.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jRadioButton2StateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -288,47 +287,54 @@ public class IngresoDePedidos extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE)
-                            .addComponent(jTextField4))
+                            .addComponent(jTextField2)
+                            .addComponent(jTextField4, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE))
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(18, 18, 18)
-                                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(46, 46, 46)
                                 .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE)))))
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jRadioButton2))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
+                                    .addComponent(jRadioButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
+                    .addComponent(jButton3)
                     .addComponent(jButton5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jRadioButton1)
+                    .addComponent(jRadioButton2))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -372,21 +378,38 @@ public class IngresoDePedidos extends javax.swing.JInternalFrame {
         });
         jScrollPane3.setViewportView(jTable2);
 
+        jButton2.setText("Eliminar Item");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 37, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton2))
         );
+
+        jLabel1.setText("TOTAL FACTURA :");
+
+        jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 0, 0));
+
+        jLabel6.setText("jLabel6");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -397,9 +420,17 @@ public class IngresoDePedidos extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 435, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE))
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -409,6 +440,12 @@ public class IngresoDePedidos extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel6)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
@@ -425,7 +462,18 @@ public class IngresoDePedidos extends javax.swing.JInternalFrame {
             listadoDeBusqueda.clear();
             Facturar fart=new Articulos();
             arti=new Articulos();
-            arti=(Articulos)fart.cargarPorCodigoDeBarra(jTextField1.getText());
+            if(this.jRadioButton2.isSelected()){
+                cliT=new ClientesTango("999999");
+            }else{
+                cliT=new ClientesTango("2");
+                //cliT.setCodigoId(2);
+                cliT.setRazonSocial("CLIENTE MAYORISTA");
+            }
+            if(cliT.getCodigoId()==2){
+                arti=(Articulos)fart.cargarPorCodigoDeBarraMayorista(jTextField1.getText());
+            }else{
+                arti=(Articulos)fart.cargarPorCodigoDeBarra(jTextField1.getText());
+            }
             if(arti.getCodigoDeBarra().equals("")){
                 
              jTextField1.setText("");   
@@ -476,7 +524,11 @@ public class IngresoDePedidos extends javax.swing.JInternalFrame {
         if(evt.getKeyCode()==KeyEvent.VK_F1){
             //System.out.println("ENTRO CON F1¡¡¡¡¡");
         Facturar fart=new Articulos();
-        listadoDeBusqueda=fart.listadoBusqueda(this.jTextField1.getText());
+        if(cliT.getCodigoId()==2){
+            listadoDeBusqueda=fart.listadoBusquedaMayorista(this.jTextField1.getText());
+        }else{
+            listadoDeBusqueda=fart.listadoBusqueda(this.jTextField1.getText());
+        }
         cargarLista(listadoDeBusqueda);    
         }
         if(evt.getKeyCode()==KeyEvent.VK_F4){
@@ -586,7 +638,8 @@ public class IngresoDePedidos extends javax.swing.JInternalFrame {
         listadoDeBusqueda.clear();
         cargarLista(listadoDeBusqueda);
         cliT=new ClientesTango("999999");
-        this.jLabel6.setText(cliT.getRazonSocial());
+        //this.jLabel6.setText(cliT.getRazonSocial());
+        this.jRadioButton2.setSelected(true);
         this.jTextField2.setText("");
         jTextField1.setText("");
         jTextField1.requestFocus();
@@ -625,7 +678,7 @@ public class IngresoDePedidos extends javax.swing.JInternalFrame {
                  //System.err.println("MONTO TOTAL "+montoTotal);
                  this.jLabel8.setText("");
                  this.jTable2.removeAll();
-                this.jButton1.setVisible(true);
+                this.jButton1.setVisible(false);
             this.jTextField1.setText("");
             this.jTextField2.setText("");
             this.jTextField1.requestFocus();
@@ -767,7 +820,8 @@ public class IngresoDePedidos extends javax.swing.JInternalFrame {
         listadoDeBusqueda.clear();
         cargarLista(listadoDeBusqueda);
         cliT=new ClientesTango("999999");
-        this.jLabel6.setText(cliT.getRazonSocial());
+        //this.jLabel6.setText(cliT.getRazonSocial());
+        this.jRadioButton2.setSelected(true);
         this.jTextField2.setText("");
         jTextField1.setText("");
         jTextField1.requestFocus();
@@ -804,7 +858,11 @@ public class IngresoDePedidos extends javax.swing.JInternalFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         Facturar fart=new Articulos();
-        listadoDeBusqueda=fart.listadoBusqueda(this.jTextField1.getText());
+        if(cliT.getCodigoId()==2){
+            listadoDeBusqueda=fart.listadoBusquedaMayorista(this.jTextField1.getText());
+        }else{
+            listadoDeBusqueda=fart.listadoBusqueda(this.jTextField1.getText());
+        }
         cargarLista(listadoDeBusqueda);
     }//GEN-LAST:event_jButton4ActionPerformed
 
@@ -821,13 +879,15 @@ public class IngresoDePedidos extends javax.swing.JInternalFrame {
 
     private void jTextField4KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField4KeyPressed
         if(evt.getKeyCode()==KeyEvent.VK_ENTER){
-            Double servicio;
+            Double servicio=0.00;
             //Articulos articuloss=new Articulos();
+            /*
             if(this.jCheckBox1.isSelected()){
                 servicio=arti.getPrecioServicio();
             }else{
                 servicio=0.00;
             }
+                    */
             if(arti.getModificaPrecio())servicio=Numeros.ConvertirStringADouble(String.valueOf(this.jTextField4.getText()));
             Double tota=arti.getPrecioUnitarioNeto() + servicio;
             //arti.setPrecioUnitarioNeto(tota);
@@ -886,10 +946,25 @@ public class IngresoDePedidos extends javax.swing.JInternalFrame {
         jTextField1.requestFocus();
     }
     }//GEN-LAST:event_jTable2KeyPressed
+
+    private void jRadioButton1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jRadioButton1StateChanged
+        listadoDeBusqueda.clear();
+        cliT=new ClientesTango("2");
+        //cliT.setCodigoId(2);
+        cliT.setRazonSocial("CLIENTE MAYORISTA");
+        this.jTextField1.requestFocus();
+    }//GEN-LAST:event_jRadioButton1StateChanged
+
+    private void jRadioButton2StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jRadioButton2StateChanged
+        listadoDeBusqueda.clear();
+        cliT.setCodigoId(1);
+        this.jTextField1.requestFocus();
+    }//GEN-LAST:event_jRadioButton2StateChanged
 private void cargarLista(ArrayList lista){
     DefaultTableModel modelo=new DefaultTableModel();
     Modificable mod=new Articulos();
     modelo=mod.mostrarListadoBusqueda(lista);
+    
     this.jTable2.setModel(modelo);
     columnaNumero=this.jTable2.getColumn("Codigo");
         columnaNumero.setPreferredWidth(50);
@@ -932,7 +1007,7 @@ private void agregarRenglonTabla(){
             Double valor=precioUnitario * pedidos.getCantidad();
             //precioUnitario= pedidos.getPrecioUnitario() * cliT.getCoeficienteListaDeprecios();
             //Double valor=(pedidos.getCantidad() * precioUnitario);
-            valor=valor * cliT.getCoeficienteListaDeprecios();
+            //valor=valor * cliT.getCoeficienteListaDeprecios();
             pedidos.setPrecioUnitario(valor);
             String val=String.valueOf(valor);
             montoTotal=montoTotal + valor;
@@ -949,7 +1024,7 @@ private void agregarRenglonTabla(){
         if(detalleDelPedido.size()==0){
             this.jButton1.setEnabled(false);
         }else{
-            this.jButton1.setEnabled(true);
+            this.jButton1.setEnabled(false);
         }
 }
 private void montrarMonto(){
@@ -999,6 +1074,8 @@ private void verificar(){
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JRadioButton jRadioButton1;
+    private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
@@ -1007,5 +1084,6 @@ private void verificar(){
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
+    private javax.swing.ButtonGroup tipoClientes;
     // End of variables declaration//GEN-END:variables
 }
