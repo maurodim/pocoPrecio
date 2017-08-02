@@ -293,13 +293,16 @@ public class pdfsJavaGenerador {
                 cb.showText(pdf.getCuit());
                 cb.setTextMatrix(600,renglon);
                 
-                if(pdf.getComprobante().equals("N.C.")){
+                if(pdf.getComprobante().equals("NCA.") || pdf.getComprobante().equals("NCB.")){
+                    System.out.println(pdf.getComprobante());
+                    /*
                     String neto=pdf.getNeto();
                     String iva=pdf.getIva();
                     String totalP=pdf.getTotal();
                     pdf.setNeto("-"+neto.trim());
                     pdf.setIva("-"+iva.trim());
                     pdf.setTotal("-"+totalP.trim());
+                    */
                 }
                     montoCIva=montoCIva + Numeros.ConvertirStringADouble(pdf.getNeto());
                     descuento=descuento + Numeros.ConvertirStringADouble(pdf.getIva());

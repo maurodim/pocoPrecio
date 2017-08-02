@@ -83,7 +83,8 @@ public class LeerIva {
                     String decimal=total.substring(tot);
                     
                     String monto=total.substring(0,tot)+"."+decimal;
-                    Double montt=Numeros.ConvertirStringADouble(monto);
+                    System.out.println("monto: "+monto);
+                    Double montt=Numeros.ConvertirStringADoubleIva(monto);
                     Double nett=montt / 1.21;
                     Double grav=montt - nett;
                     neto=Numeros.ConvetirNumeroDosDigitos(nett);
@@ -134,7 +135,16 @@ public class LeerIva {
                                 condicion="R.I.";
                                 
                                 comparativo=numeroF.substring(10);
-                                numeroF="A0002-"+comparativo;
+                                numeroF="NCA02-"+comparativo;
+                                sql="insert into ivaventas (comprobante,fecha,numero,idcliente,cliente,condicion,cuit,neto,iva,total,periodo) values ('"+comprobante+"','"+fecha+"','"+numeroF+"',"+numero+",'"+cliente+"','"+condicion+"','"+cuit+"','"+neto+"','"+iva+"','"+total+"','"+periodo+"')";
+                                
+                                break;
+                            case 113:
+                                comprobante="NCB.";
+                                condicion="C.F.";
+                                
+                                comparativo=numeroF.substring(10);
+                                numeroF="NCB02-"+comparativo;
                                 sql="insert into ivaventas (comprobante,fecha,numero,idcliente,cliente,condicion,cuit,neto,iva,total,periodo) values ('"+comprobante+"','"+fecha+"','"+numeroF+"',"+numero+",'"+cliente+"','"+condicion+"','"+cuit+"','"+neto+"','"+iva+"','"+total+"','"+periodo+"')";
                                 
                                 break;

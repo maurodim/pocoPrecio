@@ -106,4 +106,18 @@ public class Numeros {
         Double dd=Double.parseDouble(num);
         return dd;
     }
+    public static Double ConvertirStringADoubleIva(String num){
+        if(num.equals("")){
+            num="0.00";
+        }
+        num=num.replace(",","");
+        int negativo=num.indexOf("-");
+        if(negativo > 0){
+            String negg=num.substring(negativo);
+            num=negg;
+        }
+        System.out.println(" rsultado "+num);
+        Double dd=Double.parseDouble(num);
+        return dd;
+    }
 }

@@ -19,6 +19,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -444,7 +445,7 @@ public class EmisorDeInformes extends javax.swing.JInternalFrame {
         ArchivoCiti citi=new ArchivoCiti();
         String fDesde=Numeros.ConvertirFechaLeidaDeDateChooser(this.dateChooserCombo7.getSelectedDate());
         String fHasta=Numeros.ConvertirFechaLeidaDeDateChooser(this.dateChooserCombo8.getSelectedDate());
-        if(citi.GenerarArchivoComprobantes(fDesde,fHasta)) this.jButton5.setEnabled(false);
+        if(citi.GenerarArchivoComprobantes(fDesde,fHasta)) JOptionPane.showMessageDialog(this,"ARCHIVO GENERADO");
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
