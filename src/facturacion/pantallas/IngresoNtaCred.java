@@ -606,6 +606,7 @@ public class IngresoNtaCred extends javax.swing.JInternalFrame {
                  this.jTextField4.requestFocus();   
                 }else{
                     Articulos articul=new Articulos();
+                    cantt=cantt *  (-1);
                     articul.setCantidad(cantt);
                     articul.setCodigoAsignado(arti.getCodigoAsignado());
                     
