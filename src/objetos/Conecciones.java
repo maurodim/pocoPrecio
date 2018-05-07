@@ -47,10 +47,10 @@ public class Conecciones implements Transaccionable{
                     
                     
                     
-                    dataSource.setUser("bambumau");//maurodim
-                    dataSource.setDatabaseName("bambumau_pocoprecio");//maurodim_lseriea
-                    dataSource.setPassword("bambuSf");//mau*2012
-                    dataSource.setServerName("167.250.5.18");//201.235.253.65
+                    dataSource.setUser("pocoprecio");//maurodim
+                    dataSource.setDatabaseName("pocoprecio2");//maurodim_lseriea
+                    dataSource.setPassword("");//mau*2012
+                    dataSource.setServerName("localhost");//201.235.253.65
                     con=dataSource.getConnection();
                     
                     //con=null;
