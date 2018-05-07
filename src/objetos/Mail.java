@@ -4,6 +4,7 @@
  */
 package objetos;
 
+import Configuracion.Propiedades;
 import java.util.Properties;
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
@@ -22,12 +23,13 @@ import javax.mail.internet.MimeMultipart;
  * @author Administrador
  */
 public class Mail {
-    private final Properties propiedades=new Properties();
-    private String password="SUtter001";
+    private final Properties propiedades;
+    private String password;
     private Session sesion;
     private String direccionFile;
     private String detalleListado;
     private String asunto;
+    private String correoSaliente;
 
     public void setAsunto(String asunto) {
         this.asunto = asunto;
@@ -43,12 +45,18 @@ public class Mail {
         this.direccionFile = direccionFile;
     }
     
+    public Mail() {
+        propiedades=new Properties();
+        password=Propiedades.getPASS();
+        correoSaliente=Propiedades.getCORREOSALIENTE();
+        
+    }
     private void init(){
         propiedades.put("mail.smtp.host","mail.bambusoft.com.ar");
         propiedades.put("mail.smtp.starttls.enable","false");
         propiedades.put("mail.smtp.port",587);
-        propiedades.put("mail.smtp.mail.sender","sistemas@bambusoft.com.ar");
-        propiedades.put("mail.smtp.user","sistemas@bambusoft.com.ar");
+        propiedades.put("mail.smtp.mail.sender",correoSaliente);
+        propiedades.put("mail.smtp.user",correoSaliente);
         propiedades.put("mail.smtp.auth","true");
         sesion=Session.getDefaultInstance(propiedades);
         

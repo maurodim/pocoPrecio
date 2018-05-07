@@ -19,6 +19,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 import objetos.ConeccionLocal;
 import objetos.Conecciones;
 
@@ -37,6 +38,13 @@ public class BbsGestion {
         Usuarios usuarios=new Usuarios();
         usuariosList=usuarios.listarUsuario();
         */
+         try{
+           // UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
+            //UIManager.setLookAndFeel("com.jtattoo.plaf.aero.AeroLookAndFeel");
+            UIManager.setLookAndFeel("com.jtattoo.plaf.aluminium.AluminiumLookAndFeel");
+        }catch(Exception e){
+            e.printStackTrace();
+        }
         File folder=new File("C:\\Gestion");
         File archivos=new File("C:\\Informes");
         File bases=new File("C:\\Gestion\\DB");

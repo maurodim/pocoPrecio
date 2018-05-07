@@ -35,6 +35,17 @@ public class Propiedades {
     static String CORREOCIERREDECAJA;
     static String CORREOCC;
     static String CORREOCCC;
+    static String CORREOSALIENTE;
+    static String PASS;
+
+    public static String getCORREOSALIENTE() {
+        return CORREOSALIENTE;
+    }
+
+    public static String getPASS() {
+        return PASS;
+    }
+    
 
     public static String getCORREOCIERREDECAJA() {
         return CORREOCIERREDECAJA;
@@ -133,7 +144,8 @@ public class Propiedades {
                             break;
                             
                     }
-                    
+                    CORREOSALIENTE="bambusuite@bambusoft.com.ar";
+                            PASS="bambuSoft001";
                     System.out.println(renglon+" // "+SERVER+" // "+BD+" // "+USUARIO+" // "+CLAVE+" // "+CREADA+" // "+ARCHIVOBK+" // "+NOMBRECOMERCIO);
                     // if(tra.guardarRegistro(linea));
       }
