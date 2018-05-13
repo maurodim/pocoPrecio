@@ -5,6 +5,7 @@
 package bbsgestion;
 
 import Compras.Remitos;
+import Configuracion.Propiedades;
 import Sucursales.Usuarios;
 import interfaceGraficas.Inicio;
 import interfaceGraficas.LoguinBbsGestion;
@@ -128,6 +129,7 @@ public class BbsGestion {
             e2.printStackTrace();
          }
       }
+         Propiedades.CargarPropiedades();
         LoguinBbsGestion lBb=new LoguinBbsGestion();
         lBb.setVisible(true);
         lBb.pack();

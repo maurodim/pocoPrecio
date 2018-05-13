@@ -68,7 +68,7 @@ public class Mail {
             mensaje.setFrom(new InternetAddress((String)propiedades.get("mail.smtp.mail.sender")));
             mensaje.addRecipient(Message.RecipientType.TO,new InternetAddress("alexlebbo@hotmail.com"));
             mensaje.addRecipient(Message.RecipientType.CC,new InternetAddress("mauro@bambusoft.com.ar"));
-            
+            System.out.println("DATOS DEL CORREO SALIENTE "+correoSaliente+" // "+password);
             mensaje.setSubject(asunto);
             BodyPart texto=new MimeBodyPart();
             texto.setText("INFORME GENERADO POR CIERRE DE CAJA   \n Saludos");

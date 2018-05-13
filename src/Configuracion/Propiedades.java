@@ -145,8 +145,8 @@ public class Propiedades {
                             
                     }
                     CORREOSALIENTE="bambusuite@bambusoft.com.ar";
-                            PASS="bambuSoft001";
-                    System.out.println(renglon+" // "+SERVER+" // "+BD+" // "+USUARIO+" // "+CLAVE+" // "+CREADA+" // "+ARCHIVOBK+" // "+NOMBRECOMERCIO);
+                    PASS="bambuSoft001";
+                    System.out.println(renglon+" // "+CORREOSALIENTE+" // "+PASS+" // "+USUARIO+" // "+CLAVE+" // "+CREADA+" // "+ARCHIVOBK+" // "+NOMBRECOMERCIO);
                     // if(tra.guardarRegistro(linea));
       }
             if(CREADA.equals("0")){
