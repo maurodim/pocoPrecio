@@ -11,6 +11,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import static java.lang.Thread.sleep;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import objetos.ConeccionLocal;
@@ -124,6 +127,11 @@ public class BbsGestion {
          }
       }
          Propiedades.CargarPropiedades();
+        try {
+            sleep(3000);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(BbsGestion.class.getName()).log(Level.SEVERE, null, ex);
+        }
         LoguinBbsGestion lBb=new LoguinBbsGestion();
         lBb.setVisible(true);
         lBb.pack();
