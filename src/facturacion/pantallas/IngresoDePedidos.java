@@ -140,6 +140,7 @@ public class IngresoDePedidos extends javax.swing.JInternalFrame {
             }
         });
 
+        jTable1.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         jTable1.setModel(facturas);
         jScrollPane1.setViewportView(jTable1);
 
@@ -340,6 +341,7 @@ public class IngresoDePedidos extends javax.swing.JInternalFrame {
                 .addContainerGap())
         );
 
+        jTable2.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},

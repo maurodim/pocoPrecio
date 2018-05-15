@@ -168,6 +168,7 @@ public class Inicio extends javax.swing.JFrame {
             }
 
         };
+        jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem8 = new javax.swing.JMenuItem();
@@ -222,6 +223,10 @@ public class Inicio extends javax.swing.JFrame {
                 jDesktopPane1ComponentShown(evt);
             }
         });
+        jDesktopPane1.setLayout(new java.awt.BorderLayout());
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/logo-bamboosoft-final-para-ico.png"))); // NOI18N
+        jDesktopPane1.add(jLabel1, java.awt.BorderLayout.PAGE_END);
 
         jMenu1.setText("Administracion");
 
@@ -778,6 +783,7 @@ public class Inicio extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JDesktopPane jDesktopPane1;
+    private javax.swing.JLabel jLabel1;
     public static javax.swing.JMenu jMenu1;
     public static javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;

@@ -4,25 +4,17 @@
  */
 package bbsgestion;
 
-import Compras.Remitos;
 import Configuracion.Propiedades;
-import Sucursales.Usuarios;
-import interfaceGraficas.Inicio;
 import interfaceGraficas.LoguinBbsGestion;
-import interfaces.Comprobable;
-import interfaces.Transaccionable;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import objetos.ConeccionLocal;
-import objetos.Conecciones;
+import pantalla.Ventana;
 
 /**
  *
@@ -46,6 +38,8 @@ public class BbsGestion {
         }catch(Exception e){
             e.printStackTrace();
         }
+         Ventana ventana=new Ventana();
+        ventana.setVisible(true);
         File folder=new File("C:\\Gestion");
         File archivos=new File("C:\\Informes");
         File bases=new File("C:\\Gestion\\DB");

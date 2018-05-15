@@ -20,8 +20,11 @@ public class LoguinBbsGestion extends javax.swing.JFrame {
      */
     public LoguinBbsGestion() {
         initComponents();
+        iniciar();
     }
-
+    public void iniciar(){
+        setLocationRelativeTo(null);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -48,7 +51,7 @@ public class LoguinBbsGestion extends javax.swing.JFrame {
         jLabel3.setText("CLAVE");
 
         jButton1.setBackground(new java.awt.Color(204, 204, 204));
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/icono.png"))); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/isologo_32.png"))); // NOI18N
         jButton1.setText("<html><strong>INGRESAR</strong></html>");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -93,7 +96,7 @@ public class LoguinBbsGestion extends javax.swing.JFrame {
                     .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(83, Short.MAX_VALUE))
+                .addContainerGap(99, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

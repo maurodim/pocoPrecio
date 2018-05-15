@@ -24,7 +24,7 @@ import objetos.ConeccionLocal;
  */
 public class Propiedades {
     static String SERVER;
-    static String BD="siglox";
+    static String BD;
     static String USUARIO;
     static String CLAVE;
     static String CREADA;

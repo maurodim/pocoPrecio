@@ -149,6 +149,7 @@ public class CajaAbm extends javax.swing.JInternalFrame {
             tablaCaja.addRow(fila);
         }
         ModificarLabels();
+        jTable1.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         jTable1.setModel(tablaCaja);
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -288,7 +289,7 @@ public class CajaAbm extends javax.swing.JInternalFrame {
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
 
         jLabel5.setText("Saldo Inicial de Caja:");
