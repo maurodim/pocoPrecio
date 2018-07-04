@@ -722,8 +722,8 @@ public class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem25ActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        //Backapear bb=new BackUp();
-        //System.out.println(bb.GenerarArchivos());
+        Backapear bb=new BackUp();
+        System.out.println(bb.GenerarArchivos());
     }//GEN-LAST:event_formWindowClosing
 
     /**
