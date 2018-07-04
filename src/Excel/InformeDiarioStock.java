@@ -6,6 +6,7 @@
 
 package Excel;
 
+import Configuracion.Propiedades;
 import interfaceGraficas.Inicio;
 import interfaces.Transaccionable;
 import java.io.FileNotFoundException;
@@ -355,7 +356,7 @@ public class InformeDiarioStock {
                 Mail mail=new Mail();
                 mail.setDetalleListado(nombree);
                 mail.setDireccionFile(ruta);
-                mail.setAsunto("Informe de cierre de caja "+Inicio.fechaDia+" Sucursal: PocoPrecio 1 ");
+                mail.setAsunto("Informe de cierre de caja "+Inicio.fechaDia+" Sucursal: "+Propiedades.getNOMBRECOMERCIO()+" "+Propiedades.getDEPOSITO());
                 mail.enviarMailRepartoCargaCompleta();
             } catch (IOException ex) {
                 Logger.getLogger(InformeMensual.class.getName()).log(Level.SEVERE, null, ex);

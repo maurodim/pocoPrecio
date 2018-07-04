@@ -37,7 +37,12 @@ public class Propiedades {
     static String CORREOCCC;
     static String CORREOSALIENTE;
     static String PASS;
+    static String DEPOSITO;
 
+    public static String getDEPOSITO() {
+        return DEPOSITO;
+    }
+    
     public static String getCORREOSALIENTE() {
         return CORREOSALIENTE;
     }
@@ -139,6 +144,9 @@ public class Propiedades {
                             break;
                         case 11:
                             IMAGEN=linea.substring(7);
+                            break;
+                        case 12:
+                            DEPOSITO=linea.substring(9);
                             break;
                         default:
                             break;

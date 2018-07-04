@@ -126,6 +126,7 @@ public class BbsGestion {
             e2.printStackTrace();
          }
       }
+        
          Propiedades.CargarPropiedades();
         try {
             sleep(3000);
