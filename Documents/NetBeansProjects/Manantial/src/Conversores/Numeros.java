@@ -1,0 +1,143 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Conversores;
+
+import interfaceGraficas.Inicio;
+import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+/**
+ *
+ * @author mauro
+ */
+public class Numeros {
+    private static String doble;
+    private static String flotante;
+    private static String fecha;
+    
+    public static String ConvertirNumero(Double num){
+        DecimalFormat formato=new DecimalFormat("####.####");
+        doble=formato.format(num);
+        return doble;
+    }
+    public static String ConvertirNumeroAfip(Double num){
+        if(num != null){
+        DecimalFormat formato=new DecimalFormat("####.##");
+        doble=formato.format(num);
+        doble=doble.replace(",",".");
+        }else{
+            doble="0.00";
+        }
+        return doble;
+    }
+    public static String ConvertirFecha(Date ff){
+        DecimalFormat fr=new DecimalFormat("00");
+        Calendar c1=Calendar.getInstance();
+	Calendar c2=new GregorianCalendar();
+	String dia=Integer.toString(c2.get(Calendar.DAY_OF_MONTH));
+	String mes=Integer.toString(c2.get(Calendar.MONTH));
+	String ano=Integer.toString(c2.get(Calendar.YEAR));
+	
+        int da=Integer.parseInt(dia);
+        int me=Integer.parseInt(mes);
+        me++;
+        dia=fr.format(da);
+        mes=fr.format(me);
+        fecha=ano+"-"+mes+"-"+dia;
+        
+        return fecha;
+    }
+    public static Calendar ConvertirStringEnCalendar(Date ff){
+        Calendar cal=Calendar.getInstance();
+        SimpleDateFormat fh=new SimpleDateFormat("yyyy-mm-dd");
+        cal.setTime(ff);
+        return cal;
+    }
+    public static Date ConvertirStringEnDate(String ff){
+        //ff=ff.substring(0,10);
+        System.out.println(ff);
+        SimpleDateFormat fh=new SimpleDateFormat("yyyy-mm-dd");
+        Date fechaVal = null;    
+       
+        
+        try {
+            //fechaVal = fh.parse(ff.substring(0, 10));
+            fechaVal=(Date) fh.parse(ff);
+        } catch (ParseException ex) {
+            Logger.getLogger(Numeros.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        return fechaVal;
+    }
+    public static Double ConvertirStringADouble(String num){
+        num=num.replace(",",".");
+        //System.out.println(" rsultado "+num);
+        Double dd=Double.parseDouble(num);
+        return dd;
+    }
+    public static String ConvertirFechaLeidaDeDateChooser(Calendar dateC){
+        DecimalFormat fr=new DecimalFormat("00");
+        DecimalFormat formato=new DecimalFormat("####.####");
+        //SiderconCapaatos.listaPedidos.clear();
+        SimpleDateFormat dia=new SimpleDateFormat("dd/mm/yyyy");
+        //Date mes=Calendar.getInstance().getTime();
+        //dateChooserCombo1.setDateFormat(dia);
+        Calendar fechaNueva=dateC;
+        int ano=fechaNueva.get(Calendar.YEAR);
+        int mes=fechaNueva.get(Calendar.MONTH);
+        mes++;
+        int dd=fechaNueva.get(Calendar.DAY_OF_MONTH);
+        String ddia=fr.format(dd);
+        String mmes=fr.format(mes);
+        String fecha1=ano+"-"+mmes+"-"+ddia;
+        return fecha1;
+    }
+    public static Date ConvertirStringEnSqlDate(String ff){
+        //ff=ff.substring(0,10);
+        System.out.println(ff);
+        SimpleDateFormat fh=new SimpleDateFormat("yyyy-M-dd");
+        Date fechaVal = null;    
+       
+        
+        try {
+            //fechaVal = fh.parse(ff.substring(0, 10));
+            fechaVal=(Date) fh.parse(ff);
+        } catch (ParseException ex) {
+            Logger.getLogger(Numeros.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        return fechaVal;
+    }
+    public static java.sql.Date ConvertirDateADate(java.util.Date ffch){
+        
+        java.sql.Date sqlDate = new java.sql.Date(ffch.getTime());
+        return sqlDate;
+    }
+    public static String ConvertirFechaCalendarEnString(Calendar dateC){
+        DecimalFormat fr=new DecimalFormat("00");
+        DecimalFormat formato=new DecimalFormat("####.####");
+        //SiderconCapaatos.listaPedidos.clear();
+        SimpleDateFormat dia=new SimpleDateFormat("dd/mm/yyyy");
+        //Date mes=Calendar.getInstance().getTime();
+        //dateChooserCombo1.setDateFormat(dia);
+        Calendar fechaNueva=dateC;
+        int ano=fechaNueva.get(Calendar.YEAR);
+        int mes=fechaNueva.get(Calendar.MONTH);
+        mes++;
+        int dd=fechaNueva.get(Calendar.DAY_OF_MONTH);
+        String ddia=fr.format(dd);
+        String mmes=fr.format(mes);
+        String fecha1=ano+"-"+mmes+"-"+ddia;
+        return fecha1;
+    }
+}
