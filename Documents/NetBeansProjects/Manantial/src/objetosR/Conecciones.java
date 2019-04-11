@@ -49,7 +49,6 @@ public class Conecciones implements Transaccionable{
                con=null;
  //String strUrl = "jdbc:derby://localhost:1527/respaldo;create=true";
                String strUrl = "jdbc:derby:base14\\bambuPrueba.db";
-            
         
         try {
             Class.forName(driver1).newInstance();
