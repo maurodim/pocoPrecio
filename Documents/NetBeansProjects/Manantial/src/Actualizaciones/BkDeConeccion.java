@@ -326,6 +326,7 @@ public class BkDeConeccion implements Backpeable{
                         }
                         rs.close();
                         
+                        
         } catch (SQLException ex) {
             Logger.getLogger(BkDeConeccion.class.getName()).log(Level.SEVERE, null, ex);
         } catch (FileNotFoundException ex) {
