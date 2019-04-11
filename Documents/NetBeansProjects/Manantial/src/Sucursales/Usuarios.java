@@ -159,7 +159,16 @@ public class Usuarios extends TipoAcceso implements Personalizable{
         this.clave = clave;
     }
     public static void BackapearUsuarios(){
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra = null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Usuarios.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(Usuarios.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Usuarios.class.getName()).log(Level.SEVERE, null, ex);
+        }
         //lista.clear();
         Cargar();
         String sql="delete from usuarios";
@@ -182,7 +191,16 @@ public class Usuarios extends TipoAcceso implements Personalizable{
             sql="delete from tipoacceso";
             tra.guardarRegistro(sql);
             sql="select * from tipoacceso";
-            Transaccionable tt=new Conecciones();
+            Transaccionable tt = null;
+            try {
+                tt = new Conecciones();
+            } catch (InstantiationException ex) {
+                Logger.getLogger(Usuarios.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IllegalAccessException ex) {
+                Logger.getLogger(Usuarios.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(Usuarios.class.getName()).log(Level.SEVERE, null, ex);
+            }
             ResultSet rs=tt.leerConjuntoDeRegistros(sql);
             try {
                 while(rs.next()){
@@ -227,6 +245,10 @@ public class Usuarios extends TipoAcceso implements Personalizable{
             rr.close();
         } catch (SQLException ex) {
             Logger.getLogger(Usuarios.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Usuarios.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(Usuarios.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     public ArrayList listarUsuario(){
@@ -261,6 +283,10 @@ public class Usuarios extends TipoAcceso implements Personalizable{
             rr.close();
         } catch (SQLException ex) {
             Logger.getLogger(Usuarios.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Usuarios.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(Usuarios.class.getName()).log(Level.SEVERE, null, ex);
         }
         return listadoUsuarios;
     }
@@ -269,21 +295,48 @@ public class Usuarios extends TipoAcceso implements Personalizable{
     public Boolean registrarIngreso(Object objeto) {
         //return super.registrarIngreso(objeto);
         String sql="insert into movimientosusuarios (numeroUsuario,tipoacceso) values ("+Inicio.usuario.getNumeroId()+","+Inicio.usuario.getNivelDeAutorizacion()+")";
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra = null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Usuarios.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(Usuarios.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Usuarios.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return tra.guardarRegistro(sql);
     }
 
     @Override
     public Boolean registrarSalida(Object objeto) {
         String sql="update movimientosusuarios set salida=";
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra = null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Usuarios.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(Usuarios.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Usuarios.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return tra.guardarRegistro(sql);
         //return super.registrarSalida(objeto);
     }
 
     @Override
     public Object validarClave(String usuario, String clave) {
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra = null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Usuarios.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(Usuarios.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Usuarios.class.getName()).log(Level.SEVERE, null, ex);
+        }
         Usuarios usu=null;
         Integer numeroEquipo=0;
         try{
@@ -349,6 +402,10 @@ public class Usuarios extends TipoAcceso implements Personalizable{
                  Logger.getLogger(Usuarios.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex1) {
                 Logger.getLogger(Usuarios.class.getName()).log(Level.SEVERE, null, ex1);
+            } catch (InstantiationException ex1) {
+                Logger.getLogger(Usuarios.class.getName()).log(Level.SEVERE, null, ex1);
+            } catch (IllegalAccessException ex1) {
+                Logger.getLogger(Usuarios.class.getName()).log(Level.SEVERE, null, ex1);
             }
             
         } catch (FileNotFoundException ex) {
@@ -367,7 +424,16 @@ public class Usuarios extends TipoAcceso implements Personalizable{
     public Boolean modificarDatosUsuario(Object objeto) {
         Boolean verif=false;
         Usuarios usuario=(Usuarios)objeto;
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra = null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Usuarios.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(Usuarios.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Usuarios.class.getName()).log(Level.SEVERE, null, ex);
+        }
         String sql="update usuarios set nombre='"+usuario.getNombre()+"',direccion='"+usuario.getDireccion()+"',telefono='"+usuario.getTelefono()+"',mail='"+usuario.getMail()+"',nombreUsuario='"+usuario.getNombreDeUsuario()+"',clave='"+usuario.getClave()+"',autorizacion="+usuario.getNivelDeAutorizacion()+",numeroTipoAcceso="+usuario.getNivelDeAutorizacion()+",sucursal="+usuario.getSucursal().getNumero()+" where numero="+usuario.getNumeroId();
         verif=tra.guardarRegistro(sql);
         
@@ -378,7 +444,16 @@ public class Usuarios extends TipoAcceso implements Personalizable{
     public Boolean nuevoUsuario(Object objeto) {
         Boolean verif=false;
         Usuarios usuario=(Usuarios)objeto;
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra = null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Usuarios.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(Usuarios.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Usuarios.class.getName()).log(Level.SEVERE, null, ex);
+        }
         String sql="insert into usuarios (nombre,direccion,telefono,mail,nombreUsuario,clave,autorizacion,numeroTipoAcceso,sucursal) values ('"+usuario.getNombre()+"','"+usuario.getDireccion()+"','"+usuario.getTelefono()+"','"+usuario.getMail()+"','"+usuario.getNombreDeUsuario()+"','"+usuario.getClave()+"',"+usuario.getNivelDeAutorizacion()+","+usuario.getNivelDeAutorizacion()+","+usuario.getSucursal().getNumero()+")";
         verif=tra.guardarRegistro(sql);
         
@@ -392,7 +467,16 @@ public class Usuarios extends TipoAcceso implements Personalizable{
 
     @Override
     public Object cargarUsuario(Integer numeroUsuario) {
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra = null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Usuarios.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(Usuarios.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Usuarios.class.getName()).log(Level.SEVERE, null, ex);
+        }
         Usuarios usu=null;
         String sql="select *,(select tipoacceso.menu1 from tipoacceso where tipoacceso.numero=usuarios.autorizacion)as menu1,(select tipoacceso.menu2 from tipoacceso where tipoacceso.numero=usuarios.autorizacion)as menu2,(select tipoacceso.menu3 from tipoacceso where tipoacceso.numero=usuarios.autorizacion)as menu3,(select tipoacceso.menu4 from tipoacceso where tipoacceso.numero=usuarios.autorizacion)as menu4,(select tipoacceso.menu5 from tipoacceso where tipoacceso.numero=usuarios.autorizacion)as menu5,(select tipoacceso.menu6 from tipoacceso where tipoacceso.numero=usuarios.autorizacion)as menu6,(select tipoacceso.menu7 from tipoacceso where tipoacceso.numero=usuarios.autorizacion)as menu7 from usuarios where numero="+numeroUsuario;
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
@@ -425,7 +509,16 @@ public class Usuarios extends TipoAcceso implements Personalizable{
     public Integer agregar(Object objeto) {
         Boolean verif=false;
         Usuarios usuario=(Usuarios)objeto;
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra = null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Usuarios.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(Usuarios.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Usuarios.class.getName()).log(Level.SEVERE, null, ex);
+        }
         String sql="insert into usuarios (nombre,direccion,telefono,mail,nombreUsuario,clave,autorizacion,numeroTipoAcceso,sucursal) values ('"+usuario.getNombre()+"','"+usuario.getDireccion()+"','"+usuario.getTelefono()+"','"+usuario.getMail()+"','"+usuario.getNombreDeUsuario().toUpperCase()+"','"+usuario.getClave()+"',"+usuario.getNivelDeAutorizacion()+","+usuario.getNivelDeAutorizacion()+","+usuario.getSucursal().getNumero()+")";
         verif=tra.guardarRegistro(sql);
         
@@ -436,7 +529,16 @@ public class Usuarios extends TipoAcceso implements Personalizable{
     public Boolean modificar(Object objeto) {
         Boolean verif=false;
         Usuarios usuario=(Usuarios)objeto;
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra = null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Usuarios.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(Usuarios.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Usuarios.class.getName()).log(Level.SEVERE, null, ex);
+        }
         String sql="update usuarios set nombre='"+usuario.getNombre()+"',direccion='"+usuario.getDireccion()+"',telefono='"+usuario.getTelefono()+"',mail='"+usuario.getMail()+"',nombreUsuario='"+usuario.getNombreDeUsuario().toUpperCase()+"',clave='"+usuario.getClave()+"',autorizacion="+usuario.getNivelDeAutorizacion()+",numeroTipoAcceso="+usuario.getNivelDeAutorizacion()+",sucursal="+usuario.getSucursal().getNumero()+" where numero="+usuario.getNumeroId();
         verif=tra.guardarRegistro(sql);
         

@@ -86,7 +86,7 @@ public class Actualiza extends Thread{
         
         
     }  
-    private Boolean ProbarConeccion(){
+    private Boolean ProbarConeccion() throws InstantiationException, IllegalAccessException, SQLException{
         Boolean verif=false;
         String sql="select * from articulos limit 0,1";
         Transaccionable tra=new Conecciones();
@@ -104,7 +104,7 @@ public class Actualiza extends Thread{
         }
         return verif;
     }
-    private void VerificarErrores(){
+    private void VerificarErrores() throws InstantiationException, IllegalAccessException, SQLException{
         String sql="select * from fallas where estado=0";
         ArrayList fallas=new ArrayList();
         /*

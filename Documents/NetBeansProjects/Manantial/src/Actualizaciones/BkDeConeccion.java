@@ -43,134 +43,154 @@ public class BkDeConeccion implements Backpeable{
     
     public static Boolean guardarSentencias(String sql){
         Boolean verif=false;
-        Transaccionable tra=new Conecciones();
-        
-            verif=tra.guardarRegistro(sql);
-        
-        return verif;
-    }
-    public synchronized Boolean procesosDeCierre(){
-        Boolean ver=false;
-        Boolean ver1=false;
-        Boolean ver2=false;
-        Boolean ver3=false;
-        Boolean ver4=false;
-        Boolean ver5=false;
-        Transaccionable tra=new Conecciones();
-        Transaccionable tt=new Conecciones();
-        String sql="select * from movimientosarticulos where estado is null";
-        String sentencia="";
-        ResultSet rs=tt.leerConjuntoDeRegistros(sql);
+        Transaccionable tra;
         try {
-            while(rs.next()){
-                sentencia="insert into movimientosarticulos (tipoMovimiento,idArticulo,cantidad,numeroDeposito,tipoComprobante,numeroComprobante,numeroCliente,fechaComprobante,numeroUsuario,precioDeCosto,precioDeVenta,precioServicio,idcaja) values ("+rs.getInt("tipomovimiento")+","+rs.getInt("idarticulo")+","+rs.getDouble("cantidad")+","+rs.getInt("numerodeposito")+","+rs.getInt("tipocomprobante")+","+rs.getInt("numerocomprobante")+","+rs.getInt("numerocliente")+",'"+rs.getString("fechacomprobante")+"',"+rs.getInt("numerousuario")+","+rs.getDouble("preciodecosto")+","+rs.getDouble("preciodeventa")+","+rs.getDouble("precioservicio")+","+Inicio.caja.getNumero()+")";
-                listadoSentenciasArt.add(sentencia);
-                
-            }
-            rs.close();
-            
-            sql="select * from movimientoscaja where estado is null";
-            rs=tt.leerConjuntoDeRegistros(sql);
-            while(rs.next()){
-                sentencia="insert into movimientoscaja (numeroUsuario,idCliente,numeroSucursal,numeroComprobante,tipoComprobante,monto,tipoMovimiento,idCaja,cantidad,pagado,observaciones,tipoCliente) values ("+rs.getInt("numerousuario")+","+rs.getInt("idcliente")+","+rs.getInt("numerosucursal")+","+rs.getInt("numerocomprobante")+","+rs.getInt("tipocomprobante")+","+rs.getDouble("monto")+","+rs.getInt("tipomovimiento")+","+rs.getInt("idcaja")+","+rs.getDouble("cantidad")+","+rs.getInt("pagado")+",'"+rs.getString("observaciones")+"',"+rs.getInt("tipocliente")+")";
-                listadoSentenciasCaja.add(sentencia);
-            }
-            rs.close();
-
-            sql="select * from movimientosclientes where estado is null";
-            rs=tt.leerConjuntoDeRegistros(sql);
-            while(rs.next()){
-                sentencia="insert into movimientosclientes (numeroProveedor,monto,pagado,numeroComprobante,idRemito,idUsuario,idCaja,tipoComprobante,idSucursal) values ("+rs.getInt("numeroproveedor")+","+rs.getDouble("monto")+","+rs.getInt("pagado")+","+rs.getInt("numerocomprobante")+","+rs.getInt("idRemito")+","+rs.getInt("idusuario")+","+rs.getInt("idcaja")+","+rs.getInt("tipocomprobante")+","+rs.getInt("idsucursal")+")";
-                listadoSentenciasClientes.add(sentencia);
-            }
-            rs.close();
-            
-            sql="select * from movimientosproveedores where estado is null";
-            rs=tt.leerConjuntoDeRegistros(sql);
-            while(rs.next()){
-                sentencia="insert into movimientosproveedores (numeroProveedor,monto,pagado,numeroComprobante,idRemito,idUsuario,idCaja,fechaPago,tipoComprobante,idSucursal) values ("+rs.getInt("numeroproveedor")+","+rs.getDouble("monto")+","+rs.getInt("pagado")+","+rs.getInt("numerocomprobante")+","+rs.getInt("idRemito")+","+rs.getInt("idusuario")+","+rs.getInt("idcaja")+",'"+rs.getString("fechapago")+"',"+rs.getInt("tipocomprobante")+","+rs.getInt("idsucursal")+")";
-               listadoSentenciasProveedores.add(sentencia);
-            }
-            rs.close();
-
-            sql="select * from tipocomprobantes";
-            rs=tt.leerConjuntoDeRegistros(sql);
-            while(rs.next()){
-                sentencia="update tipocomprobantes set numeroActivo="+rs.getInt("numeroactivo")+" where numero="+rs.getInt("numero");
-                listadoSentenciasComprobantes.add(sentencia);
-                
-            }
-            rs.close();
-            
-            //ACA COMIENZAN LOS UPDATES
-            //if(ProbarConeccion()){
-            
-            
-                       
-            
-            
-           
-            String st=null;
-            Iterator itA=listadoSentenciasArt.listIterator();
-            while(itA.hasNext()){
-                st=(String)itA.next();
-                ver1=tra.guardarRegistro(st);
-            }
-            if(ver1){
-             sql="update movimientosarticulos set estado=1 where estado is null";
-            tt.guardarRegistro(sql);  
-            }
-            Iterator itCa=listadoSentenciasCaja.listIterator();
-            while(itCa.hasNext()){
-                st=(String)itCa.next();
-                ver2=tra.guardarRegistro(st);
-            }
-            if(ver2){
-               sql="update movimientoscaja set estado=1 where estado is null";
-            tt.guardarRegistro(sql);
-  
-            }
-            Iterator itCl=listadoSentenciasClientes.listIterator();
-            while(itCl.hasNext()){
-                st=(String)itCl.next();
-                ver3=tra.guardarRegistro(st);
-                
-            }
-            if(ver3){
-            sql="update movimientosclientes set estado =1 where estado is null";
-            tt.guardarRegistro(sql);    
-            }
-            Iterator itP=listadoSentenciasProveedores.listIterator();
-            while(itP.hasNext()){
-                st=(String)itP.next();
-                ver4=tra.guardarRegistro(st);
-            }
-            if(ver4){
-               sql="update movimientosproveedores set estado=1 where estado is null";
-            tt.guardarRegistro(sql);  
-            }
-            Iterator itCo=listadoSentenciasComprobantes.listIterator();
-            while(itCo.hasNext()){
-                st=(String)itCo.next();
-                tra.guardarRegistro(st);
-            }
-            
-            listadoSentenciasArt.clear();
-            listadoSentenciasCaja.clear();
-            listadoSentenciasClientes.clear();
-            listadoSentenciasProveedores.clear();
-            listadoSentenciasComprobantes.clear();
-            ver=true;
-            
-            
+            tra = new Conecciones();
+            verif=tra.guardarRegistro(sql);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(BkDeConeccion.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(BkDeConeccion.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(BkDeConeccion.class.getName()).log(Level.SEVERE, null, ex);
         }
         
+            
         
-        return ver;
+        return verif;
     }
-    private Boolean ProbarConeccion(){
+    public synchronized Boolean procesosDeCierre(){
+       
+            Boolean ver=false;
+            Boolean ver1=false;
+            Boolean ver2=false;
+            Boolean ver3=false;
+            Boolean ver4=false;
+            Boolean ver5=false;
+             try {
+            Transaccionable tra=new Conecciones();
+            Transaccionable tt=new Conecciones();
+            String sql="select * from movimientosarticulos where estado is null";
+            String sentencia="";
+            ResultSet rs=tt.leerConjuntoDeRegistros(sql);
+            try {
+                while(rs.next()){
+                    sentencia="insert into movimientosarticulos (tipoMovimiento,idArticulo,cantidad,numeroDeposito,tipoComprobante,numeroComprobante,numeroCliente,fechaComprobante,numeroUsuario,precioDeCosto,precioDeVenta,precioServicio,idcaja) values ("+rs.getInt("tipomovimiento")+","+rs.getInt("idarticulo")+","+rs.getDouble("cantidad")+","+rs.getInt("numerodeposito")+","+rs.getInt("tipocomprobante")+","+rs.getInt("numerocomprobante")+","+rs.getInt("numerocliente")+",'"+rs.getString("fechacomprobante")+"',"+rs.getInt("numerousuario")+","+rs.getDouble("preciodecosto")+","+rs.getDouble("preciodeventa")+","+rs.getDouble("precioservicio")+","+Inicio.caja.getNumero()+")";
+                    listadoSentenciasArt.add(sentencia);
+                    
+                }
+                rs.close();
+                
+                sql="select * from movimientoscaja where estado is null";
+                rs=tt.leerConjuntoDeRegistros(sql);
+                while(rs.next()){
+                    sentencia="insert into movimientoscaja (numeroUsuario,idCliente,numeroSucursal,numeroComprobante,tipoComprobante,monto,tipoMovimiento,idCaja,cantidad,pagado,observaciones,tipoCliente) values ("+rs.getInt("numerousuario")+","+rs.getInt("idcliente")+","+rs.getInt("numerosucursal")+","+rs.getInt("numerocomprobante")+","+rs.getInt("tipocomprobante")+","+rs.getDouble("monto")+","+rs.getInt("tipomovimiento")+","+rs.getInt("idcaja")+","+rs.getDouble("cantidad")+","+rs.getInt("pagado")+",'"+rs.getString("observaciones")+"',"+rs.getInt("tipocliente")+")";
+                    listadoSentenciasCaja.add(sentencia);
+                }
+                rs.close();
+                
+                sql="select * from movimientosclientes where estado is null";
+                rs=tt.leerConjuntoDeRegistros(sql);
+                while(rs.next()){
+                    sentencia="insert into movimientosclientes (numeroProveedor,monto,pagado,numeroComprobante,idRemito,idUsuario,idCaja,tipoComprobante,idSucursal) values ("+rs.getInt("numeroproveedor")+","+rs.getDouble("monto")+","+rs.getInt("pagado")+","+rs.getInt("numerocomprobante")+","+rs.getInt("idRemito")+","+rs.getInt("idusuario")+","+rs.getInt("idcaja")+","+rs.getInt("tipocomprobante")+","+rs.getInt("idsucursal")+")";
+                    listadoSentenciasClientes.add(sentencia);
+                }
+                rs.close();
+                
+                sql="select * from movimientosproveedores where estado is null";
+                rs=tt.leerConjuntoDeRegistros(sql);
+                while(rs.next()){
+                    sentencia="insert into movimientosproveedores (numeroProveedor,monto,pagado,numeroComprobante,idRemito,idUsuario,idCaja,fechaPago,tipoComprobante,idSucursal) values ("+rs.getInt("numeroproveedor")+","+rs.getDouble("monto")+","+rs.getInt("pagado")+","+rs.getInt("numerocomprobante")+","+rs.getInt("idRemito")+","+rs.getInt("idusuario")+","+rs.getInt("idcaja")+",'"+rs.getString("fechapago")+"',"+rs.getInt("tipocomprobante")+","+rs.getInt("idsucursal")+")";
+                    listadoSentenciasProveedores.add(sentencia);
+                }
+                rs.close();
+                
+                sql="select * from tipocomprobantes";
+                rs=tt.leerConjuntoDeRegistros(sql);
+                while(rs.next()){
+                    sentencia="update tipocomprobantes set numeroActivo="+rs.getInt("numeroactivo")+" where numero="+rs.getInt("numero");
+                    listadoSentenciasComprobantes.add(sentencia);
+                    
+                }
+                rs.close();
+                
+                //ACA COMIENZAN LOS UPDATES
+                //if(ProbarConeccion()){
+                
+                
+                
+                
+                
+                
+                String st=null;
+                Iterator itA=listadoSentenciasArt.listIterator();
+                while(itA.hasNext()){
+                    st=(String)itA.next();
+                    ver1=tra.guardarRegistro(st);
+                }
+                if(ver1){
+                    sql="update movimientosarticulos set estado=1 where estado is null";
+                    tt.guardarRegistro(sql);
+                }
+                Iterator itCa=listadoSentenciasCaja.listIterator();
+                while(itCa.hasNext()){
+                    st=(String)itCa.next();
+                    ver2=tra.guardarRegistro(st);
+                }
+                if(ver2){
+                    sql="update movimientoscaja set estado=1 where estado is null";
+                    tt.guardarRegistro(sql);
+                    
+                }
+                Iterator itCl=listadoSentenciasClientes.listIterator();
+                while(itCl.hasNext()){
+                    st=(String)itCl.next();
+                    ver3=tra.guardarRegistro(st);
+                    
+                }
+                if(ver3){
+                    sql="update movimientosclientes set estado =1 where estado is null";
+                    tt.guardarRegistro(sql);
+                }
+                Iterator itP=listadoSentenciasProveedores.listIterator();
+                while(itP.hasNext()){
+                    st=(String)itP.next();
+                    ver4=tra.guardarRegistro(st);
+                }
+                if(ver4){
+                    sql="update movimientosproveedores set estado=1 where estado is null";
+                    tt.guardarRegistro(sql);
+                }
+                Iterator itCo=listadoSentenciasComprobantes.listIterator();
+                while(itCo.hasNext()){
+                    st=(String)itCo.next();
+                    tra.guardarRegistro(st);
+                }
+                
+                listadoSentenciasArt.clear();
+                listadoSentenciasCaja.clear();
+                listadoSentenciasClientes.clear();
+                listadoSentenciasProveedores.clear();
+                listadoSentenciasComprobantes.clear();
+                ver=true;
+                
+                
+            } catch (SQLException ex) {
+                Logger.getLogger(BkDeConeccion.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            
+                       
+        } catch (SQLException ex) {
+            Logger.getLogger(BkDeConeccion.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(BkDeConeccion.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(BkDeConeccion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+             return ver; 
+    }
+    private Boolean ProbarConeccion() throws InstantiationException, IllegalAccessException, SQLException{
         Boolean verif=false;
         String sql="select * from articulos limit 0,1";
         Transaccionable tra=new Conecciones();
@@ -189,17 +209,25 @@ public class BkDeConeccion implements Backpeable{
         return verif;
     }
     public void limpiarBasesLocal(){
-        Transaccionable tra=new Conecciones();
-        String sql="delete from movimientosarticulos where estado=1";
-        tra.guardarRegistro(sql);
-        sql="delete from movimientoscaja where estado=1";
-        tra.guardarRegistro(sql);
-        sql="delete from movimientosclientes where estado=1";
-        tra.guardarRegistro(sql);
-        sql="delete from movimientosproveedores where estado=1";
-        tra.guardarRegistro(sql);
-        //sql="delete from movimientosdesucursales where estado=1";
-        //tra.guardarRegistro(sql);
+        try {
+            Transaccionable tra=new Conecciones();
+            String sql="delete from movimientosarticulos where estado=1";
+            tra.guardarRegistro(sql);
+            sql="delete from movimientoscaja where estado=1";
+            tra.guardarRegistro(sql);
+            sql="delete from movimientosclientes where estado=1";
+            tra.guardarRegistro(sql);
+            sql="delete from movimientosproveedores where estado=1";
+            tra.guardarRegistro(sql);
+            //sql="delete from movimientosdesucursales where estado=1";
+            //tra.guardarRegistro(sql);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(BkDeConeccion.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(BkDeConeccion.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(BkDeConeccion.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }
     @Override
@@ -308,6 +336,10 @@ public class BkDeConeccion implements Backpeable{
             Logger.getLogger(BkDeConeccion.class.getName()).log(Level.SEVERE, null, ex);
             System.err.println(ex);
             numeroEquipo=0;
+        } catch (InstantiationException ex) {
+            Logger.getLogger(BkDeConeccion.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(BkDeConeccion.class.getName()).log(Level.SEVERE, null, ex);
         }
                       
          return usu;
