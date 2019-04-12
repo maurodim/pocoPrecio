@@ -38,7 +38,14 @@ import facturacion.clientes.Facturable;
 import facturacion.clientes.MovimientosClientes;
 import interfaces.FacturableE;
 import interfaces.Transaccionable;
+import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.ScrollPaneConstants;
+import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import objetosR.Comprobantes;
@@ -76,6 +83,96 @@ public class ModificacionDeFacturas extends javax.swing.JInternalFrame {
     private Double porcentajeDescuento;
     private Double subTotal;
     private Pedidos pedido;
+    
+    private void desplegarPopUp(String tituloVentana){
+        // Creando la ventana emergente
+        JFrame jf = new JFrame(tituloVentana);
+        JDialog emergente = new JDialog(jf, 
+                                        tituloVentana, 
+                                        true);
+        emergente.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        emergente.setSize(1000,400);
+        emergente.setLocationRelativeTo(null);
+        
+        // Estableciendo los datos
+        String[] columnNames = {"First Name",
+                        "Last Name",
+                        "Sport",
+                        "# of Years",
+                        "Vegetarian"};
+        
+        Object[][] data = {
+            {"Kathy", "Smith",
+             "Snowboarding", new Integer(5), new Boolean(false)},
+            {"John", "Doe",
+             "Rowing", new Integer(3), new Boolean(true)},
+            {"Sue", "Black",
+             "Knitting", new Integer(2), new Boolean(false)},
+            {"Jane", "White",
+             "Speed reading", new Integer(20), new Boolean(true)},
+            {"Joe", "Brown",
+             "Pool", new Integer(10), new Boolean(false)},
+            {"Kathy", "Smith",
+             "Snowboarding", new Integer(5), new Boolean(false)},
+            {"John", "Doe",
+             "Rowing", new Integer(3), new Boolean(true)},
+            {"Sue", "Black",
+             "Knitting", new Integer(2), new Boolean(false)},
+            {"Jane", "White",
+             "Speed reading", new Integer(20), new Boolean(true)},
+            {"Joe", "Brown",
+             "Pool", new Integer(10), new Boolean(false)},
+            {"Kathy", "Smith",
+             "Snowboarding", new Integer(5), new Boolean(false)},
+            {"John", "Doe",
+             "Rowing", new Integer(3), new Boolean(true)},
+            {"Sue", "Black",
+             "Knitting", new Integer(2), new Boolean(false)},
+            {"Jane", "White",
+             "Speed reading", new Integer(20), new Boolean(true)},
+            {"Joe", "Brown",
+             "Pool", new Integer(10), new Boolean(false)},
+            {"Kathy", "Smith",
+             "Snowboarding", new Integer(5), new Boolean(false)},
+            {"John", "Doe",
+             "Rowing", new Integer(3), new Boolean(true)},
+            {"Sue", "Black",
+             "Knitting", new Integer(2), new Boolean(false)},
+            {"Jane", "White",
+             "Speed reading", new Integer(20), new Boolean(true)},
+            {"Joe", "Brown",
+             "Pool", new Integer(10), new Boolean(false)}
+        };
+        
+        // Crentado la tabla de datos
+        JTable tabla = new JTable();
+        tabla.setModel(
+                new DefaultTableModel(data, columnNames)
+                {
+                    boolean[] canEdit = new boolean [] {false, false, false, false, false};
+                    public boolean isCellEditable(int rowIndex, int columnIndex) {return canEdit [columnIndex];}
+                }
+        );
+        tabla.setFillsViewportHeight(true);
+        tabla.setAutoCreateRowSorter(true);
+        
+        // Estableciendo parametros personalizadas
+        tabla.getColumn("Sport").setPreferredWidth(400);
+        
+        // Creando el scroll para deslizamiento de la tabla
+        JScrollPane scrollPane = new JScrollPane(tabla);
+        scrollPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        
+                
+        scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+        
+        // Agregando todo el contenido a la ventana emergente
+        emergente.getContentPane().add(scrollPane);
+        emergente.setVisible(true);
+    }
+   
+    
     
     public ModificacionDeFacturas() {
         //Articulos.CargarMap();
@@ -190,8 +287,6 @@ public class ModificacionDeFacturas extends javax.swing.JInternalFrame {
         jLabel12 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
 
         setClosable(true);
         setIconifiable(true);
@@ -481,24 +576,15 @@ public class ModificacionDeFacturas extends javax.swing.JInternalFrame {
 
         jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        DefaultTableModel modelo=new DefaultTableModel();
-        jTable2.setModel(modelo);
-        jTable2.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jTable2KeyPressed(evt);
-            }
-        });
-        jScrollPane3.setViewportView(jTable2);
-
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3)
+            .addGap(0, 1116, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 71, Short.MAX_VALUE)
+            .addGap(0, 71, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -1110,21 +1196,6 @@ public class ModificacionDeFacturas extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_jComboBox2KeyPressed
 
-    private void jTable2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable2KeyPressed
-        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
-            int posicion=this.jTable2.getSelectedRow();
-            arti=(Articulos)listadoDeBusqueda.get(posicion);
-            //System.err.println("ARTICULO SELECCIONADO :"+arti.getDescripcionArticulo()+" "+arti.getCodigoDeBarra());
-            String codBar=arti.getCodigoDeBarra();
-            jTextField1.setText(codBar.trim());
-
-            this.jLabel8.setText(arti.getDescripcionArticulo());
-
-            this.jTextField1.requestFocus();
-
-        }
-    }//GEN-LAST:event_jTable2KeyPressed
-
     private void jTextField3KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField3KeyPressed
         if(KeyEvent.VK_ENTER==evt.getKeyCode()){
             Double descuentoGral=Numeros.ConvertirStringADouble(this.jTextField3.getText());
@@ -1140,25 +1211,29 @@ private void cargarLista(ArrayList lista){
     DefaultTableModel modelo=new DefaultTableModel();
     Iterator il=lista.listIterator();
     Articulos art=new Articulos();
+    
     modelo.addColumn("Descripcion");
-        modelo.addColumn("Precio");
-        modelo.addColumn("Stock");
-        Object [] fila=new Object[3];
-        while(il.hasNext()){
+    modelo.addColumn("Precio");
+    modelo.addColumn("Stock");
+    Object [] fila=new Object[3];
+    
+    while(il.hasNext()){
             art=(Articulos)il.next();
             fila[0]=art.getDescripcionArticulo();
             fila[1]=" $"+Numeros.ConvertirNumero(art.getPrecioUnitarioNeto());
             fila[2]=String.valueOf(art.getStockActual());
             //modelo.addElement(articulo.getDescripcionArticulo()+" $"+Numeros.ConvertirNumero(articulo.getPrecioUnitarioNeto()));
             modelo.addRow(fila);
-        }
+    }
     
     
-    this.jTable2.setModel(modelo);
-            columnaCodigo=this.jTable2.getColumn("Precio");
+        this.jTable2.setModel(modelo);
+        
+        columnaCodigo=this.jTable2.getColumn("Precio");
         columnaCodigo.setPreferredWidth(60);
         columnaCodigo.setMaxWidth(60);
-                columnaCodigo=this.jTable2.getColumn("Stock");
+        
+        columnaCodigo=this.jTable2.getColumn("Stock");
         columnaCodigo.setPreferredWidth(60);
         columnaCodigo.setMaxWidth(60);
 }
@@ -1330,9 +1405,7 @@ private void verificar(){
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
     public static javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
