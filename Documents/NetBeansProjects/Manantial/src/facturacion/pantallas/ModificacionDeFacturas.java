@@ -38,6 +38,7 @@ import facturacion.clientes.Facturable;
 import facturacion.clientes.MovimientosClientes;
 import interfaces.FacturableE;
 import interfaces.Transaccionable;
+import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JDialog;
@@ -48,6 +49,7 @@ import javax.swing.ScrollPaneConstants;
 import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 import objetosR.Comprobantes;
 import objetos.DetalleFacturas;
 import objetos.FacturaElectronica;
@@ -84,85 +86,45 @@ public class ModificacionDeFacturas extends javax.swing.JInternalFrame {
     private Double subTotal;
     private Pedidos pedido;
     
-    private void desplegarPopUp(String tituloVentana){
+    
+    private void desplegarPopUp(String tituloVentana, DefaultTableModel modeloDatos, List<String> parametros){
         // Creando la ventana emergente
         JFrame jf = new JFrame(tituloVentana);
         JDialog emergente = new JDialog(jf, 
                                         tituloVentana, 
                                         true);
+        
         emergente.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         emergente.setSize(1000,400);
         emergente.setLocationRelativeTo(null);
         
-        // Estableciendo los datos
-        String[] columnNames = {"First Name",
-                        "Last Name",
-                        "Sport",
-                        "# of Years",
-                        "Vegetarian"};
-        
-        Object[][] data = {
-            {"Kathy", "Smith",
-             "Snowboarding", new Integer(5), new Boolean(false)},
-            {"John", "Doe",
-             "Rowing", new Integer(3), new Boolean(true)},
-            {"Sue", "Black",
-             "Knitting", new Integer(2), new Boolean(false)},
-            {"Jane", "White",
-             "Speed reading", new Integer(20), new Boolean(true)},
-            {"Joe", "Brown",
-             "Pool", new Integer(10), new Boolean(false)},
-            {"Kathy", "Smith",
-             "Snowboarding", new Integer(5), new Boolean(false)},
-            {"John", "Doe",
-             "Rowing", new Integer(3), new Boolean(true)},
-            {"Sue", "Black",
-             "Knitting", new Integer(2), new Boolean(false)},
-            {"Jane", "White",
-             "Speed reading", new Integer(20), new Boolean(true)},
-            {"Joe", "Brown",
-             "Pool", new Integer(10), new Boolean(false)},
-            {"Kathy", "Smith",
-             "Snowboarding", new Integer(5), new Boolean(false)},
-            {"John", "Doe",
-             "Rowing", new Integer(3), new Boolean(true)},
-            {"Sue", "Black",
-             "Knitting", new Integer(2), new Boolean(false)},
-            {"Jane", "White",
-             "Speed reading", new Integer(20), new Boolean(true)},
-            {"Joe", "Brown",
-             "Pool", new Integer(10), new Boolean(false)},
-            {"Kathy", "Smith",
-             "Snowboarding", new Integer(5), new Boolean(false)},
-            {"John", "Doe",
-             "Rowing", new Integer(3), new Boolean(true)},
-            {"Sue", "Black",
-             "Knitting", new Integer(2), new Boolean(false)},
-            {"Jane", "White",
-             "Speed reading", new Integer(20), new Boolean(true)},
-            {"Joe", "Brown",
-             "Pool", new Integer(10), new Boolean(false)}
-        };
-        
         // Crentado la tabla de datos
         JTable tabla = new JTable();
-        tabla.setModel(
+        tabla.setModel(modeloDatos);
+        /*tabla.setModel(
                 new DefaultTableModel(data, columnNames)
                 {
                     boolean[] canEdit = new boolean [] {false, false, false, false, false};
                     public boolean isCellEditable(int rowIndex, int columnIndex) {return canEdit [columnIndex];}
                 }
-        );
+        );*/
         tabla.setFillsViewportHeight(true);
         tabla.setAutoCreateRowSorter(true);
         
-        // Estableciendo parametros personalizadas
-        tabla.getColumn("Sport").setPreferredWidth(400);
+        // Configurando parametros de cada columna de interes
+        TableColumnModel modeloColumnas = tabla.getColumnModel();
+        for(String config : parametros){
+            String nombreColumna = config.split(":")[0];
+            int anchoColumna = Integer.valueOf(config.split(":")[1]);
+            int maxAncho = Integer.valueOf(config.split(":")[2]);
+            System.out.println(nombreColumna+" - "+anchoColumna+" - "+maxAncho);
+            modeloColumnas.getColumn(modeloColumnas.getColumnIndex(nombreColumna)).setPreferredWidth(anchoColumna);
+            modeloColumnas.getColumn(modeloColumnas.getColumnIndex(nombreColumna)).setMaxWidth(maxAncho);
+        }
         
         // Creando el scroll para deslizamiento de la tabla
         JScrollPane scrollPane = new JScrollPane(tabla);
         scrollPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        
                 
         scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
@@ -671,20 +633,32 @@ public class ModificacionDeFacturas extends javax.swing.JInternalFrame {
         if(evt.getKeyCode()==KeyEvent.VK_F1){
             valorCargado=jTextField1.getText();
         Facturar fart=new Articulos();
-        this.jTable2.removeAll();
+        
+        //this.jTable2.removeAll();
             Modificable modiA=new Articulos();
             Articulable modi=new ArticulosAsignados();
             listadoDeBusqueda.clear();
             listadoDeBusqueda=modi.convertirListadoEnArticulos(modi.filtradorDeFormularios(listadoSubRubros, listadoR, cliT,this.jTextField1.getText()));
             //listadoDeBusqueda=modi.filtrador(listadoSubRubros,listadoR);
-            this.jTable2.setModel(modiA.mostrarListadoBusqueda(listadoDeBusqueda));
-            columnaCodigo=this.jTable2.getColumn("Precio");
-        columnaCodigo.setPreferredWidth(60);
-        columnaCodigo.setMaxWidth(60);
-                columnaCodigo=this.jTable2.getColumn("Stock");
-        columnaCodigo.setPreferredWidth(60);
-        columnaCodigo.setMaxWidth(60);
-            this.jTable2.requestFocus();
+//            this.jTable2.setModel(modiA.mostrarListadoBusqueda(listadoDeBusqueda));
+//            columnaCodigo=this.jTable2.getColumn("Precio");
+//        columnaCodigo.setPreferredWidth(60);
+//        columnaCodigo.setMaxWidth(60);
+//                columnaCodigo=this.jTable2.getColumn("Stock");
+//        columnaCodigo.setPreferredWidth(60);
+//        columnaCodigo.setMaxWidth(60);
+//            this.jTable2.requestFocus();
+            
+            // Configurando parametros de algunas columnas de interes
+            List<String> columnasTabla = new ArrayList<>();
+            columnasTabla.add("Precio:60:60");
+            columnasTabla.add("Stock:60:60");
+            
+            // Desplegando ventana emergente
+            this.desplegarPopUp("Seleccion Producto", 
+                                 modiA.mostrarListadoBusqueda(listadoDeBusqueda), 
+                                 columnasTabla);
+            
         }
         if(evt.getKeyCode()==KeyEvent.VK_F4){
                     //verificar();
@@ -1209,6 +1183,7 @@ public class ModificacionDeFacturas extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jTextField3KeyPressed
 private void cargarLista(ArrayList lista){
     DefaultTableModel modelo=new DefaultTableModel();
+    
     Iterator il=lista.listIterator();
     Articulos art=new Articulos();
     
@@ -1226,16 +1201,23 @@ private void cargarLista(ArrayList lista){
             modelo.addRow(fila);
     }
     
+    // Configurando parametros de algunas columnas de interes
+    List<String> columnasTabla = new ArrayList<>();
+    columnasTabla.add("Precio:60:60");
+    columnasTabla.add("Stock:60:60");
     
-        this.jTable2.setModel(modelo);
+    // Desplegando ventana emergente
+    this.desplegarPopUp("Seleccion Item", modelo, columnasTabla);
+    
+    //this.jTable2.setModel(modelo);
         
-        columnaCodigo=this.jTable2.getColumn("Precio");
-        columnaCodigo.setPreferredWidth(60);
-        columnaCodigo.setMaxWidth(60);
-        
-        columnaCodigo=this.jTable2.getColumn("Stock");
-        columnaCodigo.setPreferredWidth(60);
-        columnaCodigo.setMaxWidth(60);
+//    columnaCodigo=this.jTable2.getColumn("Precio");
+//    columnaCodigo.setPreferredWidth(60);
+//    columnaCodigo.setMaxWidth(60);
+//
+//    columnaCodigo=this.jTable2.getColumn("Stock");
+//    columnaCodigo.setPreferredWidth(60);
+//    columnaCodigo.setMaxWidth(60);
 }
 private void agregarRenglonTabla(){
         MiModeloTablaFacturacion busC=new MiModeloTablaFacturacion();
