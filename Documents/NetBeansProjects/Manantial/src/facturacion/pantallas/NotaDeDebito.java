@@ -31,6 +31,7 @@ import Articulos.Modificable;
 import Articulos.Rubrable;
 import Articulos.Rubros;
 import Articulos.SubRubros;
+import Articulos.TablaGenericaProductos;
 import ConfiguracionR.Propiedades;
 import FacturaE.pdfsJavaGenerador;
 import ListasDePrecios.Articulable;
@@ -44,6 +45,7 @@ import interfaces.FacturableE;
 import interfaces.Transaccionable;
 import java.awt.event.KeyListener;
 import java.net.MalformedURLException;
+import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
@@ -85,6 +87,7 @@ public class NotaDeDebito extends javax.swing.JInternalFrame implements KeyListe
     private Double porcentajeDescuento;
     private Double subTotal;
     private MovimientosClientes factura;
+    private TablaGenericaProductos tgp;
     
     public NotaDeDebito() {
         //Articulos.CargarMap();
@@ -92,6 +95,8 @@ public class NotaDeDebito extends javax.swing.JInternalFrame implements KeyListe
         //cliT=(ClientesTango)oob;
         //comp.setCliente(cliT);
         initComponents();
+        tgp = new TablaGenericaProductos();
+        
         porcentajeDescuento=0.00;
         subTotal=0.00;
         this.jCheckBox2.setEnabled(true);
@@ -162,9 +167,6 @@ public class NotaDeDebito extends javax.swing.JInternalFrame implements KeyListe
         jComboBox2 = new javax.swing.JComboBox();
         jLabel12 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
 
         setClosable(true);
         setIconifiable(true);
@@ -271,27 +273,27 @@ public class NotaDeDebito extends javax.swing.JInternalFrame implements KeyListe
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(4, 4, 4)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(4, 4, 4)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel5))
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(jCheckBox2)))
+                                    .addComponent(jLabel5)))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jCheckBox2))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButton2)
                             .addComponent(jButton1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                .addContainerGap(13, Short.MAX_VALUE))
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -465,28 +467,6 @@ public class NotaDeDebito extends javax.swing.JInternalFrame implements KeyListe
                 .addGap(49, 49, 49))
         );
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        DefaultTableModel modelo=new DefaultTableModel();
-        jTable2.setModel(modelo);
-        jTable2.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jTable2KeyPressed(evt);
-            }
-        });
-        jScrollPane3.setViewportView(jTable2);
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3)
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -495,8 +475,7 @@ public class NotaDeDebito extends javax.swing.JInternalFrame implements KeyListe
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -504,9 +483,7 @@ public class NotaDeDebito extends javax.swing.JInternalFrame implements KeyListe
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
+                .addGap(105, 105, 105)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -572,20 +549,29 @@ public class NotaDeDebito extends javax.swing.JInternalFrame implements KeyListe
             //System.out.println("ENTRO CON F1¡¡¡¡¡");
             valorCargado=jTextField1.getText();
         Facturar fart=new Articulos();
-        this.jTable2.removeAll();
+//        this.jTable2.removeAll();
             Modificable modiA=new Articulos();
             Articulable modi=new ArticulosAsignados();
             listadoDeBusqueda.clear();
             listadoDeBusqueda=modi.convertirListadoEnArticulos(modi.filtradorDeFormularios(listadoSubRubros, listadoR, cliT,this.jTextField1.getText()));
             //listadoDeBusqueda=modi.filtrador(listadoSubRubros,listadoR);
-            this.jTable2.setModel(modiA.mostrarListadoBusqueda(listadoDeBusqueda));
-            columnaCodigo=this.jTable2.getColumn("Descripcion");
-        columnaCodigo.setPreferredWidth(600);
-        columnaCodigo.setMaxWidth(600);
-                columnaCodigo=this.jTable2.getColumn("Stock");
-        columnaCodigo.setPreferredWidth(60);
-        columnaCodigo.setMaxWidth(60);
-            this.jTable2.requestFocus();
+//            this.jTable2.setModel(modiA.mostrarListadoBusqueda(listadoDeBusqueda));
+//            columnaCodigo = this.jTable2.getColumn("Descripcion");
+//            columnaCodigo.setPreferredWidth(600);
+//            columnaCodigo.setMaxWidth(600);
+//            columnaCodigo = this.jTable2.getColumn("Stock");
+//            columnaCodigo.setPreferredWidth(60);
+//            columnaCodigo.setMaxWidth(60);
+//            this.jTable2.requestFocus();
+            
+            // Configurando parametros de algunas columnas de interes
+            List<String> columnasTabla = new ArrayList<>();
+            columnasTabla.add("Descripcion:600:600");
+            columnasTabla.add("Stock:60:60");
+
+            // Desplegando ventana emergente
+            tgp.desplegarPopUp("Seleccion Item", modiA.mostrarListadoBusqueda(listadoDeBusqueda), columnasTabla);
+            
         }
         if(evt.getKeyCode()==KeyEvent.VK_F4){
                     //verificar();
@@ -700,7 +686,7 @@ public class NotaDeDebito extends javax.swing.JInternalFrame implements KeyListe
         agregarRenglonTabla();
         this.jCheckBox2.setSelected(true);
         //this.jCheckBox2.setEnabled(false);
-        this.jTable2.removeAll();
+       // this.jTable2.removeAll();
         listadoDeBusqueda.clear();
         cargarLista(listadoDeBusqueda);
         //cliT=new Clientes("99");
@@ -775,7 +761,7 @@ public class NotaDeDebito extends javax.swing.JInternalFrame implements KeyListe
                  montrarMonto();
                  //System.err.println("MONTO TOTAL "+montoTotal);
                  this.jLabel8.setText("");
-                 this.jTable2.removeAll();
+                // this.jTable2.removeAll();
                 this.jButton1.setVisible(true);
                     //String valorCargado;
             jTextField1.setText(valorCargado);
@@ -1066,7 +1052,7 @@ public class NotaDeDebito extends javax.swing.JInternalFrame implements KeyListe
                  montrarMonto();
                  //System.err.println("MONTO TOTAL "+montoTotal);
                  this.jLabel8.setText("");
-                 this.jTable2.removeAll();
+                // this.jTable2.removeAll();
                 this.jButton1.setVisible(true);
             this.jTextField1.setText("");
             this.jTextField2.setText("");
@@ -1218,7 +1204,7 @@ public class NotaDeDebito extends javax.swing.JInternalFrame implements KeyListe
         agregarRenglonTabla();
         this.jCheckBox2.setSelected(true);
         //this.jCheckBox2.setEnabled(false);
-        this.jTable2.removeAll();
+//        this.jTable2.removeAll();
         listadoDeBusqueda.clear();
         cargarLista(listadoDeBusqueda);
         //cliT=new Clientes("99");
@@ -1246,13 +1232,22 @@ public class NotaDeDebito extends javax.swing.JInternalFrame implements KeyListe
             Articulable modi=new ArticulosAsignados();
             listadoDeBusqueda=modi.convertirListadoEnArticulos(modi.filtrador(listadoSubRubros, listadoR, cliT));
             //listadoDeBusqueda=modi.filtrador(listadoSubRubros,listadoR);
-            this.jTable2.setModel(modiA.mostrarListadoBusqueda(listadoDeBusqueda));
-            columnaCodigo=this.jTable2.getColumn("Descripcion");
-        columnaCodigo.setPreferredWidth(600);
-        columnaCodigo.setMaxWidth(600);
-                columnaCodigo=this.jTable2.getColumn("Stock");
-        columnaCodigo.setPreferredWidth(60);
-        columnaCodigo.setMaxWidth(60);
+//            this.jTable2.setModel(modiA.mostrarListadoBusqueda(listadoDeBusqueda));
+//            columnaCodigo = this.jTable2.getColumn("Descripcion");
+//            columnaCodigo.setPreferredWidth(600);
+//            columnaCodigo.setMaxWidth(600);
+//            columnaCodigo = this.jTable2.getColumn("Stock");
+//            columnaCodigo.setPreferredWidth(60);
+//            columnaCodigo.setMaxWidth(60);
+            
+            // Configurando parametros de algunas columnas de interes
+            List<String> columnasTabla = new ArrayList<>();
+            columnasTabla.add("Precio:600:600");
+            columnasTabla.add("Stock:60:60");
+
+            // Desplegando ventana emergente
+            tgp.desplegarPopUp("Seleccion Item", modiA.mostrarListadoBusqueda(listadoDeBusqueda), columnasTabla);
+        
             this.jLabel10.setVisible(true);
             this.jComboBox2.setVisible(true);
             this.jComboBox2.setModel(subRuble.mostrarEnBox(listadoSubRubros));
@@ -1272,18 +1267,27 @@ public class NotaDeDebito extends javax.swing.JInternalFrame implements KeyListe
             subRubro=(SubRubros)listadoSubRubros.get(this.jComboBox2.getSelectedIndex());
             listadoSubRubros.clear();
             listadoSubRubros.add(subRubro);
-            this.jTable2.removeAll();
+           // this.jTable2.removeAll();
             Modificable modiA=new Articulos();
             Articulable modi=new ArticulosAsignados();
             listadoDeBusqueda=modi.convertirListadoEnArticulos(modi.filtradorDeFormularios(listadoSubRubros, listadoR, cliT,jTextField1.getText()));
             //listadoDeBusqueda=modi.filtrador(listadoSubRubros,listadoR);
-            this.jTable2.setModel(modiA.mostrarListadoBusqueda(listadoDeBusqueda));
-            columnaCodigo=this.jTable2.getColumn("Descripcion");
-        columnaCodigo.setPreferredWidth(600);
-        columnaCodigo.setMaxWidth(600);
-                columnaCodigo=this.jTable2.getColumn("Stock");
-        columnaCodigo.setPreferredWidth(60);
-        columnaCodigo.setMaxWidth(60);
+//            this.jTable2.setModel(modiA.mostrarListadoBusqueda(listadoDeBusqueda));
+//            columnaCodigo = this.jTable2.getColumn("Descripcion");
+//            columnaCodigo.setPreferredWidth(600);
+//            columnaCodigo.setMaxWidth(600);
+//            columnaCodigo = this.jTable2.getColumn("Stock");
+//            columnaCodigo.setPreferredWidth(60);
+//            columnaCodigo.setMaxWidth(60);
+            
+            // Configurando parametros de algunas columnas de interes
+            List<String> columnasTabla = new ArrayList<>();
+            columnasTabla.add("Descripcion:600:600");
+            columnasTabla.add("Stock:60:60");
+
+            // Desplegando ventana emergente
+            tgp.desplegarPopUp("Seleccion Item", modiA.mostrarListadoBusqueda(listadoDeBusqueda), columnasTabla);
+            
             this.jTextField1.requestFocus();
         }
 
@@ -1293,21 +1297,6 @@ public class NotaDeDebito extends javax.swing.JInternalFrame implements KeyListe
         
         
     }//GEN-LAST:event_formKeyPressed
-
-    private void jTable2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable2KeyPressed
-        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
-            int posicion=this.jTable2.getSelectedRow();
-            arti=(Articulos)listadoDeBusqueda.get(posicion);
-            //System.err.println("ARTICULO SELECCIONADO :"+arti.getDescripcionArticulo()+" "+arti.getCodigoDeBarra());
-            String codBar=arti.getCodigoDeBarra();
-            jTextField1.setText(codBar.trim());
-
-            this.jLabel8.setText(arti.getDescripcionArticulo());
-
-            this.jTextField1.requestFocus();
-
-        }
-    }//GEN-LAST:event_jTable2KeyPressed
 
     private void jTextField3KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField3KeyPressed
         if(KeyEvent.VK_ENTER==evt.getKeyCode()){
@@ -1338,13 +1327,23 @@ private void cargarLista(ArrayList lista){
         }
     
     
-    this.jTable2.setModel(modelo);
-            columnaCodigo=this.jTable2.getColumn("Descripcion");
-        columnaCodigo.setPreferredWidth(600);
-        columnaCodigo.setMaxWidth(600);
-                columnaCodigo=this.jTable2.getColumn("Stock");
-        columnaCodigo.setPreferredWidth(60);
-        columnaCodigo.setMaxWidth(60);
+//    this.jTable2.setModel(modelo);
+//    columnaCodigo = this.jTable2.getColumn("Descripcion");
+//    columnaCodigo.setPreferredWidth(600);
+//    columnaCodigo.setMaxWidth(600);
+//    columnaCodigo = this.jTable2.getColumn("Stock");
+//    columnaCodigo.setPreferredWidth(60);
+//    columnaCodigo.setMaxWidth(60);
+
+    // Configurando parametros de algunas columnas de interes
+    List<String> columnasTabla = new ArrayList<>();
+    columnasTabla.add("Descripcion:600:600");
+    columnasTabla.add("Stock:60:60");
+    
+    // Desplegando ventana emergente
+    tgp.desplegarPopUp("Seleccion Item", modelo, columnasTabla);
+    
+    
 }
 private void agregarRenglonTabla(){
         MiModeloTablaFacturacion busC=new MiModeloTablaFacturacion();
@@ -1512,11 +1511,8 @@ private void verificar(){
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
     public static javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;

@@ -28,6 +28,7 @@ import Articulos.Modificable;
 import Articulos.Rubrable;
 import Articulos.Rubros;
 import Articulos.SubRubros;
+import Articulos.TablaGenericaProductos;
 import ConfiguracionR.Propiedades;
 import ListasDePrecios.Articulable;
 import ListasDePrecios.ArticulosAsignados;
@@ -85,54 +86,9 @@ public class ModificacionDeFacturas extends javax.swing.JInternalFrame {
     private Double porcentajeDescuento;
     private Double subTotal;
     private Pedidos pedido;
+    private TablaGenericaProductos tgp;
     
     
-    private void desplegarPopUp(String tituloVentana, DefaultTableModel modeloDatos, List<String> parametros){
-        // Creando la ventana emergente
-        JFrame jf = new JFrame(tituloVentana);
-        JDialog emergente = new JDialog(jf, 
-                                        tituloVentana, 
-                                        true);
-        
-        emergente.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        emergente.setSize(1000,400);
-        emergente.setLocationRelativeTo(null);
-        
-        // Crentado la tabla de datos
-        JTable tabla = new JTable();
-        tabla.setModel(modeloDatos);
-        /*tabla.setModel(
-                new DefaultTableModel(data, columnNames)
-                {
-                    boolean[] canEdit = new boolean [] {false, false, false, false, false};
-                    public boolean isCellEditable(int rowIndex, int columnIndex) {return canEdit [columnIndex];}
-                }
-        );*/
-        tabla.setFillsViewportHeight(true);
-        tabla.setAutoCreateRowSorter(true);
-        
-        // Configurando parametros de cada columna de interes
-        TableColumnModel modeloColumnas = tabla.getColumnModel();
-        for(String config : parametros){
-            String nombreColumna = config.split(":")[0];
-            int anchoColumna = Integer.valueOf(config.split(":")[1]);
-            int maxAncho = Integer.valueOf(config.split(":")[2]);
-            System.out.println(nombreColumna+" - "+anchoColumna+" - "+maxAncho);
-            modeloColumnas.getColumn(modeloColumnas.getColumnIndex(nombreColumna)).setPreferredWidth(anchoColumna);
-            modeloColumnas.getColumn(modeloColumnas.getColumnIndex(nombreColumna)).setMaxWidth(maxAncho);
-        }
-        
-        // Creando el scroll para deslizamiento de la tabla
-        JScrollPane scrollPane = new JScrollPane(tabla);
-        scrollPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-                
-        scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-        
-        // Agregando todo el contenido a la ventana emergente
-        emergente.getContentPane().add(scrollPane);
-        emergente.setVisible(true);
-    }
    
     
     
@@ -142,6 +98,7 @@ public class ModificacionDeFacturas extends javax.swing.JInternalFrame {
         //cliT=(ClientesTango)oob;
         //comp.setCliente(cliT);
         initComponents();
+        tgp = new TablaGenericaProductos();
         porcentajeDescuento=0.00;
         subTotal=0.00;
         this.jCheckBox2.setEnabled(true);
@@ -638,7 +595,7 @@ public class ModificacionDeFacturas extends javax.swing.JInternalFrame {
             columnasTabla.add("Stock:60:60");
             
             // Desplegando ventana emergente
-            this.desplegarPopUp("Seleccion Producto", 
+            tgp.desplegarPopUp("Seleccion Producto", 
                                  modiA.mostrarListadoBusqueda(listadoDeBusqueda), 
                                  columnasTabla);
             
@@ -1118,7 +1075,7 @@ public class ModificacionDeFacturas extends javax.swing.JInternalFrame {
             columnasTabla.add("Stock:60:60");
             
             // Desplegando ventana emergente
-            this.desplegarPopUp("Seleccion Producto", 
+            tgp.desplegarPopUp("Seleccion Producto", 
                                  modiA.mostrarListadoBusqueda(listadoDeBusqueda), 
                                  columnasTabla);
             
@@ -1168,7 +1125,7 @@ public class ModificacionDeFacturas extends javax.swing.JInternalFrame {
             columnasTabla.add("Stock:60:60");
             
             // Desplegando ventana emergente
-            this.desplegarPopUp("Seleccion Producto", 
+            tgp.desplegarPopUp("Seleccion Producto", 
                                  modiA.mostrarListadoBusqueda(listadoDeBusqueda), 
                                  columnasTabla);
         
@@ -1214,7 +1171,7 @@ private void cargarLista(ArrayList lista){
     columnasTabla.add("Stock:60:60");
     
     // Desplegando ventana emergente
-    this.desplegarPopUp("Seleccion Item", modelo, columnasTabla);
+    tgp.desplegarPopUp("Seleccion Item", modelo, columnasTabla);
     
     //this.jTable2.setModel(modelo);
         
