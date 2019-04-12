@@ -83,14 +83,14 @@ public class Actualiza extends Thread{
         }); 
         timer.start();
         
-        
-        
     }  
     private Boolean ProbarConeccion() throws InstantiationException, IllegalAccessException, SQLException{
         Boolean verif=false;
         String sql="select * from articulos limit 0,1";
         Transaccionable tra=new Conecciones();
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
+       
+        
         try {
             while(rs.next()){
                 verif=true;
