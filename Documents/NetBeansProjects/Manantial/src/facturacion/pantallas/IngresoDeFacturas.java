@@ -77,6 +77,10 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
     private Double porcentajeDescuento;
     private Double subTotal;
     
+    private void desplegarPopUp(){
+    
+    }
+    
     public IngresoDeFacturas() {
         //Articulos.CargarMap();
         cliT=new Clientes("130");
