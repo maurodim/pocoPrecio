@@ -29,6 +29,7 @@ import Articulos.Modificable;
 import Articulos.Rubrable;
 import Articulos.Rubros;
 import Articulos.SubRubros;
+import Articulos.TablaGenericaProductos;
 import ConfiguracionR.Propiedades;
 import ListasDePrecios.Articulable;
 import ListasDePrecios.ArticulosAsignados;
@@ -39,6 +40,7 @@ import facturacion.clientes.Facturable;
 import facturacion.clientes.MovimientosClientes;
 import interfaces.FacturableE;
 import interfaces.Transaccionable;
+import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
@@ -75,6 +77,7 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
     private String valorCargado;
     private Double porcentajeDescuento;
     private Double subTotal;
+    private TablaGenericaProductos tgp;
     
     public NotaDeCredito() {
         //Articulos.CargarMap();
@@ -82,6 +85,8 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
         //cliT=(ClientesTango)oob;
         //comp.setCliente(cliT);
         initComponents();
+        tgp = new TablaGenericaProductos();
+        
         porcentajeDescuento=0.00;
         subTotal=0.00;
         this.jCheckBox2.setEnabled(true);
@@ -189,9 +194,6 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
         jComboBox2 = new javax.swing.JComboBox();
         jLabel12 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
 
         setClosable(true);
         setIconifiable(true);
@@ -295,7 +297,7 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -466,36 +468,15 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
                     .addComponent(jLabel7)
                     .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel3)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(38, 38, 38)
                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(53, 53, 53))
-        );
-
-        jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        DefaultTableModel modelo=new DefaultTableModel();
-        jTable2.setModel(modelo);
-        jTable2.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jTable2KeyPressed(evt);
-            }
-        });
-        jScrollPane3.setViewportView(jTable2);
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING)
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 71, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -505,9 +486,8 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 1120, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -515,10 +495,8 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -582,20 +560,29 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
         if(evt.getKeyCode()==KeyEvent.VK_F1){
             valorCargado=jTextField1.getText();
         Facturar fart=new Articulos();
-        this.jTable2.removeAll();
+       // this.jTable2.removeAll();
             Modificable modiA=new Articulos();
             Articulable modi=new ArticulosAsignados();
             listadoDeBusqueda.clear();
             listadoDeBusqueda=modi.convertirListadoEnArticulos(modi.filtradorDeFormularios(listadoSubRubros, listadoR, cliT,this.jTextField1.getText()));
             //listadoDeBusqueda=modi.filtrador(listadoSubRubros,listadoR);
-            this.jTable2.setModel(modiA.mostrarListadoBusqueda(listadoDeBusqueda));
-            columnaCodigo=this.jTable2.getColumn("Precio");
-        columnaCodigo.setPreferredWidth(60);
-        columnaCodigo.setMaxWidth(60);
-                columnaCodigo=this.jTable2.getColumn("Stock");
-        columnaCodigo.setPreferredWidth(60);
-        columnaCodigo.setMaxWidth(60);
-            this.jTable2.requestFocus();
+//            this.jTable2.setModel(modiA.mostrarListadoBusqueda(listadoDeBusqueda));
+//            columnaCodigo = this.jTable2.getColumn("Precio");
+//            columnaCodigo.setPreferredWidth(60);
+//            columnaCodigo.setMaxWidth(60);
+//            columnaCodigo = this.jTable2.getColumn("Stock");
+//            columnaCodigo.setPreferredWidth(60);
+//            columnaCodigo.setMaxWidth(60);
+//            this.jTable2.requestFocus();
+            
+            // Configurando parametros de algunas columnas de interes
+            List<String> columnasTabla = new ArrayList<>();
+            columnasTabla.add("Precio:60:60");
+            columnasTabla.add("Stock:60:60");
+
+            // Desplegando ventana emergente
+            tgp.desplegarPopUp("Seleccion Item", modiA.mostrarListadoBusqueda(listadoDeBusqueda), columnasTabla);
+
         }
         if(evt.getKeyCode()==KeyEvent.VK_F4){
                     //verificar();
@@ -691,7 +678,7 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
         agregarRenglonTabla();
         this.jCheckBox2.setSelected(true);
         //this.jCheckBox2.setEnabled(false);
-        this.jTable2.removeAll();
+      //  this.jTable2.removeAll();
         listadoDeBusqueda.clear();
         cargarLista(listadoDeBusqueda);
         cliT=new Clientes("999999");
@@ -738,7 +725,7 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
                  montrarMonto();
                  //System.err.println("MONTO TOTAL "+montoTotal);
                  this.jLabel8.setText("");
-                 this.jTable2.removeAll();
+       //          this.jTable2.removeAll();
                 this.jButton1.setVisible(true);
             jTextField1.setText(valorCargado);
             this.jTextField5.selectAll();
@@ -1034,7 +1021,7 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
                  montrarMonto();
                  //System.err.println("MONTO TOTAL "+montoTotal);
                  this.jLabel8.setText("");
-                 this.jTable2.removeAll();
+                 //this.jTable2.removeAll();
                 this.jButton1.setVisible(true);
             this.jTextField1.setText("");
             this.jTextField2.setText("");
@@ -1085,13 +1072,22 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
             Articulable modi=new ArticulosAsignados();
             listadoDeBusqueda=modi.convertirListadoEnArticulos(modi.filtrador(listadoSubRubros, listadoR, cliT));
             //listadoDeBusqueda=modi.filtrador(listadoSubRubros,listadoR);
-            this.jTable2.setModel(modiA.mostrarListadoBusqueda(listadoDeBusqueda));
-            columnaCodigo=this.jTable2.getColumn("Precio");
-        columnaCodigo.setPreferredWidth(60);
-        columnaCodigo.setMaxWidth(60);
-                columnaCodigo=this.jTable2.getColumn("Stock");
-        columnaCodigo.setPreferredWidth(60);
-        columnaCodigo.setMaxWidth(60);
+//            this.jTable2.setModel(modiA.mostrarListadoBusqueda(listadoDeBusqueda));
+//            columnaCodigo = this.jTable2.getColumn("Precio");
+//            columnaCodigo.setPreferredWidth(60);
+//            columnaCodigo.setMaxWidth(60);
+//            columnaCodigo = this.jTable2.getColumn("Stock");
+//            columnaCodigo.setPreferredWidth(60);
+//            columnaCodigo.setMaxWidth(60);
+            
+            // Configurando parametros de algunas columnas de interes
+            List<String> columnasTabla = new ArrayList<>();
+            columnasTabla.add("Precio:60:60");
+            columnasTabla.add("Stock:60:60");
+
+            // Desplegando ventana emergente
+            tgp.desplegarPopUp("Seleccion Item", modiA.mostrarListadoBusqueda(listadoDeBusqueda), columnasTabla);
+        
             this.jLabel10.setVisible(true);
             this.jComboBox2.setVisible(true);
             this.jComboBox2.setModel(subRuble.mostrarEnBox(listadoSubRubros));
@@ -1111,37 +1107,31 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
             subRubro=(SubRubros)listadoSubRubros.get(this.jComboBox2.getSelectedIndex());
             listadoSubRubros.clear();
             listadoSubRubros.add(subRubro);
-            this.jTable2.removeAll();
+           // this.jTable2.removeAll();
             Modificable modiA=new Articulos();
             Articulable modi=new ArticulosAsignados();
             listadoDeBusqueda=modi.convertirListadoEnArticulos(modi.filtradorDeFormularios(listadoSubRubros, listadoR, cliT,jTextField1.getText()));
             //listadoDeBusqueda=modi.filtrador(listadoSubRubros,listadoR);
-            this.jTable2.setModel(modiA.mostrarListadoBusqueda(listadoDeBusqueda));
-            columnaCodigo=this.jTable2.getColumn("Precio");
-        columnaCodigo.setPreferredWidth(60);
-        columnaCodigo.setMaxWidth(60);
-                columnaCodigo=this.jTable2.getColumn("Stock");
-        columnaCodigo.setPreferredWidth(60);
-        columnaCodigo.setMaxWidth(60);
-            this.jTextField1.requestFocus();
+//            this.jTable2.setModel(modiA.mostrarListadoBusqueda(listadoDeBusqueda));
+//            columnaCodigo = this.jTable2.getColumn("Precio");
+//            columnaCodigo.setPreferredWidth(60);
+//            columnaCodigo.setMaxWidth(60);
+//            columnaCodigo = this.jTable2.getColumn("Stock");
+//            columnaCodigo.setPreferredWidth(60);
+//            columnaCodigo.setMaxWidth(60);
+
+            // Configurando parametros de algunas columnas de interes
+            List<String> columnasTabla = new ArrayList<>();
+            columnasTabla.add("Precio:60:60");
+            columnasTabla.add("Stock:60:60");
+
+            // Desplegando ventana emergente
+            tgp.desplegarPopUp("Seleccion Item", modiA.mostrarListadoBusqueda(listadoDeBusqueda), columnasTabla);
+            
+        this.jTextField1.requestFocus();
         }
 
     }//GEN-LAST:event_jComboBox2KeyPressed
-
-    private void jTable2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable2KeyPressed
-        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
-            int posicion=this.jTable2.getSelectedRow();
-            arti=(Articulos)listadoDeBusqueda.get(posicion);
-            //System.err.println("ARTICULO SELECCIONADO :"+arti.getDescripcionArticulo()+" "+arti.getCodigoDeBarra());
-            String codBar=arti.getCodigoDeBarra();
-            jTextField1.setText(codBar.trim());
-
-            this.jLabel8.setText(arti.getDescripcionArticulo());
-
-            this.jTextField1.requestFocus();
-
-        }
-    }//GEN-LAST:event_jTable2KeyPressed
 
     private void jTextField3KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField3KeyPressed
         if(KeyEvent.VK_ENTER==evt.getKeyCode()){
@@ -1172,13 +1162,25 @@ private void cargarLista(ArrayList lista){
         }
     
     
-    this.jTable2.setModel(modelo);
-            columnaCodigo=this.jTable2.getColumn("Precio");
-        columnaCodigo.setPreferredWidth(60);
-        columnaCodigo.setMaxWidth(60);
-                columnaCodigo=this.jTable2.getColumn("Stock");
-        columnaCodigo.setPreferredWidth(60);
-        columnaCodigo.setMaxWidth(60);
+//    this.jTable2.setModel(modelo);
+//    columnaCodigo = this.jTable2.getColumn("Precio");
+//    columnaCodigo.setPreferredWidth(60);
+//    columnaCodigo.setMaxWidth(60);
+//    columnaCodigo = this.jTable2.getColumn("Stock");
+//    columnaCodigo.setPreferredWidth(60);
+//    columnaCodigo.setMaxWidth(60);
+        
+        // Configurando parametros de algunas columnas de interes
+        List<String> columnasTabla = new ArrayList<>();
+        columnasTabla.add("Precio:60:60");
+        columnasTabla.add("Stock:60:60");
+
+        // Desplegando ventana emergente
+        tgp.desplegarPopUp("Seleccion Item", modelo, columnasTabla);
+    
+        
+        
+        
 }
 private void agregarRenglonTabla(){
         MiModeloTablaFacturacion busC=new MiModeloTablaFacturacion();
@@ -1346,11 +1348,8 @@ private void verificar(){
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
     public static javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
