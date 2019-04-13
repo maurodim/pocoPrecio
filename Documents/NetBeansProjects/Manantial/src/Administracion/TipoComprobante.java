@@ -6,8 +6,11 @@ package Administracion;
 
 import interfaces.Comprobable;
 import interfaces.Transaccionable;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import objetosR.Conecciones;
 
 /**
@@ -47,13 +50,23 @@ public class TipoComprobante implements Comprobable {
         TipoComprobante tipoComprobante=(TipoComprobante)objeto;
         Integer creado=0;
         String sql="";
-        Transaccionable tran=new Conecciones();
-        if(tran.guardarRegistro(sql)){
+        Transaccionable tran;
+        try {
+            tran = new Conecciones();
+            if(tran.guardarRegistro(sql)){
             sql="";
             if(tran.guardarRegistro(sql)){
                 //creado=devuelve el last_id;
             };
         }
+        } catch (InstantiationException ex) {
+            Logger.getLogger(TipoComprobante.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(TipoComprobante.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(TipoComprobante.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         return creado;
     }
 
@@ -67,9 +80,19 @@ public class TipoComprobante implements Comprobable {
         TipoComprobante tipoComprobante=(TipoComprobante)objeto;
         Boolean creado=false;
         String sql="";
-        Transaccionable tran=new Conecciones();
-       
+        Transaccionable tran;
+        try {
+            tran = new Conecciones();
             if(tran.guardarRegistro(sql))creado=true;
+        } catch (InstantiationException ex) {
+            Logger.getLogger(TipoComprobante.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(TipoComprobante.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(TipoComprobante.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
+            
         
         return creado;
     }
