@@ -43,7 +43,16 @@ public class ArticulosAsignados implements Articulable{
     private String observaciones;
     private Integer origen;
     private String descLista;
-    private static Transaccionable tra=new Conecciones();
+    private static Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
     private static ResultSet rs;
 
     public String getDescLista() {
@@ -221,7 +230,16 @@ public class ArticulosAsignados implements Articulable{
         ArticulosAsignados arti;
         Iterator itA=listado.listIterator();
         String sql="";
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
         ResultSet rs;
         //BarraDeProgreso progreso=new BarraDeProgreso(listado.size());
         //progreso.setTitle("Progreso de Modificacion de Lista de Precio");
@@ -297,7 +315,16 @@ public class ArticulosAsignados implements Articulable{
         cliente=(Clientes)idCliente;
         ArrayList listado=new ArrayList();
         String sql="select articulos.id,articulos.nombre,articulos.costo,articulos.precio,articulos.idrubro,articulos.idsubrubro,(select aplicacion.coeficiente from aplicacion where aplicacion.idarticulo=articulos.id and aplicacion.idcliente="+cliente.getCodigoId()+" limit 0,1)as coeficienteA,(select aplicacion.observaciones from aplicacion where aplicacion.idarticulo=articulos.id and aplicacion.idcliente="+cliente.getCodigoId()+" limit 0,1)as observaciones,(select aplicacion.idlista from aplicacion where aplicacion.idarticulo=articulos.id and aplicacion.idcliente="+cliente.getCodigoId()+" limit 0,1)as idlista,(select articulosMov.cantidad from articulosMov where articulosMov.idArticulo=articulos.ID)as sst from articulos order by nombre";
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
         Double precio=0.00;
         Double coeficiente=1.00;

@@ -119,7 +119,16 @@ public class Remitos implements Comprobable{
         Remitos rem=(Remitos)objeto;
         String sql="select * from tipocomprobantes where id=3 and numeroSucursal=1";
         Integer veri=0;
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
         Integer numero=0;
         try {

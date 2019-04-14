@@ -87,11 +87,15 @@ public class Actualiza extends Thread{
     private Boolean ProbarConeccion() throws InstantiationException, IllegalAccessException, SQLException{
         Boolean verif=false;
         String sql="select * from articulos limit 0,1";
-        Transaccionable tra=new Conecciones();
-        ResultSet rs=tra.leerConjuntoDeRegistros(sql);
+        Transaccionable tra=null;
+        
+            
        
         
         try {
+            tra = new Conecciones();
+        
+        ResultSet rs=tra.leerConjuntoDeRegistros(sql);
             while(rs.next()){
                 verif=true;
                 
@@ -112,7 +116,10 @@ public class Actualiza extends Thread{
          * TAMBIEN DEBO MODIFICAR EL VALOR DE ESTADO EN DERBY
          * 
          */
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra=null;
+        
+            tra = new Conecciones();
+        
         Transaccionable tt=new Conecciones();
         ResultSet rr=tt.leerConjuntoDeRegistros(sql);
         String sentencia="";

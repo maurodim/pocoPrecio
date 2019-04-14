@@ -59,7 +59,16 @@ public class CondicionesIva implements Busquedas{
     @Override
     public ArrayList listar(String cliente) {
         ArrayList listado=new ArrayList();
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
         String sql="select * from condicionesiva";
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
         try {

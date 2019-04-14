@@ -28,7 +28,7 @@ public class Rubros implements Personalizable,Rubrable{
     private Integer id;
     private String descripcion;
     private static String sql;
-    private static Transaccionable tra=new Conecciones();
+    private static Transaccionable tra;
     private static ResultSet rs;
     
 
@@ -55,11 +55,29 @@ public class Rubros implements Personalizable,Rubrable{
 
     @Override
     public Boolean modificar(Object objeto) {
-        Rubros rubro=new Rubros();
-        rubro=(Rubros)objeto;
-        String sql="update rubros set descripcion='"+rubro.getDescripcion()+"' where id="+rubro.getId();
-        Transaccionable tra=new Conecciones();
-        tra.guardarRegistro(sql);
+        try {
+            Rubros rubro=new Rubros();
+            rubro=(Rubros)objeto;
+            String sql="update rubros set descripcion='"+rubro.getDescripcion()+"' where id="+rubro.getId();
+            Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            tra.guardarRegistro(sql);
+            
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Rubros.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(Rubros.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Rubros.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return true;
     }
 
@@ -87,9 +105,19 @@ public class Rubros implements Personalizable,Rubrable{
     public ArrayList listar() {
         ArrayList listado=new ArrayList();
         String sql="select * from rubros order by descripcion";
-        Transaccionable tra=new Conecciones();
-        ResultSet rs=tra.leerConjuntoDeRegistros(sql);
+        
         try {
+            Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        ResultSet rs=tra.leerConjuntoDeRegistros(sql);
             while(rs.next()){
                 Rubros rubro=new Rubros();
                 rubro.setId(rs.getInt("id"));
@@ -97,6 +125,10 @@ public class Rubros implements Personalizable,Rubrable{
                 listado.add(rubro);
             }
         } catch (SQLException ex) {
+            Logger.getLogger(Rubros.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Rubros.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
             Logger.getLogger(Rubros.class.getName()).log(Level.SEVERE, null, ex);
         }
         return listado;
@@ -117,16 +149,30 @@ public class Rubros implements Personalizable,Rubrable{
         Rubros rubros=new Rubros();
         rubros=(Rubros)rubro;
         String sql="insert into rubros (descripcion) values ('"+rubros.getDescripcion()+"')";
-        Transaccionable tra=new Conecciones();
-        tra.guardarRegistro(sql);
         int ultimo=0;
+        try {
+            Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        tra.guardarRegistro(sql);
+        
         sql="select LAST_INSERT_ID()";
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
-        try {
             while(rs.next()){
                 ultimo=rs.getInt(1);
             }
         } catch (SQLException ex) {
+            Logger.getLogger(Rubros.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Rubros.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
             Logger.getLogger(Rubros.class.getName()).log(Level.SEVERE, null, ex);
         }
         return ultimo;

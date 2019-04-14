@@ -350,7 +350,16 @@ public class Usuarios extends TipoAcceso implements Personalizable{
  
          // Lectura del fichero
          String linea;
-          //Transaccionable tra=new Conecciones();
+          //Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
          while((linea=br.readLine())!=null){
              
             System.out.println("Equipo Numero :"+linea);

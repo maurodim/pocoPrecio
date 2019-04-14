@@ -84,7 +84,16 @@ public class Sucursales extends Administracion implements Personalizable{
         
         String sentencia="";
         if(Inicio.coneccionRemota){
-            Transaccionable tra=new Conecciones();
+            Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
             Transaccionable tt=new Conecciones();
             String sql="select * from sucursal";
             tt.guardarRegistro("delete from sucursal");
@@ -162,7 +171,16 @@ public class Sucursales extends Administracion implements Personalizable{
          Boolean verif=false;
         Sucursales deposito=(Sucursales)objeto;
         String sql="insert into sucursal (descripcion,deposito) values ('"+deposito.getDescripcion()+"','"+deposito.getDepositos().getNumero()+"')";
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
         verif=tra.guardarRegistro(sql);
         
         return 0;
@@ -173,7 +191,16 @@ public class Sucursales extends Administracion implements Personalizable{
                Boolean verif=false;
         Sucursales deposito=(Sucursales)objeto;
         String sql="update sucursal set descripcion='"+deposito.getDescripcion()+"',deposito='"+deposito.getDepositos().getNumero()+"' where numero="+deposito.getNumero();
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
         verif=tra.guardarRegistro(sql);
         
         return verif;

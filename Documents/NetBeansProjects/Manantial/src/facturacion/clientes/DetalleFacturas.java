@@ -102,7 +102,16 @@ public class DetalleFacturas implements Facturable{
         int id=0;
         detalle=(DetalleFacturas)ped;
         String sql="insert into detallefacturas (idfactura,idarticulo,cantidad,preciounitario,descuento,cantidadremitida) values ("+detalle.getIdFactura()+","+detalle.getIdArticulo()+","+detalle.getCantidad()+",round("+detalle.getPrecioUnitario()+",4),"+detalle.getDescuento()+","+detalle.getCantidadRemitida()+")";
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
         tra.guardarRegistro(sql);
         return id;
     }
@@ -112,7 +121,16 @@ public class DetalleFacturas implements Facturable{
         DetalleFacturas detalle;
         ArrayList listadoDetalle=new ArrayList();
         String sql="select *,(select articulos.nombre from articulos where articulos.id=detallefacturas.idarticulo)as descripcion from detallefacturas where idfactura="+idPed;
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
         try {
             while(rs.next()){

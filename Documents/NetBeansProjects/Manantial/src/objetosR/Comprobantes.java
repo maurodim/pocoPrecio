@@ -349,7 +349,16 @@ public class Comprobantes implements Facturar{
         numeroComprobante++;
         }
         comp.setNumero(numeroComprobante);
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
         Articulos articulo=new Articulos();
         Articulos art;
         MovimientosClientes factura=new MovimientosClientes();
@@ -481,7 +490,16 @@ public class Comprobantes implements Facturar{
     public Integer leerNumeroDeComprobanteSiguiente(Integer numeroComprobante) {
         Integer numeroSiguiente=0;
         String sql="select tipocomprobantes.numeroActivo from tipocomprobantes where numero="+numeroComprobante+" and numeroSucursal="+Inicio.sucursal.getNumero();
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
         try {
             while(rs.next()){
@@ -496,7 +514,16 @@ public class Comprobantes implements Facturar{
         return numeroSiguiente;
     }
     private Integer numeroComprobante(Integer tipoComp){
-               Transaccionable tra=new Conecciones();
+               Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
                Integer numeroAct=0;
         String sql="select * from tipocomprobantes where numero="+tipoComp+" and numeroSucursal="+Inicio.sucursal.getNumero();
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);

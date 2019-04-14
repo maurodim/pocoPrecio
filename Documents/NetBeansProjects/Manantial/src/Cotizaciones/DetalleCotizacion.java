@@ -145,7 +145,16 @@ public class DetalleCotizacion implements Cotizable{
     public ArrayList cargarDetalle(Integer idCotizacion) {
         ArrayList detalle=new ArrayList();
         String sql="select * from detallecotizaciones where idcotizacion="+idCotizacion+" order by id";
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
         DetalleCotizacion cotizacionD;
         try {
@@ -214,7 +223,16 @@ public class DetalleCotizacion implements Cotizable{
        Double detD=0.00;
        if(detalle.getPorcentajeDescuento() !=null)detD=detalle.getPorcentajeDescuento();
        String sql="insert into detallecotizaciones (idcotizacion,idarticulo,descripcionarticulo,idcliente,cantidad,preciounitario,descuento,observaciones,montoDescuento,porcentajedescuento) values ("+detalle.getIdCotizacion()+","+detalle.getIdArticulo()+",'"+detalle.getDescripcionArticulo()+"',"+detalle.getIdCliente()+","+detalle.getCantidad()+",round("+detalle.getPrecioUnitario()+",4),"+detalle.getDescuento()+",'xx',"+detalle.getMontoDescuento()+","+detD+")";
-       Transaccionable tra=new Conecciones();
+       Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
        tra.guardarRegistro(sql);
        
        return dev;
@@ -225,7 +243,16 @@ public class DetalleCotizacion implements Cotizable{
         DetalleCotizacion detalle=new DetalleCotizacion();
         detalle=(DetalleCotizacion)coti;
         String sql="update detallecotizaciones set descripcionarticulo='"+detalle.getDescripcionArticulo()+"',cantidad="+detalle.getCantidad()+", preciounitario=round("+detalle.getPrecioUnitario()+",4),descuento="+detalle.getDescuento()+",montoDescuento="+detalle.getMontoDescuento()+",porcentajedescuento="+detalle.getPorcentajeDescuento()+" where id="+detalle.getId();
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
         tra.guardarRegistro(sql);
         return detalle;
     }
@@ -233,7 +260,16 @@ public class DetalleCotizacion implements Cotizable{
     @Override
     public void eliminarCotizacion(Integer id) {
        String sql="delete from detallecotizaciones where id="+id;
-       Transaccionable tra=new Conecciones();
+       Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
        tra.guardarRegistro(sql);
        
     }

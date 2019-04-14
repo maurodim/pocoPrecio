@@ -128,7 +128,16 @@ public class Transportes implements Personalizable,Componable{
         Transportes transporte=(Transportes) objeto;
         int verif=0;
         String sql="insert into transportes (descripcion,direccion,telefono,cuit,idlocalidad,codigopostal,encargado,idprovincia) values ('"+transporte.getDescripcion()+"','"+transporte.getDireccion()+"','"+transporte.getTelefono()+"','"+transporte.getCuit()+"',"+transporte.getIdLocalidad()+",'"+transporte.getCodigoPostal()+"','"+transporte.getEncargado()+"',"+transporte.getIdProvincia()+")";
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
         tra.guardarRegistro(sql);
         
         return verif;
@@ -139,7 +148,16 @@ public class Transportes implements Personalizable,Componable{
         Transportes transporte=(Transportes) objeto;
         Boolean verif=false;
         String sql="update transportes set descripcion='"+transporte.getDescripcion()+"',direccion='"+transporte.getDireccion()+"',cuit='"+transporte.getCuit()+"',telefono='"+transporte.getTelefono()+"',idlocalidad="+transporte.getIdLocalidad()+",codigopostal='"+transporte.getCodigoPostal()+"',encargado='"+transporte.getEncargado()+"',idprovincia="+transporte.getIdProvincia()+" where id="+transporte.getId();
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
         verif=tra.guardarRegistro(sql);
         
         return verif;
@@ -150,7 +168,16 @@ public class Transportes implements Personalizable,Componable{
         Transportes transporte=(Transportes) objeto;
         Boolean verif=false;
         String sql="delete from transportes where id="+transporte.getId();
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
         verif=tra.guardarRegistro(sql);
         return verif;
     }
@@ -158,7 +185,16 @@ public class Transportes implements Personalizable,Componable{
     @Override
     public Object buscarPorNumero(Integer id) {
         Transportes transporte=new Transportes();
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
         ResultSet rs=tra.leerConjuntoDeRegistros("select *,(select localidades.localidad from localidades where localidades.id=transportes.idlocalidad)as localidad from transportes where id="+id);
        try {
            while(rs.next()){
@@ -198,7 +234,16 @@ public class Transportes implements Personalizable,Componable{
     public ArrayList listar() {
         ArrayList lisatdo=new ArrayList();
         String sql="select *,(select localidades.localidad from localidades where localidades.id=transportes.idlocalidad)as localidad from transportes order by descripcion";
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
         Transportes transporte;
        try {

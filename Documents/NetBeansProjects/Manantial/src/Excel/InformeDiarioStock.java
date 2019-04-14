@@ -68,7 +68,16 @@ public class InformeDiarioStock {
         String sql="select id,nombre,(select sum(movimientosarticulos.cantidad) from movimientosarticulos where movimientosarticulos.idarticulo=articulos.id and movimientosarticulos.numerodeposito="+Inicio.deposito.getNumero()+")as stock,(select sum(movimientosarticulos.cantidad) from movimientosarticulos where movimientosarticulos.idcaja="+Inicio.caja.getNumero()+" and movimientosarticulos.idarticulo=articulos.id)as cantidadVendida from articulos";
        
         System.out.println(sql);
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
         HSSFCellStyle titulo=libro.createCellStyle();
         titulo.setFont(fuente);

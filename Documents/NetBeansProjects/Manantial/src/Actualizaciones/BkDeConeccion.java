@@ -68,7 +68,10 @@ public class BkDeConeccion implements Backpeable{
             Boolean ver4=false;
             Boolean ver5=false;
              try {
-            Transaccionable tra=new Conecciones();
+            Transaccionable tra=null;
+
+            tra = new Conecciones();
+        
             Transaccionable tt=new Conecciones();
             String sql="select * from movimientosarticulos where estado is null";
             String sentencia="";
@@ -193,7 +196,10 @@ public class BkDeConeccion implements Backpeable{
     private Boolean ProbarConeccion() throws InstantiationException, IllegalAccessException, SQLException{
         Boolean verif=false;
         String sql="select * from articulos limit 0,1";
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra=null;
+        
+            tra = new Conecciones();
+       
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
         try {
             while(rs.next()){
@@ -210,7 +216,10 @@ public class BkDeConeccion implements Backpeable{
     }
     public void limpiarBasesLocal(){
         try {
-            Transaccionable tra=new Conecciones();
+            Transaccionable tra=null;
+        
+            tra = new Conecciones();
+        
             String sql="delete from movimientosarticulos where estado=1";
             tra.guardarRegistro(sql);
             sql="delete from movimientoscaja where estado=1";
@@ -276,7 +285,10 @@ public class BkDeConeccion implements Backpeable{
          String usuario;
          String clv;
          int a=0;
-          //Transaccionable tra=new Conecciones();
+          Transaccionable tra=null;
+        
+            tra = new Conecciones();
+        
          while((linea=br.readLine())!=null){
              a++;
             System.out.println("Equipo Numero :"+linea);

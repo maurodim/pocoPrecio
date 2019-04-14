@@ -95,7 +95,16 @@ public class ListasDePrecios implements Editables{
     }
     public static void BackapearListasDePrecios(){
         ListasDePrecios rs=new ListasDePrecios();
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
         String sql="delete from coeficienteslistas";
         tra.guardarRegistro(sql);
         Enumeration<ListasDePrecios> elementos=listadoDeListas.elements();
@@ -122,7 +131,16 @@ public class ListasDePrecios implements Editables{
     public Boolean AltaObjeto(Object objeto) {
         ListasDePrecios listaDePrecios=(ListasDePrecios)objeto;
         Boolean verif=true;
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
         Double coe=listaDePrecios.getCoeficiente() / 100;
         coe=coe + 1;
         String sql="insert into coeficienteslistas (coeficiente,descripcion) values ("+coe+",'"+listaDePrecios.getDesccripcion()+"')";
@@ -135,7 +153,16 @@ public class ListasDePrecios implements Editables{
     public Boolean ModificaionObjeto(Object objeto) {
         ListasDePrecios listaDePrecios=(ListasDePrecios)objeto;
         Boolean verif=true;
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
         Double coe=listaDePrecios.getCoeficiente() / 100;
         coe=coe + 1;
         String sql="update coeficienteslistas set coeficiente="+coe+",descripcion='"+listaDePrecios.getDesccripcion()+"' where id="+listaDePrecios.getId();

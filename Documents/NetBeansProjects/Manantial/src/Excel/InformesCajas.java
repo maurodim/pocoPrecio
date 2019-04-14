@@ -56,7 +56,16 @@ public class InformesCajas {
         String form=null;
         String sql="SELECT idArticulo,cantidad,(select articulos.NOMBRE from articulos where articulos.ID=movimientosarticulos.idArticulo)as descA,(sum(cantidad)* -1)as total FROM movimientosarticulos where tipoMovimiento =1 and fecha between '"+desde+"' and '"+hasta+"' group by idArticulo";
         //System.out.println(sql);
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
         HSSFCellStyle titulo=libro.createCellStyle();
         titulo.setFont(fuente);

@@ -953,7 +953,16 @@ public class NotaDeDebito extends javax.swing.JInternalFrame implements KeyListe
                 int tipoVta=Integer.parseInt(Propiedades.getTIPODEVENTA());
                 Integer idPed=0;  // 0-homologacion  1- produccion
                 //if(pedido.getId() != null)idPed=pedido.getId();
-                Transaccionable tra=new Conecciones();
+                Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
                 Integer compNum=fact.generar(tra.obtenerConexion(), condicion, Propiedades.getARCHIVOKEY(),Propiedades.getARCHIVOCRT(),cliT.getCodigoId(), cliT.getNumeroDeCuit(), comprobante.getTipoComprobante(), montoTotal, subTotal, montoIva, ptoVta, Propiedades.getCUIT(), tipoVta, listadoIva, listadoTrib, cliT.getRazonSocial(), cliT.getDireccion(), cliT.getCondicionIva(), listadoDetalle,idPed);
                 System.out.println("COMPROBANTE FISCAL N° "+compNum);
                 Facturable ffact=new MovimientosClientes();

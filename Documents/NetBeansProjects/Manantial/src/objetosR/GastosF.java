@@ -102,14 +102,32 @@ public class GastosF implements Editables{
     }
     private void ActualizarComprobante(){
         String sql="update tipocomprobantes set numeroActivo="+numeroComprobanteInt+" where numero=13";
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
         tra.guardarRegistro(sql);
         
         
     }
     private static void LeerComprobante(){
        String sql="select * from tipocomprobantes where numero=13";
-       Transaccionable tra=new Conecciones();
+       Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
        ResultSet rs=tra.leerConjuntoDeRegistros(sql);
         try {
             while(rs.next()){
@@ -126,7 +144,16 @@ public class GastosF implements Editables{
         GastosF gastos=(GastosF)objeto;
         String fecha=Numeros.ConvertirFecha(gastos.getFechaVencimiento());
         String sql="insert into movimientosgastosfijos (idProveedor,monto,fechaVencimiento,numeroFactura) values ("+gastos.getProveedor().getNumero()+","+gastos.getMonto()+",'"+fecha+"','"+gastos.getNumeroFactura()+"')";
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
         if(tra.guardarRegistro(sql)){
             verif=true;
             sql="select LAST_INSERT_ID()";
@@ -156,7 +183,16 @@ public class GastosF implements Editables{
        numeroComprobanteInt++;
        GastosF gastos=(GastosF)objeto;
        String sql="insert into movimientosproveedores (numeroProveedor,monto,pagado,idRemito,idUsuario,idCaja,fechaPago,tipoComprobante,numeroComprobante) values ("+gastos.getProveedor().getNumero()+","+gastos.getMonto()+",1,0,"+Inicio.usuario.getNumeroId()+","+Inicio.caja.getNumero()+",'"+Inicio.fechaDia+"',13,"+numeroComprobanteInt+")";
-       Transaccionable tra=new Conecciones();
+       Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
        verif=tra.guardarRegistro(sql);
        
        
@@ -174,7 +210,16 @@ public class GastosF implements Editables{
         Boolean verif=false;
         GastosF gastos=(GastosF)objeto;
         String sql="delete movimientosgastosfijos where id="+gastos.getId();
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
         if(tra.guardarRegistro(sql)){
             verif=true;
             listadoVencimientos.remove(gastos.getId());

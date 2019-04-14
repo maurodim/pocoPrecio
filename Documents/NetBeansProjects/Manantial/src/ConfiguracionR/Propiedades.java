@@ -144,7 +144,16 @@ public class Propiedades {
                 // Lectura del fichero
                 String linea;
                 int renglon=0;
-                //Transaccionable tra=new Conecciones();
+                //Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
                 //while((linea=br.readLine())!=null){
                     
                     

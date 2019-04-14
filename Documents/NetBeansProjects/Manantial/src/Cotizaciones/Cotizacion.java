@@ -42,7 +42,16 @@ public class Cotizacion implements Cotizable{
     private String aclaracionAlPie2;
 
     public Cotizacion() {
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
         String sql="select pie from tipocomprobantes where id=4";
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
         try {
@@ -60,7 +69,16 @@ public class Cotizacion implements Cotizable{
     }
 
     public void setAclaracionAlPie1(String aclaracionAlPie1) {
-         Transaccionable tra=new Conecciones();
+         Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
         String sql="update tipocomprobantes set pie1='"+aclaracionAlPie1+"' where id=4";
         tra.guardarRegistro(sql);
         this.aclaracionAlPie1 = aclaracionAlPie1;
@@ -71,7 +89,16 @@ public class Cotizacion implements Cotizable{
     }
 
     public void setAclaracionAlPie2(String aclaracionAlPie2) {
-         Transaccionable tra=new Conecciones();
+         Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
         String sql="update tipocomprobantes set pie2='"+aclaracionAlPie2+"' where id=4";
         tra.guardarRegistro(sql);
         this.aclaracionAlPie2 = aclaracionAlPie2;
@@ -82,7 +109,16 @@ public class Cotizacion implements Cotizable{
     }
 
     public void setAclaracionAlPie(String aclaracionAlPie) {
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
         String sql="update tipocomprobantes set pie='"+aclaracionAlPie+"' where id=4";
         tra.guardarRegistro(sql);
         this.aclaracionAlPie = aclaracionAlPie;
@@ -192,7 +228,16 @@ public class Cotizacion implements Cotizable{
     public Object cargarEncabezado(Integer id) {
         
         String sql="select * from cotizaciones where id="+id;
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
         Cotizacion cotizacion=new Cotizacion();
         try {
@@ -227,7 +272,16 @@ public class Cotizacion implements Cotizable{
     public ArrayList listar() {
         ArrayList listado=new ArrayList();
         String sql="select * from cotizaciones order by id desc";
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
         Cotizacion cotizacion;
         try {
@@ -257,7 +311,16 @@ public class Cotizacion implements Cotizable{
     public ArrayList listarPorCliente(Integer idCliente) {
         ArrayList listado=new ArrayList();
         String sql="select * from cotizaciones where idcliente="+idCliente+" and estado =0 order by id desc";
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
         Cotizacion cotizacion;
         try {
@@ -287,7 +350,16 @@ public class Cotizacion implements Cotizable{
     public ArrayList listarPorEstado(Integer idCliente, int estado) {
        ArrayList listado=new ArrayList();
         String sql="select * from cotizaciones where idcliente="+idCliente+" and estado="+estado+" order by id desc";
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
         Cotizacion cotizacion;
         try {
@@ -338,7 +410,16 @@ public class Cotizacion implements Cotizable{
         Cotizacion cotizacion=new Cotizacion();
         cotizacion=(Cotizacion)coti;
         String sql="insert into cotizaciones (idcliente,fecha,vencimiento,total,idusuario,subtotal,descuento,porcentajed) values ("+cotizacion.getIdCliente()+",'"+cotizacion.getFecha()+"','"+cotizacion.getVencimiento()+"',round("+cotizacion.getTotal()+",4),"+cotizacion.getIdUsuario()+",round("+cotizacion.getSubTotal()+",4),round("+cotizacion.getDescuento()+",4),"+cotizacion.getPorcentajeDescuento()+")";
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
         tra.guardarRegistro(sql);
         int ultimo=0;
         sql="select LAST_INSERT_ID()";
@@ -359,7 +440,16 @@ public class Cotizacion implements Cotizable{
         Cotizacion cotizacion=new Cotizacion();
         cotizacion=(Cotizacion)coti;
         String sql="update cotizaciones set total=round("+cotizacion.getTotal()+",4),subtotal=round("+cotizacion.getSubTotal()+",4),descuento=round("+cotizacion.getDescuento()+",4),porcentajed="+cotizacion.getPorcentajeDescuento()+", estado="+cotizacion.getEstado()+",idpedido="+cotizacion.getIdPedido()+" where id="+cotizacion.getId();
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
         tra.guardarRegistro(sql);
         tra.guardarRegistro("delete from detallecotizaciones where idcotizacion="+cotizacion.getId());
         return cotizacion;

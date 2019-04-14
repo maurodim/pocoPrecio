@@ -59,7 +59,16 @@ public class InformeProveedores {
         String form=null;
         String sql="SELECT *,(select proveedores.nombre from proveedores where proveedores.numero=movimientosproveedores.numeroProveedor)as nombreP,if(pagado=0,'pendiente','pagado')as estado FROM movimientosproveedores where fecha between '"+desde+"' and '"+hasta+"'";
         System.out.println(sql);
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
         HSSFCellStyle titulo=libro.createCellStyle();
         titulo.setFont(fuente);

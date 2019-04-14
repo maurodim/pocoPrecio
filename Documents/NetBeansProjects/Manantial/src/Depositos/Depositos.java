@@ -117,7 +117,16 @@ public class Depositos implements Personalizable, Trasladable{
                 
         String sentencia="";
         if(Inicio.coneccionRemota){
-            Transaccionable tra=new Conecciones();
+            Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
             Transaccionable tt=new Conecciones();
             String sql="select * from depositos";
             tt.guardarRegistro("delete from depositos");
@@ -141,7 +150,16 @@ public class Depositos implements Personalizable, Trasladable{
         Boolean verif=false;
         Depositos deposito=(Depositos)objeto;
         String sql="insert into depositos (descripcion,direccion) values ('"+deposito.getDescripcion()+"','"+deposito.getDireccion()+"')";
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
         verif=tra.guardarRegistro(sql);
         
         return 0;
@@ -154,7 +172,16 @@ public class Depositos implements Personalizable, Trasladable{
         Boolean verif=false;
         Depositos deposito=(Depositos)objeto;
         String sql="update depositos set descripcion='"+deposito.getDescripcion()+"',direccion='"+deposito.getDireccion()+"' where numero="+deposito.getNumero();
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
         verif=tra.guardarRegistro(sql);
         
         return verif;
@@ -185,7 +212,16 @@ public class Depositos implements Personalizable, Trasladable{
     public ArrayList listar() {
         ArrayList depo=new ArrayList();
         Depositos depositos=null;
-       Transaccionable tra=new Conecciones();
+       Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
         String sql1="select * from depositos order by numero";
         ResultSet rr=tra.leerConjuntoDeRegistros(sql1);
         try {
@@ -222,7 +258,16 @@ public class Depositos implements Personalizable, Trasladable{
         Boolean guardado=false;
         Iterator ilA=remitoInterno.getArticulos().listIterator();
         String sql="";
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
         while(ilA.hasNext()){
             articulos=(Articulos)ilA.next();
             sql="insert into movimientosdesucursales (depOrigen,depDestino,idArticulo,cantidad,numeroRemito,idUsuario) values ("+remitoInterno.getDepositoOrigen()+","+remitoInterno.getDepositoDestino()+","+articulos.getCodigoAsignado()+","+articulos.getCantidad()+","+remitoInterno.getNumero()+","+remitoInterno.getIdUusuario()+")";
@@ -245,7 +290,16 @@ public class Depositos implements Personalizable, Trasladable{
         Boolean guardado=false;
         Iterator ilA=remitoInterno.getArticulos().listIterator();
         String sql="";
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
         while(ilA.hasNext()){
             articulos=(Articulos)ilA.next();
             sql="update movimientosdesucursales set confirmado="+articulos.getConfirmado()+" where id="+remitoInterno.getId();

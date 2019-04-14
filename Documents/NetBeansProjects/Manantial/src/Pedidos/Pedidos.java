@@ -33,7 +33,16 @@ public class Pedidos implements Pedable{
     private Integer idRemito;
     private String archivo;
     private int estado;
-    private static Transaccionable tra=new Conecciones();
+    private static Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
     private static ResultSet rs;
     private static String sql;
     private Double subTotal;
@@ -183,7 +192,16 @@ public class Pedidos implements Pedable{
         pedido=(Pedidos)ped;
         Integer verif=0;
         sql="insert into pedidos (idcliente,fecha,total,idusuario,idcotizacion,estado,subtotal,descuento,porcentajed,saldo) values ("+pedido.getIdCliente()+",'"+pedido.getFecha()+"',"+pedido.getTotal()+","+pedido.getIdUsuario()+","+pedido.getIdCotizacion()+",0,round("+pedido.getSubTotal()+",4),round("+pedido.getDescuento()+",4),"+pedido.getPorcentajeDescuento()+",round("+pedido.getTotal()+",4))";
-        //Transaccionable tra=new Conecciones();
+        //Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
         tra.guardarRegistro(sql);
         sql="select LAST_INSERT_ID()";
         
@@ -346,7 +364,16 @@ public class Pedidos implements Pedable{
         Pedidos pedido=new Pedidos();
         pedido=(Pedidos)ped;
         String sql="update pedidos set total=round("+pedido.getTotal()+",4),subtotal=round("+pedido.getSubTotal()+",4),descuento=round("+pedido.getDescuento()+",4),porcentajed="+pedido.getPorcentajeDescuento()+",idcotizacion="+pedido.getIdCotizacion()+",idfactura="+pedido.getIdFactura()+",idremito="+pedido.getIdRemito()+",idremito="+pedido.getIdRemito()+",estado="+pedido.getEstado()+",saldo="+pedido.getSaldo()+" where id="+pedido.getId();
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
         tra.guardarRegistro(sql);
         
         return true;

@@ -24,7 +24,16 @@ public class OrdenDePago implements Recidable{
     private Integer idCliente;
     private Double monto;
     private Date fecha;
-    private static Transaccionable tra=new Conecciones();
+    private static Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
     private static ResultSet rs;
     private String sql;
 

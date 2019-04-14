@@ -71,7 +71,16 @@ public class Clientes implements Busquedas,Facturar,Adeudable{
         private String email;
         private Integer tipoComprobante;
         private String direccionDeEntrega;
-        private static Transaccionable tra=new Conecciones();
+        private static Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
         private static ResultSet rs;
         private Integer idTransporte;
 

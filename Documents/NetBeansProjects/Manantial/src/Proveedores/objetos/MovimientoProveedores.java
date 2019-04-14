@@ -135,7 +135,16 @@ public class MovimientoProveedores implements FacturableE{
     public ArrayList listarFacturasProveedor(Integer estado){
         //LO VOY A UTILIZAR PARA LISTAR POR PROVEEDOR
         String sql="select * from movimientosproveedores where numeroProveedor="+estado+" and pagado=0 and tipoComprobante=1 order by fecha desc";
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
         ArrayList listado=new ArrayList();
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
         MovimientoProveedores mov;
@@ -164,7 +173,16 @@ public class MovimientoProveedores implements FacturableE{
     public ArrayList lsitarFacturasProveedorOrdenadas(Integer estado){
         //LO VOY A UTILIZAR PARA LISTAR POR PROVEEDOR
         String sql="select * from movimientosproveedores where numeroProveedor="+estado+" and pagado=0 and tipoComprobante=1 order by fecha";
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
         ArrayList listado=new ArrayList();
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
         MovimientoProveedores mov;
@@ -223,7 +241,16 @@ public class MovimientoProveedores implements FacturableE{
     public Integer guardar(Object Fe) {
         Integer id=0;
         MovimientoProveedores mov=(MovimientoProveedores) Fe;
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
         String sql="insert into movimientosproveedores (numeroProveedor,monto,numeroComprobante,idUsuario,tipoComprobante,subtotal,saldo,fecha,porcentajedescuento) values ("+mov.getIdProveedor()+",round("+mov.getMonto()+",4),'"+mov.getNumeroComprobante()+"',"+Inicio.usuario.getNumeroId()+","+mov.getTipoComprobante()+","+mov.getSubTotal()+","+mov.getSaldo()+",'"+mov.getFecha()+"',"+mov.getPorcentajeDescuento()+")";
         tra.guardarRegistro(sql);
         sql="select LAST_INSERT_ID()";
@@ -248,7 +275,16 @@ public class MovimientoProveedores implements FacturableE{
     public ArrayList listarPorEstado(Integer estado) {
         //LO VOY A UTILIZAR PARA LISTAR POR PROVEEDOR
         String sql="select * from movimientosproveedores where numeroProveedor="+estado+" order by fecha desc";
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
         ArrayList listado=new ArrayList();
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
         MovimientoProveedores mov;
@@ -280,7 +316,16 @@ public class MovimientoProveedores implements FacturableE{
     public Object cargar(Integer id) {
         //LO VOY A UTILIZAR PARA LISTAR POR PROVEEDOR
         String sql="select * from movimientosproveedores where id="+id;
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
         ArrayList listado=new ArrayList();
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
         MovimientoProveedores mov = null;
