@@ -39,6 +39,7 @@ import facturacion.clientes.Facturable;
 import facturacion.clientes.MovimientosClientes;
 import interfaces.FacturableE;
 import interfaces.Transaccionable;
+import java.sql.SQLException;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
@@ -924,13 +925,13 @@ public class ModificacionDeFacturas extends javax.swing.JInternalFrame {
                 Transaccionable tra=null;
         try {
             tra = new Conecciones();
-        } catch (InstantiationException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }   catch (InstantiationException ex) { 
+                Logger.getLogger(ModificacionDeFacturas.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IllegalAccessException ex) {
+                Logger.getLogger(ModificacionDeFacturas.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(ModificacionDeFacturas.class.getName()).log(Level.SEVERE, null, ex);
+            }
                 Integer compNum=fact.generar(tra.obtenerConexion(), condicion, Propiedades.getARCHIVOKEY(),Propiedades.getARCHIVOCRT(),cliT.getCodigoId(), cliT.getNumeroDeCuit(), comprobante.getTipoComprobante(), montoTotal, subTotal, montoIva, ptoVta, Propiedades.getCUIT(), tipoVta, listadoIva, listadoTrib, cliT.getRazonSocial(), cliT.getDireccion(), cliT.getCondicionIva(), listadoDetalle,idPed);
                 System.out.println("COMPROBANTE FISCAL N° "+compNum);
                 Facturable ffact=new MovimientosClientes();

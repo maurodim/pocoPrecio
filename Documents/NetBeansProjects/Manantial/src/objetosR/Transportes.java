@@ -132,11 +132,11 @@ public class Transportes implements Personalizable,Componable{
         try {
             tra = new Conecciones();
         } catch (InstantiationException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Transportes.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Transportes.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Transportes.class.getName()).log(Level.SEVERE, null, ex);
         }
         tra.guardarRegistro(sql);
         
@@ -152,11 +152,11 @@ public class Transportes implements Personalizable,Componable{
         try {
             tra = new Conecciones();
         } catch (InstantiationException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Transportes.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Transportes.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Transportes.class.getName()).log(Level.SEVERE, null, ex);
         }
         verif=tra.guardarRegistro(sql);
         
@@ -172,11 +172,11 @@ public class Transportes implements Personalizable,Componable{
         try {
             tra = new Conecciones();
         } catch (InstantiationException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Transportes.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Transportes.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Transportes.class.getName()).log(Level.SEVERE, null, ex);
         }
         verif=tra.guardarRegistro(sql);
         return verif;
@@ -189,11 +189,11 @@ public class Transportes implements Personalizable,Componable{
         try {
             tra = new Conecciones();
         } catch (InstantiationException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Transportes.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Transportes.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Transportes.class.getName()).log(Level.SEVERE, null, ex);
         }
         ResultSet rs=tra.leerConjuntoDeRegistros("select *,(select localidades.localidad from localidades where localidades.id=transportes.idlocalidad)as localidad from transportes where id="+id);
        try {
@@ -238,11 +238,11 @@ public class Transportes implements Personalizable,Componable{
         try {
             tra = new Conecciones();
         } catch (InstantiationException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Transportes.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Transportes.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Transportes.class.getName()).log(Level.SEVERE, null, ex);
         }
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
         Transportes transporte;

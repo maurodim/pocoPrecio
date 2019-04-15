@@ -57,12 +57,13 @@ public class Sucursales extends Administracion implements Personalizable{
             tra=new Conecciones();
         }else{
         */ 
+            
+        try {
             tra=new Conecciones();
         //}
             if(numero < 1)numero=1;
         String sql="select * from sucursal where id="+numero;
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
-        try {
             while(rs.next()){
                 this.depositos=new Depositos(rs.getInt("deposito"));
                 this.descripcion=rs.getString("descripcion");
@@ -78,6 +79,10 @@ public class Sucursales extends Administracion implements Personalizable{
             rs.close();
         } catch (SQLException ex) {
             Logger.getLogger(Sucursales.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Sucursales.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(Sucursales.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     public static void BackapearSucursales(){
@@ -88,17 +93,18 @@ public class Sucursales extends Administracion implements Personalizable{
         try {
             tra = new Conecciones();
         } catch (InstantiationException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Sucursales.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Sucursales.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Sucursales.class.getName()).log(Level.SEVERE, null, ex);
         }
-            Transaccionable tt=new Conecciones();
+            
+            try {
+                Transaccionable tt=new Conecciones();
             String sql="select * from sucursal";
             tt.guardarRegistro("delete from sucursal");
             ResultSet rs=tra.leerConjuntoDeRegistros(sql);
-            try {
                 while(rs.next()){
                     sentencia="insert into sucursal (numero,descripcion,direccion,telefono,deposito) values ("+rs.getInt("numero")+",'"+rs.getString("descripcion")+"','"+rs.getString("direccion")+"','"+rs.getString("telefono")+"',"+rs.getInt("deposito")+")";
                     tt.guardarRegistro(sentencia);
@@ -106,6 +112,10 @@ public class Sucursales extends Administracion implements Personalizable{
                 }
                 rs.close();
             } catch (SQLException ex) {
+                Logger.getLogger(Sucursales.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InstantiationException ex) {
+                Logger.getLogger(Sucursales.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IllegalAccessException ex) {
                 Logger.getLogger(Sucursales.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -175,11 +185,11 @@ public class Sucursales extends Administracion implements Personalizable{
         try {
             tra = new Conecciones();
         } catch (InstantiationException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Sucursales.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Sucursales.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Sucursales.class.getName()).log(Level.SEVERE, null, ex);
         }
         verif=tra.guardarRegistro(sql);
         
@@ -195,11 +205,11 @@ public class Sucursales extends Administracion implements Personalizable{
         try {
             tra = new Conecciones();
         } catch (InstantiationException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Sucursales.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Sucursales.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Sucursales.class.getName()).log(Level.SEVERE, null, ex);
         }
         verif=tra.guardarRegistro(sql);
         
@@ -229,17 +239,19 @@ public class Sucursales extends Administracion implements Personalizable{
     @Override
     public ArrayList listar() {
                 Transaccionable tra;
+                ArrayList listado=new ArrayList();
         /*
         if(Inicio.coneccionRemota){
             tra=new Conecciones();
         }else{
         */ 
-            tra=new Conecciones();
-            ArrayList listado=new ArrayList();
+           
+        try {
+             tra=new Conecciones();
+            
         //}
         String sql="select * from sucursal";
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
-        try {
             while(rs.next()){
                 Sucursales sucursal=new Sucursales();
                 sucursal.setDepositos(new Depositos(rs.getInt("deposito")));
@@ -253,6 +265,10 @@ public class Sucursales extends Administracion implements Personalizable{
             
             rs.close();
         } catch (SQLException ex) {
+            Logger.getLogger(Sucursales.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Sucursales.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
             Logger.getLogger(Sucursales.class.getName()).log(Level.SEVERE, null, ex);
         }
         return listado;

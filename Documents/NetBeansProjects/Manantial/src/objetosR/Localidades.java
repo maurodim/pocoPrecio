@@ -31,16 +31,8 @@ public class Localidades implements Busquedas,Personalizable,Componable,Rubrable
     private Integer provincia;
     private String descripcionProvincia;
     private String codigoPostal;
-    private static Transaccionable tra=null;
-        try {
-            tra = new Conecciones();
-        } catch (InstantiationException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    private static Transaccionable tra;
+        
     private static String sql;
     private static ResultSet rs;
 

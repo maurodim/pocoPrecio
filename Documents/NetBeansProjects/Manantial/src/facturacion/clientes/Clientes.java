@@ -71,16 +71,8 @@ public class Clientes implements Busquedas,Facturar,Adeudable{
         private String email;
         private Integer tipoComprobante;
         private String direccionDeEntrega;
-        private static Transaccionable tra=null;
-        try {
-            tra = new Conecciones();
-        } catch (InstantiationException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        private static Transaccionable tra;
+        
         private static ResultSet rs;
         private Integer idTransporte;
 
@@ -217,7 +209,9 @@ public class Clientes implements Busquedas,Facturar,Adeudable{
             
             String sql=null;
             
-            if(signal==1){
+            
+            try{
+                if(signal==1){
                 tra=new Conecciones();
                 sql="select *,(select coeficienteslistas.coeficiente from coeficienteslistas where coeficienteslistas.id=clientes.LISTADEPRECIO)as coeficiente,(select sum(movimientosclientes.monto) from movimientosclientes where pagado=0 and movimientosclientes.numeroProveedor=clientes.id)as saldo from clientes";    
                 //System.err.println("LEER CLIENTES - "+sql);
@@ -232,7 +226,6 @@ public class Clientes implements Busquedas,Facturar,Adeudable{
             //System.out.println("CLIENTES "+sql);
             //String sql="select pedidos_carga1.COD_CLIENT,pedidos_carga1.RAZON_SOC,pedidos_carga1.NRO_PEDIDO,pedidos_carga1.numero,pedidos_carga1.LEYENDA_2 from pedidos_carga1 where RAZON_SOC like '"+cliente+"%' group by COD_CLIENT order by RAZON_SOC";
             rs=tra.leerConjuntoDeRegistros(sql);
-            try{
                 listadoClientes.clear();
                 listadoPorNom.clear();
                 listadoPorContacto.clear();
@@ -296,7 +289,11 @@ public class Clientes implements Busquedas,Facturar,Adeudable{
             rs.close();
         } catch (SQLException ex) {
             Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }   catch (InstantiationException ex) {
+                Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IllegalAccessException ex) {
+                Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
+            }
             if(signal==1){
             //if(Inicio.coneccionRemota)BackapearClientes();
             signal=0;
@@ -568,7 +565,16 @@ public class Clientes implements Busquedas,Facturar,Adeudable{
         Clientes cli=new Clientes();
         listado=bus.listar("");
         Iterator ilC=listado.listIterator();
-        Transaccionable tt=new Conecciones();
+        Transaccionable tt=null;
+            try {
+                tt = new Conecciones();
+            } catch (InstantiationException ex) {
+                Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IllegalAccessException ex) {
+                Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
+            }
         String sql="delete from clientes";
         tt.guardarRegistro(sql);
         while(ilC.hasNext()){

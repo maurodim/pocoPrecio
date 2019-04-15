@@ -93,15 +93,7 @@ public class BbsGestion {
         bk=new File("C:\\Gestion\\backUp.sql");
         //String sql="select * from movimientoscaja into outfile "+bk+" FIELDS TERMINATED BY ';' OPTIONALLY ENCLOSED BY '\"' LINES TERMINATED BY '\n\r'";
        // Transaccionable tra=null;
-        try {
-            tra = new Conecciones();
-        } catch (InstantiationException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
-        }
+       
         //tra.guardarRegistro(sql);
         
         try {
@@ -115,15 +107,7 @@ public class BbsGestion {
          // Lectura del fichero
          String linea;
           //Transaccionable tra=null;
-        try {
-            tra = new Conecciones();
-        } catch (InstantiationException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
          while((linea=br.readLine())!=null){
              
             //System.out.println(linea);

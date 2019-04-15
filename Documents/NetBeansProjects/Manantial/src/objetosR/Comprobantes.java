@@ -298,35 +298,43 @@ public class Comprobantes implements Facturar{
         this.descargaStock = descargaStock;
     }
     private static void numeroActual(int tipoComprobante){
-        Transaccionable tra;
-        /*
-        if(Inicio.coneccionRemota){
-            tra=new Conecciones();
-        }else{
-        */ 
-            tra=new Conecciones();
-        //}
-        String tc="ticket";
-        String fc="FCA A";
-        String tx="";
-        if(tipoComprobante==1){
-            tx=tc;
-        }else{
-            tx=fc;
-        }
-        String sql="select * from tipocomprobantes where id="+tipoComprobante+" and numeroSucursal =1";
-        ResultSet rs=tra.leerConjuntoDeRegistros(sql);
         try {
-            while(rs.next()){
-            numeroComprobante=rs.getInt("numeroActivo");
-            idComp=rs.getInt("id");   
+            Transaccionable tra;
+            /*
+            if(Inicio.coneccionRemota){
+            tra=new Conecciones();
+            }else{
+            */ 
+            tra=new Conecciones();
+            //}
+            String tc="ticket";
+            String fc="FCA A";
+            String tx="";
+            if(tipoComprobante==1){
+                tx=tc;
+            }else{
+                tx=fc;   
             }
-            rs.close();
+            String sql="select * from tipocomprobantes where id="+tipoComprobante+" and numeroSucursal =1";
+            ResultSet rs=tra.leerConjuntoDeRegistros(sql);
+            try {
+                while(rs.next()){
+                    numeroComprobante=rs.getInt("numeroActivo");
+                    idComp=rs.getInt("id");
+                }
+                rs.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(Comprobantes.class.getName()).log(Level.SEVERE, null, ex);
+            }catch(NullPointerException ee){
+                Inicio.coneccionRemota=false;
+                numeroActual(tipoComprobante);
+            }
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Comprobantes.class.getName()).log(Level.SEVERE, null, ex);
+        }catch(IllegalAccessException ex){
+            Logger.getLogger(Comprobantes.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(Comprobantes.class.getName()).log(Level.SEVERE, null, ex);
-        }catch(NullPointerException ee){
-            Inicio.coneccionRemota=false;
-            numeroActual(tipoComprobante);
         }
     }
     @Override
@@ -353,11 +361,11 @@ public class Comprobantes implements Facturar{
         try {
             tra = new Conecciones();
         } catch (InstantiationException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Comprobantes.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Comprobantes.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Comprobantes.class.getName()).log(Level.SEVERE, null, ex);
         }
         Articulos articulo=new Articulos();
         Articulos art;
@@ -425,14 +433,23 @@ public class Comprobantes implements Facturar{
         
         System.out.println("SE RECEPCIONO BARBARO");
         sql="update tipocomprobantes set numeroActivo="+numeroComprobante+" where id="+idComp;
-        /*
-        if(Inicio.coneccionRemota){
+        try {
+            /*
+            if(Inicio.coneccionRemota){
             
-        }else{
-        * */
+            }else{
+            * */
             tra=new Conecciones();
+            tra.guardarRegistro(sql);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Comprobantes.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(Comprobantes.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Comprobantes.class.getName()).log(Level.SEVERE, null, ex);
+        }
         //}
-        tra.guardarRegistro(sql);
+        
         return comp;
     }
 
@@ -494,11 +511,11 @@ public class Comprobantes implements Facturar{
         try {
             tra = new Conecciones();
         } catch (InstantiationException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Comprobantes.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Comprobantes.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Comprobantes.class.getName()).log(Level.SEVERE, null, ex);
         }
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
         try {
@@ -518,11 +535,11 @@ public class Comprobantes implements Facturar{
         try {
             tra = new Conecciones();
         } catch (InstantiationException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Comprobantes.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Comprobantes.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Comprobantes.class.getName()).log(Level.SEVERE, null, ex);
         }
                Integer numeroAct=0;
         String sql="select * from tipocomprobantes where numero="+tipoComp+" and numeroSucursal="+Inicio.sucursal.getNumero();

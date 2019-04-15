@@ -186,18 +186,24 @@ public class MovimientosClientes implements Facturable, Movible, Editables {
     @Override
     public Integer nuevaFactura(Object ped) {
         MovimientosClientes factura = new MovimientosClientes();
+        int idNuevo = 0;
         factura = (MovimientosClientes) ped;
-        Transaccionable tra = new Conecciones();
+        
+        try {
+            Transaccionable tra = new Conecciones();
         String sql = "insert into facturas (idcliente,total,tipo,idusuario,idpedido,idremito,numerofactura,estado,saldo,subtotal,descuento,porcentajeD) values (" + factura.getIdCliente() + ",round(" + factura.getTotal() + ",4)," + factura.getTipo() + "," + factura.getIdUsuario() + "," + factura.getIdPedido() + "," + factura.getIdRemito() + "," + factura.getNumeroFactura() + "," + factura.getEstado() + ",round(" + factura.getTotal() + ",4)," + factura.getSubTotal() + "," + factura.getDescuento() + "," + factura.getPorcentajeDescuento() + ")";
         tra.guardarRegistro(sql);
-        int idNuevo = 0;
+        
         sql = "select LAST_INSERT_ID()";
         ResultSet rs = tra.leerConjuntoDeRegistros(sql);
-        try {
             while (rs.next()) {
                 idNuevo = rs.getInt(1);
             }
         } catch (SQLException ex) {
+            Logger.getLogger(MovimientosClientes.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(MovimientosClientes.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
             Logger.getLogger(MovimientosClientes.class.getName()).log(Level.SEVERE, null, ex);
         }
         return idNuevo;
@@ -212,9 +218,10 @@ public class MovimientosClientes implements Facturable, Movible, Editables {
     public Object cargarEncabezadoFactura(Integer idPed, Integer tipo) {
         MovimientosClientes factura = new MovimientosClientes();
         String sql = "select *,(select tipocomprobantes.descripcion from tipocomprobantes where tipocomprobantes.id=facturas.tipo)as descripcionTipo from facturas where numerofactura=" + idPed + " and tipo=" + tipo;
-        Transaccionable tra = new Conecciones();
-        ResultSet rs = tra.leerConjuntoDeRegistros(sql);
+        
         try {
+            Transaccionable tra = new Conecciones();
+        ResultSet rs = tra.leerConjuntoDeRegistros(sql);
             while (rs.next()) {
                 factura.setEstado(rs.getInt("estado"));
                 factura.setFecha(rs.getDate("fecha"));
@@ -232,6 +239,10 @@ public class MovimientosClientes implements Facturable, Movible, Editables {
                 factura.setPorcentajeDescuento(rs.getDouble("porcentajeD"));
             }
         } catch (SQLException ex) {
+            Logger.getLogger(MovimientosClientes.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(MovimientosClientes.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
             Logger.getLogger(MovimientosClientes.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -315,10 +326,11 @@ public class MovimientosClientes implements Facturable, Movible, Editables {
         ArrayList listado = new ArrayList();
         String sql = "select facturas.*,pedidos.saldo as saldo1,tipocomprobantes.descripcion as descripcionTipo,remitos.numeroremito as remito from facturas left join pedidos on pedidos.idfactura=facturas.id join tipocomprobantes on tipocomprobantes.id=facturas.tipo left join remitos on remitos.id=facturas.idremito where facturas.idcliente=" + idClient;
         System.out.println(sql);
-        Transaccionable tra = new Conecciones();
+        
+        try {
+            Transaccionable tra = new Conecciones();
         ResultSet rs = tra.leerConjuntoDeRegistros(sql);
         MovimientosClientes factura;
-        try {
             while (rs.next()) {
                 factura = new MovimientosClientes();
                 factura.setId(rs.getInt("id"));
@@ -341,6 +353,10 @@ public class MovimientosClientes implements Facturable, Movible, Editables {
             }
         } catch (SQLException ex) {
             Logger.getLogger(MovimientosClientes.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(MovimientosClientes.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(MovimientosClientes.class.getName()).log(Level.SEVERE, null, ex);
         }
         return listado;
     }
@@ -352,17 +368,26 @@ public class MovimientosClientes implements Facturable, Movible, Editables {
 
     @Override
     public Boolean identificarPedidoAFactura(Integer idPedido, Integer idFactura, Integer numeroFactura, Integer tipoDeComprobante) {
-        String sql = "update pedidos set idfactura=" + idFactura + " where id=" + idPedido;
-        Transaccionable tra = new Conecciones();
-        tra.guardarRegistro(sql);
-        System.out.println(sql);
-        sql = "update facturas set idpedido=" + idPedido + ",numerofactura=" + numeroFactura + " where id=" + idFactura;
-        tra.guardarRegistro(sql);
-        System.out.println(sql);
-        sql = "update movimientosclientes set tipocomprobante=" + tipoDeComprobante + ",movimientosclientes.monto=(SELECT facturas.total from facturas where facturas.id=" + idFactura + ") where idpedido=" + idPedido;
-        tra.guardarRegistro(sql);
-        System.out.println(sql);
-        //update movimientosclientes set movimientosclientes.monto=(SELECT facturas.total from facturas where facturas.id=6) where movimientosclientes.idpedido=5
+        try {
+            String sql = "update pedidos set idfactura=" + idFactura + " where id=" + idPedido;
+            Transaccionable tra = new Conecciones();
+            tra.guardarRegistro(sql);
+            System.out.println(sql);
+            sql = "update facturas set idpedido=" + idPedido + ",numerofactura=" + numeroFactura + " where id=" + idFactura;
+            tra.guardarRegistro(sql);
+            System.out.println(sql);
+            sql = "update movimientosclientes set tipocomprobante=" + tipoDeComprobante + ",movimientosclientes.monto=(SELECT facturas.total from facturas where facturas.id=" + idFactura + ") where idpedido=" + idPedido;
+            tra.guardarRegistro(sql);
+            System.out.println(sql);
+            //update movimientosclientes set movimientosclientes.monto=(SELECT facturas.total from facturas where facturas.id=6) where movimientosclientes.idpedido=5
+            
+        } catch (InstantiationException ex) {
+            Logger.getLogger(MovimientosClientes.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(MovimientosClientes.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(MovimientosClientes.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return true;
     }
 
@@ -375,9 +400,10 @@ public class MovimientosClientes implements Facturable, Movible, Editables {
     public Object cargarIdFactura(Integer id) {
         MovimientosClientes factura = new MovimientosClientes();
         String sql = "select *,(select tipocomprobantes.descripcion from tipocomprobantes where tipocomprobantes.id=facturas.tipo)as descripcionTipo from facturas where id=" + id;
-        Transaccionable tra = new Conecciones();
-        ResultSet rs = tra.leerConjuntoDeRegistros(sql);
+        
         try {
+            Transaccionable tra = new Conecciones();
+        ResultSet rs = tra.leerConjuntoDeRegistros(sql);
             while (rs.next()) {
                 factura.setEstado(rs.getInt("estado"));
                 factura.setFecha(rs.getDate("fecha"));
@@ -396,6 +422,10 @@ public class MovimientosClientes implements Facturable, Movible, Editables {
             }
         } catch (SQLException ex) {
             Logger.getLogger(MovimientosClientes.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(MovimientosClientes.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(MovimientosClientes.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return factura;
@@ -406,10 +436,11 @@ public class MovimientosClientes implements Facturable, Movible, Editables {
         ArrayList listado = new ArrayList();
         String sql = "SELECT movimientosclientes.*,tipocomprobantes.descripcion,pedidos.saldo,pedidos.idfactura,facturas.numerofactura, facturas.tipo FROM movimientosclientes left join tipocomprobantes on tipocomprobantes.id=movimientosclientes.tipocomprobante left join pedidos on pedidos.id=movimientosclientes.idpedido left JOIN facturas on facturas.id=pedidos.idfactura where movimientosclientes.numeroproveedor=" + id;
         System.out.println(sql);
-        Transaccionable tra = new Conecciones();
+        
+        try {
+            Transaccionable tra = new Conecciones();
         ResultSet rs = tra.leerConjuntoDeRegistros(sql);
         MovimientosClientes factura;
-        try {
             while (rs.next()) {
                 factura = new MovimientosClientes();
                 factura.setId(rs.getInt("id"));
@@ -445,6 +476,10 @@ public class MovimientosClientes implements Facturable, Movible, Editables {
                 listado.add(factura);
             }
         } catch (SQLException ex) {
+            Logger.getLogger(MovimientosClientes.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(MovimientosClientes.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
             Logger.getLogger(MovimientosClientes.class.getName()).log(Level.SEVERE, null, ex);
         }
         return listado;
@@ -503,10 +538,19 @@ public class MovimientosClientes implements Facturable, Movible, Editables {
 
     @Override
     public Boolean AltaObjeto(Object objeto) {
-        MovimientosClientes movi = (MovimientosClientes) objeto;
-        Transaccionable tra = new Conecciones();
-        String sql = "update movimientosclientes set editado=1,fecha='" + movi.getFecha() + "',tipocomprobante=" + movi.getTipo() + ", numerocomprobante='" + movi.getNumeroFiscal() + "' where id=" + movi.getId();
-        tra.guardarRegistro(sql);
+        try {
+            MovimientosClientes movi = (MovimientosClientes) objeto;
+            Transaccionable tra = new Conecciones();
+            String sql = "update movimientosclientes set editado=1,fecha='" + movi.getFecha() + "',tipocomprobante=" + movi.getTipo() + ", numerocomprobante='" + movi.getNumeroFiscal() + "' where id=" + movi.getId();
+            tra.guardarRegistro(sql);
+            
+        } catch (InstantiationException ex) {
+            Logger.getLogger(MovimientosClientes.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(MovimientosClientes.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(MovimientosClientes.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return true;
 
     }
@@ -534,32 +578,47 @@ public class MovimientosClientes implements Facturable, Movible, Editables {
     @Override
     public Boolean identificarPedidoAOtros(Integer idMovimiento, Integer idFactura, Integer numeroFactura, Integer tipoDeComprobante) {
 
-        Transaccionable tra = new Conecciones();
+        try {
+            Transaccionable tra = new Conecciones();
+            
+            String sql = "update facturas set idpedido=" + idPedido + ",numerofactura=" + numeroFactura + " where id=" + idFactura;
+            tra.guardarRegistro(sql);
+            System.out.println(sql);
+            sql = "update movimientosclientes set tipocomprobante=" + tipoDeComprobante + ",movimientosclientes.monto=(SELECT facturas.total from facturas where facturas.id=" + idFactura + ") where id=" + idMovimiento;
+            tra.guardarRegistro(sql);
+            System.out.println(sql);
+            //update movimientosclientes set movimientosclientes.monto=(SELECT facturas.total from facturas where facturas.id=6) where movimientosclientes.idpedido=5
 
-        String sql = "update facturas set idpedido=" + idPedido + ",numerofactura=" + numeroFactura + " where id=" + idFactura;
-        tra.guardarRegistro(sql);
-        System.out.println(sql);
-        sql = "update movimientosclientes set tipocomprobante=" + tipoDeComprobante + ",movimientosclientes.monto=(SELECT facturas.total from facturas where facturas.id=" + idFactura + ") where id=" + idMovimiento;
-        tra.guardarRegistro(sql);
-        System.out.println(sql);
-        //update movimientosclientes set movimientosclientes.monto=(SELECT facturas.total from facturas where facturas.id=6) where movimientosclientes.idpedido=5
-        return true;
+        } catch (InstantiationException ex) {
+            Logger.getLogger(MovimientosClientes.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(MovimientosClientes.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(MovimientosClientes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+                    return true;
     }
 
     @Override
     public Integer nuevoMovimiento(Object ped) {
         MovimientosClientes pedido = (MovimientosClientes) ped;
-        Transaccionable tra = new Conecciones();
+        Integer id = 0;
+        
+        
+        try {
+            Transaccionable tra = new Conecciones();
         String sql = "insert into movimientosclientes (numeroProveedor,monto,pagado,numeroComprobante,idUsuario,idCaja,idSucursal,tipoComprobante,idpedido,editado) values (" + pedido.idCliente + ",round(" + pedido.total + ",4),0," + pedido.getNumeroFactura() + "," + Inicio.usuario.getNumeroId() + "," + Inicio.caja.getNumero() + "," + Inicio.sucursal.getNumero() + ",5," + pedido.getIdPedido() + ",1)";
         tra.guardarRegistro(sql);
         ResultSet rs = tra.leerConjuntoDeRegistros("select last_insert_id()");
-        Integer id = 0;
-        try {
             while (rs.next()) {
                 id = rs.getInt(1);
             }
             rs.close();
         } catch (SQLException ex) {
+            Logger.getLogger(MovimientosClientes.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(MovimientosClientes.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
             Logger.getLogger(MovimientosClientes.class.getName()).log(Level.SEVERE, null, ex);
         }
         return id;

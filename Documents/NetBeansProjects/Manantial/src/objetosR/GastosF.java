@@ -76,28 +76,36 @@ public class GastosF implements Editables{
       Transaccionable tra;
       
       if(Inicio.coneccionRemota){
-          tra=new Conecciones();
-      
-      GastosF gastos;
-      ResultSet rs=tra.leerConjuntoDeRegistros(sql);
         try {
-            Integer id=0;
-            listadoVencimientos.clear();
-            while(rs.next()){
-                id=rs.getInt("id");
-                gastos=new GastosF();
-                gastos.setFechaVencimiento(rs.getDate("fechaVencimiento"));
-                gastos.setId(id);
-                gastos.setMonto(rs.getDouble("monto"));
-                gastos.setNumeroFactura(rs.getString("numeroFactura"));
-                gastos.setProveedor(new Proveedores(rs.getInt("idProveedor")));
-                listadoVencimientos.putIfAbsent(id,gastos);
-                
+            tra=new Conecciones();
+            
+            GastosF gastos;
+            ResultSet rs=tra.leerConjuntoDeRegistros(sql);
+            try {
+                Integer id=0;
+                listadoVencimientos.clear();
+                while(rs.next()){
+                    id=rs.getInt("id");
+                    gastos=new GastosF();
+                    gastos.setFechaVencimiento(rs.getDate("fechaVencimiento"));
+                    gastos.setId(id);
+                    gastos.setMonto(rs.getDouble("monto"));
+                    gastos.setNumeroFactura(rs.getString("numeroFactura"));
+                    gastos.setProveedor(new Proveedores(rs.getInt("idProveedor")));
+                    listadoVencimientos.putIfAbsent(id,gastos);
+                    
+                }
+                rs.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(GastosF.class.getName()).log(Level.SEVERE, null, ex);
             }
-            rs.close();
-        } catch (SQLException ex) {
+        } catch (InstantiationException ex) {
             Logger.getLogger(GastosF.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } catch (IllegalAccessException ex) {
+              Logger.getLogger(GastosF.class.getName()).log(Level.SEVERE, null, ex);
+          } catch (SQLException ex) {
+              Logger.getLogger(GastosF.class.getName()).log(Level.SEVERE, null, ex);
+          }
       }
     }
     private void ActualizarComprobante(){
@@ -106,11 +114,11 @@ public class GastosF implements Editables{
         try {
             tra = new Conecciones();
         } catch (InstantiationException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GastosF.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GastosF.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GastosF.class.getName()).log(Level.SEVERE, null, ex);
         }
         tra.guardarRegistro(sql);
         
@@ -122,11 +130,11 @@ public class GastosF implements Editables{
         try {
             tra = new Conecciones();
         } catch (InstantiationException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GastosF.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GastosF.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GastosF.class.getName()).log(Level.SEVERE, null, ex);
         }
        ResultSet rs=tra.leerConjuntoDeRegistros(sql);
         try {
@@ -148,11 +156,11 @@ public class GastosF implements Editables{
         try {
             tra = new Conecciones();
         } catch (InstantiationException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GastosF.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GastosF.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GastosF.class.getName()).log(Level.SEVERE, null, ex);
         }
         if(tra.guardarRegistro(sql)){
             verif=true;
@@ -187,11 +195,11 @@ public class GastosF implements Editables{
         try {
             tra = new Conecciones();
         } catch (InstantiationException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GastosF.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GastosF.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GastosF.class.getName()).log(Level.SEVERE, null, ex);
         }
        verif=tra.guardarRegistro(sql);
        
@@ -214,11 +222,11 @@ public class GastosF implements Editables{
         try {
             tra = new Conecciones();
         } catch (InstantiationException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GastosF.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GastosF.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GastosF.class.getName()).log(Level.SEVERE, null, ex);
         }
         if(tra.guardarRegistro(sql)){
             verif=true;
