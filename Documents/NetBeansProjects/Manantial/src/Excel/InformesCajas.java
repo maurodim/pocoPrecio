@@ -60,12 +60,10 @@ public class InformesCajas {
         try {
             tra = new Conecciones();
         } catch (InstantiationException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
-        }
+          Logger.getLogger(InformesCajas.class.getName()).log(Level.SEVERE, null, ex);
+      } catch (IllegalAccessException ex) {
+          Logger.getLogger(InformesCajas.class.getName()).log(Level.SEVERE, null, ex);
+      }
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
         HSSFCellStyle titulo=libro.createCellStyle();
         titulo.setFont(fuente);

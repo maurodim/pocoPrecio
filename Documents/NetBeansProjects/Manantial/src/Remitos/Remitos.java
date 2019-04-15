@@ -148,21 +148,27 @@ public class Remitos implements Remitable{
 
     @Override
     public Integer nuevo(Object remi) {
-       tra=new Conecciones();
+       
+        int numeroId=0;
         Remitos remito=new Remitos();
         remito=(Remitos)remi;
+        try{
+            tra=new Conecciones();
+        
         //System.out.println("es una prueba de carga :"+this.getIdCliente()+" observaciones: "+this.getObservaciones());
         
         sql="insert into remitos (idcliente,tipocomprobante,observaciones,numeroremito,idcomprobante,domicilio,localidad,cantidad,tipoBulto) values ("+remito.getIdCliente()+","+remito.getTipoComprobantte()+",'"+remito.getObservaciones()+"',(select tipocomprobantes.numeroActivo + 1 from tipocomprobantes where id=7),"+remito.getIdComprobante()+",'"+remito.getDomicilioDeEntrega()+"','"+remito.getLocalidad()+"',"+remito.getCantidadBultos()+","+remito.getTipoBulto()+")";
         tra.guardarRegistro(sql);
         sql="select LAST_INSERT_ID()";
         rs=tra.leerConjuntoDeRegistros(sql);
-        int numeroId=0;
-        try{
         while(rs.next()){
             numeroId=rs.getInt(1);
         }
         }catch(SQLException ex) {
+            Logger.getLogger(Remitos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Remitos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
             Logger.getLogger(Remitos.class.getName()).log(Level.SEVERE, null, ex);
         }
         sql="update tipocomprobantes set numeroactivo=numeroactivo +1 where id=7";
@@ -212,11 +218,12 @@ public class Remitos implements Remitable{
 
     @Override
     public Object carga(Integer id) {
-        tra=new Conecciones();
         Remitos remito=new Remitos();
+        try {
+            tra=new Conecciones();
+        
         sql="select * from remitos where id="+id;
         rs=tra.leerConjuntoDeRegistros(sql);
-        try {
             while(rs.next()){
                 remito.setId(rs.getInt("id"));
                 remito.setIdCliente(rs.getInt("idcliente"));
@@ -230,6 +237,10 @@ public class Remitos implements Remitable{
             
             }   
         } catch (SQLException ex) {
+            Logger.getLogger(Remitos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Remitos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
             Logger.getLogger(Remitos.class.getName()).log(Level.SEVERE, null, ex);
         }
     return remito;

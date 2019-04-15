@@ -71,15 +71,9 @@ public class SubRubros implements Rubrable{
         int ultimo=0;
         try {
             Transaccionable tra=null;
-        try {
+        
             tra = new Conecciones();
-        } catch (InstantiationException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
         tra.guardarRegistro(sql);
         
         sql="select LAST_INSERT_ID()";
@@ -104,15 +98,9 @@ public class SubRubros implements Rubrable{
             rubro=(SubRubros)rubros;
             String sql="update tipos set tipo='"+rubro.getDescripcion()+"' where id="+rubro.getId();
             Transaccionable tra=null;
-        try {
+        
             tra = new Conecciones();
-        } catch (InstantiationException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
-        }
+       
             tra.guardarRegistro(sql);
             
         } catch (InstantiationException ex) {
@@ -153,15 +141,9 @@ public class SubRubros implements Rubrable{
         
         try {
             Transaccionable tra=null;
-        try {
+        
             tra = new Conecciones();
-        } catch (InstantiationException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
             while(rs.next()){
                 subRubro=new SubRubros();
@@ -202,15 +184,9 @@ public class SubRubros implements Rubrable{
         
         try {
             Transaccionable tra=null;
-        try {
+        
             tra = new Conecciones();
-        } catch (InstantiationException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
             while(rs.next()){
                 subRubro=new SubRubros();
@@ -238,15 +214,9 @@ public class SubRubros implements Rubrable{
         try {
             String sql="delete from tipos where id="+idRubro;
             Transaccionable tra=null;
-        try {
+        
             tra = new Conecciones();
-        } catch (InstantiationException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
             tra.guardarRegistro(sql);
         } catch (InstantiationException ex) {
             Logger.getLogger(SubRubros.class.getName()).log(Level.SEVERE, null, ex);
@@ -265,15 +235,9 @@ public class SubRubros implements Rubrable{
             System.out.println("resultado :"+coe);
             String sql="update articulos set costo=round((costo * "+coe+"),4) where idsubrubro="+idRubro;
             Transaccionable tra=null;
-        try {
+        
             tra = new Conecciones();
-        } catch (InstantiationException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
             tra.guardarRegistro(sql);
         } catch (InstantiationException ex) {
             Logger.getLogger(SubRubros.class.getName()).log(Level.SEVERE, null, ex);

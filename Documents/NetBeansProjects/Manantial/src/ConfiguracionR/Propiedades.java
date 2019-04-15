@@ -145,15 +145,9 @@ public class Propiedades {
                 String linea;
                 int renglon=0;
                 //Transaccionable tra=null;
-        try {
-            tra = new Conecciones();
-        } catch (InstantiationException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
+            //tra = new Conecciones();
+        
                 //while((linea=br.readLine())!=null){
                     
                     

@@ -71,12 +71,13 @@ public class Billetes {
             tra=new Conecciones();
         }else{
         */
-        tra=new Conecciones();
+        
+        
+        try {
+            tra=new Conecciones();
         //}
         String sql="select * from billetes";
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
-        
-        try {
             listadoBill.clear();
             while(rs.next()){
                 Billetes billetes=new Billetes();
@@ -91,6 +92,10 @@ public class Billetes {
             //System.out.println(" TOTAL ARRAY BILLETES "+listadoBill.size());
             rs.close();
         } catch (SQLException ex) {
+            Logger.getLogger(Billetes.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Billetes.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
             Logger.getLogger(Billetes.class.getName()).log(Level.SEVERE, null, ex);
         }
         

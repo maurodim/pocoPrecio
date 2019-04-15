@@ -60,15 +60,9 @@ public class Rubros implements Personalizable,Rubrable{
             rubro=(Rubros)objeto;
             String sql="update rubros set descripcion='"+rubro.getDescripcion()+"' where id="+rubro.getId();
             Transaccionable tra=null;
-        try {
+       
             tra = new Conecciones();
-        } catch (InstantiationException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
             tra.guardarRegistro(sql);
             
         } catch (InstantiationException ex) {
@@ -108,15 +102,9 @@ public class Rubros implements Personalizable,Rubrable{
         
         try {
             Transaccionable tra=null;
-        try {
+        
             tra = new Conecciones();
-        } catch (InstantiationException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
             while(rs.next()){
                 Rubros rubro=new Rubros();
@@ -152,15 +140,9 @@ public class Rubros implements Personalizable,Rubrable{
         int ultimo=0;
         try {
             Transaccionable tra=null;
-        try {
+        
             tra = new Conecciones();
-        } catch (InstantiationException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
         tra.guardarRegistro(sql);
         
         sql="select LAST_INSERT_ID()";

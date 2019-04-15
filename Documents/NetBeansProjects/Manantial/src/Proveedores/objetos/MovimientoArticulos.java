@@ -8,7 +8,10 @@ package Proveedores.objetos;
 import interfaceGraficas.Inicio;
 import interfaces.Personalizable;
 import interfaces.Transaccionable;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import objetosR.Conecciones;
 
 /**
@@ -151,11 +154,11 @@ public class MovimientoArticulos implements Personalizable,Proveer{
         try {
             tra = new Conecciones();
         } catch (InstantiationException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MovimientoArticulos.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MovimientoArticulos.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MovimientoArticulos.class.getName()).log(Level.SEVERE, null, ex);
         }
         tra.guardarRegistro(sql);
         return 0;

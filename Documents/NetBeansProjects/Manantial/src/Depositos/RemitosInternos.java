@@ -122,12 +122,12 @@ public class RemitosInternos implements Comprobable{
         Transaccionable tra=null;
         try {
             tra = new Conecciones();
-        } catch (InstantiationException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) { 
+            Logger.getLogger(RemitosInternos.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RemitosInternos.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RemitosInternos.class.getName()).log(Level.SEVERE, null, ex);
         }
         String sql="select * from tipocomprobantes where numero=4";
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
@@ -150,11 +150,11 @@ public class RemitosInternos implements Comprobable{
         try {
             tra = new Conecciones();
         } catch (InstantiationException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RemitosInternos.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RemitosInternos.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RemitosInternos.class.getName()).log(Level.SEVERE, null, ex);
         }
         String sql="";
         Iterator itRem=remInterno.articulos.listIterator();
@@ -189,11 +189,11 @@ public class RemitosInternos implements Comprobable{
         try {
             tra = new Conecciones();
         } catch (InstantiationException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RemitosInternos.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RemitosInternos.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RemitosInternos.class.getName()).log(Level.SEVERE, null, ex);
         }
         String sql="";
         Iterator itL=remitoInterno.getArticulos().listIterator();
@@ -217,12 +217,12 @@ public class RemitosInternos implements Comprobable{
         Transaccionable tra=null;
         try {
             tra = new Conecciones();
-        } catch (InstantiationException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) { 
+            Logger.getLogger(RemitosInternos.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RemitosInternos.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RemitosInternos.class.getName()).log(Level.SEVERE, null, ex);
         }
         ArrayList listado=new ArrayList();
         String sql="select *,(select articulos.NOMBRE from articulos where articulos.ID=movimientosdesucursales.idArticulo)as descripcion from movimientosdesucursales where numeroRemito="+numero+" and confirmado=0";

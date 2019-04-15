@@ -67,12 +67,10 @@ public class InformesClientes {
         try {
             tra = new Conecciones();
         } catch (InstantiationException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
-        }
+           Logger.getLogger(InformesClientes.class.getName()).log(Level.SEVERE, null, ex);
+       } catch (IllegalAccessException ex) {
+           Logger.getLogger(InformesClientes.class.getName()).log(Level.SEVERE, null, ex);
+       }
         ResultSet rs=null;
         HSSFCellStyle titulo=libro.createCellStyle();
         Iterator iCli=listadoClientes.listIterator();

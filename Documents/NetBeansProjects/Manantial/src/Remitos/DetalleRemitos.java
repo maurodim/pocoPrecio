@@ -30,16 +30,8 @@ public class DetalleRemitos implements Remitable{
     private Integer idFactura;
     private Integer idPedido;
     private Date fecha;
-    private static Transaccionable tra=null;
-        try {
-            tra = new Conecciones();
-        } catch (InstantiationException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    private static Transaccionable tra;
+       
     private String sql;
     private static ResultSet rs;
     

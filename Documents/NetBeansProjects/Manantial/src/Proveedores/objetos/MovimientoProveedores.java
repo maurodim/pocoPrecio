@@ -139,11 +139,11 @@ public class MovimientoProveedores implements FacturableE{
         try {
             tra = new Conecciones();
         } catch (InstantiationException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MovimientoProveedores.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MovimientoProveedores.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MovimientoProveedores.class.getName()).log(Level.SEVERE, null, ex);
         }
         ArrayList listado=new ArrayList();
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
@@ -177,11 +177,11 @@ public class MovimientoProveedores implements FacturableE{
         try {
             tra = new Conecciones();
         } catch (InstantiationException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MovimientoProveedores.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MovimientoProveedores.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MovimientoProveedores.class.getName()).log(Level.SEVERE, null, ex);
         }
         ArrayList listado=new ArrayList();
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
@@ -245,11 +245,11 @@ public class MovimientoProveedores implements FacturableE{
         try {
             tra = new Conecciones();
         } catch (InstantiationException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MovimientoProveedores.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MovimientoProveedores.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MovimientoProveedores.class.getName()).log(Level.SEVERE, null, ex);
         }
         String sql="insert into movimientosproveedores (numeroProveedor,monto,numeroComprobante,idUsuario,tipoComprobante,subtotal,saldo,fecha,porcentajedescuento) values ("+mov.getIdProveedor()+",round("+mov.getMonto()+",4),'"+mov.getNumeroComprobante()+"',"+Inicio.usuario.getNumeroId()+","+mov.getTipoComprobante()+","+mov.getSubTotal()+","+mov.getSaldo()+",'"+mov.getFecha()+"',"+mov.getPorcentajeDescuento()+")";
         tra.guardarRegistro(sql);
@@ -279,11 +279,11 @@ public class MovimientoProveedores implements FacturableE{
         try {
             tra = new Conecciones();
         } catch (InstantiationException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MovimientoProveedores.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MovimientoProveedores.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MovimientoProveedores.class.getName()).log(Level.SEVERE, null, ex);
         }
         ArrayList listado=new ArrayList();
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
@@ -320,11 +320,11 @@ public class MovimientoProveedores implements FacturableE{
         try {
             tra = new Conecciones();
         } catch (InstantiationException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MovimientoProveedores.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MovimientoProveedores.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MovimientoProveedores.class.getName()).log(Level.SEVERE, null, ex);
         }
         ArrayList listado=new ArrayList();
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);

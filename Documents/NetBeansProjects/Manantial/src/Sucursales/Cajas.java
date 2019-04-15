@@ -297,10 +297,11 @@ public class Cajas extends Sucursales implements Cajeables{
             tra=new Conecciones();
         }else{
         */
-        tra=new Conecciones();
+        
+        try {
+            tra=new Conecciones();
         //}
         ResultSet rr=tra.leerConjuntoDeRegistros(sql);
-        try {
             while(rr.next()){
                 numeroAct=rr.getInt("numeroActivo");
                 
@@ -308,11 +309,16 @@ public class Cajas extends Sucursales implements Cajeables{
             }
             rr.close();
             numeroAct++;
+            sql="update tipocomprobantes set numeroActivo=numeroActivo + 1 where id=6";
+        if(tra.guardarRegistro(sql));//System.err.println(sql);
         } catch (SQLException ex) {
             Logger.getLogger(Cajas.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Cajas.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(Cajas.class.getName()).log(Level.SEVERE, null, ex);
         }
-        sql="update tipocomprobantes set numeroActivo=numeroActivo + 1 where id=6";
-        if(tra.guardarRegistro(sql));//System.err.println(sql);
+        
         return numeroAct;
     }
     
@@ -324,10 +330,11 @@ public class Cajas extends Sucursales implements Cajeables{
             tra=new Conecciones();
         }else{
         */
-        tra=new Conecciones();
+       
+        try {
+             tra=new Conecciones();
         //}
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
-        try {
             while(rs.next()){
             Inicio.numeroCajaAdministradora=rs.getInt("numero");
                 
@@ -339,6 +346,10 @@ public class Cajas extends Sucursales implements Cajeables{
         }catch (NullPointerException ee){
             Inicio.coneccionRemota=false;
             LeerCajaAdministradora();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Cajas.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(Cajas.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         
@@ -349,11 +360,11 @@ public class Cajas extends Sucursales implements Cajeables{
         try {
             tra = new Conecciones();
         } catch (InstantiationException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Cajas.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Cajas.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Cajas.class.getName()).log(Level.SEVERE, null, ex);
         }
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
         try {
@@ -388,11 +399,11 @@ public class Cajas extends Sucursales implements Cajeables{
         try {
             tra = new Conecciones();
         } catch (InstantiationException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Cajas.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Cajas.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Cajas.class.getName()).log(Level.SEVERE, null, ex);
         }
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
         try {
@@ -451,11 +462,11 @@ public class Cajas extends Sucursales implements Cajeables{
         try {
             tra = new Conecciones();
         } catch (InstantiationException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Cajas.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Cajas.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Cajas.class.getName()).log(Level.SEVERE, null, ex);
         }
         String sql="delete from caja";
         String ff="";
@@ -499,11 +510,11 @@ public class Cajas extends Sucursales implements Cajeables{
         try {
             tra = new Conecciones();
         } catch (InstantiationException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Cajas.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Cajas.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Cajas.class.getName()).log(Level.SEVERE, null, ex);
         }
             int cajaNumeroAct=0;
             ResultSet rs;
@@ -576,11 +587,11 @@ public class Cajas extends Sucursales implements Cajeables{
         try {
             tra = new Conecciones();
         } catch (InstantiationException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Cajas.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Cajas.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Cajas.class.getName()).log(Level.SEVERE, null, ex);
         }
         Double diferencia=0.00;
         //String sql="select * from saldofinalcaja where numero="+cajj.getNumero();
@@ -668,11 +679,11 @@ public class Cajas extends Sucursales implements Cajeables{
         try {
             tra = new Conecciones();
         } catch (InstantiationException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Cajas.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Cajas.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Cajas.class.getName()).log(Level.SEVERE, null, ex);
         }
         ch=tra.guardarRegistro(sql);
         
@@ -691,11 +702,11 @@ public class Cajas extends Sucursales implements Cajeables{
         try {
             tra = new Conecciones();
         } catch (InstantiationException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Cajas.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Cajas.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Cajas.class.getName()).log(Level.SEVERE, null, ex);
         }
        Boolean verif=false;
        Cajas cajjaa=null;
@@ -766,11 +777,11 @@ public class Cajas extends Sucursales implements Cajeables{
         try {
             tra = new Conecciones();
         } catch (InstantiationException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Cajas.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Cajas.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Cajas.class.getName()).log(Level.SEVERE, null, ex);
         }
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
         try {
@@ -810,16 +821,21 @@ public class Cajas extends Sucursales implements Cajeables{
             tra=new Conecciones();
         }else{
         */ 
+            
+        try {
             tra=new Conecciones();
         //}
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
-        try {
             while(rs.next()){
             verifi=true;
                 
             }
             rs.close();
         } catch (SQLException ex) {
+            Logger.getLogger(Cajas.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Cajas.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
             Logger.getLogger(Cajas.class.getName()).log(Level.SEVERE, null, ex);
         }
         //if(Inicio.coneccionRemota)BackapearCajas();
@@ -836,10 +852,11 @@ public class Cajas extends Sucursales implements Cajeables{
             tra=new Conecciones();
         }else{
         */ 
-            tra=new Conecciones();
+           
+        try {
+             tra=new Conecciones();
         //}
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
-        try {
             while(rs.next()){
                 cajas.numero=rs.getInt("numero");
                 cajas.saldoInicial=rs.getDouble("saldoInicial");
@@ -847,6 +864,10 @@ public class Cajas extends Sucursales implements Cajeables{
             }
             rs.close();
         } catch (SQLException ex) {
+            Logger.getLogger(Cajas.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Cajas.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
             Logger.getLogger(Cajas.class.getName()).log(Level.SEVERE, null, ex);
         }
         return cajas;
@@ -874,14 +895,23 @@ public class Cajas extends Sucursales implements Cajeables{
         
         */
          sql="insert into movimientoscaja (numeroUsuario,numeroSucursal,numeroComprobante,tipoComprobante,monto,tipoMovimiento,idCaja,idCliente,tipoCliente,pagado,observaciones) values ("+Inicio.usuario.getNumeroId()+","+Inicio.sucursal.getNumero()+","+caj.getNumeroDeComprobante()+","+caj.getTipoDeComprobante()+","+monto+","+caj.getTipoMovimiento()+","+caj.getNumero()+",0,2,0,'"+caj.getDescripcionMovimiento()+"')";
-    /*    
-    }else{
-    */ 
+        try {
+            /*
+            }else{
+            */
             tra=new Conecciones();
+             tra.guardarRegistro(sql);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Cajas.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(Cajas.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Cajas.class.getName()).log(Level.SEVERE, null, ex);
+        }
       //      sql="insert into movimientoscaja (numeroUsuario,numeroSucursal,numeroComprobante,tipoComprobante,monto,tipoMovimiento,idCaja,idCliente,tipoCliente,pagado) values ("+Inicio.usuario.getNumeroId()+","+Inicio.sucursal.getNumero()+","+caj.getNumeroDeComprobante()+","+caj.getTipoDeComprobante()+","+monto+","+caj.getTipoMovimiento()+","+caj.getNumero()+",0,2,0)";
        //     sql="insert into fallas (st,estado) values ('"+sql+"',0)";
         //}
-        tra.guardarRegistro(sql);
+       
         //sql="update comprobantes "
         
         return caj;
@@ -895,11 +925,11 @@ public class Cajas extends Sucursales implements Cajeables{
         try {
             tra = new Conecciones();
         } catch (InstantiationException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Cajas.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Cajas.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Cajas.class.getName()).log(Level.SEVERE, null, ex);
         }
        ResultSet rs;
        Cajas cajjaa=null;
