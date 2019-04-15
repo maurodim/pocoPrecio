@@ -43,9 +43,9 @@ public class BbsGestion {
         }catch(Exception e){
             e.printStackTrace();
         }
-        File folder=new File("C:\\GestionRyR");
-        File archivos=new File("C:\\Informes");
-        File bases=new File("C:\\GestionRyR\\DB");
+        File folder=new File("Gestion");
+        File archivos=new File("Informes");
+        File bases=new File("base14");
         File configuracion=new File("Configuracion");
         //File imagenes=new File("C:\\Gestion\\imagenes\\saynomore.jpg");
         File bk;
@@ -57,7 +57,7 @@ public class BbsGestion {
         BufferedReader br=null;
         if(!bases.isDirectory()){
             JOptionPane.showMessageDialog(null,"INICIANDO CONFIGURACION Y CREACION DE LA BASE DE DATOS");
-            bases.mkdirs();
+            //bases.mkdirs();
             //ConeccionLocal.CrearDb();
             
         }
@@ -90,7 +90,7 @@ public class BbsGestion {
           
         fregis.close();
         */
-        bk=new File("C:\\Gestion\\backUp.sql");
+        bk=new File("Gestion\\backUp.sql");
         //String sql="select * from movimientoscaja into outfile "+bk+" FIELDS TERMINATED BY ';' OPTIONALLY ENCLOSED BY '\"' LINES TERMINATED BY '\n\r'";
        // Transaccionable tra=null;
        
@@ -99,7 +99,7 @@ public class BbsGestion {
         try {
          // Apertura del fichero y creacion de BufferedReader para poder
          // hacer una lectura comoda (disponer del metodo readLine()).
-         archivo = new File ("C:\\Gestion\\erroresDeConeccion.txt");
+         archivo = new File ("Gestion\\erroresDeConeccion.txt");
          if(archivo.exists()){
          fr = new FileReader (archivo);
          br = new BufferedReader(fr);
@@ -132,7 +132,7 @@ public class BbsGestion {
          }
           File archivo1=null;
         
-         archivo = new File ("C:\\Gestion\\idEquipo.txt");
+         archivo = new File ("Gestion\\idEquipo.txt");
         try {
             
             Propiedades.CargarPropiedades1();

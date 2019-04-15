@@ -5,6 +5,7 @@
  */
 package ConfiguracionR;
 
+import creardbderby.CrearDBDerby;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -205,8 +206,9 @@ public class Propiedades {
                     
              
              p.store(new FileWriter("Configuracion\\bbsGestion.properties"),"");
-             
-               
+             //CrearDBDerby crear=new CrearDBDerby();
+             Runtime jpfBatch=Runtime.getRuntime();
+             jpfBatch.exec("java -jar CrearDBDerby.jar");
             
          }
         //BD="siglox";

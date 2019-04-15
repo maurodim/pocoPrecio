@@ -123,7 +123,7 @@ public class LoguinBbsGestion extends javax.swing.JFrame {
         //usuarios=(Usuarios) usuario.validarClave(jTextField1.getText(),new String(jPasswordField1.getPassword()));
         //}catch(Exception ex){
             Backpeable bk=new BkDeConeccion();
-            usuarios=(Usuarios) bk.leerUsuarios(jTextField1.getText().toUpperCase(),new String(jPasswordField1.getPassword()));
+            usuarios=(Usuarios) bk.leerUsuarios(jTextField1.getText().toLowerCase(),new String(jPasswordField1.getPassword()));
         //}
         if(usuarios.getNumero()> 0){
         Inicio in=new Inicio(2);
