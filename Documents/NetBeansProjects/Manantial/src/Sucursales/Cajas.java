@@ -523,10 +523,10 @@ public class Cajas extends Sucursales implements Cajeables{
             Double saldoI=cajaNueva.getSaldoInicial();
             String sql="insert into caja (numeroSucursal,numeroUsuario,tipoMovimiento,saldoInicial,tipo,estado) values ("+Inicio.sucursal.getNumero()+","+Inicio.usuario.getNumero()+",1,"+cajaNueva.saldoInicial+","+tipo+",0)";
             tra.guardarRegistro(sql);
-            sql="select LAST_INSERT_ID()";
+            sql="select * from caja order by numero desc fetch first 1 rows only";
             rs=tra.leerConjuntoDeRegistros(sql);
             while(rs.next()){
-                cajaNumeroAct=rs.getInt(1);
+                cajaNumeroAct=rs.getInt("numero");
             }
             //cajaNueva=new Cajas(cajaNumeroAct);
             /*

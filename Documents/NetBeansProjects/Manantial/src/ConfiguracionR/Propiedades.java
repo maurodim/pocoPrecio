@@ -16,6 +16,7 @@ import java.util.Enumeration;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import objetosDerby.Base;
 
 /**
  *
@@ -207,8 +208,10 @@ public class Propiedades {
              
              p.store(new FileWriter("Configuracion\\bbsGestion.properties"),"");
              //CrearDBDerby crear=new CrearDBDerby();
-             Runtime jpfBatch=Runtime.getRuntime();
-             jpfBatch.exec("java -jar CrearDBDerby.jar");
+             Base base=new Base();
+             base.CrearBase("base14\\bambuPrueba.db", "mauro", "mauro");
+             //Runtime jpfBatch=Runtime.getRuntime();
+             //jpfBatch.exec("java -jar CrearDBDerby.jar");
             
          }
         //BD="siglox";

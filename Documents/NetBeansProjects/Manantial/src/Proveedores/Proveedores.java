@@ -194,7 +194,7 @@ public class Proveedores implements Personalizable{
             //    sql="select *,(select sum(movimientosproveedores.monto) from movimientosproveedores where pagado=0 and movimientosproveedores.numeroProveedor=proveedores.ID)as saldo from proveedores order by NOMBRE";
             //}else{
                 tra=new Conecciones();
-                sql="select *,(SELECT sum(movimientosproveedores.monto) FROM movimientosproveedores WHERE movimientosproveedores.numeroProveedor=proveedores.ID)as saldo,(select localidades.localidad from localidades where localidades.id=proveedores.localidad)as nomL from proveedores order by NOMBRE";
+                sql="select id,nombre,domicilio,localidad,telefono,inhabilitado,mail,saldo1,responsable,celular,cuit,anexo,(SELECT sum(movimientosproveedores.monto) FROM movimientosproveedores WHERE movimientosproveedores.numeroProveedor=proveedores.ID)as saldo,(proveedores.localidad)as nomL from proveedores order by NOMBRE";
             //}
             ResultSet rr=tra.leerConjuntoDeRegistros(sql);
             while(rr.next()){

@@ -7,6 +7,7 @@ package objetosR;
 import ConfiguracionR.Propiedades;
 import interfaceGraficas.Inicio;
 import interfaces.Transaccionable;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -48,11 +49,14 @@ public class Conecciones implements Transaccionable{
                //Connection dbConnection = null;
                con=null;
  //String strUrl = "jdbc:derby://localhost:1527/respaldo;create=true";
+ File miDir=new File(".");
+ String directorio=miDir.getAbsolutePath();
+        System.out.println(directorio);
                String strUrl = "jdbc:derby:base14//bambuPrueba.db";
         
         try {
             Class.forName(driver1).newInstance();
-            con = DriverManager.getConnection (strUrl); 
+            con = DriverManager.getConnection (strUrl,"mauro","mauro"); 
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Conecciones.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -65,12 +69,21 @@ public class Conecciones implements Transaccionable{
         //Connection dbConnection = null;
                con=null;
  //String strUrl = "jdbc:derby://localhost:1527/respaldo;create=true";
-               String strUrl = "jdbc:derby:base14//bambuPrueba.db";
+               //String strUrl = "jdbc:derby:base14//bambuPrueba.db";
             
         
         try {
+            
+            File miDir=new File(".");
+ String directorio=miDir.getAbsolutePath();
+        String directo="C:\\Users\\Usuario\\Documents\\NetBeansProjects\\Manantial\\";
+            String strUrl = "jdbc:derby:base14\\bambuPrueba.db";
+            
+        System.out.println(strUrl);
+        
             Class.forName(driver1).newInstance();
-            con = DriverManager.getConnection (strUrl); 
+            con = DriverManager.getConnection (strUrl,"mauro","mauro");
+            
             
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Conecciones.class.getName()).log(Level.SEVERE, null, ex);
@@ -174,13 +187,9 @@ public class Conecciones implements Transaccionable{
     public ResultSet leerConjuntoDeRegistros(String sql) {
         ResultSet rs=null;
         try {
-            String strUrl = "jdbc:derby:base14//bambuPrueba.db";
             
-        
-        
-            Class.forName(driver1).newInstance();
-            con = DriverManager.getConnection (strUrl);
             System.out.println(sql);
+            //sql="select * from mauro.usuarios where nombreUsuario like 'adm' and clave ='adm'";
            if(con!=null){
                 st=con.prepareStatement(sql);
                 st.execute();
@@ -198,12 +207,6 @@ public class Conecciones implements Transaccionable{
             if(st!=null)Inicio.coneccionRemota=false;
             
             System.out.println("ERROR "+sql);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Conecciones.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            Logger.getLogger(Conecciones.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            Logger.getLogger(Conecciones.class.getName()).log(Level.SEVERE, null, ex);
         }
         return rs;
     }
