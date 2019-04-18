@@ -860,9 +860,7 @@ public class Articulos implements Facturar, Editables, Comparables, Modificable,
                     articulo.setModificaServicio(rr.getBoolean("modificaServicio"));
                     String nom = rr.getString("NOMBRE");
                     articulo.setIdCombo(rr.getInt("idcombo"));
-                    if (articulo.getIdCombo() > 0) {
-                        articulo.setCombo(CargarCombo(articulo.getNumeroId()));
-                    }
+                    
                     resultado.add(articulo);
                 }
                 rr.close();
@@ -1047,6 +1045,13 @@ public class Articulos implements Facturar, Editables, Comparables, Modificable,
             while (rs.next()) {
                 ultimoArt = rs.getInt("id");
             }
+            if (articulo.getCodigoDeBarra().isEmpty()) {
+
+        
+            sql = "update articulos set BARRAS='" + ultimoArt + "' where id=" + ultimoArt;
+            tra.guardarRegistro(sql);
+        }
+            
             rs.close();
         } catch (SQLException ex) {
             Logger.getLogger(Articulos.class.getName()).log(Level.SEVERE, null, ex);
@@ -1055,14 +1060,10 @@ public class Articulos implements Facturar, Editables, Comparables, Modificable,
         } catch (IllegalAccessException ex) {
             Logger.getLogger(Articulos.class.getName()).log(Level.SEVERE, null, ex);
         }
-        if (articulo.getCodigoDeBarra().isEmpty()) {
-
         
-            sql = "update articulos set BARRAS='" + ultimoArt + "' where id=" + ultimoArt;
-            tra.guardarRegistro(sql);
-        }
         //sql="insert into actualizaciones (iddeposito,idobjeto,estado) values (1,1,3),(2,1,3),(3,1,3),(4,1,3),(5,1,3),(6,1,3),(7,1,3)";
         //tra.guardarRegistro(sql);
+        /*
         if (articulo.getIdCombo() > 0) {
             Articulos art = new Articulos();
             Iterator ic = articulo.getCombo().listIterator();
@@ -1072,6 +1073,7 @@ public class Articulos implements Facturar, Editables, Comparables, Modificable,
                 tra.guardarRegistro(sql);
             }
         }
+        */
 
         return ch;
     }
