@@ -10,7 +10,7 @@ package Recibos;
 import Conversores.NumberToLetterConverter;
 import Conversores.Numeros;
 import facturacion.clientes.Clientes;
-import interfaceGraficas.Inicio;
+import interfaceGraficasManantial.Inicio;
 import interfacesPrograma.Facturar;
 import java.awt.Color;
 import java.awt.Font;

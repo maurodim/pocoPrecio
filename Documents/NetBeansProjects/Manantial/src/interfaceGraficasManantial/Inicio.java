@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package interfaceGraficas;
+package interfaceGraficasManantial;
 
 import ClientesPantallas.AbmClientes;
 import Proveedores.AbmProveedores;
@@ -10,7 +10,6 @@ import Articulos.RubrosAbm;
 import Actualizaciones.Actualiza;
 import Actualizaciones.Actualiza1;
 import Actualizaciones.BkDeConeccion;
-import Articulos.AbmArticulos;
 import Proveedores.Proveedores;
 import Depositos.Depositos;
 import Sucursales.Cajas;
@@ -18,10 +17,7 @@ import Sucursales.ListasDePrecios;
 import Sucursales.Sucursales;
 import Sucursales.Usuarios;
 import facturacion.clientes.Clientes;
-import Cotizaciones.IngresoDeCotizacion;
 import facturacion.pantallas.IngresoDeFacturas;
-import Pedidos.IngresoDePedidos;
-import Remitos.IngresoDeRemitos;
 import interfacesPrograma.Cajeables;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -41,9 +37,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import Articulos.Articulos;
-import Articulos.SubRubrosAbm;
-import FacturaE.AbmFacturaElectronica;
-import Recibos.ChequesAbm;
+import Articulos.ArticulosAbm;
 
 /**
  *

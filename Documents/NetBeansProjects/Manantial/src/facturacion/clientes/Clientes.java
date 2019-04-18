@@ -6,7 +6,7 @@ package facturacion.clientes;
 
 
 import Conversores.Numeros;
-import interfaceGraficas.Inicio;
+import interfaceGraficasManantial.Inicio;
 import interfaces.Adeudable;
 import interfaces.Transaccionable;
 import interfacesPrograma.Busquedas;

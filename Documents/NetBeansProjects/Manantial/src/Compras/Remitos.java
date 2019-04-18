@@ -5,7 +5,7 @@
 package Compras;
 
 import Administracion.TipoComprobante;
-import interfaceGraficas.Inicio;
+import interfaceGraficasManantial.Inicio;
 import interfaces.Comprobable;
 import interfaces.Transaccionable;
 import java.sql.ResultSet;

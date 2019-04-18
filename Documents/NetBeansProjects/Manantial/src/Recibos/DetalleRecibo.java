@@ -6,7 +6,7 @@
 package Recibos;
 
 import Pedidos.Pedidos;
-import interfaceGraficas.Inicio;
+import interfaceGraficasManantial.Inicio;
 import interfaces.Transaccionable;
 
 import java.sql.Date;

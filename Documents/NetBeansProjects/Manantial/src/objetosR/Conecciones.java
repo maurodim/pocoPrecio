@@ -5,7 +5,7 @@
 package objetosR;
 
 import ConfiguracionR.Propiedades;
-import interfaceGraficas.Inicio;
+import interfaceGraficasManantial.Inicio;
 import interfaces.Transaccionable;
 import java.io.File;
 import java.io.FileWriter;

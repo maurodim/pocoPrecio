@@ -13,7 +13,7 @@ import Proveedores.Proveedores;
 import Recibos.Formable;
 import Recibos.FormasDePago;
 import Recibos.Recidable;
-import interfaceGraficas.Inicio;
+import interfaceGraficasManantial.Inicio;
 import interfaces.Personalizable;
 import interfacesPrograma.Facturar;
 import java.awt.Color;

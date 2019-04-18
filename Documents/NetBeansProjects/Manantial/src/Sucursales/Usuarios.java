@@ -5,7 +5,7 @@
 package Sucursales;
 
 import Administracion.TipoAcceso;
-import interfaceGraficas.Inicio;
+import interfaceGraficasManantial.Inicio;
 import interfaces.Personalizable;
 import interfaces.Transaccionable;
 import java.io.BufferedReader;

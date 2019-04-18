@@ -8,7 +8,7 @@ import ClientesPantallas.NuevoCliente;
 import Pedidos.IngresoDePedidos;
 import Conversores.Numeros;
 import facturacion.clientes.Clientes;
-import interfaceGraficas.Inicio;
+import interfaceGraficasManantial.Inicio;
 import interfacesPrograma.Facturar;
 import java.awt.event.KeyEvent;
 import java.io.FileWriter;

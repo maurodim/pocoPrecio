@@ -7,7 +7,7 @@ package Proveedores;
 import Conversores.Numeros;
 
 import Excel.LeerExcelProveedores;
-import interfaceGraficas.Inicio;
+import interfaceGraficasManantial.Inicio;
 import interfaces.Personalizable;
 import interfacesPrograma.Busquedas;
 import interfacesPrograma.Facturar;

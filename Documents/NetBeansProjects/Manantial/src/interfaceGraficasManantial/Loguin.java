@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package interfaceGraficas;
+package interfaceGraficasManantial;
 
 import Sucursales.Usuarios;
 import static java.lang.Thread.sleep;

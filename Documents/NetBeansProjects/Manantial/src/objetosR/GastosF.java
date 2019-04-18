@@ -6,7 +6,7 @@ package objetosR;
 
 import Proveedores.Proveedores;
 import Conversores.Numeros;
-import interfaceGraficas.Inicio;
+import interfaceGraficasManantial.Inicio;
 import interfaces.Editables;
 import interfaces.Transaccionable;
 import java.sql.ResultSet;

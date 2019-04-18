@@ -1,7 +1,7 @@
 package facturacion.clientes;
 
 import Conversores.Numeros;
-import interfaceGraficas.Inicio;
+import interfaceGraficasManantial.Inicio;
 import interfaces.Transaccionable;
 import java.sql.Date;
 import java.sql.ResultSet;

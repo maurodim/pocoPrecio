@@ -13,7 +13,7 @@ import Proveedores.objetos.MovimientoProveedores;
 import Proveedores.objetos.OrdenDePago;
 import Recibos.Recidable;
 import facturacion.clientes.ListasDePrecios;
-import interfaceGraficas.Inicio;
+import interfaceGraficasManantial.Inicio;
 import ClientesPantallas.NuevoCliente;
 import interfaces.Personalizable;
 import interfacesPrograma.Busquedas;

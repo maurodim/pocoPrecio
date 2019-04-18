@@ -6,7 +6,7 @@ package Articulos;
 
 import Conversores.Numeros;
 import Proveedores.objetos.Proveer;
-import interfaceGraficas.Inicio;
+import interfaceGraficasManantial.Inicio;
 import interfaces.Comparables;
 import interfaces.Editables;
 import interfaces.Transaccionable;

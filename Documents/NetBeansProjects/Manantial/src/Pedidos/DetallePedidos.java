@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.table.DefaultTableModel;
 import Articulos.Articulos;
-import interfaceGraficas.Inicio;
+import interfaceGraficasManantial.Inicio;
 import objetosR.Conecciones;
 
 /**

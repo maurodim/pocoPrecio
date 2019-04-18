@@ -4,7 +4,6 @@
  */
 package ConfiguracionR;
 
-import interfaceGraficas.*;
 import Sucursales.Cajas;
 import interfacesPrograma.Cajeables;
 

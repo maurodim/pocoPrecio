@@ -8,7 +8,7 @@ package Cotizaciones;
 import Pedidos.DetallePedidos;
 import Pedidos.Pedable;
 import Pedidos.Pedidos;
-import interfaceGraficas.Inicio;
+import interfaceGraficasManantial.Inicio;
 import interfaces.Transaccionable;
 import java.sql.Date;
 import java.sql.ResultSet;

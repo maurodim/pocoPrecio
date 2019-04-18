@@ -9,7 +9,7 @@ import Articulos.Articulos;
 import Excel.InformeMensual;
 import ListasDePrecios.ArticulosAsignados;
 import facturacion.clientes.Clientes;
-import interfaceGraficas.Inicio;
+import interfaceGraficasManantial.Inicio;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;

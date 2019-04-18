@@ -6,7 +6,7 @@
 
 package Excel;
 
-import interfaceGraficas.Inicio;
+import interfaceGraficasManantial.Inicio;
 import interfaces.Transaccionable;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;

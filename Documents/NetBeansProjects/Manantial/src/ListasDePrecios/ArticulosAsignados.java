@@ -9,7 +9,7 @@ import Proveedores.Proveedores;
 import facturacion.clientes.Clientes;
 import facturacion.clientes.Facturable;
 import facturacion.clientes.ListasDePrecios;
-import interfaceGraficas.BarraDeProgreso;
+import interfaceGraficasManantial.BarraDeProgreso;
 import interfaces.Comparables;
 import interfaces.Editables;
 import interfaces.Personalizable;

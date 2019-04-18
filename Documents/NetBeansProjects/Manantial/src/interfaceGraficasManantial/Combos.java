@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package interfaceGraficas;
+package interfaceGraficasManantial;
 
 import Articulos.ArticulosMod;
 import Conversores.Numeros;

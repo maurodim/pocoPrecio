@@ -162,12 +162,21 @@ public class Rubros implements Personalizable,Rubrable{
 
     @Override
     public void modificarPrecioRubro(Integer idRubro, Double precio) {
-        Double coe=precio / 100;
-        coe=coe + 1;
-        System.out.println("resultado :"+coe);
-        sql="update articulos set precio=round((precio * "+coe+"),2) where idrubro="+idRubro;
-        
-        tra.guardarRegistro(sql);
+        try {
+            Double coe=precio / 100;
+            coe=coe + 1;
+            System.out.println("resultado :"+coe);
+            sql="update articulos set precio=(precio * "+coe+") where idrubro="+idRubro;
+            tra=new Conecciones();
+            System.out.println(sql);
+            tra.guardarRegistro(sql);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Rubros.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(Rubros.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Rubros.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }
 
@@ -210,12 +219,20 @@ ArrayList<Rubros> listado=new ArrayList();
 
     @Override
     public void modificarCostoPorRubro(Integer idRubro, Double precio) {
-        Double coe=precio / 100;
-        coe=coe + 1;
-        System.out.println("resultado :"+coe);
-        String sql="update articulos set costo=round((costo * "+coe+"),4) where idrubro="+idRubro;
-        
-        tra.guardarRegistro(sql);
+        try {
+            Double coe=precio / 100;
+            coe=coe + 1;
+            System.out.println("resultado :"+coe);
+            String sql="update articulos set costo=(costo * "+coe+") where idrubro="+idRubro;
+            tra=new Conecciones();
+            tra.guardarRegistro(sql);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Rubros.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(Rubros.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Rubros.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
@@ -268,7 +285,14 @@ ArrayList<Rubros> listado=new ArrayList();
 
     @Override
     public DefaultComboBoxModel mostrarEnBox(ArrayList listado) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        DefaultComboBoxModel modelo=new DefaultComboBoxModel();
+        Rubros rubro=new Rubros();
+        Iterator it=listado.listIterator();
+        while(it.hasNext()){
+            rubro=(Rubros)it.next();
+            modelo.addElement(rubro.getId()+" "+rubro.getDescripcion());
+        }
+        return modelo;
     }
     
     

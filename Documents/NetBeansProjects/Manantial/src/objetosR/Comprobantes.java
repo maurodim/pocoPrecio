@@ -9,7 +9,7 @@ import facturacion.clientes.Clientes;
 import facturacion.clientes.DetalleFacturas;
 import facturacion.clientes.Facturable;
 import facturacion.clientes.MovimientosClientes;
-import interfaceGraficas.Inicio;
+import interfaceGraficasManantial.Inicio;
 import interfaces.Transaccionable;
 import interfacesPrograma.Facturar;
 import java.sql.ResultSet;

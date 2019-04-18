@@ -16,7 +16,7 @@ import Articulos.Articulos;
 import Articulos.Rubrable;
 import Articulos.Rubros;
 import Articulos.SubRubros;
-import interfaceGraficas.Combos;
+import interfaceGraficasManantial.Combos;
 import tablas.MiModeloTablaArticulos;
 
 /**

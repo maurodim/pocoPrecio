@@ -6,7 +6,7 @@ package Sucursales;
 
 import Administracion.Administracion;
 import Depositos.Depositos;
-import interfaceGraficas.Inicio;
+import interfaceGraficasManantial.Inicio;
 import interfaces.Personalizable;
 import interfaces.Transaccionable;
 import java.sql.ResultSet;

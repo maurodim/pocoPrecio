@@ -19,7 +19,7 @@ import javax.swing.JOptionPane;
 import Articulos.Articulos;
 import Articulos.Rubros;
 import Excel.PlanillaStock;
-import interfaceGraficas.Inicio;
+import interfaceGraficasManantial.Inicio;
 import interfaces.Personalizable;
 import tablas.MiModeloTablaArticulos;
 
@@ -47,7 +47,7 @@ public class ArticulosAbm extends javax.swing.JInternalFrame {
         listadoRubro=new ArrayList();
         rubro=new Rubros();
         listadoRubro=rub.listar();
-        this.jComboBox1.setModel(rubC.LlenarComboConArray(listadoRubro));
+        this.jComboBox1.setModel(rubR.mostrarEnBox(listadoRubro));
         
     }
 

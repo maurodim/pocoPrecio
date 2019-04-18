@@ -7,7 +7,7 @@ package Impresiones;
 
 import Depositos.RemitosInternos;
 import Sucursales.Cajas;
-import interfaceGraficas.Inicio;
+import interfaceGraficasManantial.Inicio;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Frame;

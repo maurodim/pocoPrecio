@@ -4,7 +4,7 @@
  */
 package Sucursales;
 
-import interfaceGraficas.Inicio;
+import interfaceGraficasManantial.Inicio;
 import interfaces.Editables;
 import interfaces.Transaccionable;
 import java.sql.ResultSet;

@@ -6,7 +6,7 @@ package Actualizaciones;
 
 import Sucursales.Sucursales;
 import Sucursales.Usuarios;
-import interfaceGraficas.Inicio;
+import interfaceGraficasManantial.Inicio;
 import interfaces.Backpeable;
 import interfaces.Transaccionable;
 import java.io.BufferedReader;

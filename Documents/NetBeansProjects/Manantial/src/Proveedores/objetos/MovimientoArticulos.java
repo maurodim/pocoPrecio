@@ -5,7 +5,7 @@
  */
 package Proveedores.objetos;
 
-import interfaceGraficas.Inicio;
+import interfaceGraficasManantial.Inicio;
 import interfaces.Personalizable;
 import interfaces.Transaccionable;
 import java.sql.SQLException;

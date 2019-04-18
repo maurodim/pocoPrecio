@@ -4,7 +4,7 @@
  */
 package Depositos;
 
-import interfaceGraficas.Inicio;
+import interfaceGraficasManantial.Inicio;
 import interfaces.Comprobable;
 import interfaces.Transaccionable;
 import java.sql.ResultSet;

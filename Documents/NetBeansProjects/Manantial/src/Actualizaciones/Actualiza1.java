@@ -11,7 +11,7 @@ import Sucursales.ListasDePrecios;
 import Sucursales.Sucursales;
 import Sucursales.Usuarios;
 import facturacion.clientes.Clientes;
-import interfaceGraficas.Inicio;
+import interfaceGraficasManantial.Inicio;
 import interfaces.Transaccionable;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

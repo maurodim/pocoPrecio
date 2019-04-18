@@ -7,7 +7,7 @@ package Compras;
 import Proveedores.Proveedores;
 import Administracion.TipoComprobante;
 import Conversores.Numeros;
-import interfaceGraficas.Inicio;
+import interfaceGraficasManantial.Inicio;
 import interfaces.Adeudable;
 import interfaces.Comprobable;
 import interfaces.Personalizable;

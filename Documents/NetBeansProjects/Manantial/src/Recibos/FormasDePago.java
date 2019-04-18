@@ -7,7 +7,7 @@ package Recibos;
 
 import facturacion.clientes.Clientes;
 import facturacion.clientes.Facturable;
-import interfaceGraficas.Inicio;
+import interfaceGraficasManantial.Inicio;
 import interfaces.Transaccionable;
 import interfacesPrograma.Busquedas;
 import interfacesPrograma.Facturar;

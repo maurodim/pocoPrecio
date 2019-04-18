@@ -13,7 +13,7 @@ import facturacion.clientes.Clientes;
 import facturacion.clientes.Editables;
 import facturacion.clientes.Movible;
 import facturacion.clientes.MovimientosClientes;
-import interfaceGraficas.Inicio;
+import interfaceGraficasManantial.Inicio;
 import interfacesPrograma.Cajeables;
 import java.sql.SQLException;
 import java.util.ArrayList;

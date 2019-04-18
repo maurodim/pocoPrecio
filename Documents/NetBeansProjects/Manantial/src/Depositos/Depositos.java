@@ -5,7 +5,7 @@
 package Depositos;
 
 import Proveedores.Proveedores;
-import interfaceGraficas.Inicio;
+import interfaceGraficasManantial.Inicio;
 import interfaces.Personalizable;
 import interfaces.Transaccionable;
 import interfaces.Trasladable;
