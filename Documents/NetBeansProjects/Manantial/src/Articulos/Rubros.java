@@ -269,8 +269,10 @@ ArrayList<Rubros> listado=new ArrayList();
         ArrayList resultado=new ArrayList();
         Rubros rubro=null;
         sql="select * from rubros where descripcion like '%"+texto+"%'";
-        rs=tra.leerConjuntoDeRegistros(sql);
+        
         try {
+            tra=new Conecciones();
+            rs=tra.leerConjuntoDeRegistros(sql);
             while(rs.next()){
                rubro=new Rubros();
                rubro.setId(rs.getInt("id"));
@@ -278,6 +280,10 @@ ArrayList<Rubros> listado=new ArrayList();
                resultado.add(rubro);
             }
         } catch (SQLException ex) {
+            Logger.getLogger(Rubros.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Rubros.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
             Logger.getLogger(Rubros.class.getName()).log(Level.SEVERE, null, ex);
         }
         return resultado;
