@@ -165,7 +165,7 @@ public class Rubros implements Personalizable,Rubrable{
         Double coe=precio / 100;
         coe=coe + 1;
         System.out.println("resultado :"+coe);
-        sql="update articulos set precio=round((precio * "+coe+"),4) where idrubro="+idRubro;
+        sql="update articulos set precio=round((precio * "+coe+"),2) where idrubro="+idRubro;
         
         tra.guardarRegistro(sql);
         
@@ -173,12 +173,14 @@ public class Rubros implements Personalizable,Rubrable{
 
     @Override
     public ArrayList listarPorRubro(Integer idRubro) {
-ArrayList listado=new ArrayList();
+ArrayList<Rubros> listado=new ArrayList();
         Rubros subRubro;
         String sql="select * from rubros order by descripcion";
         
-        rs=tra.leerConjuntoDeRegistros(sql);
+        
         try {
+            tra=new Conecciones();
+            rs=tra.leerConjuntoDeRegistros(sql);
             while(rs.next()){
                 subRubro=new Rubros();
                 subRubro.setDescripcion(rs.getString("descripcion"));
@@ -188,6 +190,10 @@ ArrayList listado=new ArrayList();
             rs.close();
         } catch (SQLException ex) {
             Logger.getLogger(SubRubros.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Rubros.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(Rubros.class.getName()).log(Level.SEVERE, null, ex);
         }
         return listado;
     }

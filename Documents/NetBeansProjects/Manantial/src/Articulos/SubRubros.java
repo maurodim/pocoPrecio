@@ -137,7 +137,7 @@ public class SubRubros implements Rubrable{
     public ArrayList listarPorRubro(Integer idRubro) {
         ArrayList listado=new ArrayList();
         SubRubros subRubro;
-        String sql="select *,(select rubros.descripcion from rubros where rubros.id=tipos.id_clasificacion)as descr from tipos where id_clasificacion="+idRubro+" order by id_clasificacion";
+        String sql="select tipo,id,id_clasificacion,(select rubros.descripcion from rubros where rubros.id=tipos.id_clasificacion)as descr from tipos where id_clasificacion="+idRubro+" order by id_clasificacion";
         
         try {
             Transaccionable tra=null;

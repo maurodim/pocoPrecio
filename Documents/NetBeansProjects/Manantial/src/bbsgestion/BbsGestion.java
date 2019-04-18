@@ -4,8 +4,12 @@
  */
 package bbsgestion;
 
+import Actualizaciones.BkDeConeccion;
 import ConfiguracionR.Propiedades;
+import Sucursales.Usuarios;
+import interfaceGraficas.Inicio;
 import interfaceGraficas.LoguinBbsGestion;
+import interfaces.Backpeable;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -139,8 +143,29 @@ public class BbsGestion {
         } catch (ParseException ex) {
             Logger.getLogger(BbsGestion.class.getName()).log(Level.SEVERE, null, ex);
         }
-        LoguinBbsGestion lBb=new LoguinBbsGestion();
+        
+        /*LoguinBbsGestion lBb=new LoguinBbsGestion();
         lBb.setVisible(true);
         lBb.pack();
+*/
+        Usuarios usuario=new Usuarios();
+        Usuarios usuarios=new Usuarios();
+        //try{
+        //usuarios=(Usuarios) usuario.validarClave(jTextField1.getText(),new String(jPasswordField1.getPassword()));
+        //}catch(Exception ex){
+        Backpeable bk1=new BkDeConeccion();
+            usuarios=(Usuarios) bk1.leerUsuarios("adm","adm");
+        //}
+        
+        Inicio in=new Inicio(2);
+        //Inicio in=new Inicio();
+        Inicio.niv=usuarios.getNivelDeAutorizacion();
+        Inicio.usuario=usuarios;
+        Inicio.sucursal=usuarios.getSucursal();
+        Inicio.deposito=Inicio.sucursal.getDepositos();
+        in.setTitle(" SISTEMA DE GESTION IMPRENTA eR&Re //   USUARIO : "+Inicio.usuario.getNombre()+" SUCURSAL :"+Inicio.sucursal.getNumero()+" - "+Inicio.sucursal.getDescripcion());
+        in.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        in.setVisible(true);
+        in.toFront();
     }
 }

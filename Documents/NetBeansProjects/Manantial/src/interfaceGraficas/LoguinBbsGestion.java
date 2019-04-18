@@ -7,6 +7,9 @@ package interfaceGraficas;
 import Actualizaciones.BkDeConeccion;
 import Sucursales.Usuarios;
 import interfaces.Backpeable;
+import static java.lang.Thread.sleep;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 
 /**
@@ -20,6 +23,34 @@ public class LoguinBbsGestion extends javax.swing.JFrame {
      */
     public LoguinBbsGestion() {
         initComponents();
+        
+        try {
+            sleep(30);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(LoguinBbsGestion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Usuarios usuario=new Usuarios();
+        Usuarios usuarios=new Usuarios();
+        //try{
+        //usuarios=(Usuarios) usuario.validarClave(jTextField1.getText(),new String(jPasswordField1.getPassword()));
+        //}catch(Exception ex){
+            Backpeable bk=new BkDeConeccion();
+            usuarios=(Usuarios) bk.leerUsuarios("adm","adm");
+        //}
+        this.setVisible(false);
+        this.dispose();
+        Inicio in=new Inicio(2);
+        Inicio.niv=usuarios.getNivelDeAutorizacion();
+        Inicio.usuario=usuarios;
+        Inicio.sucursal=usuarios.getSucursal();
+        Inicio.deposito=Inicio.sucursal.getDepositos();
+        in.setTitle(" SISTEMA DE GESTION IMPRENTA eR&Re //   USUARIO : "+Inicio.usuario.getNombre()+" SUCURSAL :"+Inicio.sucursal.getNumero()+" - "+Inicio.sucursal.getDescripcion());
+        in.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        in.setVisible(true);
+        in.toFront();
+        //in.pack();
+        
+        
     }
 
     /**

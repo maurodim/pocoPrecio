@@ -55,16 +55,7 @@ public class Depositos implements Personalizable, Trasladable{
                 
             }
             int numeroRemitoInterno=0;
-            if(Inicio.coneccionRemota){
-            sql1="select movimientosdesucursales.numeroRemito from movimientosdesucursales where depDestino="+this.numero+" and confirmado=0 group by numeroRemito";
-            rr=tra.leerConjuntoDeRegistros(sql1);
-            while(rr.next()){
-                numeroRemitoInterno=rr.getInt("numeroRemito");
-                //System.out.println("REMITO INTERNO LEIDOOOOOO "+numeroRemitoInterno);
-                JOptionPane.showMessageDialog(null,"USTED TIENE REMITOS INTERNOS A CONFIRMAR");
-                remitosInternos.add(numeroRemitoInterno);
-            }
-            }
+            
             rr.close();
         } catch (SQLException ex) {
             Logger.getLogger(Depositos.class.getName()).log(Level.SEVERE, null, ex);

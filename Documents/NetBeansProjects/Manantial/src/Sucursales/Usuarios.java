@@ -365,7 +365,7 @@ public class Usuarios extends TipoAcceso implements Personalizable{
            // if(tra.guardarRegistro(linea));
       }
          }
-        String sql="select *,(select tipoacceso.menu1 from tipoacceso where tipoacceso.numero=usuarios.autorizacion)as menu1,(select tipoacceso.menu2 from tipoacceso where tipoacceso.numero=usuarios.autorizacion)as menu2,(select tipoacceso.menu3 from tipoacceso where tipoacceso.numero=usuarios.autorizacion)as menu3,(select tipoacceso.menu4 from tipoacceso where tipoacceso.numero=usuarios.autorizacion)as menu4,(select tipoacceso.menu5 from tipoacceso where tipoacceso.numero=usuarios.autorizacion)as menu5,(select tipoacceso.menu6 from tipoacceso where tipoacceso.numero=usuarios.autorizacion)as menu6,(select tipoacceso.menu7 from tipoacceso where tipoacceso.numero=usuarios.autorizacion)as menu7 from usuarios where nombreUsuario like '"+usuario+"' and clave like '"+clave+"'";
+        String sql="select * from usuarios where nombreUsuario like '"+usuario+"' and clave like '"+clave+"'";
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
        
         
@@ -374,11 +374,11 @@ public class Usuarios extends TipoAcceso implements Personalizable{
             usu=new Usuarios();
             usu.setNivelDeAutorizacion(rs.getInt("autorizacion"));
             usu.setNombre(rs.getString("nombre"));
-            usu.setNumero(rs.getInt("numero"));
-            usu.setNumeroId(rs.getInt("numero"));
+            usu.setNumero(rs.getInt("id"));
+            usu.setNumeroId(rs.getInt("id"));
             usu.setSucursal(new Sucursales(rs.getInt("sucursal")));
             usu.setEquipo(numeroEquipo);
-                    usu.setMenu(new Menus(rs.getBoolean("menu1"),rs.getBoolean("menu2"),rs.getBoolean("menu3"),rs.getBoolean("menu4"),rs.getBoolean("menu5"),rs.getBoolean("menu6"),rs.getBoolean("menu7")));                    
+                    usu.setMenu(new Menus(true,true,true,true,true,true,true));                    
                
             }
             rs.close();
@@ -387,7 +387,7 @@ public class Usuarios extends TipoAcceso implements Personalizable{
             try {
                 //System.out.println("NO SE CONECTA, ACA CARGA LOS OBJETOS"); 
                 Transaccionable tras=new Conecciones();
-                String sql="select *,(select tipoacceso.menu1 from tipoacceso where tipoacceso.numero=usuarios.autorizacion)as menu1,(select tipoacceso.menu2 from tipoacceso where tipoacceso.numero=usuarios.autorizacion)as menu2,(select tipoacceso.menu3 from tipoacceso where tipoacceso.numero=usuarios.autorizacion)as menu3,(select tipoacceso.menu4 from tipoacceso where tipoacceso.numero=usuarios.autorizacion)as menu4,(select tipoacceso.menu5 from tipoacceso where tipoacceso.numero=usuarios.autorizacion)as menu5,(select tipoacceso.menu6 from tipoacceso where tipoacceso.numero=usuarios.autorizacion)as menu6,(select tipoacceso.menu7 from tipoacceso where tipoacceso.numero=usuarios.autorizacion)as menu7 from usuarios where nombreUsuario like '"+usuario+"' and clave like '"+clave+"'";
+                String sql="select * from usuarios where nombreUsuario like '"+usuario+"' and clave like '"+clave+"'";
                 //System.out.println(sql);
                 ResultSet rs=tras.leerConjuntoDeRegistros(sql);
             
@@ -397,11 +397,11 @@ public class Usuarios extends TipoAcceso implements Personalizable{
                  usu=new Usuarios();
                  usu.setNivelDeAutorizacion(rs.getInt("autorizacion"));
                  usu.setNombre(rs.getString("nombre"));
-                 usu.setNumero(rs.getInt("numero"));
-                 usu.setNumeroId(rs.getInt("numero"));
+                 usu.setNumero(rs.getInt("id"));
+                 usu.setNumeroId(rs.getInt("id"));
                  usu.setSucursal(new Sucursales(rs.getInt("sucursal")));
                  usu.setEquipo(numeroEquipo);
-                         usu.setMenu(new Menus(rs.getBoolean("menu1"),rs.getBoolean("menu2"),rs.getBoolean("menu3"),rs.getBoolean("menu4"),rs.getBoolean("menu5"),rs.getBoolean("menu6"),rs.getBoolean("menu7")));                    
+                         usu.setMenu(new Menus(true,true,true,true,true,true,true)); 
                     
                  }
                  rs.close();

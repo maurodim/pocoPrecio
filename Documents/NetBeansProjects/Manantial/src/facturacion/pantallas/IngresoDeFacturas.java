@@ -86,7 +86,7 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
     
     public IngresoDeFacturas() {
         //Articulos.CargarMap();
-        cliT=new Clientes("130");
+        cliT=new Clientes("1");
         //cliT=(ClientesTango)oob;
         //comp.setCliente(cliT);
         initComponents();
