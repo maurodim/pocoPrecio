@@ -7,7 +7,7 @@ package Recibos;
 
 import facturacion.clientes.Clientes;
 import facturacion.clientes.Facturable;
-import interfaceGraficas.Inicio;
+import interfaceGraficasManantial.Inicio;
 import interfaces.Transaccionable;
 import interfacesPrograma.Busquedas;
 import interfacesPrograma.Facturar;
@@ -35,7 +35,8 @@ public class FormasDePago implements Formable{
     private String vencimiento;
     private Integer idRecibo;
     private Integer idCliente;
-    private static Transaccionable tra=new Conecciones();
+    private static Transaccionable tra;
+        
     private static ResultSet rs;
     private String sql;
     private Integer idTipoComprobante;

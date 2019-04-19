@@ -14,7 +14,7 @@ import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfWriter;
 import facturacion.clientes.Clientes;
-import interfaceGraficas.Inicio;
+import interfaceGraficasManantial.Inicio;
 import java.io.File;
 
 import java.io.FileNotFoundException;

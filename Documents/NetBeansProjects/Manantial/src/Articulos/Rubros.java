@@ -28,7 +28,7 @@ public class Rubros implements Personalizable,Rubrable{
     private Integer id;
     private String descripcion;
     private static String sql;
-    private static Transaccionable tra=new Conecciones();
+    private static Transaccionable tra;
     private static ResultSet rs;
     
 
@@ -55,11 +55,23 @@ public class Rubros implements Personalizable,Rubrable{
 
     @Override
     public Boolean modificar(Object objeto) {
-        Rubros rubro=new Rubros();
-        rubro=(Rubros)objeto;
-        String sql="update rubros set descripcion='"+rubro.getDescripcion()+"' where id="+rubro.getId();
-        Transaccionable tra=new Conecciones();
-        tra.guardarRegistro(sql);
+        try {
+            Rubros rubro=new Rubros();
+            rubro=(Rubros)objeto;
+            String sql="update rubros set descripcion='"+rubro.getDescripcion()+"' where id="+rubro.getId();
+            Transaccionable tra=null;
+       
+            tra = new Conecciones();
+        
+            tra.guardarRegistro(sql);
+            
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Rubros.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(Rubros.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Rubros.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return true;
     }
 
@@ -87,9 +99,13 @@ public class Rubros implements Personalizable,Rubrable{
     public ArrayList listar() {
         ArrayList listado=new ArrayList();
         String sql="select * from rubros order by descripcion";
-        Transaccionable tra=new Conecciones();
-        ResultSet rs=tra.leerConjuntoDeRegistros(sql);
+        
         try {
+            Transaccionable tra=null;
+        
+            tra = new Conecciones();
+        
+        ResultSet rs=tra.leerConjuntoDeRegistros(sql);
             while(rs.next()){
                 Rubros rubro=new Rubros();
                 rubro.setId(rs.getInt("id"));
@@ -97,6 +113,10 @@ public class Rubros implements Personalizable,Rubrable{
                 listado.add(rubro);
             }
         } catch (SQLException ex) {
+            Logger.getLogger(Rubros.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Rubros.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
             Logger.getLogger(Rubros.class.getName()).log(Level.SEVERE, null, ex);
         }
         return listado;
@@ -117,16 +137,24 @@ public class Rubros implements Personalizable,Rubrable{
         Rubros rubros=new Rubros();
         rubros=(Rubros)rubro;
         String sql="insert into rubros (descripcion) values ('"+rubros.getDescripcion()+"')";
-        Transaccionable tra=new Conecciones();
-        tra.guardarRegistro(sql);
         int ultimo=0;
+        try {
+            Transaccionable tra=null;
+        
+            tra = new Conecciones();
+        
+        tra.guardarRegistro(sql);
+        
         sql="select LAST_INSERT_ID()";
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
-        try {
             while(rs.next()){
                 ultimo=rs.getInt(1);
             }
         } catch (SQLException ex) {
+            Logger.getLogger(Rubros.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Rubros.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
             Logger.getLogger(Rubros.class.getName()).log(Level.SEVERE, null, ex);
         }
         return ultimo;
@@ -134,23 +162,34 @@ public class Rubros implements Personalizable,Rubrable{
 
     @Override
     public void modificarPrecioRubro(Integer idRubro, Double precio) {
-        Double coe=precio / 100;
-        coe=coe + 1;
-        System.out.println("resultado :"+coe);
-        sql="update articulos set precio=round((precio * "+coe+"),4) where idrubro="+idRubro;
-        
-        tra.guardarRegistro(sql);
+        try {
+            Double coe=precio / 100;
+            coe=coe + 1;
+            System.out.println("resultado :"+coe);
+            sql="update articulos set precio=(precio * "+coe+") where idrubro="+idRubro;
+            tra=new Conecciones();
+            System.out.println(sql);
+            tra.guardarRegistro(sql);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Rubros.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(Rubros.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Rubros.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }
 
     @Override
     public ArrayList listarPorRubro(Integer idRubro) {
-ArrayList listado=new ArrayList();
+ArrayList<Rubros> listado=new ArrayList();
         Rubros subRubro;
         String sql="select * from rubros order by descripcion";
         
-        rs=tra.leerConjuntoDeRegistros(sql);
+        
         try {
+            tra=new Conecciones();
+            rs=tra.leerConjuntoDeRegistros(sql);
             while(rs.next()){
                 subRubro=new Rubros();
                 subRubro.setDescripcion(rs.getString("descripcion"));
@@ -160,6 +199,10 @@ ArrayList listado=new ArrayList();
             rs.close();
         } catch (SQLException ex) {
             Logger.getLogger(SubRubros.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Rubros.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(Rubros.class.getName()).log(Level.SEVERE, null, ex);
         }
         return listado;
     }
@@ -176,12 +219,20 @@ ArrayList listado=new ArrayList();
 
     @Override
     public void modificarCostoPorRubro(Integer idRubro, Double precio) {
-        Double coe=precio / 100;
-        coe=coe + 1;
-        System.out.println("resultado :"+coe);
-        String sql="update articulos set costo=round((costo * "+coe+"),4) where idrubro="+idRubro;
-        
-        tra.guardarRegistro(sql);
+        try {
+            Double coe=precio / 100;
+            coe=coe + 1;
+            System.out.println("resultado :"+coe);
+            String sql="update articulos set costo=(costo * "+coe+") where idrubro="+idRubro;
+            tra=new Conecciones();
+            tra.guardarRegistro(sql);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Rubros.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(Rubros.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Rubros.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
@@ -218,8 +269,10 @@ ArrayList listado=new ArrayList();
         ArrayList resultado=new ArrayList();
         Rubros rubro=null;
         sql="select * from rubros where descripcion like '%"+texto+"%'";
-        rs=tra.leerConjuntoDeRegistros(sql);
+        
         try {
+            tra=new Conecciones();
+            rs=tra.leerConjuntoDeRegistros(sql);
             while(rs.next()){
                rubro=new Rubros();
                rubro.setId(rs.getInt("id"));
@@ -228,13 +281,24 @@ ArrayList listado=new ArrayList();
             }
         } catch (SQLException ex) {
             Logger.getLogger(Rubros.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Rubros.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(Rubros.class.getName()).log(Level.SEVERE, null, ex);
         }
         return resultado;
     }
 
     @Override
     public DefaultComboBoxModel mostrarEnBox(ArrayList listado) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        DefaultComboBoxModel modelo=new DefaultComboBoxModel();
+        Rubros rubro=new Rubros();
+        Iterator it=listado.listIterator();
+        while(it.hasNext()){
+            rubro=(Rubros)it.next();
+            modelo.addElement(rubro.getId()+" "+rubro.getDescripcion());
+        }
+        return modelo;
     }
     
     

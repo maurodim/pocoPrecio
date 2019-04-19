@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.table.DefaultTableModel;
 import Articulos.Articulos;
-import interfaceGraficas.Inicio;
+import interfaceGraficasManantial.Inicio;
 import objetosR.Conecciones;
 
 /**
@@ -131,7 +131,16 @@ public class DetallePedidos implements Pedable{
         detalle=(DetallePedidos)ped;
         Integer numero=0;
         String sql="insert into detallepedidos (idpedido,idarticulo,descripcionarticulo,idcliente,cantidad,preciounitario,descuento) values ("+detalle.getIdPedido()+","+detalle.getIdArticulo()+",'"+detalle.getDescripcionArticulo()+"',"+detalle.getIdCliente()+","+detalle.getCantidad()+","+detalle.getPrecioUnitario()+","+detalle.getDescuento()+")";
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(DetallePedidos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(DetallePedidos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(DetallePedidos.class.getName()).log(Level.SEVERE, null, ex);
+        }
         tra.guardarRegistro(sql);
         
         
@@ -143,7 +152,16 @@ public class DetallePedidos implements Pedable{
         ArrayList listadoP=new ArrayList();
         DetallePedidos detalle;
         String sql="select * from detallepedidos where idpedido="+idPed;
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(DetallePedidos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(DetallePedidos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(DetallePedidos.class.getName()).log(Level.SEVERE, null, ex);
+        }
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
         try {
             while(rs.next()){
@@ -193,7 +211,16 @@ public class DetallePedidos implements Pedable{
         DetallePedidos detalle=new DetallePedidos();
         detalle=(DetallePedidos)ped;
         String sql="update detallepedidos set descripcionarticulo='"+detalle.getDescripcionArticulo()+"',cantidad="+detalle.getCantidad()+",preciounitario="+detalle.getPrecioUnitario()+", descuento="+detalle.getDescuento()+" where id="+detalle.getId();
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(DetallePedidos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(DetallePedidos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(DetallePedidos.class.getName()).log(Level.SEVERE, null, ex);
+        }
         tra.guardarRegistro(sql);
         return true;
         
@@ -202,7 +229,16 @@ public class DetallePedidos implements Pedable{
     @Override
     public void eliminarPedido(Integer idPed) {
         String sql="delete from detallepedidos where id="+idPed;
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(DetallePedidos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(DetallePedidos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(DetallePedidos.class.getName()).log(Level.SEVERE, null, ex);
+        }
        tra.guardarRegistro(sql);
     }
 

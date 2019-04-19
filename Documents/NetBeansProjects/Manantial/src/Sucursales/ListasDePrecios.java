@@ -4,7 +4,7 @@
  */
 package Sucursales;
 
-import interfaceGraficas.Inicio;
+import interfaceGraficasManantial.Inicio;
 import interfaces.Editables;
 import interfaces.Transaccionable;
 import java.sql.ResultSet;
@@ -69,11 +69,12 @@ public class ListasDePrecios implements Editables{
              tra=new Conecciones();
          }else{
          */ 
-             tra=new Conecciones();
+             
+        try {
+            tra=new Conecciones();
          //}
         String sql="select * from coeficienteslistas";
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
-        try {
             listadoDeListas.clear();
             Integer numero=0;
             while(rs.next()){
@@ -90,12 +91,25 @@ public class ListasDePrecios implements Editables{
         } catch (SQLException ex) {
             Logger.getLogger(ListasDePrecios.class.getName()).log(Level.SEVERE, null, ex);
             
+        } catch (InstantiationException ex) {
+            Logger.getLogger(ListasDePrecios.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(ListasDePrecios.class.getName()).log(Level.SEVERE, null, ex);
         }
         //if(Inicio.coneccionRemota)BackapearListasDePrecios();
     }
     public static void BackapearListasDePrecios(){
         ListasDePrecios rs=new ListasDePrecios();
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(ListasDePrecios.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(ListasDePrecios.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(ListasDePrecios.class.getName()).log(Level.SEVERE, null, ex);
+        }
         String sql="delete from coeficienteslistas";
         tra.guardarRegistro(sql);
         Enumeration<ListasDePrecios> elementos=listadoDeListas.elements();
@@ -122,7 +136,16 @@ public class ListasDePrecios implements Editables{
     public Boolean AltaObjeto(Object objeto) {
         ListasDePrecios listaDePrecios=(ListasDePrecios)objeto;
         Boolean verif=true;
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(ListasDePrecios.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(ListasDePrecios.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(ListasDePrecios.class.getName()).log(Level.SEVERE, null, ex);
+        }
         Double coe=listaDePrecios.getCoeficiente() / 100;
         coe=coe + 1;
         String sql="insert into coeficienteslistas (coeficiente,descripcion) values ("+coe+",'"+listaDePrecios.getDesccripcion()+"')";
@@ -135,7 +158,16 @@ public class ListasDePrecios implements Editables{
     public Boolean ModificaionObjeto(Object objeto) {
         ListasDePrecios listaDePrecios=(ListasDePrecios)objeto;
         Boolean verif=true;
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(ListasDePrecios.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(ListasDePrecios.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(ListasDePrecios.class.getName()).log(Level.SEVERE, null, ex);
+        }
         Double coe=listaDePrecios.getCoeficiente() / 100;
         coe=coe + 1;
         String sql="update coeficienteslistas set coeficiente="+coe+",descripcion='"+listaDePrecios.getDesccripcion()+"' where id="+listaDePrecios.getId();

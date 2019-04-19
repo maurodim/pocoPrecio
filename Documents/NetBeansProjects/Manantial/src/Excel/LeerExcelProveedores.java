@@ -93,7 +93,16 @@ private void printToConsole(List cellDataList)
     String celular="";
     int cuit2;
     String sql="";
-    Transaccionable tra=new Conecciones();
+    Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+           Logger.getLogger(LeerExcelProveedores.class.getName()).log(Level.SEVERE, null, ex);
+       } catch (IllegalAccessException ex) {
+           Logger.getLogger(LeerExcelProveedores.class.getName()).log(Level.SEVERE, null, ex);
+       } catch (SQLException ex) {
+           Logger.getLogger(LeerExcelProveedores.class.getName()).log(Level.SEVERE, null, ex);
+       }
     HashMap listadoArticulos=new HashMap();
     Boolean verif=false;
     ArrayList lstArt=new ArrayList();

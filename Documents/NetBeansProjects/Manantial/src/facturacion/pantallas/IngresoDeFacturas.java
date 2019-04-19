@@ -9,7 +9,7 @@ import Pedidos.IngresoDePedidos;
 import Conversores.Numeros;
 import facturacion.clientes.Clientes;
 import FacturaE.FEl;
-import interfaceGraficas.Inicio;
+import interfaceGraficasManantial.Inicio;
 import interfacesPrograma.Facturar;
 import java.awt.event.KeyEvent;
 import java.io.FileWriter;
@@ -78,13 +78,19 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
     private String valorCargado;
     private Double porcentajeDescuento;
     private Double subTotal;
-    
+    private TablaGenericaProductos tgp;
+
+    private void desplegarPopUp(){
+
+    }
+
     public IngresoDeFacturas() {
         //Articulos.CargarMap();
-        cliT=new Clientes("130");
+        cliT=new Clientes("1");
         //cliT=(ClientesTango)oob;
         //comp.setCliente(cliT);
         initComponents();
+        tgp = new TablaGenericaProductos();
         porcentajeDescuento=0.00;
         subTotal=0.00;
         this.jCheckBox2.setEnabled(true);
@@ -96,7 +102,7 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
         this.jCheckBox2.setEnabled(false);
         this.jTextField1.requestFocus();
         //this.jPanel2.requestFocus();
-        
+
     }
     public IngresoDeFacturas(Object clienteTango){
         cliT=new Clientes();
@@ -149,15 +155,8 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
         jLabel7 = new javax.swing.JLabel();
         jTextField4 = new javax.swing.JTextField();
         jCheckBox1 = new javax.swing.JCheckBox();
-        jLabel2 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
-        jLabel10 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox();
         jLabel8 = new javax.swing.JLabel();
         jLabel25 = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
 
         setClosable(true);
         setIconifiable(true);
@@ -269,7 +268,7 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton1)
@@ -357,27 +356,7 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
             }
         });
 
-        jLabel2.setText("Rubro:");
-
-        jTextField5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField5ActionPerformed(evt);
-            }
-        });
-        jTextField5.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jTextField5KeyPressed(evt);
-            }
-        });
-
-        jLabel10.setText("SubRubro:");
-
-        jComboBox2.setModel(combox);
-        jComboBox2.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jComboBox2KeyPressed(evt);
-            }
-        });
+        
 
         jLabel25.setText("<html>PRESIONE F1 PARA CONSULTAR POR DESCRIPCION<br> PRESIONE F3 PARA FILTRAR POR SUBRUBRO<br> PRESIONE F4 PARA IMPRIMIR </html>");
 
@@ -385,46 +364,42 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(21, 21, 21)
+                                .addComponent(jTextField1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(31, 31, 31)
+                                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))))
+                .addGap(19, 19, 19)
+                .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(36, 36, 36))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel6))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel10)
-                                .addGap(4, 4, 4)
-                                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(13, 13, 13)))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel4)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(29, 29, 29)
-                .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -439,46 +414,17 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
                             .addComponent(jCheckBox1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel10)
-                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel7)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel3)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(1, 1, 1)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addGap(905, 905, 905)
+                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3)
+                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(899, 899, 899)
                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        DefaultTableModel modelo=new DefaultTableModel();
-        jTable2.setModel(modelo);
-        jTable2.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jTable2KeyPressed(evt);
-            }
-        });
-        jScrollPane3.setViewportView(jTable2);
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3)
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 71, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -489,7 +435,6 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -498,8 +443,6 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -522,17 +465,17 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         //verificar();
-        //Impresora imp=new Impresora();        
+        //Impresora imp=new Impresora();
         String cadena=cliT.getCodigoCliente()+" - "+cliT.getRazonSocial()+"\n"+cliT.getDireccion();
         //comp.setCliente(cliT);
         //VisorDeHojaDeRuta
-        
+
         //comp.setVendedor(VisorDeHojaDeRuta.tG.getOperador());
         if(this.jCheckBox1.isSelected()){
         //    comp.setReparto(1);
         //    comp.setEntrega(String.valueOf(this.jTextField3.getText()));
         }
-        
+
         //comp.setArticulos(detalleDelPedido);
         DecimalFormat fr=new DecimalFormat("00");
         Calendar c1=Calendar.getInstance();
@@ -540,7 +483,7 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
 	String dia=Integer.toString(c2.get(Calendar.DAY_OF_MONTH));
 	String mes=Integer.toString(c2.get(Calendar.MONTH));
 	String ano=Integer.toString(c2.get(Calendar.YEAR));
-	
+
         int da=Integer.parseInt(dia);
         int me=Integer.parseInt(mes);
         me++;
@@ -555,8 +498,8 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
         if(cliT.getTipoIva()== 1)comprobanteTipo=2;
         if(cliT.getTipoIva()== 2)comprobanteTipo=1;
         if(cliT.getTipoIva()== 3)comprobanteTipo=1;
-        
-        
+
+
         Comprobantes comprobante=new Comprobantes();
         comprobante.setFe(true);
         comprobante.setCliente(cliT);
@@ -583,7 +526,7 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
                 Logger.getLogger(IngresoDePedidos.class.getName()).log(Level.SEVERE, null, ex1);
             }finally{
                          try {
-           // Nuevamente aprovechamos el finally para 
+           // Nuevamente aprovechamos el finally para
            // asegurarnos que se cierra el fichero.
            if (null != fichero)
               fichero.close();
@@ -602,13 +545,13 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
         }else{
             sub=montoTotal;
         }
-        
+
         comprobante.setMontoTotal(sub);
         comprobante.setSubTotal(montoTotal);
         Double descuen=montoTotal - sub;
         comprobante.setDescuento(descuen);
         comprobante.setPorcentajeDescuento(porcentajeDescuento);
-        
+
         int noFacturar=0;
         if(IngresoDeFacturas.jCheckBox2.isSelected()){
             comprobante.setPagado(1);
@@ -623,16 +566,16 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
             //Double totalGral=montoTotal + saldo;
             Double totalGral=montoTotal;
             if(limite < totalGral)noFacturar=1;
-            
+
         }
         if(noFacturar==0){
         Facturar fat=new Comprobantes();
         comprobante=(Comprobantes)fat.guardar(comprobante);
         // aqui hago el envio a factura  electronica, si aprueba no imprime
-        
+
         FEl fe=new FEl();
         try {
-            
+
            fe=(FEl) fe.leer(comprobante);
            if(fe.getRespuesta().equals("OK")){
                //JOptionPane.showMessageDialog(this,"aprobada id: "+fe.getId());
@@ -640,7 +583,7 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
                pdf.setDoc(fe);
                pdf.setCliente(cliT);
                pdf.run();
-              /*         
+              /*
         ImprimirFactura imprimir=new ImprimirFactura();
             try {
                 imprimir.ImprimirFactura(comprobante.getNumero(),comprobante.getTipoComprobante());
@@ -648,7 +591,7 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
                 Logger.getLogger(IngresoDeFacturas.class.getName()).log(Level.SEVERE, null, ex);
             }
             */
-            
+
            }else{
                if(fe.getRespuesta().equals("PARAMETROS"))JOptionPane.showMessageDialog(this,"Error en los parametros del cliente, modifiquelos en cae pendientes");
                               JOptionPane.showMessageDialog(this,"error en la coneccion, intentelo mas tarde");
@@ -665,7 +608,7 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
             }
         /*
          * ACA DEBO LIMPIAR TODOS LOS CAMPOS Y VARIABLES DE LA PANTALLA
-         * 
+         *
          */
         //comp.setTipoComprobante(comprobanteTipo);
         //comp.setMontoTotal(montoTotal);
@@ -673,7 +616,7 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
         agregarRenglonTabla();
         this.jCheckBox2.setSelected(true);
         //this.jCheckBox2.setEnabled(false);
-        this.jTable2.removeAll();
+//        this.jTable2.removeAll();
         listadoDeBusqueda.clear();
         cargarLista(listadoDeBusqueda);
         //cliT=new Clientes("99");
@@ -685,9 +628,9 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
             JOptionPane.showMessageDialog(this,"El cliente supera el límite de crédito, debe abonar la venta");
             noFacturar=0;
         }
-         
-        
-        
+
+
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -698,12 +641,12 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
         jTextField1.setText("");
         jTextField1.requestFocus();
         //listadoDeBusqueda.clear();
-        //montoTotal=0.00;        
-        
+        //montoTotal=0.00;
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
-        jTextField5.requestFocus();
+        jTextField1.requestFocus();
     }//GEN-LAST:event_formComponentShown
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
@@ -719,28 +662,13 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
         montrarMonto();
         jTextField1.setText("");
         jTextField1.requestFocus();
-          
+
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
-        
-        
+
+
     }//GEN-LAST:event_formKeyPressed
-
-    private void jTable2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable2KeyPressed
-        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
-            int posicion=this.jTable2.getSelectedRow();
-            arti=(Articulos)listadoDeBusqueda.get(posicion);
-            //System.err.println("ARTICULO SELECCIONADO :"+arti.getDescripcionArticulo()+" "+arti.getCodigoDeBarra());
-            String codBar=arti.getCodigoDeBarra();
-            jTextField1.setText(codBar.trim());
-
-            this.jLabel8.setText(arti.getDescripcionArticulo());
-
-            this.jTextField1.requestFocus();
-
-        }
-    }//GEN-LAST:event_jTable2KeyPressed
 
     private void jTextField3KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField3KeyPressed
         if(KeyEvent.VK_ENTER==evt.getKeyCode()){
@@ -750,187 +678,9 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
             //cargarLista(detalleDelPedido);
             montrarMonto();
             agregarRenglonTabla();
-            
+
         }
     }//GEN-LAST:event_jTextField3KeyPressed
-
-    private void jComboBox2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jComboBox2KeyPressed
-        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
-            subRubro=(SubRubros)listadoSubRubros.get(this.jComboBox2.getSelectedIndex());
-            listadoSubRubros.clear();
-            listadoSubRubros.add(subRubro);
-            this.jTable2.removeAll();
-            Modificable modiA=new Articulos();
-            Articulable modi=new ArticulosAsignados();
-            listadoDeBusqueda=modi.convertirListadoEnArticulos(modi.filtradorDeFormularios(listadoSubRubros, listadoR, cliT,jTextField1.getText()));
-            //listadoDeBusqueda=modi.filtrador(listadoSubRubros,listadoR);
-            this.jTable2.setModel(modiA.mostrarListadoBusqueda(listadoDeBusqueda));
-            columnaCodigo=this.jTable2.getColumn("Descripcion");
-            columnaCodigo.setPreferredWidth(600);
-            columnaCodigo.setMaxWidth(600);
-            columnaCodigo=this.jTable2.getColumn("Stock");
-            columnaCodigo.setPreferredWidth(60);
-            columnaCodigo.setMaxWidth(60);
-            this.jTextField1.requestFocus();
-        }
-    }//GEN-LAST:event_jComboBox2KeyPressed
-
-    private void jTextField5KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField5KeyPressed
-        if(evt.getKeyCode()==KeyEvent.VK_F4){
-            //verificar();
-            //Impresora imp=new Impresora();
-            //verificar();
-            //Impresora imp=new Impresora();
-            String cadena=cliT.getCodigoCliente()+" - "+cliT.getRazonSocial()+"\n"+cliT.getDireccion();
-            //comp.setCliente(cliT);
-            //VisorDeHojaDeRuta
-
-            //comp.setVendedor(VisorDeHojaDeRuta.tG.getOperador());
-            if(this.jCheckBox1.isSelected()){
-                //    comp.setReparto(1);
-                //    comp.setEntrega(String.valueOf(this.jTextField3.getText()));
-            }
-
-            //comp.setArticulos(detalleDelPedido);
-            DecimalFormat fr=new DecimalFormat("00");
-            Calendar c1=Calendar.getInstance();
-            Calendar c2=new GregorianCalendar();
-            String dia=Integer.toString(c2.get(Calendar.DAY_OF_MONTH));
-            String mes=Integer.toString(c2.get(Calendar.MONTH));
-            String ano=Integer.toString(c2.get(Calendar.YEAR));
-
-            int da=Integer.parseInt(dia);
-            int me=Integer.parseInt(mes);
-            me++;
-
-            dia=fr.format(da);
-            mes=fr.format(me);
-            String fecha=dia+"/"+mes+"/"+ano;
-            String fecha2=ano+"-"+mes+"-"+dia;
-            //comp.setFechaComprobante(fecha2);
-            //comp.setFechaComprobante(fecha);
-            int comprobanteTipo=cliT.getTipoComprobante();
-
-            Comprobantes comprobante=new Comprobantes();
-            comprobante.setFe(false);
-            comprobante.setCliente(cliT);
-            comprobante.setTipoMovimiento(1);
-            comprobante.setTipoComprobante(comprobanteTipo);
-            comprobante.setFechaEmision((Date.valueOf(fecha2)));
-            comprobante.setListadoDeArticulos(detalleDelPedido);
-            comprobante.setUsuarioGenerador(Inicio.usuario.getNumero());
-            comprobante.setIdSucursal(Inicio.sucursal.getNumero());
-            comprobante.setIdDeposito(Inicio.deposito.getNumero());
-            Integer numeroCaja=Inicio.caja.getNumero();
-            //System.out.println("EL NUMERO DE CAJA ESSSSSSSS "+numeroCaja);
-            comprobante.setIdCaja(numeroCaja);
-            if(montoTotal == 0.00){
-                String sqM="usuario :"+Inicio.usuario.getNombre()+" sucursal "+Inicio.sucursal.getNumero()+" idcaja "+Inicio.caja.getNumero();
-                JOptionPane.showMessageDialog(this,"OJO EL MONTO DE ESTE COMPROBANTE ES $ 0, AVISE PARA DETECTAR EL ERROR");
-                FileWriter fichero=null;
-                PrintWriter pw=null;
-                try {
-                    fichero = new FileWriter("C:\\Gestion\\"+Inicio.fechaDia+" - errores en comprobantes.txt",true);
-                        pw=new PrintWriter(fichero);
-                        pw.println(sqM);
-                    } catch (IOException ex1) {
-                        Logger.getLogger(IngresoDePedidos.class.getName()).log(Level.SEVERE, null, ex1);
-                    }finally{
-                        try {
-                            // Nuevamente aprovechamos el finally para
-                            // asegurarnos que se cierra el fichero.
-                            if (null != fichero)
-                            fichero.close();
-                        } catch (Exception e2) {
-                            e2.printStackTrace();
-                        }
-                    }
-                }
-                comprobante.setMontoTotal(montoTotal);
-                int noFacturar=0;
-                if(IngresoDeFacturas.jCheckBox2.isSelected()){
-                    comprobante.setPagado(1);
-                }else{
-                    comprobante.setPagado(0);
-                    /*
-                    * ACA DEBO COMPROBAR EL LIMITE DEL CLIENTE Y SI LO SUPERA LA COMPRA RECHAZAR LA VENTA
-                    *
-                    */
-                    Double limite=cliT.getCupoDeCredito();
-                    //Double saldo=cliT.getSaldo();
-                    //Double totalGral=montoTotal + saldo;
-                    Double totalGral=montoTotal;
-                    if(limite < totalGral)noFacturar=1;
-
-                }
-                if(noFacturar==0){
-                    Facturar fat=new Comprobantes();
-                    comprobante=(Comprobantes)fat.guardar(comprobante);
-                    // aqui hago el envio a factura  electronica, si aprueba no imprime
-
-                    ImprimirFactura imprimir=new ImprimirFactura();
-                    try {
-                        imprimir.ImprimirFactura(comprobante.getNumero(),comprobante.getTipoComprobante());
-                    } catch (IOException ex) {
-                        Logger.getLogger(IngresoDeFacturas.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-
-                    /*
-                    * ACA DEBO LIMPIAR TODOS LOS CAMPOS Y VARIABLES DE LA PANTALLA
-                    *
-                    */
-                    //comp.setTipoComprobante(comprobanteTipo);
-                    //comp.setMontoTotal(montoTotal);
-                    detalleDelPedido.clear();
-                    agregarRenglonTabla();
-                    this.jCheckBox2.setSelected(true);
-                    //this.jCheckBox2.setEnabled(false);
-                    this.jTable2.removeAll();
-                    listadoDeBusqueda.clear();
-                    cargarLista(listadoDeBusqueda);
-                    //cliT=new Clientes("99");
-                    this.jLabel6.setText(cliT.getRazonSocial());
-                    this.jTextField2.setText("");
-                    //jTextField1.setText("");
-                    jTextField1.requestFocus();
-                }else{
-                    JOptionPane.showMessageDialog(this,"El cliente supera el límite de crédito, debe abonar la venta");
-                    noFacturar=0;
-                }
-
-            }
-            if(evt.getKeyCode()==KeyEvent.VK_ENTER){
-                rubro=new Rubros();
-                Rubrable subRuble=new SubRubros();
-                Iterator iR=listadoR.listIterator();
-                while(iR.hasNext()){
-                    rubro=(Rubros)iR.next();
-                    listadoSubRubros=subRuble.listarPorRubro(rubro.getId());
-                }
-                Modificable modiA=new Articulos();
-                Articulable modi=new ArticulosAsignados();
-                listadoDeBusqueda=modi.convertirListadoEnArticulos(modi.filtrador(listadoSubRubros, listadoR, cliT));
-                //listadoDeBusqueda=modi.filtrador(listadoSubRubros,listadoR);
-                this.jTable2.setModel(modiA.mostrarListadoBusqueda(listadoDeBusqueda));
-                columnaCodigo=this.jTable2.getColumn("Descripcion");
-                columnaCodigo.setPreferredWidth(600);
-                columnaCodigo.setMaxWidth(600);
-                columnaCodigo=this.jTable2.getColumn("Stock");
-                columnaCodigo.setPreferredWidth(60);
-                columnaCodigo.setMaxWidth(60);
-                this.jLabel10.setVisible(true);
-                this.jComboBox2.setVisible(true);
-                this.jComboBox2.setModel(subRuble.mostrarEnBox(listadoSubRubros));
-                jTextField1.selectAll();
-                jTextField1.requestFocus();
-            }else{
-                String rub=this.jTextField5.getText();
-
-                listadoR=ruble.buscar(rub);
-
-                //this.jTable2.setModel(ruble.mostrarEnCombo(listadoR));
-            }
-    }//GEN-LAST:event_jTextField5KeyPressed
 
     private void jCheckBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBox1ItemStateChanged
         this.jTextField4.requestFocus();
@@ -970,7 +720,7 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
             montrarMonto();
             //System.err.println("MONTO TOTAL "+montoTotal);
             this.jLabel8.setText("");
-            this.jTable2.removeAll();
+//            this.jTable2.removeAll();
             this.jButton1.setVisible(true);
             this.jTextField1.setText("");
             this.jTextField2.setText("");
@@ -1053,13 +803,13 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
                     montrarMonto();
                     //System.err.println("MONTO TOTAL "+montoTotal);
                     this.jLabel8.setText("");
-                    this.jTable2.removeAll();
+//                    this.jTable2.removeAll();
                     this.jButton1.setVisible(true);
                     //String valorCargado;
                     jTextField1.setText(valorCargado);
-                    this.jTextField5.selectAll();
+                    //this.jTextField5.selectAll();
                     this.jTextField2.setText("");
-                    this.jTextField5.requestFocus();
+                    //this.jTextField5.requestFocus();
                 }
             }
 
@@ -1127,20 +877,31 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
             //System.out.println("ENTRO CON F1¡¡¡¡¡");
             valorCargado=jTextField1.getText();
             Facturar fart=new Articulos();
-            this.jTable2.removeAll();
+//            this.jTable2.removeAll();
             Modificable modiA=new Articulos();
             Articulable modi=new ArticulosAsignados();
             listadoDeBusqueda.clear();
-            listadoDeBusqueda=modi.convertirListadoEnArticulos(modi.filtradorDeFormularios(listadoSubRubros, listadoR, cliT,this.jTextField1.getText()));
+            listadoDeBusqueda=fart.listadoBusqueda(jTextField1.getText());
             //listadoDeBusqueda=modi.filtrador(listadoSubRubros,listadoR);
-            this.jTable2.setModel(modiA.mostrarListadoBusqueda(listadoDeBusqueda));
-            columnaCodigo=this.jTable2.getColumn("Descripcion");
-            columnaCodigo.setPreferredWidth(600);
-            columnaCodigo.setMaxWidth(600);
-            columnaCodigo=this.jTable2.getColumn("Stock");
-            columnaCodigo.setPreferredWidth(60);
-            columnaCodigo.setMaxWidth(60);
-            this.jTable2.requestFocus();
+
+//            this.jTable2.setModel(modiA.mostrarListadoBusqueda(listadoDeBusqueda));
+//            columnaCodigo=this.jTable2.getColumn("Descripcion");
+//            columnaCodigo.setPreferredWidth(600);
+//            columnaCodigo.setMaxWidth(600);
+//            columnaCodigo=this.jTable2.getColumn("Stock");
+//            columnaCodigo.setPreferredWidth(60);
+//            columnaCodigo.setMaxWidth(60);
+//            this.jTable2.requestFocus();
+
+            // Configurando parametros de algunas columnas de interes
+            List<String> columnasTabla = new ArrayList<>();
+            columnasTabla.add("Descripcion:600:600");
+            columnasTabla.add("Stock:60:60");
+
+            // Desplegando ventana emergente
+            tgp.desplegarPopUp("Seleccion Item", modiA.mostrarListadoBusqueda(listadoDeBusqueda), columnasTabla);
+
+
         }
         if(evt.getKeyCode()==KeyEvent.VK_F4){
             //verificar();
@@ -1251,7 +1012,7 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
                     agregarRenglonTabla();
                     this.jCheckBox2.setSelected(true);
                     //this.jCheckBox2.setEnabled(false);
-                    this.jTable2.removeAll();
+//                    this.jTable2.removeAll();
                     listadoDeBusqueda.clear();
                     cargarLista(listadoDeBusqueda);
                     //cliT=new Clientes("99");
@@ -1265,7 +1026,7 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
                 }
 
             }
-            if(evt.getKeyCode()==KeyEvent.VK_F3)this.jComboBox2.requestFocus();
+            //if(evt.getKeyCode()==KeyEvent.VK_F3)this.jComboBox2.requestFocus();
     }//GEN-LAST:event_jTextField1KeyPressed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -1291,15 +1052,25 @@ private void cargarLista(ArrayList lista){
             //modelo.addElement(articulo.getDescripcionArticulo()+" $"+Numeros.ConvertirNumero(articulo.getPrecioUnitarioNeto()));
             modelo.addRow(fila);
         }
-    
-    
-    this.jTable2.setModel(modelo);
-            columnaCodigo=this.jTable2.getColumn("Descripcion");
-        columnaCodigo.setPreferredWidth(600);
-        columnaCodigo.setMaxWidth(600);
-                columnaCodigo=this.jTable2.getColumn("Stock");
-        columnaCodigo.setPreferredWidth(60);
-        columnaCodigo.setMaxWidth(60);
+
+
+//    this.jTable2.setModel(modelo);
+//    columnaCodigo = this.jTable2.getColumn("Descripcion");
+//    columnaCodigo.setPreferredWidth(600);
+//    columnaCodigo.setMaxWidth(600);
+//    columnaCodigo = this.jTable2.getColumn("Stock");
+//    columnaCodigo.setPreferredWidth(60);
+//    columnaCodigo.setMaxWidth(60);
+
+    // Configurando parametros de algunas columnas de interes
+    List<String> columnasTabla = new ArrayList<>();
+    columnasTabla.add("Descripcion:600:600");
+    columnasTabla.add("Stock:60:60");
+
+    // Desplegando ventana emergente
+    tgp.desplegarPopUp("Seleccion Item", modelo, columnasTabla);
+
+
 }
 private void agregarRenglonTabla(){
         MiModeloTablaFacturacion busC=new MiModeloTablaFacturacion();
@@ -1325,13 +1096,13 @@ private void agregarRenglonTabla(){
             String codig=pedidos.getCodigoAsignado();
             String desc=pedidos.getDescripcionArticulo();
             String cant=String.valueOf(pedidos.getCantidad());
-            
+
             fila[0]=codig;
             fila[1]=desc;
             Double precioUnitario=pedidos.getPrecioUnitarioNeto();
-            
+
             //precioUnitario=precioUnitario * cliT.getCoeficienteListaDeprecios();
-            
+
             Double valor=precioUnitario * pedidos.getCantidad();
             //precioUnitario= pedidos.getPrecioUnitario() * cliT.getCoeficienteListaDeprecios();
             //Double valor=(pedidos.getCantidad() * precioUnitario);
@@ -1341,7 +1112,7 @@ private void agregarRenglonTabla(){
             montoTotal=montoTotal + valor;
             //precioUnitario=precioUnitario * cliT.getCoeficienteListaDeprecios();
             //fila[2]=cant;
-            
+
             fila[5]=val;
             fila[3]=Numeros.ConvertirNumero(precioUnitario);
             fila[2]=Numeros.ConvertirNumero(pedidos.getPrecioDeCosto());
@@ -1431,7 +1202,7 @@ private void verificar(){
     Articulos art=new Articulos();
     cantidad=cantidad - 1;
     for(int ah=0;ah < cantidad;ah++){
-        
+
         art=(Articulos)detalleDelPedido.get(ah);
         //ah++;
         String descripcion=(String) this.jTable1.getValueAt(ah,1);
@@ -1454,10 +1225,7 @@ private void verificar(){
     private javax.swing.JButton jButton6;
     private javax.swing.JCheckBox jCheckBox1;
     public static javax.swing.JCheckBox jCheckBox2;
-    private javax.swing.JComboBox jComboBox2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -1467,16 +1235,12 @@ private void verificar(){
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
     public static javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
     // End of variables declaration//GEN-END:variables
 
     @Override

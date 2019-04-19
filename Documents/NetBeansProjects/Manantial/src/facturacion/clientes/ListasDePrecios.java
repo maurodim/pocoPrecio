@@ -22,7 +22,8 @@ public class ListasDePrecios implements Personalizable{
     private String descripcionLista;
     private Double porcentaje;
     private String sql;
-    private static Transaccionable tra=new Conecciones();
+    private static Transaccionable tra;
+        
     private static ResultSet rs;
 
     public void setNumeroLista(int numeroLista) {

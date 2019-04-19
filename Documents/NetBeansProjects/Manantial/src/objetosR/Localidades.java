@@ -31,7 +31,8 @@ public class Localidades implements Busquedas,Personalizable,Componable,Rubrable
     private Integer provincia;
     private String descripcionProvincia;
     private String codigoPostal;
-    private static Transaccionable tra=new Conecciones();
+    private static Transaccionable tra;
+        
     private static String sql;
     private static ResultSet rs;
 

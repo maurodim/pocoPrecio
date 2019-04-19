@@ -76,7 +76,16 @@ public class Impuestos implements Personalizable,Componable,Proveer{
         Impuestos impu=(Impuestos) objeto;
         int id=0;
         String sql="insert into impuestos (descripcion,tasa) values ('"+impu.getDescripcion()+"',"+impu.getTasa()+")";
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Impuestos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(Impuestos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Impuestos.class.getName()).log(Level.SEVERE, null, ex);
+        }
         tra.guardarRegistro(sql);
         ResultSet rs=tra.leerConjuntoDeRegistros("SELECT LAST_INSERT_ID()");
         try {
@@ -94,7 +103,16 @@ public class Impuestos implements Personalizable,Componable,Proveer{
     public Boolean modificar(Object objeto) {
         Impuestos impu=(Impuestos) objeto;
         String sql="update impuestos set descripcion='"+impu.descripcion+"', tasa="+impu.tasa+" where id="+impu.id;
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Impuestos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(Impuestos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Impuestos.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return tra.guardarRegistro(sql);
     }
 
@@ -123,7 +141,16 @@ public class Impuestos implements Personalizable,Componable,Proveer{
         Impuestos impu;
         ArrayList listado=new ArrayList();
         String sql="select id,descripcion,round(tasa,4) as tasa from impuestos";
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Impuestos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(Impuestos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Impuestos.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
         try {
@@ -205,7 +232,16 @@ public class Impuestos implements Personalizable,Componable,Proveer{
         Iterator it=lista.listIterator();
         Impuestos impuesto;
         String sql;
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Impuestos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(Impuestos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Impuestos.class.getName()).log(Level.SEVERE, null, ex);
+        }
         while(it.hasNext()){
             impuesto=(Impuestos) it.next();
             sql="insert into movimientosimpuestos (idfactura,idimpuesto,monto) values ("+idFactura+","+impuesto.id+","+impuesto.monto+")";
@@ -220,7 +256,16 @@ public class Impuestos implements Personalizable,Componable,Proveer{
         ArrayList listado=new ArrayList();
         String sql="select movimientosimpuestos.idfactura,movimientosimpuestos.monto, impuestos.id,impuestos.descripcion,impuestos.tasa from movimientosimpuestos left join impuestos on impuestos.id=movimientosimpuestos.idimpuesto where movimientosimpuestos.idfactura="+idFactura;
         System.out.println(sql);
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Impuestos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(Impuestos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Impuestos.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
         try {

@@ -4,7 +4,7 @@
  */
 package Conversores;
 
-import interfaceGraficas.Inicio;
+import interfaceGraficasManantial.Inicio;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

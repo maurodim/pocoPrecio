@@ -32,7 +32,8 @@ public class DetalleOrdenDePago implements Recidable{
     private Integer idFactura;
     private Integer idPedido;
     private Integer numeroFc;
-    private static Transaccionable tra=new Conecciones();
+    private static Transaccionable tra;
+        
     private static ResultSet rs;
     private String sql;
     private String montoFcatura;

@@ -4,7 +4,7 @@
  */
 package Depositos;
 
-import interfaceGraficas.Inicio;
+import interfaceGraficasManantial.Inicio;
 import interfaces.Comprobable;
 import interfaces.Transaccionable;
 import java.sql.ResultSet;
@@ -119,7 +119,16 @@ public class RemitosInternos implements Comprobable{
     }
     
     public static void numeroActual(){
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) { 
+            Logger.getLogger(RemitosInternos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(RemitosInternos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(RemitosInternos.class.getName()).log(Level.SEVERE, null, ex);
+        }
         String sql="select * from tipocomprobantes where numero=4";
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
         try {
@@ -137,7 +146,16 @@ public class RemitosInternos implements Comprobable{
         numeroActual();
         RemitosInternos remInterno=(RemitosInternos)objeto;
         numeroComprobante++;
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(RemitosInternos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(RemitosInternos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(RemitosInternos.class.getName()).log(Level.SEVERE, null, ex);
+        }
         String sql="";
         Iterator itRem=remInterno.articulos.listIterator();
         while(itRem.hasNext()){
@@ -167,7 +185,16 @@ public class RemitosInternos implements Comprobable{
     public Boolean modificarComprobante(Object objeto) {
         RemitosInternos remitoInterno=(RemitosInternos)objeto;
         Boolean conf=false;
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(RemitosInternos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(RemitosInternos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(RemitosInternos.class.getName()).log(Level.SEVERE, null, ex);
+        }
         String sql="";
         Iterator itL=remitoInterno.getArticulos().listIterator();
         while(itL.hasNext()){
@@ -187,7 +214,16 @@ public class RemitosInternos implements Comprobable{
     @Override
     public Object leerComprobante(Integer numero) {
         //ACA LEO LOS REMITOS INTERNOS GENERADOS
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) { 
+            Logger.getLogger(RemitosInternos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(RemitosInternos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(RemitosInternos.class.getName()).log(Level.SEVERE, null, ex);
+        }
         ArrayList listado=new ArrayList();
         String sql="select *,(select articulos.NOMBRE from articulos where articulos.ID=movimientosdesucursales.idArticulo)as descripcion from movimientosdesucursales where numeroRemito="+numero+" and confirmado=0";
         RemitosInternos remitoInterno=new RemitosInternos();

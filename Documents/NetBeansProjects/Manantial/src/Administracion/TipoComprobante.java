@@ -56,17 +56,23 @@ public class TipoComprobante implements Comprobable {
             if(tran.guardarRegistro(sql)){
             sql="";
             if(tran.guardarRegistro(sql)){
-                //creado=devuelve el last_id;
-            };
+                sql="";
+                if(tran.guardarRegistro(sql)){
+                    //creado=devuelve el last_id;
+                };
+            }
+            
+        
         }
-        } catch (InstantiationException ex) {
+        
+        
+    }   catch (InstantiationException ex) {
             Logger.getLogger(TipoComprobante.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
             Logger.getLogger(TipoComprobante.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(TipoComprobante.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
         return creado;
     }
 
@@ -78,12 +84,15 @@ public class TipoComprobante implements Comprobable {
     @Override
     public Boolean modificarComprobante(Object objeto) {
         TipoComprobante tipoComprobante=(TipoComprobante)objeto;
-        Boolean creado=false;
-        String sql="";
-        Transaccionable tran;
+            Boolean creado=false;
         try {
-            tran = new Conecciones();
+            
+            String sql="";
+            Transaccionable tran=new Conecciones();
+            
             if(tran.guardarRegistro(sql))creado=true;
+            
+            
         } catch (InstantiationException ex) {
             Logger.getLogger(TipoComprobante.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
@@ -91,9 +100,6 @@ public class TipoComprobante implements Comprobable {
         } catch (SQLException ex) {
             Logger.getLogger(TipoComprobante.class.getName()).log(Level.SEVERE, null, ex);
         }
-       
-            
-        
         return creado;
     }
 

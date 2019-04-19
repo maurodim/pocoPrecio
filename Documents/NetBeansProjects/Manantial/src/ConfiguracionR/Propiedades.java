@@ -5,6 +5,7 @@
  */
 package ConfiguracionR;
 
+import creardbderby.CrearDBDerby;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -15,6 +16,7 @@ import java.util.Enumeration;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import objetosDerby.Base;
 
 /**
  *
@@ -144,7 +146,10 @@ public class Propiedades {
                 // Lectura del fichero
                 String linea;
                 int renglon=0;
-                //Transaccionable tra=new Conecciones();
+                //Transaccionable tra=null;
+
+            //tra = new Conecciones();
+        
                 //while((linea=br.readLine())!=null){
                     
                     
@@ -202,8 +207,11 @@ public class Propiedades {
                     
              
              p.store(new FileWriter("Configuracion\\bbsGestion.properties"),"");
-             
-               
+             //CrearDBDerby crear=new CrearDBDerby();
+             Base base=new Base();
+             base.CrearBase("base14\\bambuPrueba.db", "mauro", "mauro");
+             //Runtime jpfBatch=Runtime.getRuntime();
+             //jpfBatch.exec("java -jar CrearDBDerby.jar");
             
          }
         //BD="siglox";

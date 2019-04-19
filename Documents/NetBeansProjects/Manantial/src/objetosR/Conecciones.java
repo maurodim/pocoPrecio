@@ -5,8 +5,9 @@
 package objetosR;
 
 import ConfiguracionR.Propiedades;
-import interfaceGraficas.Inicio;
+import interfaceGraficasManantial.Inicio;
 import interfaces.Transaccionable;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -48,85 +49,41 @@ public class Conecciones implements Transaccionable{
                //Connection dbConnection = null;
                con=null;
  //String strUrl = "jdbc:derby://localhost:1527/respaldo;create=true";
-               String strUrl = "jdbc:derby:base14\\bambuPrueba.db";
+ File miDir=new File(".");
+ String directorio=miDir.getAbsolutePath();
+        System.out.println(directorio);
+               String strUrl = "jdbc:derby:base14//bambuPrueba.db";
         
         try {
             Class.forName(driver1).newInstance();
-            con = DriverManager.getConnection (strUrl); 
+            con = DriverManager.getConnection (strUrl,"mauro","mauro"); 
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Conecciones.class.getName()).log(Level.SEVERE, null, ex);
         }
             
         
-        /*
-        MysqlDataSource dataSource=new MysqlDataSource();
-		try{
-			//Class.forName(driver1).newInstance();
-                    dataSource.setUser(Propiedades.getUSUARIO());//("ryrsistema");//("root");//
-                    dataSource.setDatabaseName(Propiedades.getBD());//ryr
-                    dataSource.setPassword(Propiedades.getCLAVE());//("Remoto");//4FTfQRKWPDe4KF9d//("");//
-                    dataSource.setServerName(Propiedades.getSERVER());//10.0.0.201//("localhost");//rrpapeles.dyndns.org
-                    
-                    DATOS DE ROOT
-                    USUARIO:ROOT
-                    CLAVE: GER (TODO MINUSCULA)
-                    ACCESO: 10.0.0.201/phpmyadmin
-                    
-                    
-                    
-                    con=dataSource.getConnection();
-                    //st=con.createStatement();
-                 }catch(Exception ex){
-                    
-                String cod1=String.valueOf(ex);
-                        
-			System.out.println("NO SE PUDO CONECTAR A LA BASE "+ex);
-		FileWriter fichero=null;
-            PrintWriter pw=null;
-            String fechaDia;
-            DecimalFormat fr=new DecimalFormat("00");
-        Calendar c1=Calendar.getInstance();
-	Calendar c2=new GregorianCalendar();
-	String dia=Integer.toString(c2.get(Calendar.DAY_OF_MONTH));
-	String mes=Integer.toString(c2.get(Calendar.MONTH));
-	String ano=Integer.toString(c2.get(Calendar.YEAR));
-	
-        int da=Integer.parseInt(dia);
-        int me=Integer.parseInt(mes);
-        me++;
-        dia=fr.format(da);
-        mes=fr.format(me);
-        fechaDia=ano+"-"+mes+"-"+dia;
-            try {
-                fichero = new FileWriter("Gestion\\"+fechaDia+" - erroresDeLectura.txt",true);
-                pw=new PrintWriter(fichero);
-                pw.println(ex);
-            } catch (IOException ex1) {
-                Logger.getLogger(Conecciones.class.getName()).log(Level.SEVERE, null, ex1);
-            }finally{
-                         try {
-           // Nuevamente aprovechamos el finally para 
-           // asegurarnos que se cierra el fichero.
-           if (null != fichero)
-              fichero.close();
-           } catch (Exception e2) {
-              e2.printStackTrace();
-           }
-            }
-                 }
-*/
+        
         
     }
     private Connection obtener() throws InstantiationException, IllegalAccessException, SQLException{
         //Connection dbConnection = null;
                con=null;
  //String strUrl = "jdbc:derby://localhost:1527/respaldo;create=true";
-               String strUrl = "jdbc:derby:base14\\bambuPrueba.db";
+               //String strUrl = "jdbc:derby:base14//bambuPrueba.db";
             
         
         try {
+            
+            File miDir=new File(".");
+ String directorio=miDir.getAbsolutePath();
+        String directo="C:\\Users\\Usuario\\Documents\\NetBeansProjects\\Manantial\\";
+            String strUrl = "jdbc:derby:base14\\bambuPrueba.db";
+            
+        System.out.println(strUrl);
+        
             Class.forName(driver1).newInstance();
-            con = DriverManager.getConnection (strUrl); 
+            con = DriverManager.getConnection (strUrl,"mauro","mauro");
+            
             
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Conecciones.class.getName()).log(Level.SEVERE, null, ex);
@@ -230,14 +187,9 @@ public class Conecciones implements Transaccionable{
     public ResultSet leerConjuntoDeRegistros(String sql) {
         ResultSet rs=null;
         try {
-            /*
-            if(st==null){
-            Transaccionable tt=new Conecciones();
-            System.out.println("ACA DESDE CONECCIONES "+sql);
-            rs=tt.leerConjuntoDeRegistros(sql);
-            }else{
-             */
-            //System.out.println("ERROR EN SENTENCIA "+sql);
+            
+            System.out.println(sql);
+            //sql="select * from mauro.usuarios where nombreUsuario like 'adm' and clave ='adm'";
            if(con!=null){
                 st=con.prepareStatement(sql);
                 st.execute();

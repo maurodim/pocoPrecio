@@ -15,7 +15,7 @@ import Recibos.Formable;
 import Recibos.FormasDePago;
 import Recibos.Recidable;
 import facturacion.clientes.Clientes;
-import interfaceGraficas.Inicio;
+import interfaceGraficasManantial.Inicio;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.util.ArrayList;

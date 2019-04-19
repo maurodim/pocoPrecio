@@ -13,7 +13,7 @@ import Excel.LeerExcelClientes;
 import facturacion.clientes.Clientes;
 import facturacion.pantallas.IngresoDeFacturas;
 import Pedidos.IngresoDePedidos;
-import interfaceGraficas.Inicio;
+import interfaceGraficasManantial.Inicio;
 import interfaces.Adeudable;
 import interfaces.Personalizable;
 import interfacesPrograma.Busquedas;

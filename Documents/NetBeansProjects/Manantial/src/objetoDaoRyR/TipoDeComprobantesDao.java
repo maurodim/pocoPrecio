@@ -25,10 +25,11 @@ public class TipoDeComprobantesDao {
     public ArrayList ListarVentas(){
         ArrayList<TipoDeComprobantes> listado=new ArrayList();
         String sql="select * from tipocomprobantes";
-        tra=new Conecciones();
+        
+        try {
+            tra=new Conecciones();
         TipoDeComprobantes tipo;
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
-        try {
             while(rs.next()){
                 tipo=new TipoDeComprobantes();
                 tipo.setId(rs.getInt("id"));
@@ -39,6 +40,10 @@ public class TipoDeComprobantesDao {
             rs.close();
             
         } catch (SQLException ex) {
+            Logger.getLogger(TipoDeComprobantesDao.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(TipoDeComprobantesDao.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
             Logger.getLogger(TipoDeComprobantesDao.class.getName()).log(Level.SEVERE, null, ex);
         }
         return listado;

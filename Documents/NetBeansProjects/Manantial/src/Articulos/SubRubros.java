@@ -68,16 +68,24 @@ public class SubRubros implements Rubrable{
         subRubro=(SubRubros)rubro;
         
         String sql="insert into tipos (tipo,id_clasificacion,etiqueta,eliminado) values ('"+subRubro.getDescripcion()+"',"+subRubro.getIdRubro()+",'NN','N')";
-        Transaccionable tra=new Conecciones();
-        tra.guardarRegistro(sql);
         int ultimo=0;
+        try {
+            Transaccionable tra=null;
+        
+            tra = new Conecciones();
+        
+        tra.guardarRegistro(sql);
+        
         sql="select LAST_INSERT_ID()";
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
-        try {
             while(rs.next()){
                 ultimo=rs.getInt(1);
             }
         } catch (SQLException ex) {
+            Logger.getLogger(SubRubros.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(SubRubros.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
             Logger.getLogger(SubRubros.class.getName()).log(Level.SEVERE, null, ex);
         }
         return ultimo;
@@ -85,11 +93,23 @@ public class SubRubros implements Rubrable{
 
     @Override
     public Boolean modificar(Object rubros) {
-        SubRubros rubro=new SubRubros();
-        rubro=(SubRubros)rubros;
-        String sql="update tipos set tipo='"+rubro.getDescripcion()+"' where id="+rubro.getId();
-        Transaccionable tra=new Conecciones();
-        tra.guardarRegistro(sql);
+        try {
+            SubRubros rubro=new SubRubros();
+            rubro=(SubRubros)rubros;
+            String sql="update tipos set tipo='"+rubro.getDescripcion()+"' where id="+rubro.getId();
+            Transaccionable tra=null;
+        
+            tra = new Conecciones();
+       
+            tra.guardarRegistro(sql);
+            
+        } catch (InstantiationException ex) {
+            Logger.getLogger(SubRubros.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(SubRubros.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(SubRubros.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return true;
     }
 
@@ -99,18 +119,32 @@ public class SubRubros implements Rubrable{
         coe=coe + 1;
         System.out.println("resultado :"+coe);
         String sql="update articulos set precio=round((precio * "+coe+"),4) where idsubrubro="+idRubro;
-        Transaccionable tra=new Conecciones();
-        tra.guardarRegistro(sql);
+        Transaccionable tra;
+        try {
+            tra = new Conecciones();
+            tra.guardarRegistro(sql);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(SubRubros.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(SubRubros.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(SubRubros.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
 
     @Override
     public ArrayList listarPorRubro(Integer idRubro) {
         ArrayList listado=new ArrayList();
         SubRubros subRubro;
-        String sql="select *,(select rubros.descripcion from rubros where rubros.id=tipos.id_clasificacion)as descr from tipos where id_clasificacion="+idRubro+" order by id_clasificacion";
-        Transaccionable tra=new Conecciones();
-        ResultSet rs=tra.leerConjuntoDeRegistros(sql);
+        String sql="select tipo,id,id_clasificacion,(select rubros.descripcion from rubros where rubros.id=tipos.id_clasificacion)as descr from tipos where id_clasificacion="+idRubro+" order by id_clasificacion";
+        
         try {
+            Transaccionable tra=null;
+        
+            tra = new Conecciones();
+        
+        ResultSet rs=tra.leerConjuntoDeRegistros(sql);
             while(rs.next()){
                 subRubro=new SubRubros();
                 subRubro.setDescripcion(rs.getString("tipo"));
@@ -121,6 +155,10 @@ public class SubRubros implements Rubrable{
             }
             rs.close();
         } catch (SQLException ex) {
+            Logger.getLogger(SubRubros.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(SubRubros.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
             Logger.getLogger(SubRubros.class.getName()).log(Level.SEVERE, null, ex);
         }
         return listado;
@@ -143,9 +181,13 @@ public class SubRubros implements Rubrable{
         sentencia=sentencia.substring(0, cant);
         String sql="select *,(select rubros.descripcion from rubros where rubros.id=tipos.id_clasificacion)as descr from tipos where "+sentencia+" order by id_clasificacion";
         System.out.println(sql);
-        Transaccionable tra=new Conecciones();
-        ResultSet rs=tra.leerConjuntoDeRegistros(sql);
+        
         try {
+            Transaccionable tra=null;
+        
+            tra = new Conecciones();
+        
+        ResultSet rs=tra.leerConjuntoDeRegistros(sql);
             while(rs.next()){
                 subRubro=new SubRubros();
                 subRubro.setDescripcion(rs.getString("tipo"));
@@ -157,6 +199,10 @@ public class SubRubros implements Rubrable{
             rs.close();
         } catch (SQLException ex) {
             Logger.getLogger(SubRubros.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(SubRubros.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(SubRubros.class.getName()).log(Level.SEVERE, null, ex);
         }
         return listado;
 
@@ -165,19 +211,41 @@ public class SubRubros implements Rubrable{
     @Override
     public void eliminar(Integer idRubro) {
         
-        String sql="delete from tipos where id="+idRubro;
-        Transaccionable tra=new Conecciones();
-        tra.guardarRegistro(sql);
+        try {
+            String sql="delete from tipos where id="+idRubro;
+            Transaccionable tra=null;
+        
+            tra = new Conecciones();
+        
+            tra.guardarRegistro(sql);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(SubRubros.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(SubRubros.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(SubRubros.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
     public void modificarCostoPorRubro(Integer idRubro, Double precio) {
-        Double coe=precio / 100;
-        coe=coe + 1;
-        System.out.println("resultado :"+coe);
-        String sql="update articulos set costo=round((costo * "+coe+"),4) where idsubrubro="+idRubro;
-        Transaccionable tra=new Conecciones();
-        tra.guardarRegistro(sql);
+        try {
+            Double coe=precio / 100;
+            coe=coe + 1;
+            System.out.println("resultado :"+coe);
+            String sql="update articulos set costo=round((costo * "+coe+"),4) where idsubrubro="+idRubro;
+            Transaccionable tra=null;
+        
+            tra = new Conecciones();
+        
+            tra.guardarRegistro(sql);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(SubRubros.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(SubRubros.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(SubRubros.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override

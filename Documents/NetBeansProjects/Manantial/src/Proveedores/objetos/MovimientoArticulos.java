@@ -5,10 +5,13 @@
  */
 package Proveedores.objetos;
 
-import interfaceGraficas.Inicio;
+import interfaceGraficasManantial.Inicio;
 import interfaces.Personalizable;
 import interfaces.Transaccionable;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import objetosR.Conecciones;
 
 /**
@@ -147,7 +150,16 @@ public class MovimientoArticulos implements Personalizable,Proveer{
     public Integer agregar(Object objeto) {
         MovimientoArticulos mov=(MovimientoArticulos) objeto;
         String sql="insert into movimientosarticulos (tipoMovimiento,idArticulo,cantidad,numeroDeposito,tipoComprobante,numeroComprobante,numeroCliente,fechaComprobante,numeroUsuario,precioDeCosto,precioDeVenta,precioServicio,estado,idcaja) values ("+mov.getTipoMovimiento()+","+mov.getIdArticulo()+","+mov.getCantidad()+","+mov.getNumeroDeposito()+","+mov.getTipoComprobante()+",'"+mov.getNumeroComprobante()+"',"+mov.getIdCliente()+",'"+mov.getFechaComprobante()+"',"+Inicio.usuario.getNumeroId()+","+mov.getPrecioDeCosto()+","+mov.getPrecioDeVenta()+","+mov.getPrecioDeServicio()+","+mov.getEstado()+","+mov.getIdCaja()+")";
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(MovimientoArticulos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(MovimientoArticulos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(MovimientoArticulos.class.getName()).log(Level.SEVERE, null, ex);
+        }
         tra.guardarRegistro(sql);
         return 0;
     }

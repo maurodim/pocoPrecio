@@ -4,7 +4,7 @@ package Articulos;
 
 import Conversores.Numeros;
 import Sucursales.ListasDePrecios;
-import interfaceGraficas.Inicio;
+import interfaceGraficasManantial.Inicio;
 import interfaces.Personalizable;
 import java.awt.event.KeyEvent;
 import java.beans.PropertyVetoException;

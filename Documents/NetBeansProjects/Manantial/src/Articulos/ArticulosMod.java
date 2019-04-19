@@ -16,7 +16,7 @@ import Articulos.Articulos;
 import Articulos.Rubrable;
 import Articulos.Rubros;
 import Articulos.SubRubros;
-import interfaceGraficas.Combos;
+import interfaceGraficasManantial.Combos;
 import tablas.MiModeloTablaArticulos;
 
 /**
@@ -88,7 +88,11 @@ public class ArticulosMod extends javax.swing.JInternalFrame {
             rengl++;
         }
         System.out.println("posicion "+posicion+"cantidad "+lstSubRubros.size()+" seleccionado "+artI);
-        this.jComboBox3.setSelectedIndex(posicion);
+        try{
+        //this.jComboBox3.setSelectedIndex(posicion);
+        }catch(java.lang.IllegalArgumentException ex){
+            System.out.println(ex);
+        }
         this.jTextField1.setText(arti.getDescripcionArticulo());
         
         //this.jTextField2.setText(String.valueOf(totalActual));
@@ -102,7 +106,7 @@ public class ArticulosMod extends javax.swing.JInternalFrame {
         //this.jCheckBox2.setSelected(arti.getModificaServicio());
         
         
-        if(arti.getIdCombo() > 0 )this.jCheckBox3.setSelected(true);
+        if(arti.getModificaPrecio())this.jCheckBox3.setSelected(true);
         //this.jPanel2.setVisible(false);
         this.jTextField7.selectAll();
         this.jTextField7.requestFocus();
@@ -150,14 +154,13 @@ public class ArticulosMod extends javax.swing.JInternalFrame {
         jPanel3 = new javax.swing.JPanel();
         jComboBox1 = new javax.swing.JComboBox();
         jComboBox2 = new javax.swing.JComboBox();
-        jLabel8 = new javax.swing.JLabel();
-        jComboBox3 = new javax.swing.JComboBox();
+        jButton3 = new javax.swing.JButton();
 
         setClosable(true);
         setMaximizable(true);
         setResizable(true);
         setTitle("Modificacion de Articulos");
-        setPreferredSize(new java.awt.Dimension(523, 585));
+        setPreferredSize(new java.awt.Dimension(723, 585));
 
         jLabel1.setText("Descripcion");
 
@@ -199,7 +202,7 @@ public class ArticulosMod extends javax.swing.JInternalFrame {
             }
         });
 
-        jCheckBox3.setText("Transformar en Combo");
+        jCheckBox3.setText("Permite Modificar Precio");
         jCheckBox3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jCheckBox3MouseClicked(evt);
@@ -245,14 +248,7 @@ public class ArticulosMod extends javax.swing.JInternalFrame {
             jComboBox2.addItem(proveedor.getNombre());
         }
 
-        jLabel8.setText("Sub Rubro");
-
-        Iterator iRs=lstSubRubros.listIterator();
-        SubRubros sRubro=new SubRubros();
-        while(iRs.hasNext()){
-            sRubro=(SubRubros)iRs.next();
-            jComboBox3.addItem(sRubro.getDescripcion());
-        }
+        jButton3.setText("Generar Etiqueta");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -268,7 +264,6 @@ public class ArticulosMod extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)
@@ -277,17 +272,19 @@ public class ArticulosMod extends javax.swing.JInternalFrame {
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jTextField3)
-                        .addComponent(jTextField4)
-                        .addComponent(jTextField5)
-                        .addComponent(jTextField7)
-                        .addComponent(jComboBox1, 0, 211, Short.MAX_VALUE)
-                        .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jComboBox3, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 470, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(149, 149, 149)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jTextField3)
+                            .addComponent(jTextField4)
+                            .addComponent(jTextField5)
+                            .addComponent(jTextField7)
+                            .addComponent(jComboBox1, 0, 211, Short.MAX_VALUE)
+                            .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextField1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -301,8 +298,9 @@ public class ArticulosMod extends javax.swing.JInternalFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel7)
-                            .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(24, 24, 24)
+                            .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton3))
+                        .addGap(20, 20, 20)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
                             .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -326,11 +324,7 @@ public class ArticulosMod extends javax.swing.JInternalFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
                             .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel8)
-                            .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                        .addGap(18, 70, Short.MAX_VALUE)
                         .addComponent(jCheckBox3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1)
@@ -344,8 +338,8 @@ public class ArticulosMod extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 619, Short.MAX_VALUE)
-                .addGap(25, 25, 25))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(95, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -375,7 +369,7 @@ public class ArticulosMod extends javax.swing.JInternalFrame {
         arti.setPrecioServicio(0.0000);
         //cant=Numeros.ConvertirStringADouble(this.jTextField9.getText());
         arti.setPrecioServicio1(0.0000);
-        arti.setModificaPrecio(false);
+        arti.setModificaPrecio(this.jCheckBox3.isSelected());
         arti.setModificaServicio(false);
         //arti.setModificaPrecio(this.jCheckBox1.isSelected());
         //arti.setModificaServicio(this.jCheckBox2.isSelected());
@@ -389,8 +383,8 @@ public class ArticulosMod extends javax.swing.JInternalFrame {
         arti.setRubroId(rubro.getId());
         if(lstSubRubros.size() > 0){
         SubRubros sub=new SubRubros();
-        sub=(SubRubros)lstSubRubros.get(this.jComboBox3.getSelectedIndex());
-        arti.setIdSubRubro(sub.getId());
+        //sub=(SubRubros)lstSubRubros.get(this.jComboBox3.getSelectedIndex());
+        arti.setIdSubRubro(0);
         }else{
             arti.setIdSubRubro(0);
         }
@@ -445,12 +439,12 @@ public class ArticulosMod extends javax.swing.JInternalFrame {
         Rubrable rubra=new SubRubros();
         lstSubRubros.clear();
         lstSubRubros=rubra.listarPorRubro(rub.getId());
-        this.jComboBox3.removeAllItems();
+        //this.jComboBox3.removeAllItems();
         Iterator iSb=lstSubRubros.listIterator();
         SubRubros subR=new SubRubros();
         while(iSb.hasNext()){
             subR=(SubRubros)iSb.next();
-            this.jComboBox3.addItem(subR.getDescripcion());
+            //this.jComboBox3.addItem(subR.getDescripcion());
         }
         
     }//GEN-LAST:event_jComboBox1ActionPerformed
@@ -458,10 +452,10 @@ public class ArticulosMod extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JCheckBox jCheckBox3;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JComboBox jComboBox2;
-    private javax.swing.JComboBox jComboBox3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -469,7 +463,6 @@ public class ArticulosMod extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JTextField jTextField1;

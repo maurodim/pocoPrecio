@@ -4,7 +4,7 @@
  */
 package Proveedores;
 
-import interfaceGraficas.Inicio;
+import interfaceGraficasManantial.Inicio;
 import interfaces.Personalizable;
 import interfaces.Transaccionable;
 import java.sql.ResultSet;
@@ -194,7 +194,7 @@ public class Proveedores implements Personalizable{
             //    sql="select *,(select sum(movimientosproveedores.monto) from movimientosproveedores where pagado=0 and movimientosproveedores.numeroProveedor=proveedores.ID)as saldo from proveedores order by NOMBRE";
             //}else{
                 tra=new Conecciones();
-                sql="select *,(SELECT sum(movimientosproveedores.monto) FROM movimientosproveedores WHERE movimientosproveedores.numeroProveedor=proveedores.ID)as saldo,(select localidades.localidad from localidades where localidades.id=proveedores.localidad)as nomL from proveedores order by NOMBRE";
+                sql="select id,nombre,domicilio,localidad,telefono,inhabilitado,mail,saldo1,responsable,celular,cuit,anexo,(SELECT sum(movimientosproveedores.monto) FROM movimientosproveedores WHERE movimientosproveedores.numeroProveedor=proveedores.ID)as saldo,(proveedores.localidad)as nomL from proveedores order by NOMBRE";
             //}
             ResultSet rr=tra.leerConjuntoDeRegistros(sql);
             while(rr.next()){
@@ -222,6 +222,10 @@ public class Proveedores implements Personalizable{
             rr.close();
             //if(Inicio.coneccionRemota)BackapearProveedores();
         } catch (SQLException ex) {
+            Logger.getLogger(Proveedores.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Proveedores.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
             Logger.getLogger(Proveedores.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -264,6 +268,10 @@ public class Proveedores implements Personalizable{
             //if(Inicio.coneccionRemota)BackapearProveedores();
         } catch (SQLException ex) {
             Logger.getLogger(Proveedores.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Proveedores.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(Proveedores.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     public static void BackapearProveedores(){
@@ -276,7 +284,16 @@ public class Proveedores implements Personalizable{
         Personalizable per=new Proveedores();
         Iterator ilP=per.listar().listIterator();
         Proveedores proveedores=new Proveedores();
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Proveedores.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(Proveedores.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Proveedores.class.getName()).log(Level.SEVERE, null, ex);
+        }
         String sql="delete from proveedores";
         tra.guardarRegistro(sql);
         while(ilP.hasNext()){
@@ -291,7 +308,16 @@ public class Proveedores implements Personalizable{
        Proveedores prov=(Proveedores)objeto;
        Boolean veri=false;
        String sql="insert into proveedores (NOMBRE,DOMICILIO,LOCALIDAD,TELEFONO,mail,responsable,celular,cuit,anexo) values ('"+prov.getNombre()+"','"+prov.getDireccion()+"','"+prov.getLocalidad()+"','"+prov.getTelefono()+"','"+prov.getMail()+"','"+prov.getResponsable()+"','"+prov.getCelular()+"','"+prov.getCuit()+"','"+prov.getAnexo()+"')";
-       Transaccionable tra=new Conecciones();
+       Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Proveedores.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(Proveedores.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Proveedores.class.getName()).log(Level.SEVERE, null, ex);
+        }
        if(tra.guardarRegistro(sql)){
            int numero=0;
            sql="select LAST_INSERT_ID()";
@@ -319,7 +345,16 @@ public class Proveedores implements Personalizable{
        Boolean veri=false;
        Proveedores prov=(Proveedores)objeto;
        String sql="update proveedores set NOMBRE='"+prov.getNombre()+"',cuit='"+prov.getCuit()+"',celular='"+prov.getCelular()+"',responsable='"+prov.getResponsable()+"',DOMICILIO='"+prov.getDireccion()+"',LOCALIDAD='"+prov.getLocalidad()+"',TELEFONO='"+prov.getTelefono()+"',mail='"+prov.getMail()+"',anexo='"+prov.getAnexo()+"' where ID="+prov.getNumero();
-       Transaccionable tra=new Conecciones();
+       Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Proveedores.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(Proveedores.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Proveedores.class.getName()).log(Level.SEVERE, null, ex);
+        }
        if(tra.guardarRegistro(sql)){}else{
            veri=false;
        }
@@ -332,7 +367,16 @@ public class Proveedores implements Personalizable{
         Boolean veri=false;
         Proveedores prov=(Proveedores)objeto;
         String sql="update proveedores set INHABILITADO=1 where numero="+prov.getNumero();
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Proveedores.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(Proveedores.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Proveedores.class.getName()).log(Level.SEVERE, null, ex);
+        }
         if(tra.guardarRegistro(sql)){}else{
             veri=false;
         }
@@ -345,7 +389,16 @@ public class Proveedores implements Personalizable{
         Proveedores prov=new Proveedores();
         try {
             String sql="select *,(SELECT sum(movimientosproveedores.monto) FROM movimientosproveedores WHERE movimientosproveedores.numeroProveedor=proveedores.ID)as saldo,(select localidades.localidad from localidades where localidades.id=proveedores.localidad)as nomL from proveedores where id="+id;
-            Transaccionable tra=new Conecciones();
+            Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Proveedores.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(Proveedores.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Proveedores.class.getName()).log(Level.SEVERE, null, ex);
+        }
             ResultSet rr=tra.leerConjuntoDeRegistros(sql);
             while(rr.next()){
                 prov.setNumero(rr.getInt("ID"));
@@ -378,7 +431,16 @@ public class Proveedores implements Personalizable{
         Proveedores prov=new Proveedores();
         try {
             String sql="select *,(SELECT sum(movimientosproveedores.monto) FROM movimientosproveedores WHERE movimientosproveedores.numeroProveedor=proveedores.ID)as saldo,(select localidades.localidad from localidades where localidades.id=proveedores.localidad)as nomL from proveedores where nombre like '%"+nombre+"%' order by nombre";
-            Transaccionable tra=new Conecciones();
+            Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Proveedores.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(Proveedores.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Proveedores.class.getName()).log(Level.SEVERE, null, ex);
+        }
             ResultSet rr=tra.leerConjuntoDeRegistros(sql);
             while(rr.next()){
                 prov.setNumero(rr.getInt("ID"));
@@ -413,7 +475,16 @@ public class Proveedores implements Personalizable{
         Proveedores prov=new Proveedores();
         try {
             String sql="select *,(SELECT sum(movimientosproveedores.monto) FROM movimientosproveedores WHERE movimientosproveedores.numeroProveedor=proveedores.ID)as saldo,(select localidades.localidad from localidades where localidades.id=proveedores.localidad)as nomL from proveedores where cuit like '"+cuit+"%'";
-            Transaccionable tra=new Conecciones();
+            Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Proveedores.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(Proveedores.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Proveedores.class.getName()).log(Level.SEVERE, null, ex);
+        }
             ResultSet rr=tra.leerConjuntoDeRegistros(sql);
             while(rr.next()){
                 prov.setNumero(rr.getInt("ID"));
@@ -471,7 +542,16 @@ public class Proveedores implements Personalizable{
         ArrayList listado=new ArrayList();
         try {
             String sql="select *,(SELECT sum(movimientosproveedores.monto) FROM movimientosproveedores WHERE movimientosproveedores.numeroProveedor=proveedores.ID)as saldo,(select localidades.localidad from localidades where localidades.id=proveedores.localidad)as nomL from proveedores where NOMBRE like '%"+nombre+"%' order by nombre";
-            Transaccionable tra=new Conecciones();
+            Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Proveedores.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(Proveedores.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Proveedores.class.getName()).log(Level.SEVERE, null, ex);
+        }
             ResultSet rr=tra.leerConjuntoDeRegistros(sql);
             while(rr.next()){
                 Proveedores prov=new Proveedores();
@@ -508,7 +588,16 @@ public class Proveedores implements Personalizable{
         ArrayList listado=new ArrayList();
         try {
             String sql="select *,(SELECT sum(movimientosproveedores.monto) FROM movimientosproveedores WHERE movimientosproveedores.numeroProveedor=proveedores.ID)as saldo,(select localidades.localidad from localidades where localidades.id=proveedores.localidad)as nomL from proveedores where cuit like '"+cuit+"%' order by nombre";
-            Transaccionable tra=new Conecciones();
+            Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Proveedores.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(Proveedores.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Proveedores.class.getName()).log(Level.SEVERE, null, ex);
+        }
             ResultSet rr=tra.leerConjuntoDeRegistros(sql);
             while(rr.next()){
                 Proveedores prov=new Proveedores();

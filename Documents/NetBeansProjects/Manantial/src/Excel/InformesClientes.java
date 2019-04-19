@@ -63,7 +63,14 @@ public class InformesClientes {
         String form=null;
         String sql="";
         System.out.println(sql);
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+           Logger.getLogger(InformesClientes.class.getName()).log(Level.SEVERE, null, ex);
+       } catch (IllegalAccessException ex) {
+           Logger.getLogger(InformesClientes.class.getName()).log(Level.SEVERE, null, ex);
+       }
         ResultSet rs=null;
         HSSFCellStyle titulo=libro.createCellStyle();
         Iterator iCli=listadoClientes.listIterator();

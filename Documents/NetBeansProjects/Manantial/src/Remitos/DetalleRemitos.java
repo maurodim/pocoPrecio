@@ -30,7 +30,8 @@ public class DetalleRemitos implements Remitable{
     private Integer idFactura;
     private Integer idPedido;
     private Date fecha;
-    private static Transaccionable tra=new Conecciones();
+    private static Transaccionable tra;
+       
     private String sql;
     private static ResultSet rs;
     

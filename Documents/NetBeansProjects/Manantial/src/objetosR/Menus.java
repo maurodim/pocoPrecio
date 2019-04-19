@@ -117,7 +117,16 @@ public class Menus implements Personalizable{
     public Integer agregar(Object objeto) {
         int verif=1;
         Menus menu=(Menus)objeto;
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Menus.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(Menus.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Menus.class.getName()).log(Level.SEVERE, null, ex);
+        }
         String sql="insert into tipoacceso (descripcion,menu1,menu2,menu3,menu4,menu5,menu6,menu7) values ('"+menu.getNombre()+"',"+menu.getMenu1()+","+menu.getMenu2()+","+menu.getMenu3()+","+menu.getMenu4()+","+menu.getMenu5()+","+menu.getMenu6()+","+menu.getMenu7()+")";
         tra.guardarRegistro(sql);
         sql="select LAST_INSERT_ID()";
@@ -142,7 +151,16 @@ public class Menus implements Personalizable{
     public Boolean modificar(Object objeto) {
         Boolean verif=false;
         Menus menu=(Menus)objeto;
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Menus.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(Menus.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Menus.class.getName()).log(Level.SEVERE, null, ex);
+        }
         String sql="update tipoacceso set descripcion='"+menu.getNombre()+"',nivel="+menu.getNumero()+",menu1="+menu.getMenu1()+",menu2="+menu.getMenu2()+",menu3="+menu.getMenu3()+",menu4="+menu.getMenu4()+",menu5="+menu.getMenu5()+",menu6="+menu.getMenu6()+",menu7="+menu.getMenu7()+" where numero="+menu.getNumero();
         verif=tra.guardarRegistro(sql);
         
@@ -172,7 +190,16 @@ public class Menus implements Personalizable{
     @Override
     public ArrayList listar() {
         
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Menus.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(Menus.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Menus.class.getName()).log(Level.SEVERE, null, ex);
+        }
         String sql="select * from tipoacceso";
         ResultSet rr=tra.leerConjuntoDeRegistros(sql);
         ArrayList listado=new ArrayList();

@@ -91,7 +91,16 @@ private void printToConsole(List cellDataList)
     Double costo=0.00;
     Double precio=0.00;
     String sql="";
-    Transaccionable tra=new Conecciones();
+    Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+           Logger.getLogger(LeerExcel.class.getName()).log(Level.SEVERE, null, ex);
+       } catch (IllegalAccessException ex) {
+           Logger.getLogger(LeerExcel.class.getName()).log(Level.SEVERE, null, ex);
+       } catch (SQLException ex) {
+           Logger.getLogger(LeerExcel.class.getName()).log(Level.SEVERE, null, ex);
+       }
     HashMap listadoArticulos=new HashMap();
     Boolean verif=false;
     ArrayList lstArt=new ArrayList();

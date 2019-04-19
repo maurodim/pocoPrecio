@@ -12,7 +12,7 @@ import Impresiones.*;
 import Depositos.RemitosInternos;
 import Sucursales.Cajas;
 import facturacion.clientes.Clientes;
-import interfaceGraficas.Inicio;
+import interfaceGraficasManantial.Inicio;
 import interfacesPrograma.Facturar;
 import java.awt.Color;
 import java.awt.Font;

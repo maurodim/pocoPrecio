@@ -4,8 +4,12 @@
  */
 package bbsgestion;
 
+import Actualizaciones.BkDeConeccion;
 import ConfiguracionR.Propiedades;
-import interfaceGraficas.LoguinBbsGestion;
+import Sucursales.Usuarios;
+import interfaceGraficasManantial.Inicio;
+//import interfaceGraficas.LoguinBbsGestion;
+import interfaces.Backpeable;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -43,9 +47,9 @@ public class BbsGestion {
         }catch(Exception e){
             e.printStackTrace();
         }
-        File folder=new File("C:\\GestionRyR");
-        File archivos=new File("C:\\Informes");
-        File bases=new File("C:\\GestionRyR\\DB");
+        File folder=new File("Gestion");
+        File archivos=new File("Informes");
+        File bases=new File("base14");
         File configuracion=new File("Configuracion");
         //File imagenes=new File("C:\\Gestion\\imagenes\\saynomore.jpg");
         File bk;
@@ -57,7 +61,7 @@ public class BbsGestion {
         BufferedReader br=null;
         if(!bases.isDirectory()){
             JOptionPane.showMessageDialog(null,"INICIANDO CONFIGURACION Y CREACION DE LA BASE DE DATOS");
-            bases.mkdirs();
+            //bases.mkdirs();
             //ConeccionLocal.CrearDb();
             
         }
@@ -90,22 +94,24 @@ public class BbsGestion {
           
         fregis.close();
         */
-        bk=new File("C:\\Gestion\\backUp.sql");
+        bk=new File("Gestion\\backUp.sql");
         //String sql="select * from movimientoscaja into outfile "+bk+" FIELDS TERMINATED BY ';' OPTIONALLY ENCLOSED BY '\"' LINES TERMINATED BY '\n\r'";
-       // Transaccionable tra=new Conecciones();
+       // Transaccionable tra=null;
+       
         //tra.guardarRegistro(sql);
         
         try {
          // Apertura del fichero y creacion de BufferedReader para poder
          // hacer una lectura comoda (disponer del metodo readLine()).
-         archivo = new File ("C:\\Gestion\\erroresDeConeccion.txt");
+         archivo = new File ("Gestion\\erroresDeConeccion.txt");
          if(archivo.exists()){
          fr = new FileReader (archivo);
          br = new BufferedReader(fr);
  
          // Lectura del fichero
          String linea;
-          //Transaccionable tra=new Conecciones();
+          //Transaccionable tra=null;
+        
          while((linea=br.readLine())!=null){
              
             //System.out.println(linea);
@@ -130,15 +136,36 @@ public class BbsGestion {
          }
           File archivo1=null;
         
-         archivo = new File ("C:\\Gestion\\idEquipo.txt");
+         archivo = new File ("Gestion\\idEquipo.txt");
         try {
             
             Propiedades.CargarPropiedades1();
         } catch (ParseException ex) {
             Logger.getLogger(BbsGestion.class.getName()).log(Level.SEVERE, null, ex);
         }
-        LoguinBbsGestion lBb=new LoguinBbsGestion();
+        
+        /*LoguinBbsGestion lBb=new LoguinBbsGestion();
         lBb.setVisible(true);
         lBb.pack();
+*/
+        Usuarios usuario=new Usuarios();
+        Usuarios usuarios=new Usuarios();
+        //try{
+        //usuarios=(Usuarios) usuario.validarClave(jTextField1.getText(),new String(jPasswordField1.getPassword()));
+        //}catch(Exception ex){
+        Backpeable bk1=new BkDeConeccion();
+            usuarios=(Usuarios) bk1.leerUsuarios("adm","adm");
+        //}
+        
+        Inicio in=new Inicio(2);
+        //Inicio in=new Inicio();
+        Inicio.niv=usuarios.getNivelDeAutorizacion();
+        Inicio.usuario=usuarios;
+        Inicio.sucursal=usuarios.getSucursal();
+        Inicio.deposito=Inicio.sucursal.getDepositos();
+        in.setTitle(" SISTEMA DE GESTION IMPRENTA eR&Re //   USUARIO : "+Inicio.usuario.getNombre()+" SUCURSAL :"+Inicio.sucursal.getNumero()+" - "+Inicio.sucursal.getDescripcion());
+        in.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        in.setVisible(true);
+        in.toFront();
     }
 }

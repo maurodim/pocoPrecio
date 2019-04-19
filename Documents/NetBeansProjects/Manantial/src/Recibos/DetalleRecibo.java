@@ -6,7 +6,7 @@
 package Recibos;
 
 import Pedidos.Pedidos;
-import interfaceGraficas.Inicio;
+import interfaceGraficasManantial.Inicio;
 import interfaces.Transaccionable;
 
 import java.sql.Date;
@@ -33,7 +33,8 @@ public class DetalleRecibo implements Recidable{
     private Integer idFactura;
     private Integer idPedido;
     private String numeroFc;
-    private static Transaccionable tra=new Conecciones();
+    private static Transaccionable tra;
+        
     private static ResultSet rs;
     private String sql;
     private String montoFcatura;

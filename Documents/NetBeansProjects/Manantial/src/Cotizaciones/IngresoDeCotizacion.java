@@ -8,7 +8,7 @@ import Conversores.Numeros;
 import facturacion.clientes.Clientes;
 import ClientesPantallas.NuevoCliente;
 import facturacion.pantallas.SeleccionDeClientes;
-import interfaceGraficas.Inicio;
+import interfaceGraficasManantial.Inicio;
 import interfaces.Comparables;
 import interfacesPrograma.Facturar;
 import java.awt.event.KeyEvent;

@@ -24,7 +24,8 @@ public class OrdenDePago implements Recidable{
     private Integer idCliente;
     private Double monto;
     private Date fecha;
-    private static Transaccionable tra=new Conecciones();
+    private static Transaccionable tra;
+        
     private static ResultSet rs;
     private String sql;
 

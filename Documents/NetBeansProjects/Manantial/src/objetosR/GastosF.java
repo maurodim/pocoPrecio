@@ -6,7 +6,7 @@ package objetosR;
 
 import Proveedores.Proveedores;
 import Conversores.Numeros;
-import interfaceGraficas.Inicio;
+import interfaceGraficasManantial.Inicio;
 import interfaces.Editables;
 import interfaces.Transaccionable;
 import java.sql.ResultSet;
@@ -76,40 +76,66 @@ public class GastosF implements Editables{
       Transaccionable tra;
       
       if(Inicio.coneccionRemota){
-          tra=new Conecciones();
-      
-      GastosF gastos;
-      ResultSet rs=tra.leerConjuntoDeRegistros(sql);
         try {
-            Integer id=0;
-            listadoVencimientos.clear();
-            while(rs.next()){
-                id=rs.getInt("id");
-                gastos=new GastosF();
-                gastos.setFechaVencimiento(rs.getDate("fechaVencimiento"));
-                gastos.setId(id);
-                gastos.setMonto(rs.getDouble("monto"));
-                gastos.setNumeroFactura(rs.getString("numeroFactura"));
-                gastos.setProveedor(new Proveedores(rs.getInt("idProveedor")));
-                listadoVencimientos.putIfAbsent(id,gastos);
-                
+            tra=new Conecciones();
+            
+            GastosF gastos;
+            ResultSet rs=tra.leerConjuntoDeRegistros(sql);
+            try {
+                Integer id=0;
+                listadoVencimientos.clear();
+                while(rs.next()){
+                    id=rs.getInt("id");
+                    gastos=new GastosF();
+                    gastos.setFechaVencimiento(rs.getDate("fechaVencimiento"));
+                    gastos.setId(id);
+                    gastos.setMonto(rs.getDouble("monto"));
+                    gastos.setNumeroFactura(rs.getString("numeroFactura"));
+                    gastos.setProveedor(new Proveedores(rs.getInt("idProveedor")));
+                    listadoVencimientos.putIfAbsent(id,gastos);
+                    
+                }
+                rs.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(GastosF.class.getName()).log(Level.SEVERE, null, ex);
             }
-            rs.close();
-        } catch (SQLException ex) {
+        } catch (InstantiationException ex) {
             Logger.getLogger(GastosF.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } catch (IllegalAccessException ex) {
+              Logger.getLogger(GastosF.class.getName()).log(Level.SEVERE, null, ex);
+          } catch (SQLException ex) {
+              Logger.getLogger(GastosF.class.getName()).log(Level.SEVERE, null, ex);
+          }
       }
     }
     private void ActualizarComprobante(){
         String sql="update tipocomprobantes set numeroActivo="+numeroComprobanteInt+" where numero=13";
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(GastosF.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(GastosF.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(GastosF.class.getName()).log(Level.SEVERE, null, ex);
+        }
         tra.guardarRegistro(sql);
         
         
     }
     private static void LeerComprobante(){
        String sql="select * from tipocomprobantes where numero=13";
-       Transaccionable tra=new Conecciones();
+       Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(GastosF.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(GastosF.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(GastosF.class.getName()).log(Level.SEVERE, null, ex);
+        }
        ResultSet rs=tra.leerConjuntoDeRegistros(sql);
         try {
             while(rs.next()){
@@ -126,7 +152,16 @@ public class GastosF implements Editables{
         GastosF gastos=(GastosF)objeto;
         String fecha=Numeros.ConvertirFecha(gastos.getFechaVencimiento());
         String sql="insert into movimientosgastosfijos (idProveedor,monto,fechaVencimiento,numeroFactura) values ("+gastos.getProveedor().getNumero()+","+gastos.getMonto()+",'"+fecha+"','"+gastos.getNumeroFactura()+"')";
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(GastosF.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(GastosF.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(GastosF.class.getName()).log(Level.SEVERE, null, ex);
+        }
         if(tra.guardarRegistro(sql)){
             verif=true;
             sql="select LAST_INSERT_ID()";
@@ -156,7 +191,16 @@ public class GastosF implements Editables{
        numeroComprobanteInt++;
        GastosF gastos=(GastosF)objeto;
        String sql="insert into movimientosproveedores (numeroProveedor,monto,pagado,idRemito,idUsuario,idCaja,fechaPago,tipoComprobante,numeroComprobante) values ("+gastos.getProveedor().getNumero()+","+gastos.getMonto()+",1,0,"+Inicio.usuario.getNumeroId()+","+Inicio.caja.getNumero()+",'"+Inicio.fechaDia+"',13,"+numeroComprobanteInt+")";
-       Transaccionable tra=new Conecciones();
+       Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(GastosF.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(GastosF.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(GastosF.class.getName()).log(Level.SEVERE, null, ex);
+        }
        verif=tra.guardarRegistro(sql);
        
        
@@ -174,7 +218,16 @@ public class GastosF implements Editables{
         Boolean verif=false;
         GastosF gastos=(GastosF)objeto;
         String sql="delete movimientosgastosfijos where id="+gastos.getId();
-        Transaccionable tra=new Conecciones();
+        Transaccionable tra=null;
+        try {
+            tra = new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(GastosF.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(GastosF.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(GastosF.class.getName()).log(Level.SEVERE, null, ex);
+        }
         if(tra.guardarRegistro(sql)){
             verif=true;
             listadoVencimientos.remove(gastos.getId());
