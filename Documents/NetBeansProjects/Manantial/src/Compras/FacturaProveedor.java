@@ -235,7 +235,7 @@ public class FacturaProveedor implements Comprobable,Facturar,Adeudable{
             Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
         }
         if(tra.guardarRegistro(sql)){
-            sql="select LAST_INSERT_ID()";
+            sql="select * from articulos order by id desc fetch first 1 rows only";
             ResultSet rs=tra.leerConjuntoDeRegistros(sql);
             try {
                 while(rs.next()){

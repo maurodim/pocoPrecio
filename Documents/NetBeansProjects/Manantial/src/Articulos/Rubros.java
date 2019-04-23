@@ -145,7 +145,7 @@ public class Rubros implements Personalizable,Rubrable{
         
         tra.guardarRegistro(sql);
         
-        sql="select LAST_INSERT_ID()";
+        sql="select * from articulos order by id desc fetch first 1 rows only";
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
             while(rs.next()){
                 ultimo=rs.getInt(1);

@@ -164,7 +164,7 @@ public class GastosF implements Editables{
         }
         if(tra.guardarRegistro(sql)){
             verif=true;
-            sql="select LAST_INSERT_ID()";
+            sql="select * from articulos order by id desc fetch first 1 rows only";
             ResultSet rs=tra.leerConjuntoDeRegistros(sql);
             Integer id=0;
             try {

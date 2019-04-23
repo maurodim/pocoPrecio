@@ -159,7 +159,7 @@ public class Remitos implements Remitable{
         
         sql="insert into remitos (idcliente,tipocomprobante,observaciones,numeroremito,idcomprobante,domicilio,localidad,cantidad,tipoBulto) values ("+remito.getIdCliente()+","+remito.getTipoComprobantte()+",'"+remito.getObservaciones()+"',(select tipocomprobantes.numeroActivo + 1 from tipocomprobantes where id=7),"+remito.getIdComprobante()+",'"+remito.getDomicilioDeEntrega()+"','"+remito.getLocalidad()+"',"+remito.getCantidadBultos()+","+remito.getTipoBulto()+")";
         tra.guardarRegistro(sql);
-        sql="select LAST_INSERT_ID()";
+        sql="select * from articulos order by id desc fetch first 1 rows only";
         rs=tra.leerConjuntoDeRegistros(sql);
         while(rs.next()){
             numeroId=rs.getInt(1);

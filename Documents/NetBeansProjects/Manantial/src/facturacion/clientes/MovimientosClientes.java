@@ -194,7 +194,7 @@ public class MovimientosClientes implements Facturable, Movible, Editables {
         String sql = "insert into facturas (idcliente,total,tipo,idusuario,idpedido,idremito,numerofactura,estado,saldo,subtotal,descuento,porcentajeD) values (" + factura.getIdCliente() + ",round(" + factura.getTotal() + ",4)," + factura.getTipo() + "," + factura.getIdUsuario() + "," + factura.getIdPedido() + "," + factura.getIdRemito() + "," + factura.getNumeroFactura() + "," + factura.getEstado() + ",round(" + factura.getTotal() + ",4)," + factura.getSubTotal() + "," + factura.getDescuento() + "," + factura.getPorcentajeDescuento() + ")";
         tra.guardarRegistro(sql);
         
-        sql = "select LAST_INSERT_ID()";
+        sql = "select * from articulos order by id desc fetch first 1 rows only";
         ResultSet rs = tra.leerConjuntoDeRegistros(sql);
             while (rs.next()) {
                 idNuevo = rs.getInt(1);
@@ -609,7 +609,7 @@ public class MovimientosClientes implements Facturable, Movible, Editables {
             Transaccionable tra = new Conecciones();
         String sql = "insert into movimientosclientes (numeroProveedor,monto,pagado,numeroComprobante,idUsuario,idCaja,idSucursal,tipoComprobante,idpedido,editado) values (" + pedido.idCliente + ",round(" + pedido.total + ",4),0," + pedido.getNumeroFactura() + "," + Inicio.usuario.getNumeroId() + "," + Inicio.caja.getNumero() + "," + Inicio.sucursal.getNumero() + ",5," + pedido.getIdPedido() + ",1)";
         tra.guardarRegistro(sql);
-        ResultSet rs = tra.leerConjuntoDeRegistros("select last_insert_id()");
+        ResultSet rs = tra.leerConjuntoDeRegistros("select * from articulos order by id desc fetch first 1 rows only");
             while (rs.next()) {
                 id = rs.getInt(1);
             }

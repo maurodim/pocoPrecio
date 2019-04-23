@@ -320,11 +320,11 @@ public class Proveedores implements Personalizable{
         }
        if(tra.guardarRegistro(sql)){
            int numero=0;
-           sql="select LAST_INSERT_ID()";
+           sql="select * from articulos order by id desc fetch first 1 rows only";
            ResultSet rs=tra.leerConjuntoDeRegistros(sql);
             try {
                 while(rs.next()){
-                    numero=rs.getInt(1);
+                    numero=rs.getInt("id");
                 }
                 rs.close();
                 prov.setNumero(numero);

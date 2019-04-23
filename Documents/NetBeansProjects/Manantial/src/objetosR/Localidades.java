@@ -133,7 +133,7 @@ public class Localidades implements Busquedas,Personalizable,Componable,Rubrable
     public Integer agregar(Object objeto) {
         Localidades localidad;
         localidad=(Localidades) objeto;
-        sql="insert into localidades (localidad,codigo_postal,id_provincia,codigo_interno) values ('"+localidad.getDescripcion()+"','"+localidad.getCodigoPostal()+"',"+localidad.getProvincia()+",(select last_insert_id()))";
+        sql="insert into localidades (localidad,codigo_postal,id_provincia,codigo_interno) values ('"+localidad.getDescripcion()+"','"+localidad.getCodigoPostal()+"',"+localidad.getProvincia()+",(select * from articulos order by id desc fetch first 1 rows only))";
         tra.guardarRegistro(sql);
         return 0;
         

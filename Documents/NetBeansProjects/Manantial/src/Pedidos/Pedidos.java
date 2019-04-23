@@ -195,7 +195,7 @@ public class Pedidos implements Pedable{
             Logger.getLogger(Pedidos.class.getName()).log(Level.SEVERE, null, ex);
         }
         tra.guardarRegistro(sql);
-        sql="select LAST_INSERT_ID()";
+        sql="select * from articulos order by id desc fetch first 1 rows only";
         
         rs=tra.leerConjuntoDeRegistros(sql);
         try {

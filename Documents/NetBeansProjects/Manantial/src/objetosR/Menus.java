@@ -129,7 +129,7 @@ public class Menus implements Personalizable{
         }
         String sql="insert into tipoacceso (descripcion,menu1,menu2,menu3,menu4,menu5,menu6,menu7) values ('"+menu.getNombre()+"',"+menu.getMenu1()+","+menu.getMenu2()+","+menu.getMenu3()+","+menu.getMenu4()+","+menu.getMenu5()+","+menu.getMenu6()+","+menu.getMenu7()+")";
         tra.guardarRegistro(sql);
-        sql="select LAST_INSERT_ID()";
+        sql="select * from articulos order by id desc fetch first 1 rows only";
         int nivel=0;
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
         try {

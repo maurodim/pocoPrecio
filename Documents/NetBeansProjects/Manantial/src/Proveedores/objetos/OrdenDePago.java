@@ -85,7 +85,7 @@ public class OrdenDePago implements Recidable{
         int numero=0;
         sql="insert into ordendepagos (idcliente,monto,numerorecibo,saldo) values ("+recibo.getIdCliente()+","+recibo.getMonto()+",'"+recibo.getNumeroRecibo()+"',"+recibo.getSaldoProveedor()+")";
         tra.guardarRegistro(sql);
-        sql="select LAST_INSERT_ID()";
+        sql="select * from articulos order by id desc fetch first 1 rows only";
         rs=tra.leerConjuntoDeRegistros(sql);
         try{
         while(rs.next()){

@@ -530,7 +530,7 @@ public class Cajas extends Sucursales implements Cajeables{
             }
             //cajaNueva=new Cajas(cajaNumeroAct);
             /*
-            sql="select LAST_INSERT_ID()";
+            sql="select * from articulos order by id desc fetch first 1 rows only";
             rs=tra.leerConjuntoDeRegistros(sql);
             try {
                 while(rs.next()){
@@ -560,7 +560,7 @@ public class Cajas extends Sucursales implements Cajeables{
             //sql="insert into caja (numero,numeroSucursal,numeroUsuario,tipoMovimiento,saldoInicial,tipo,estado) values ("+cajaNumeroAct+","+Inicio.sucursal.getNumero()+","+Inicio.usuario.getNumero()+",9,"+saldoI+","+tipo+",0)";
             //BkDeConeccion.guardarSentencias(sql);
             /*
-            sql="select LAST_INSERT_ID()";
+            sql="select * from articulos order by id desc fetch first 1 rows only";
             rs=tra.leerConjuntoDeRegistros(sql);
             try {
                 while(rs.next()){
