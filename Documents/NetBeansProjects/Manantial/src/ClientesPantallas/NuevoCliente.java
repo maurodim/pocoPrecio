@@ -57,27 +57,27 @@ import objetosR.Transportes;
  * @author hernan
  */
 public class NuevoCliente extends javax.swing.JInternalFrame implements InternalFrameListener {
+
     private JInternalFrame clientes;
     private int modificacion;
-    private Clientes cliTa=new Clientes();
-    private ArrayList listadoL=new ArrayList();
-    private ArrayList listadoIva=new ArrayList();
-    private ArrayList listadoLoc=new ArrayList();
-    private Cotizacion cotizacionT=new Cotizacion();
-    private ArrayList listadoCot=new ArrayList();
-    private ArrayList listadoPed=new ArrayList();
-    DefaultTableModel modelo=new DefaultTableModel();
-    DefaultTableModel modelo1=new DefaultTableModel();
-    DefaultTableModel modelo2=new DefaultTableModel();        
-    private CondicionesIva condicion=new CondicionesIva();
-    private ListasDePrecios listaPrecio=new ListasDePrecios();
-    private Localidades localidad=new Localidades();
-    private ArrayList listadoFac=new ArrayList();
+    private Clientes cliTa = new Clientes();
+    private ArrayList listadoL = new ArrayList();
+    private ArrayList listadoIva = new ArrayList();
+    private ArrayList listadoLoc = new ArrayList();
+    private Cotizacion cotizacionT = new Cotizacion();
+    private ArrayList listadoCot = new ArrayList();
+    private ArrayList listadoPed = new ArrayList();
+    DefaultTableModel modelo = new DefaultTableModel();
+    DefaultTableModel modelo1 = new DefaultTableModel();
+    DefaultTableModel modelo2 = new DefaultTableModel();
+    private CondicionesIva condicion = new CondicionesIva();
+    private ListasDePrecios listaPrecio = new ListasDePrecios();
+    private Localidades localidad = new Localidades();
+    private ArrayList listadoFac = new ArrayList();
     private TableColumn columnaNumero;
     private ArrayList listadoTransporte;
     private Transportes transp;
-    
-    
+
     /**
      * Creates new form NuevoCliente
      */
@@ -85,68 +85,74 @@ public class NuevoCliente extends javax.swing.JInternalFrame implements Internal
         initComponents();
         this.jPanel2.setVisible(false);
     }
+
     public NuevoCliente(Object client) {
         initComponents();
-        cliTa=(Clientes)client;
+        cliTa = (Clientes) client;
         this.jTextField1.setText(cliTa.getRazonSocial());
         //this.setTitle("MODIFICACION DATOS DEL CLIENTE - "+cliTa.getRazonSocial());
         this.jTextField2.setText(cliTa.getDireccion());
-        Iterator iIva=listadoIva.listIterator();
-        int tipoIvaC=cliTa.getTipoIva();
-        int rengl=0;
-        int posicion=0;
-        while(iIva.hasNext()){
-            condicion=(CondicionesIva)iIva.next();
-            if(tipoIvaC==condicion.getId()){
-                posicion=rengl;
+        Iterator iIva = listadoIva.listIterator();
+        int tipoIvaC = cliTa.getTipoIva();
+        int rengl = 0;
+        int posicion = 0;
+        while (iIva.hasNext()) {
+            condicion = (CondicionesIva) iIva.next();
+            if (tipoIvaC == condicion.getId()) {
+                posicion = rengl;
             }
             rengl++;
         }
         this.jComboBox1.setSelectedIndex(posicion);
-        
+
         this.jTextField3.setText(cliTa.getNumeroDeCuit());
         this.jTextField4.setText(cliTa.getTelefono());
-        tipoIvaC=cliTa.getListaDePrecios();
-        rengl=0;
-        posicion=0;
-        Iterator iLst=listadoL.listIterator();
-        while(iLst.hasNext()){
-            listaPrecio=(ListasDePrecios)iLst.next();
-            if(tipoIvaC==listaPrecio.getNumeroLista()){
-                posicion=rengl;
+        tipoIvaC = cliTa.getListaDePrecios();
+        rengl = 0;
+        posicion = 0;
+        Iterator iLst = listadoL.listIterator();
+        while (iLst.hasNext()) {
+            listaPrecio = (ListasDePrecios) iLst.next();
+            if (tipoIvaC == listaPrecio.getNumeroLista()) {
+                posicion = rengl;
             }
             rengl++;
         }
         this.jComboBox2.setSelectedIndex(posicion);
-        
-        
-        listadoTransporte=new ArrayList();
+
+        listadoTransporte = new ArrayList();
         /*
         Componable comp=new Transportes();
         Personalizable per=new Transportes();
         listadoTransporte=per.listar();
         this.jComboBox4.setModel(comp.LlenarComboConArray(listadoTransporte));
-        */
-        
-        String loc=cliTa.getLocalidad();
-        String loc2="";
-        rengl=0;
-        posicion=0;
-        Iterator itLoc=listadoLoc.listIterator();
-        while(itLoc.hasNext()){
-            localidad=(Localidades)itLoc.next();
-            loc2=localidad.getDescripcion();
-            if(loc.equals(loc2)){
-                posicion=rengl;
+         */
+
+        String loc = cliTa.getLocalidad();
+        String loc2 = "";
+        rengl = 0;
+        posicion = 0;
+        Iterator itLoc = listadoLoc.listIterator();
+        while (itLoc.hasNext()) {
+            localidad = (Localidades) itLoc.next();
+            loc2 = localidad.getDescripcion();
+            if (loc != null) {
+                if (loc.equals(loc2)) {
+                    posicion = rengl;
+                }
             }
             rengl++;
         }
-        
-        this.jComboBox3.setSelectedIndex(posicion);
+        System.out.println("posicion de localidad: " + posicion + " de total: " + listadoLoc.size() + " Localidad cargada: " + loc);
+        if (cliTa.getLocalidad() != null) {
+            this.jComboBox3.setSelectedIndex(posicion);
+        }
         this.jTextField5.setText(String.valueOf(cliTa.getCupoDeCredito()));
-        Double coef=0.00;
-        coef=cliTa.getCoeficienteListaDeprecios() - 1;
-        if(coef==0.00)coef=1.00;
+        Double coef = 0.00;
+        coef = cliTa.getCoeficienteListaDeprecios() - 1;
+        if (coef == 0.00) {
+            coef = 1.00;
+        }
         /*
         if(cliTa.getCoeficienteListaDeprecios() < 1){
             
@@ -154,7 +160,7 @@ public class NuevoCliente extends javax.swing.JInternalFrame implements Internal
         }else{
             coef=0.00;
         }
-        */
+         */
         this.jTextField6.setText(cliTa.getDireccionDeEntrega());
         this.jTextField7.setText(cliTa.getResponsable());
         this.jTextField8.setText(cliTa.getFantasia());
@@ -162,11 +168,10 @@ public class NuevoCliente extends javax.swing.JInternalFrame implements Internal
         this.jTextField10.setText(cliTa.getDireccionFantasia());
         this.jTextField11.setText(cliTa.getFax());
         this.jTextField12.setText(cliTa.getEmail());
-        
-        modificacion=1;
-        
+
+        modificacion = 1;
+
     }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -819,7 +824,7 @@ public class NuevoCliente extends javax.swing.JInternalFrame implements Internal
     }//GEN-LAST:event_formComponentShown
 
     private void formFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_formFocusGained
-    //        System.out.println(" debería recargar los datos acá");
+        //        System.out.println(" debería recargar los datos acá");
     }//GEN-LAST:event_formFocusGained
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
@@ -828,102 +833,100 @@ public class NuevoCliente extends javax.swing.JInternalFrame implements Internal
     }//GEN-LAST:event_formKeyPressed
 
     private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameActivated
-       //this.setTitle("MODIFICACION DATOS DEL CLIENTE");
-        Personalizable per=new Localidades();
-        Rubrable rub=new Localidades();
+        //this.setTitle("MODIFICACION DATOS DEL CLIENTE");
+        Personalizable per = new Localidades();
+        Rubrable rub = new Localidades();
         listadoLoc.clear();
-        listadoLoc=per.listar();
+        listadoLoc = per.listar();
         this.jComboBox3.setModel(rub.mostrarEnBox(listadoLoc));
-        Facturar factu=new Clientes();
-        cliTa=(Clientes) factu.cargarPorCodigoAsignado(cliTa.getCodigoId());
-        Double saldd=0.00;
+        Facturar factu = new Clientes();
+        cliTa = (Clientes) factu.cargarPorCodigoAsignado(cliTa.getCodigoId());
+        Double saldd = 0.00;
         this.jLabel20.setText(null);
-        if(cliTa.getSaldo() != null){
-            saldd=Math.round(cliTa.getSaldo() * 1000.0) / 1000.0;
-        }else{
+        if (cliTa.getSaldo() != null) {
+            saldd = Math.round(cliTa.getSaldo() * 1000.0) / 1000.0;
+        } else {
             //saldd=0.00;
         }
-        this.jLabel20.setText("<html>SALDO: $"+saldd+"</html>");
-        String loc=cliTa.getLocalidad();
-        String loc2="";
-        Integer rengl=0;
-        Integer posicion=0;
-        Iterator itLoc=listadoLoc.listIterator();
-        if(loc !=null){
-        while(itLoc.hasNext()){
-            localidad=(Localidades)itLoc.next();
-            loc2=localidad.getDescripcion();
-            if(loc.equals(loc2)){
-                posicion=rengl;
+        this.jLabel20.setText("<html>SALDO: $" + saldd + "</html>");
+        String loc = cliTa.getLocalidad();
+        String loc2 = "";
+        Integer rengl = 0;
+        Integer posicion = 0;
+        Iterator itLoc = listadoLoc.listIterator();
+        if (loc != null) {
+            while (itLoc.hasNext()) {
+                localidad = (Localidades) itLoc.next();
+                loc2 = localidad.getDescripcion();
+                if (loc.equals(loc2)) {
+                    posicion = rengl;
+                }
+                rengl++;
             }
-            rengl++;
+            this.jComboBox3.setSelectedIndex(posicion);
         }
-        this.jComboBox3.setSelectedIndex(posicion);
-        }
-        
-        Cotizable cotizable=new Cotizacion();
-        Cotizacion cotizacion=new Cotizacion();
-        listadoCot=cotizable.listarPorEstado(cliTa.getCodigoId(),0);
-        modelo=cotizable.mostrarListado(listadoCot);
-        if(Inicio.usuario.getNumeroId()==2){
+
+        Cotizable cotizable = new Cotizacion();
+        Cotizacion cotizacion = new Cotizacion();
+        listadoCot = cotizable.listarPorEstado(cliTa.getCodigoId(), 0);
+        modelo = cotizable.mostrarListado(listadoCot);
+        if (Inicio.usuario.getNumeroId() == 2) {
             this.jButton5.setVisible(false);
             this.jButton8.setVisible(false);
         }
         this.jTable1.setModel(modelo);
-        columnaNumero=this.jTable1.getColumn("Numero");
+        columnaNumero = this.jTable1.getColumn("Numero");
         columnaNumero.setPreferredWidth(40);
         columnaNumero.setMaxWidth(40);
-        Pedable pedable=new Pedidos();
-        Pedidos pedidos=new Pedidos();
-        listadoPed=pedable.listarPorEstado(cliTa.getCodigoId(),0);
-        modelo1=pedable.mostrarListado(listadoPed);
+        Pedable pedable = new Pedidos();
+        Pedidos pedidos = new Pedidos();
+        listadoPed = pedable.listarPorEstado(cliTa.getCodigoId(), 0);
+        modelo1 = pedable.mostrarListado(listadoPed);
         this.jTable2.setModel(modelo1);
-        columnaNumero=this.jTable2.getColumn("Numero");
+        columnaNumero = this.jTable2.getColumn("Numero");
         columnaNumero.setPreferredWidth(40);
         columnaNumero.setMaxWidth(40);
-        Facturable ff=new MovimientosClientes();
-        MovimientosClientes factura=new MovimientosClientes();
-        
-        listadoFac=ff.listarPorClienteNoRemitidas(cliTa.getCodigoId());
-        modelo2=ff.mostrarListado(listadoFac);
+        Facturable ff = new MovimientosClientes();
+        MovimientosClientes factura = new MovimientosClientes();
+
+        listadoFac = ff.listarPorClienteNoRemitidas(cliTa.getCodigoId());
+        modelo2 = ff.mostrarListado(listadoFac);
         this.jTable3.setModel(modelo2);
-        columnaNumero=this.jTable3.getColumn("Recibo");
+        columnaNumero = this.jTable3.getColumn("Recibo");
         columnaNumero.setPreferredWidth(40);
         columnaNumero.setMaxWidth(40);
-        columnaNumero=this.jTable3.getColumn("Monto");
+        columnaNumero = this.jTable3.getColumn("Monto");
         columnaNumero.setPreferredWidth(60);
         columnaNumero.setMaxWidth(60);
-        
-        
-        Componable comp=new Transportes();
-        Personalizable perT=new Transportes();
-        listadoTransporte=perT.listar();
+
+        Componable comp = new Transportes();
+        Personalizable perT = new Transportes();
+        listadoTransporte = perT.listar();
         this.jComboBox4.setModel(comp.LlenarComboConArray(listadoTransporte));
-        
-        
-        Iterator itTra=listadoTransporte.listIterator();
-        Integer idTranp=cliTa.getIdTransporte();
-        Integer posicion1=0;
+
+        Iterator itTra = listadoTransporte.listIterator();
+        Integer idTranp = cliTa.getIdTransporte();
+        Integer posicion1 = 0;
         Transportes transp1;
-        rengl=0;
-        while(itTra.hasNext()){
-            transp1=(Transportes) itTra.next();
-            if(idTranp == transp1.getId()){
-                posicion1=rengl;
+        rengl = 0;
+        while (itTra.hasNext()) {
+            transp1 = (Transportes) itTra.next();
+            if (idTranp == transp1.getId()) {
+                posicion1 = rengl;
             }
             rengl++;
         }
-        if(posicion1 > 0){
+        if (posicion1 > 0) {
             this.jComboBox4.setSelectedIndex(posicion1);
         }
-        
+
     }//GEN-LAST:event_formInternalFrameActivated
 
     private void nta_de_CreditoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nta_de_CreditoActionPerformed
-        MovimientosClientes comprobante=new MovimientosClientes();
-        int posicion=this.jTable3.getSelectedRow();
-        comprobante=(MovimientosClientes)listadoFac.get(posicion);
-        NotaDeCredito factu=new NotaDeCredito(comprobante);
+        MovimientosClientes comprobante = new MovimientosClientes();
+        int posicion = this.jTable3.getSelectedRow();
+        comprobante = (MovimientosClientes) listadoFac.get(posicion);
+        NotaDeCredito factu = new NotaDeCredito(comprobante);
         Inicio.jDesktopPane1.add(factu);
         try {
             factu.setMaximum(true);
@@ -936,7 +939,7 @@ public class NuevoCliente extends javax.swing.JInternalFrame implements Internal
 
     private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
 
-        IngresoDeFacturas pedidos=new IngresoDeFacturas(cliTa);
+        IngresoDeFacturas pedidos = new IngresoDeFacturas(cliTa);
         Inicio.jDesktopPane1.add(pedidos);
         try {
             pedidos.setMaximum(true);
@@ -949,7 +952,7 @@ public class NuevoCliente extends javax.swing.JInternalFrame implements Internal
 
     private void jButton17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton17ActionPerformed
 
-        IngresoDePedidos pedidos=new IngresoDePedidos(cliTa);
+        IngresoDePedidos pedidos = new IngresoDePedidos(cliTa);
         Inicio.jDesktopPane1.add(pedidos);
         try {
             pedidos.setMaximum(true);
@@ -962,7 +965,7 @@ public class NuevoCliente extends javax.swing.JInternalFrame implements Internal
 
     private void jButton16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton16ActionPerformed
 
-        IngresoDeCotizacion pedidos=new IngresoDeCotizacion(cliTa);
+        IngresoDeCotizacion pedidos = new IngresoDeCotizacion(cliTa);
         Inicio.jDesktopPane1.add(pedidos);
         try {
             pedidos.setMaximum(true);
@@ -974,10 +977,10 @@ public class NuevoCliente extends javax.swing.JInternalFrame implements Internal
     }//GEN-LAST:event_jButton16ActionPerformed
 
     private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton15ActionPerformed
-        MovimientosClientes comprobante=new MovimientosClientes();
-        int posicion=this.jTable3.getSelectedRow();
-        comprobante=(MovimientosClientes)listadoFac.get(posicion);
-        ModificacionDeFacturas factu=new ModificacionDeFacturas(comprobante);
+        MovimientosClientes comprobante = new MovimientosClientes();
+        int posicion = this.jTable3.getSelectedRow();
+        comprobante = (MovimientosClientes) listadoFac.get(posicion);
+        ModificacionDeFacturas factu = new ModificacionDeFacturas(comprobante);
         Inicio.jDesktopPane1.add(factu);
         try {
             factu.setMaximum(true);
@@ -989,12 +992,12 @@ public class NuevoCliente extends javax.swing.JInternalFrame implements Internal
     }//GEN-LAST:event_jButton15ActionPerformed
 
     private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
-        MovimientosClientes comprobante=new MovimientosClientes();
-        int posicion=this.jTable3.getSelectedRow();
-        comprobante=(MovimientosClientes)listadoFac.get(posicion);
-        ImprimirFactura imprimir=new ImprimirFactura();
+        MovimientosClientes comprobante = new MovimientosClientes();
+        int posicion = this.jTable3.getSelectedRow();
+        comprobante = (MovimientosClientes) listadoFac.get(posicion);
+        ImprimirFactura imprimir = new ImprimirFactura();
         try {
-            imprimir.ImprimirFactura(comprobante.getId(),comprobante.getTipo());
+            imprimir.ImprimirFactura(comprobante.getId(), comprobante.getTipo());
         } catch (IOException ex) {
             Logger.getLogger(NuevoCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -1002,11 +1005,11 @@ public class NuevoCliente extends javax.swing.JInternalFrame implements Internal
     }//GEN-LAST:event_jButton14ActionPerformed
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
-        ArrayList listadoParaRecibo=new ArrayList();
-        int cantidad=this.jTable3.getRowCount();
-        Double montt=0.00;
-        Pedable ped=new Pedidos();
-        listadoParaRecibo=ped.listarConSaldo(cliTa.getCodigoId());
+        ArrayList listadoParaRecibo = new ArrayList();
+        int cantidad = this.jTable3.getRowCount();
+        Double montt = 0.00;
+        Pedable ped = new Pedidos();
+        listadoParaRecibo = ped.listarConSaldo(cliTa.getCodigoId());
         //montt
         /*
         MovimientoProveedores factura;
@@ -1018,10 +1021,10 @@ public class NuevoCliente extends javax.swing.JInternalFrame implements Internal
                 montt=montt + factura.getTotal();
             }
         }
-        */
-        System.out.println("cantidad a recibir "+listadoParaRecibo.size()+" monto total: "+montt);
-        Recidable reci=new DetalleRecibo();
-        AbmRecibos abm=new AbmRecibos(listadoParaRecibo,montt,cliTa);
+         */
+        System.out.println("cantidad a recibir " + listadoParaRecibo.size() + " monto total: " + montt);
+        Recidable reci = new DetalleRecibo();
+        AbmRecibos abm = new AbmRecibos(listadoParaRecibo, montt, cliTa);
         //abm.jTable1.setModel(reci.mostrarARecibir(listadoParaRecibo));
         //AbmRecibos.listadoFc=listadoParaRecibo;
         //AbmRecibos.montoTotal=montt;
@@ -1036,10 +1039,10 @@ public class NuevoCliente extends javax.swing.JInternalFrame implements Internal
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-        Integer numeroF=0;
-        MovimientosClientes factura=new MovimientosClientes();
-        factura=(MovimientosClientes)listadoFac.get(this.jTable3.getSelectedRow());
-        IngresoDeRemitos remi=new IngresoDeRemitos(cliTa,factura);
+        Integer numeroF = 0;
+        MovimientosClientes factura = new MovimientosClientes();
+        factura = (MovimientosClientes) listadoFac.get(this.jTable3.getSelectedRow());
+        IngresoDeRemitos remi = new IngresoDeRemitos(cliTa, factura);
         Inicio.jDesktopPane1.add(remi);
         try {
             remi.setMaximum(true);
@@ -1051,11 +1054,11 @@ public class NuevoCliente extends javax.swing.JInternalFrame implements Internal
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        Integer numeroF=0;
-        Pedidos pedido=new Pedidos();
-        pedido=(Pedidos)listadoPed.get(this.jTable2.getSelectedRow());
+        Integer numeroF = 0;
+        Pedidos pedido = new Pedidos();
+        pedido = (Pedidos) listadoPed.get(this.jTable2.getSelectedRow());
 
-        IngresoDeRemitos remi=new IngresoDeRemitos(cliTa,pedido);
+        IngresoDeRemitos remi = new IngresoDeRemitos(cliTa, pedido);
         Inicio.jDesktopPane1.add(remi);
         try {
             remi.setMaximum(true);
@@ -1067,9 +1070,9 @@ public class NuevoCliente extends javax.swing.JInternalFrame implements Internal
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        Pedidos pedido=new Pedidos();
-        pedido=(Pedidos)listadoPed.get(this.jTable2.getSelectedRow());
-        ModificacionDePedidos modificar=new ModificacionDePedidos(pedido);
+        Pedidos pedido = new Pedidos();
+        pedido = (Pedidos) listadoPed.get(this.jTable2.getSelectedRow());
+        ModificacionDePedidos modificar = new ModificacionDePedidos(pedido);
         Inicio.jDesktopPane1.add(modificar);
         try {
             modificar.setMaximum(true);
@@ -1081,11 +1084,11 @@ public class NuevoCliente extends javax.swing.JInternalFrame implements Internal
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        Pedidos pedido=new Pedidos();
-        pedido=(Pedidos)listadoPed.get(this.jTable2.getSelectedRow());
-        Pedable peda=new Pedidos();
+        Pedidos pedido = new Pedidos();
+        pedido = (Pedidos) listadoPed.get(this.jTable2.getSelectedRow());
+        Pedable peda = new Pedidos();
         peda.transformarEnFactura(pedido, listadoL);
-        ModificacionDeFacturas factu=new ModificacionDeFacturas(pedido);
+        ModificacionDeFacturas factu = new ModificacionDeFacturas(pedido);
         Inicio.jDesktopPane1.add(factu);
         try {
             factu.setMaximum(true);
@@ -1097,9 +1100,9 @@ public class NuevoCliente extends javax.swing.JInternalFrame implements Internal
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        Pedidos pedido=new Pedidos();
-        pedido=(Pedidos)listadoPed.get(this.jTable2.getSelectedRow());
-        ImprimirPedido imprimir=new ImprimirPedido();
+        Pedidos pedido = new Pedidos();
+        pedido = (Pedidos) listadoPed.get(this.jTable2.getSelectedRow());
+        ImprimirPedido imprimir = new ImprimirPedido();
         try {
             imprimir.ImprimirOrdenDetallada(pedido);
         } catch (IOException ex) {
@@ -1108,9 +1111,9 @@ public class NuevoCliente extends javax.swing.JInternalFrame implements Internal
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        Pedidos pedido=new Pedidos();
-        pedido=(Pedidos)listadoPed.get(this.jTable2.getSelectedRow());
-        ImprimirPedido imprimir=new ImprimirPedido();
+        Pedidos pedido = new Pedidos();
+        pedido = (Pedidos) listadoPed.get(this.jTable2.getSelectedRow());
+        ImprimirPedido imprimir = new ImprimirPedido();
         try {
             imprimir.ImprimirOrdenDeTrabajo(pedido.getId());
         } catch (IOException ex) {
@@ -1119,26 +1122,26 @@ public class NuevoCliente extends javax.swing.JInternalFrame implements Internal
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        Cotizacion cotizacion=new Cotizacion();
-        cotizacion=(Cotizacion)listadoCot.get(this.jTable1.getSelectedRow());
-        Cotizable coti=new Cotizacion();
-        ArrayList detalleC=new ArrayList();
-        Cotizable detC=new DetalleCotizacion();
-        detalleC=detC.cargarDetalle(cotizacion.getId());
+        Cotizacion cotizacion = new Cotizacion();
+        cotizacion = (Cotizacion) listadoCot.get(this.jTable1.getSelectedRow());
+        Cotizable coti = new Cotizacion();
+        ArrayList detalleC = new ArrayList();
+        Cotizable detC = new DetalleCotizacion();
+        detalleC = detC.cargarDetalle(cotizacion.getId());
         coti.transformarEnPedido(cotizacion, detalleC);
         this.jTable2.removeAll();
-        Pedable pedable=new Pedidos();
+        Pedable pedable = new Pedidos();
         listadoPed.clear();
-        listadoPed=pedable.listarPorEstado(cliTa.getCodigoId(),0);
-        modelo1=pedable.mostrarListado(listadoPed);
+        listadoPed = pedable.listarPorEstado(cliTa.getCodigoId(), 0);
+        modelo1 = pedable.mostrarListado(listadoPed);
         this.jTable2.setModel(modelo1);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        Cotizable cotizable=new Cotizacion();
-        Cotizacion cotizacion=new Cotizacion();
-        cotizacion=(Cotizacion)listadoCot.get(this.jTable1.getSelectedRow());
-        ModificacionDeCotizacion modificar=new ModificacionDeCotizacion(cliTa,cotizacion);
+        Cotizable cotizable = new Cotizacion();
+        Cotizacion cotizacion = new Cotizacion();
+        cotizacion = (Cotizacion) listadoCot.get(this.jTable1.getSelectedRow());
+        ModificacionDeCotizacion modificar = new ModificacionDeCotizacion(cliTa, cotizacion);
         Inicio.jDesktopPane1.add(modificar);
         try {
             modificar.setMaximum(true);
@@ -1150,7 +1153,7 @@ public class NuevoCliente extends javax.swing.JInternalFrame implements Internal
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton21ActionPerformed
-        TransporteAbm trans=new TransporteAbm();
+        TransporteAbm trans = new TransporteAbm();
         Inicio.jDesktopPane1.add(trans);
         trans.setVisible(true);
         trans.toFront();
@@ -1158,14 +1161,14 @@ public class NuevoCliente extends javax.swing.JInternalFrame implements Internal
     }//GEN-LAST:event_jButton21ActionPerformed
 
     private void jButton20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton20ActionPerformed
-        LocalidadesAbm loca=new LocalidadesAbm();
+        LocalidadesAbm loca = new LocalidadesAbm();
         Inicio.jDesktopPane1.add(loca);
         loca.setVisible(true);
         loca.toFront();
     }//GEN-LAST:event_jButton20ActionPerformed
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
-        ListasPorCliente listas=new ListasPorCliente(cliTa);
+        ListasPorCliente listas = new ListasPorCliente(cliTa);
         Inicio.jDesktopPane1.add(listas);
         try {
             listas.setMaximum(true);
@@ -1181,25 +1184,25 @@ public class NuevoCliente extends javax.swing.JInternalFrame implements Internal
     }//GEN-LAST:event_jTextField5ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Clientes cli=new Clientes();
+        Clientes cli = new Clientes();
         //cli.setCodigoCliente(title);
-        if(modificacion==1){
-            cli=cliTa;
+        if (modificacion == 1) {
+            cli = cliTa;
         }
         cli.setRazonSocial(this.jTextField1.getText());
         cli.setDireccion(this.jTextField2.getText());
-        String condicion1=null;
-        Integer tipo=0;
-        condicion=(CondicionesIva)listadoIva.get(this.jComboBox1.getSelectedIndex());
-        tipo=condicion.getId();
+        String condicion1 = null;
+        Integer tipo = 0;
+        condicion = (CondicionesIva) listadoIva.get(this.jComboBox1.getSelectedIndex());
+        tipo = condicion.getId();
 
-        if(this.jComboBox1.getSelectedIndex() < 4){
+        if (this.jComboBox1.getSelectedIndex() < 4) {
             cli.setEmpresa("sd");
-        }else{
+        } else {
             cli.setEmpresa("bu");
         }
-        ListasDePrecios lista=new ListasDePrecios();
-        lista=(ListasDePrecios)listadoL.get(this.jComboBox2.getSelectedIndex());
+        ListasDePrecios lista = new ListasDePrecios();
+        lista = (ListasDePrecios) listadoL.get(this.jComboBox2.getSelectedIndex());
 
         cli.setListaDePrecios(lista.getNumeroLista());
         cli.setCoeficienteListaDeprecios(lista.getPorcentaje());
@@ -1218,25 +1221,25 @@ public class NuevoCliente extends javax.swing.JInternalFrame implements Internal
         cli.setFax(this.jTextField11.getText());
         cli.setDireccionFantasia(this.jTextField10.getText());
         cli.setEmail(this.jTextField12.getText());
-        localidad=(Localidades)listadoLoc.get(this.jComboBox3.getSelectedIndex());
+        localidad = (Localidades) listadoLoc.get(this.jComboBox3.getSelectedIndex());
         cli.setLocalidad(String.valueOf(localidad.getId()));
-        transp=(Transportes) listadoTransporte.get(this.jComboBox4.getSelectedIndex());
+        transp = (Transportes) listadoTransporte.get(this.jComboBox4.getSelectedIndex());
         cli.setIdTransporte(transp.getId());
 
-        Facturar fact=new Clientes();
-        if(modificacion==1){
+        Facturar fact = new Clientes();
+        if (modificacion == 1) {
 
             fact.modificarDatosDelCliente(cli);
-        }else{
+        } else {
 
             fact.guardarNuevoCliente(cli);
         }
-        try{
+        try {
             IngresoDeCotizacion.jCheckBox2.setSelected(true);
             IngresoDeCotizacion.jCheckBox2.setEnabled(false);
-            IngresoDeCotizacion.cliT=cli;
+            IngresoDeCotizacion.cliT = cli;
             IngresoDeCotizacion.jLabel6.setText(cli.getRazonSocial());
-        }catch (java.lang.NullPointerException exx){
+        } catch (java.lang.NullPointerException exx) {
             //JInternalFrame AbmClientes = null;
             //ControlaInstancia(AbmClientes);
         }
@@ -1244,8 +1247,8 @@ public class NuevoCliente extends javax.swing.JInternalFrame implements Internal
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void nta_de_DebitoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nta_de_DebitoActionPerformed
-        
-        NotaDeDebito pedidos=new NotaDeDebito(cliTa);
+
+        NotaDeDebito pedidos = new NotaDeDebito(cliTa);
         Inicio.jDesktopPane1.add(pedidos);
         try {
             pedidos.setMaximum(true);
@@ -1257,7 +1260,7 @@ public class NuevoCliente extends javax.swing.JInternalFrame implements Internal
     }//GEN-LAST:event_nta_de_DebitoActionPerformed
 
     private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
-        AbmSaldosClientes saldosC=new AbmSaldosClientes(cliTa);
+        AbmSaldosClientes saldosC = new AbmSaldosClientes(cliTa);
         Inicio.jDesktopPane1.add(saldosC);
         try {
             saldosC.setMaximum(true);
@@ -1267,7 +1270,7 @@ public class NuevoCliente extends javax.swing.JInternalFrame implements Internal
         saldosC.setVisible(true);
         saldosC.toFront();
     }//GEN-LAST:event_jButton13ActionPerformed
-    private void ControlaInstancia(JInternalFrame inter){
+    private void ControlaInstancia(JInternalFrame inter) {
         /*
         boolean mostrar=true;
         //String nombre=inter.getTitle();
@@ -1277,7 +1280,7 @@ public class NuevoCliente extends javax.swing.JInternalFrame implements Internal
                 Inicio.jDesktopPane1.moveToFront(inter);
             }
         }
-        */
+         */
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

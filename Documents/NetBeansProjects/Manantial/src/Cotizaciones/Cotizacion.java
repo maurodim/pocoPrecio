@@ -422,7 +422,7 @@ public class Cotizacion implements Cotizable{
         }
         tra.guardarRegistro(sql);
         int ultimo=0;
-        sql="select * from articulos order by id desc fetch first 1 rows only";
+        sql="select * from cotizaciones order by id desc fetch first 1 rows only";
         
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
         try {

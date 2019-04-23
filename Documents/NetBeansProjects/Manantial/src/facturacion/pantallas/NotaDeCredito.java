@@ -82,7 +82,7 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
     
     public NotaDeCredito() {
         //Articulos.CargarMap();
-        cliT=new Clientes("130");
+        cliT=new Clientes("1");
         //cliT=(ClientesTango)oob;
         //comp.setCliente(cliT);
         initComponents();
@@ -97,7 +97,7 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
         this.jTextField4.setVisible(false);
         this.jCheckBox1.setVisible(false);
         this.jCheckBox2.setEnabled(false);
-        this.jTextField5.requestFocus();
+        //this.jTextField5.requestFocus();
         //this.jPanel2.requestFocus();
         
     }
@@ -189,10 +189,6 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
         jLabel7 = new javax.swing.JLabel();
         jTextField4 = new javax.swing.JTextField();
         jCheckBox1 = new javax.swing.JCheckBox();
-        jLabel2 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
-        jLabel10 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox();
         jLabel12 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
 
@@ -200,22 +196,22 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
-        setTitle("Facturacion - Ingreso de Articulos");
+        setTitle("Emisión de NOTA DE CRÉDITO");
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
-            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
             }
             public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
                 formInternalFrameClosing(evt);
             }
-            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
-            }
-            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
             }
             public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
             }
-            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
             }
-            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
+            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
             }
         });
         addComponentListener(new java.awt.event.ComponentAdapter() {
@@ -387,23 +383,6 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel2.setText("Rubro:");
-
-        jTextField5.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jTextField5KeyPressed(evt);
-            }
-        });
-
-        jLabel10.setText("SubRubro:");
-
-        jComboBox2.setModel(combox);
-        jComboBox2.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jComboBox2KeyPressed(evt);
-            }
-        });
-
         jLabel12.setText("<html>PRESIONE F1 PARA CONSULTAR POR DESCRIPCION<br>\nPRESIONE F3 PARA FILTRAR POR SUBRUBRO<br>\nPRESIONE F4 PARA IMPRIMIR\n</html>");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -417,32 +396,26 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel10)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel6)))
+                        .addComponent(jLabel6))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -462,19 +435,15 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
                         .addComponent(jCheckBox1)))
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel10)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
+                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel3)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
                 .addGap(38, 38, 38)
                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(53, 53, 53))
@@ -693,7 +662,7 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
             noFacturar=0;
         }
         }
-        if(evt.getKeyCode()==KeyEvent.VK_F3)this.jComboBox2.requestFocus();
+        //if(evt.getKeyCode()==KeyEvent.VK_F3)this.jComboBox2.requestFocus();
     }//GEN-LAST:event_jTextField1KeyPressed
 
     private void jTextField2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField2KeyPressed
@@ -729,9 +698,9 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
        //          this.jTable2.removeAll();
                 this.jButton1.setVisible(true);
             jTextField1.setText(valorCargado);
-            this.jTextField5.selectAll();
+           // this.jTextField5.selectAll();
             this.jTextField2.setText("");
-            this.jTextField5.requestFocus();
+            //this.jTextField5.requestFocus();
                 }
                 }
             }else{
@@ -987,7 +956,7 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
-        jTextField5.requestFocus();
+        jTextField1.requestFocus();
     }//GEN-LAST:event_formComponentShown
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -1068,80 +1037,6 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
         jTextField1.requestFocus();
           
     }//GEN-LAST:event_jButton6ActionPerformed
-
-    private void jTextField5KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField5KeyPressed
-        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
-            rubro=new Rubros();
-            Rubrable subRuble=new SubRubros();
-            Iterator iR=listadoR.listIterator();
-            while(iR.hasNext()){
-                rubro=(Rubros)iR.next();
-                listadoSubRubros=subRuble.listarPorRubro(rubro.getId());
-            }
-            Modificable modiA=new Articulos();
-            Articulable modi=new ArticulosAsignados();
-            listadoDeBusqueda=modi.convertirListadoEnArticulos(modi.filtrador(listadoSubRubros, listadoR, cliT));
-            //listadoDeBusqueda=modi.filtrador(listadoSubRubros,listadoR);
-//            this.jTable2.setModel(modiA.mostrarListadoBusqueda(listadoDeBusqueda));
-//            columnaCodigo = this.jTable2.getColumn("Precio");
-//            columnaCodigo.setPreferredWidth(60);
-//            columnaCodigo.setMaxWidth(60);
-//            columnaCodigo = this.jTable2.getColumn("Stock");
-//            columnaCodigo.setPreferredWidth(60);
-//            columnaCodigo.setMaxWidth(60);
-            
-            // Configurando parametros de algunas columnas de interes
-            List<String> columnasTabla = new ArrayList<>();
-            columnasTabla.add("Precio:60:60");
-            columnasTabla.add("Stock:60:60");
-
-            // Desplegando ventana emergente
-            tgp.desplegarPopUp("Seleccion Item", modiA.mostrarListadoBusqueda(listadoDeBusqueda), columnasTabla);
-        
-            this.jLabel10.setVisible(true);
-            this.jComboBox2.setVisible(true);
-            this.jComboBox2.setModel(subRuble.mostrarEnBox(listadoSubRubros));
-            jTextField1.selectAll();
-            jTextField1.requestFocus();
-        }else{
-            String rub=this.jTextField5.getText();
-
-            listadoR=ruble.buscar(rub);
-
-            //this.jTable2.setModel(ruble.mostrarEnCombo(listadoR));
-        }
-    }//GEN-LAST:event_jTextField5KeyPressed
-
-    private void jComboBox2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jComboBox2KeyPressed
-        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
-            subRubro=(SubRubros)listadoSubRubros.get(this.jComboBox2.getSelectedIndex());
-            listadoSubRubros.clear();
-            listadoSubRubros.add(subRubro);
-           // this.jTable2.removeAll();
-            Modificable modiA=new Articulos();
-            Articulable modi=new ArticulosAsignados();
-            listadoDeBusqueda=modi.convertirListadoEnArticulos(modi.filtradorDeFormularios(listadoSubRubros, listadoR, cliT,jTextField1.getText()));
-            //listadoDeBusqueda=modi.filtrador(listadoSubRubros,listadoR);
-//            this.jTable2.setModel(modiA.mostrarListadoBusqueda(listadoDeBusqueda));
-//            columnaCodigo = this.jTable2.getColumn("Precio");
-//            columnaCodigo.setPreferredWidth(60);
-//            columnaCodigo.setMaxWidth(60);
-//            columnaCodigo = this.jTable2.getColumn("Stock");
-//            columnaCodigo.setPreferredWidth(60);
-//            columnaCodigo.setMaxWidth(60);
-
-            // Configurando parametros de algunas columnas de interes
-            List<String> columnasTabla = new ArrayList<>();
-            columnasTabla.add("Precio:60:60");
-            columnasTabla.add("Stock:60:60");
-
-            // Desplegando ventana emergente
-            tgp.desplegarPopUp("Seleccion Item", modiA.mostrarListadoBusqueda(listadoDeBusqueda), columnasTabla);
-            
-        this.jTextField1.requestFocus();
-        }
-
-    }//GEN-LAST:event_jComboBox2KeyPressed
 
     private void jTextField3KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField3KeyPressed
         if(KeyEvent.VK_ENTER==evt.getKeyCode()){
@@ -1345,11 +1240,8 @@ private void verificar(){
     private javax.swing.JButton jButton6;
     private javax.swing.JCheckBox jCheckBox1;
     public static javax.swing.JCheckBox jCheckBox2;
-    private javax.swing.JComboBox jComboBox2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1364,6 +1256,5 @@ private void verificar(){
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
     // End of variables declaration//GEN-END:variables
 }

@@ -76,7 +76,7 @@ public class SubRubros implements Rubrable{
         
         tra.guardarRegistro(sql);
         
-        sql="select * from articulos order by id desc fetch first 1 rows only";
+        sql="select * from tipos order by id desc fetch first 1 rows only";
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
             while(rs.next()){
                 ultimo=rs.getInt(1);

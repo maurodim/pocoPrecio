@@ -106,9 +106,11 @@ public class ListasDePrecios implements Personalizable{
        ArrayList listadoList=new ArrayList();
        ListasDePrecios lista=null;
        
-       sql="select * from coeficienteslistas";
-       rs=tra.leerConjuntoDeRegistros(sql);
+       
         try {
+            tra=new Conecciones();
+            sql="select * from coeficienteslistas";
+       rs=tra.leerConjuntoDeRegistros(sql);
             while(rs.next()){
                 lista=new ListasDePrecios();
                 lista.descripcionLista=rs.getString("descripcion");
@@ -118,6 +120,10 @@ public class ListasDePrecios implements Personalizable{
             }
             rs.close();
         } catch (SQLException ex) {
+            Logger.getLogger(ListasDePrecios.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(ListasDePrecios.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
             Logger.getLogger(ListasDePrecios.class.getName()).log(Level.SEVERE, null, ex);
         }
        

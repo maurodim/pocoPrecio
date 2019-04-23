@@ -87,7 +87,7 @@ public class Impuestos implements Personalizable,Componable,Proveer{
             Logger.getLogger(Impuestos.class.getName()).log(Level.SEVERE, null, ex);
         }
         tra.guardarRegistro(sql);
-        ResultSet rs=tra.leerConjuntoDeRegistros("select * from articulos order by id desc fetch first 1 rows only");
+        ResultSet rs=tra.leerConjuntoDeRegistros("select * from impuestos order by id desc fetch first 1 rows only");
         try {
             while(rs.next()){
                 id=rs.getInt(1);

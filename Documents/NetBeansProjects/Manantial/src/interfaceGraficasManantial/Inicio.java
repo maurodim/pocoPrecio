@@ -38,6 +38,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import Articulos.Articulos;
 import Articulos.ArticulosAbm;
+import facturacion.pantallas.NotaDeCredito;
+import facturacion.pantallas.NotaDeDebito;
 
 /**
  *
@@ -171,6 +173,8 @@ public class Inicio extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem7 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenu6 = new javax.swing.JMenu();
         jMenu8 = new javax.swing.JMenu();
@@ -333,6 +337,22 @@ public class Inicio extends javax.swing.JFrame {
             }
         });
         jMenu3.add(jMenuItem4);
+
+        jMenuItem1.setText("Nta de Crédito");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem1);
+
+        jMenuItem7.setText("Nta de Débito");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem7);
 
         jMenuBar1.add(jMenu3);
 
@@ -623,6 +643,32 @@ public class Inicio extends javax.swing.JFrame {
         impu.toFront();
     }//GEN-LAST:event_jMenuItem20ActionPerformed
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        NotaDeCredito credito=new NotaDeCredito();
+        Inicio.jDesktopPane1.add(credito);
+        credito.setVisible(true);
+        credito.toFront();
+        try {
+            credito.setMaximum(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        NotaDeDebito debito=new NotaDeDebito();
+        Inicio.jDesktopPane1.add(debito);
+        debito.setVisible(true);
+        debito.toFront();
+        try {
+            debito.setMaximum(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -687,6 +733,7 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenu jMenu8;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem14;
@@ -700,6 +747,7 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
     // End of variables declaration//GEN-END:variables

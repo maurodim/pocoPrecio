@@ -253,7 +253,7 @@ public class MovimientoProveedores implements FacturableE{
         }
         String sql="insert into movimientosproveedores (numeroProveedor,monto,numeroComprobante,idUsuario,tipoComprobante,subtotal,saldo,fecha,porcentajedescuento) values ("+mov.getIdProveedor()+",round("+mov.getMonto()+",4),'"+mov.getNumeroComprobante()+"',"+Inicio.usuario.getNumeroId()+","+mov.getTipoComprobante()+","+mov.getSubTotal()+","+mov.getSaldo()+",'"+mov.getFecha()+"',"+mov.getPorcentajeDescuento()+")";
         tra.guardarRegistro(sql);
-        sql="select * from articulos order by id desc fetch first 1 rows only";
+        sql="select * from movimientosproveedores order by id desc fetch first 1 rows only";
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
         try {
             while(rs.next()){

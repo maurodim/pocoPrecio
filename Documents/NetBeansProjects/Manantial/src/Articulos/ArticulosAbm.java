@@ -484,7 +484,30 @@ public class ArticulosAbm extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_formComponentShown
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
-        this.updateUI();
+         MiModeloTablaArticulos modelArticulos = new MiModeloTablaArticulos();
+        Facturar fact = new Articulos();
+        listadoA = fact.listadoBusqueda("");
+        Iterator list = listadoA.listIterator();
+        jTable1.setModel(modelArticulos);
+        modelArticulos.addColumn("CODIGO");
+        modelArticulos.addColumn("DESCRIPCION");
+        modelArticulos.addColumn("STOCK");
+        modelArticulos.addColumn("STOCK MIN");
+        modelArticulos.addColumn("COSTO");
+        modelArticulos.addColumn("P. VENTA");
+        modelArticulos.addColumn("MAYORISTA");
+        Object[] fila = new Object[7];
+        while (list.hasNext()) {
+            Articulos articulos = (Articulos) list.next();
+            fila[0] = articulos.getCodigoAsignado();
+            fila[1] = articulos.getDescripcionArticulo();
+            fila[2] = articulos.getStockActual();
+            fila[3] = articulos.getStockMinimo();
+            fila[4] = articulos.getPrecioDeCosto();
+            fila[5] = articulos.getPrecioUnitarioNeto();
+            fila[6] = articulos.getPrecioServicio();
+            modelArticulos.addRow(fila);
+        }
         System.out.println("entro en mouse");
     }//GEN-LAST:event_formMouseClicked
     public void agregarRenglon() {

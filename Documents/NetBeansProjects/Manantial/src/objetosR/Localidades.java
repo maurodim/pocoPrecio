@@ -133,9 +133,22 @@ public class Localidades implements Busquedas,Personalizable,Componable,Rubrable
     public Integer agregar(Object objeto) {
         Localidades localidad;
         localidad=(Localidades) objeto;
-        sql="insert into localidades (localidad,codigo_postal,id_provincia,codigo_interno) values ('"+localidad.getDescripcion()+"','"+localidad.getCodigoPostal()+"',"+localidad.getProvincia()+",(select * from articulos order by id desc fetch first 1 rows only))";
+        sql="insert into localidades (localidad,codigo_postal,id_provincia) values ('"+localidad.getDescripcion()+"','"+localidad.getCodigoPostal()+"',"+localidad.getProvincia()+")";
         tra.guardarRegistro(sql);
-        return 0;
+        sql="select id from localidades order by id desc fetch first 1 rows only";
+        ResultSet rs=tra.leerConjuntoDeRegistros(sql);
+        int codi_interno=0;
+        try {
+            while(rs.next()){
+                codi_interno=rs.getInt("id");
+            }
+            sql="update localidades set codigo_interno="+codi_interno+" where id="+codi_interno;
+            tra.guardarRegistro(sql);
+            rs.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(Localidades.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return codi_interno;
         
     }
 
@@ -185,9 +198,11 @@ public class Localidades implements Busquedas,Personalizable,Componable,Rubrable
     public ArrayList listar() {
         ArrayList listado=new ArrayList();
         
-        sql="select * from localidades order by localidad";
-        rs=tra.leerConjuntoDeRegistros(sql);
+        
         try {
+            tra=new Conecciones();
+            sql="select * from localidades order by localidad";
+        rs=tra.leerConjuntoDeRegistros(sql);
             while(rs.next()){
                 Localidades localidad=new Localidades();
                 localidad.setId(rs.getInt("id"));
@@ -197,6 +212,10 @@ public class Localidades implements Busquedas,Personalizable,Componable,Rubrable
                 listado.add(localidad);
             }
         } catch (SQLException ex) {
+            Logger.getLogger(Localidades.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Localidades.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
             Logger.getLogger(Localidades.class.getName()).log(Level.SEVERE, null, ex);
         }
         

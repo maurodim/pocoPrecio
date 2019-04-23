@@ -233,7 +233,7 @@ public class Transportes implements Personalizable,Componable{
     @Override
     public ArrayList listar() {
         ArrayList lisatdo=new ArrayList();
-        String sql="select *,(select localidades.localidad from localidades where localidades.id=transportes.idlocalidad)as localidad from transportes order by descripcion";
+        String sql="select id,descripcion,direccion,telefono,cuit,idlocalidad,encargado,codigopostal,(select localidades.localidad from localidades where localidades.id=transportes.idlocalidad)as localidad from transportes order by descripcion";
         Transaccionable tra=null;
         try {
             tra = new Conecciones();
