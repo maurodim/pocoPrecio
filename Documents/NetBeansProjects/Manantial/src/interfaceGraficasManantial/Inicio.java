@@ -174,8 +174,6 @@ public  void cargarImagen(javax.swing.JDesktopPane jDeskp,InputStream fileImagen
         };
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenuItem9 = new javax.swing.JMenuItem();
-        jMenuItem19 = new javax.swing.JMenuItem();
         jMenuItem20 = new javax.swing.JMenuItem();
         jMenuItem14 = new javax.swing.JMenuItem();
         jMenuItem21 = new javax.swing.JMenuItem();
@@ -183,7 +181,6 @@ public  void cargarImagen(javax.swing.JDesktopPane jDeskp,InputStream fileImagen
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem12 = new javax.swing.JMenuItem();
         jMenuItem8 = new javax.swing.JMenuItem();
-        jMenuItem13 = new javax.swing.JMenuItem();
         jMenuItem18 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
@@ -194,8 +191,8 @@ public  void cargarImagen(javax.swing.JDesktopPane jDeskp,InputStream fileImagen
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenu6 = new javax.swing.JMenu();
-        jMenu8 = new javax.swing.JMenu();
-        jMenuItem23 = new javax.swing.JMenuItem();
+        jMenu5 = new javax.swing.JMenu();
+        jMenu7 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SISITEMA DE GESTION BAMBU SOFTWARE");
@@ -220,23 +217,6 @@ public  void cargarImagen(javax.swing.JDesktopPane jDeskp,InputStream fileImagen
                 jMenu1ActionPerformed(evt);
             }
         });
-
-        jMenuItem9.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem9.setText("Listas de Precios");
-        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem9ActionPerformed(evt);
-            }
-        });
-        jMenu1.add(jMenuItem9);
-
-        jMenuItem19.setText("Listado de Transportes");
-        jMenuItem19.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem19ActionPerformed(evt);
-            }
-        });
-        jMenu1.add(jMenuItem19);
 
         jMenuItem20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/nuevos/impuestos.png"))); // NOI18N
         jMenuItem20.setText("Administración de Impuestos");
@@ -300,11 +280,6 @@ public  void cargarImagen(javax.swing.JDesktopPane jDeskp,InputStream fileImagen
             }
         });
         jMenu2.add(jMenuItem8);
-
-        jMenuItem13.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/nuevos/consulta.png"))); // NOI18N
-        jMenuItem13.setText("Consultas");
-        jMenu2.add(jMenuItem13);
 
         jMenuItem18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/nuevos/stock.png"))); // NOI18N
         jMenuItem18.setText("Ajustar Stock");
@@ -408,18 +383,13 @@ public  void cargarImagen(javax.swing.JDesktopPane jDeskp,InputStream fileImagen
         });
         jMenuBar1.add(jMenu6);
 
-        jMenu8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/library_black.png"))); // NOI18N
-        jMenu8.setText("Bases de Datos");
+        jMenu5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/nuevos/licencia.png"))); // NOI18N
+        jMenu5.setText("Licencia");
+        jMenuBar1.add(jMenu5);
 
-        jMenuItem23.setText("Ejecutar sincronizacion");
-        jMenuItem23.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem23ActionPerformed(evt);
-            }
-        });
-        jMenu8.add(jMenuItem23);
-
-        jMenuBar1.add(jMenu8);
+        jMenu7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/nuevos/factura electronica.png"))); // NOI18N
+        jMenu7.setText("Factura Electrónica");
+        jMenuBar1.add(jMenu7);
 
         setJMenuBar(jMenuBar1);
 
@@ -541,13 +511,6 @@ public  void cargarImagen(javax.swing.JDesktopPane jDeskp,InputStream fileImagen
         rubross.toFront();
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 
-    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
-        ListasDePreciosAbm ldpA=new ListasDePreciosAbm();
-        jDesktopPane1.add(ldpA);
-        ldpA.setVisible(true);
-        ldpA.toFront();
-    }//GEN-LAST:event_jMenuItem9ActionPerformed
-
     private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
         ArticulosAbm artt=new ArticulosAbm();
         jDesktopPane1.add(artt);
@@ -574,30 +537,6 @@ public  void cargarImagen(javax.swing.JDesktopPane jDeskp,InputStream fileImagen
         emisor.setVisible(true);
         emisor.toFront();
     }//GEN-LAST:event_jMenuItem21ActionPerformed
-
-    private void jMenuItem23ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem23ActionPerformed
-        Inicio.actualizable=1;
-        Usuarios.BackapearUsuarios();
-        Sucursales.BackapearSucursales();
-            Articulos.RecargarMap(1);
-        
-        Proveedores.BackapearProveedores();
-        Clientes.BackapearClientes();
-        ListasDePrecios.BackapearListasDePrecios();
-        Cajas.BackapearCajas();
-        Cajas.LeerCajaAdministradora();
-        Articulos.BackapearMap(1);
-        Depositos.BackapearDepositos();
-        
-        
-        
-        Proveedores.cargarListadoProv();
-        Clientes.cargarMap();
-        ListasDePrecios.cargarMap();
-        BkDeConeccion bk=new BkDeConeccion();
-        bk.procesosDeCierre();
-        Inicio.actualizable=0;
-    }//GEN-LAST:event_jMenuItem23ActionPerformed
 
     private void jMenu4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu4ActionPerformed
         
@@ -637,19 +576,6 @@ public  void cargarImagen(javax.swing.JDesktopPane jDeskp,InputStream fileImagen
         stock.toFront();
                 
     }//GEN-LAST:event_jMenuItem18ActionPerformed
-
-    private void jMenuItem19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem19ActionPerformed
-        TransporteAbm tran=new TransporteAbm();
-        Inicio.jDesktopPane1.add(tran);
-        try {
-            tran.setMaximum(true);
-        } catch (PropertyVetoException ex) {
-            Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        tran.setVisible(true);
-        tran.pack();
-        tran.toFront();
-    }//GEN-LAST:event_jMenuItem19ActionPerformed
 
     private void jMenuItem20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem20ActionPerformed
         ImpuestosAbm impu=new ImpuestosAbm();
@@ -754,25 +680,22 @@ public  void cargarImagen(javax.swing.JDesktopPane jDeskp,InputStream fileImagen
     public static javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
-    private javax.swing.JMenu jMenu8;
+    private javax.swing.JMenu jMenu7;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem12;
-    private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem18;
-    private javax.swing.JMenuItem jMenuItem19;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem20;
     private javax.swing.JMenuItem jMenuItem21;
-    private javax.swing.JMenuItem jMenuItem23;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
-    private javax.swing.JMenuItem jMenuItem9;
     // End of variables declaration//GEN-END:variables
 }

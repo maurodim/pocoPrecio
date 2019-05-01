@@ -56,6 +56,7 @@ public class ProveedoresAbm extends javax.swing.JInternalFrame {
         setClosable(true);
         setMaximizable(true);
         setTitle("Proveedor");
+        setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/Mlogo.png"))); // NOI18N
 
         jLabel1.setText("Nombre o Razon social");
 

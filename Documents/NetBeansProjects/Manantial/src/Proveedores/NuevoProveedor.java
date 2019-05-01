@@ -207,6 +207,7 @@ public class NuevoProveedor extends javax.swing.JInternalFrame implements Intern
         setResizable(true);
         setTitle("FACTURACION - CARGA DE NUEVO PROVEEDOR");
         setAutoscrolls(true);
+        setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/Mlogo.png"))); // NOI18N
         addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 formFocusGained(evt);

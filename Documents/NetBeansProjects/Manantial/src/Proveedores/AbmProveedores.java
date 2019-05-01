@@ -55,6 +55,7 @@ public class AbmProveedores extends javax.swing.JInternalFrame {
         setClosable(true);
         setMaximizable(true);
         setTitle("Proveedores");
+        setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/Mlogo.png"))); // NOI18N
 
         MiModeloTablaArticulos miTabla=new MiModeloTablaArticulos();
         Personalizable bus=new Proveedores();
