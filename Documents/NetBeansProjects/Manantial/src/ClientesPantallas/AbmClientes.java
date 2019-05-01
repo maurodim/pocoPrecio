@@ -86,6 +86,7 @@ public class AbmClientes extends javax.swing.JInternalFrame {
         setClosable(true);
         setMaximizable(true);
         setTitle("Clientes");
+        setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/Mlogo.png"))); // NOI18N
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
             public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
                 formInternalFrameActivated(evt);
@@ -408,7 +409,8 @@ columnaCodigo=this.jTable1.getColumn("COD CLIENTE");
     private void jMenu5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu5MouseClicked
         Clientes clienteTango=new Clientes();
         clienteTango=(Clientes)listadoClientes.get(this.jTable1.getSelectedRow());
-        NuevoCliente clienteNuevo=new NuevoCliente(clienteTango);
+        //NuevoCliente clienteNuevo=new NuevoCliente(clienteTango);
+        NuevoCliente clienteNuevo=new NuevoCliente();
         Inicio.jDesktopPane1.add(clienteNuevo);
         clienteNuevo.setTitle(clienteTango.getRazonSocial());
         try {

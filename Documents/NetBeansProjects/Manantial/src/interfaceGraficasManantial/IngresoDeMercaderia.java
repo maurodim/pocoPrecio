@@ -92,6 +92,7 @@ public class IngresoDeMercaderia extends javax.swing.JInternalFrame {
         setMaximizable(true);
         setResizable(true);
         setTitle("Ingreso de Mercadería");
+        setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/Mlogo.png"))); // NOI18N
         addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentShown(java.awt.event.ComponentEvent evt) {
                 formComponentShown(evt);

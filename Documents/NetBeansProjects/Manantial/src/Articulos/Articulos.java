@@ -915,7 +915,7 @@ public class Articulos implements Facturar, Editables, Comparables, Modificable,
     }
 
     @Override
-    public Boolean guardarNuevoCliente(Object cliente) {
+    public Integer guardarNuevoCliente(Object cliente) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
@@ -1009,9 +1009,7 @@ public class Articulos implements Facturar, Editables, Comparables, Modificable,
                 articulo.setModificaServicio(rr.getBoolean("modificaServicio"));
                 String nom = rr.getString("NOMBRE");
                 articulo.setIdCombo(rr.getInt("idcombo"));
-                if (articulo.getIdCombo() > 0) {
-                    articulo.setCombo(CargarCombo(articulo.getNumeroId()));
-                }
+                
             }
             rr.close();
         } catch (SQLException ex) {
@@ -1249,9 +1247,9 @@ public class Articulos implements Facturar, Editables, Comparables, Modificable,
 
     @Override
     public Double comparaConCotizaciones(Integer idCliente, Integer idArticulo, Double coeficienteCliente) {
-        Double precio = 0.00;
+        Double precio = 1.00;
         String sql = "select aplicacion.coeficiente from aplicacion where idcliente=" + idCliente + " and idarticulo=" + idArticulo + " limit 0,1";
-
+        /*
         try {
             Transaccionable tra = null;
 
@@ -1271,6 +1269,7 @@ public class Articulos implements Facturar, Editables, Comparables, Modificable,
         } catch (IllegalAccessException ex) {
             Logger.getLogger(Articulos.class.getName()).log(Level.SEVERE, null, ex);
         }
+        */
         return precio;
     }
 

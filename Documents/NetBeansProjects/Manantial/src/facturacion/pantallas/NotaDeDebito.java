@@ -169,6 +169,7 @@ public class NotaDeDebito extends javax.swing.JInternalFrame implements KeyListe
         setMaximizable(true);
         setResizable(true);
         setTitle("Emisión de NOTA DE DÉBITO");
+        setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/Mlogo.png"))); // NOI18N
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
             public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
             }

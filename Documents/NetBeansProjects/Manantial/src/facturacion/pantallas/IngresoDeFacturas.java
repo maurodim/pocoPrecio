@@ -163,6 +163,7 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
         setMaximizable(true);
         setResizable(true);
         setTitle("Facturacion - Ingreso de Articulos");
+        setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/Mlogo.png"))); // NOI18N
         setMaximumSize(new java.awt.Dimension(1155, 557));
         setPreferredSize(new java.awt.Dimension(1155, 557));
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
@@ -355,8 +356,6 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
                 jCheckBox1ItemStateChanged(evt);
             }
         });
-
-        
 
         jLabel25.setText("<html>PRESIONE F1 PARA CONSULTAR POR DESCRIPCION<br> PRESIONE F3 PARA FILTRAR POR SUBRUBRO<br> PRESIONE F4 PARA IMPRIMIR </html>");
 
@@ -696,7 +695,7 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
                 servicio=0.00;
             }
             if(arti.getModificaPrecio())servicio=Numeros.ConvertirStringADouble(String.valueOf(this.jTextField4.getText()));
-            Double tota=arti.getPrecioUnitarioNeto() + servicio;
+            Double tota= servicio;
             //arti.setPrecioUnitarioNeto(tota);
             //arti.setPrecioServicio(servicio);
             Double cantt=Double.parseDouble(this.jTextField2.getText());
@@ -754,11 +753,10 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
             Double precioUni=0.00;
 
             if(arti.getModificaPrecio()){
+                this.jTextField4.selectAll();
                 this.jTextField4.requestFocus();
             }else{
-                if(arti.getPrecioServicio()>0){
-                    this.jTextField4.requestFocus();
-                }else{
+                
                     Articulos articul=new Articulos();
                     articul.setCantidad(cantt);
                     articul.setCodigoAsignado(arti.getCodigoAsignado());
@@ -773,14 +771,14 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
                     articul.setCombo(arti.getCombo());
 
                     Comparables comparar=new Articulos();
-                    Double precio=comparar.comparaConCotizaciones(cliT.getCodigoId(),arti.getNumeroId(),cliT.getCoeficienteListaDeprecios());
-                    String precio2=comparar.comparaConPedidos(cliT.getCodigoId(),arti.getNumeroId());
+                    Double precio=1.00;//comparar.comparaConCotizaciones(cliT.getCodigoId(),arti.getNumeroId(),cliT.getCoeficienteListaDeprecios());
+                    String precio2=String.valueOf(arti.getPrecioUnitarioNeto());//comparar.comparaConPedidos(cliT.getCodigoId(),arti.getNumeroId());
                     // aca tengo que modificar el precio unitario segun el coeficiente del cliente y la lista
                     //Double precioU=arti.getPrecioUnitarioNeto();// * lista.getCoeficiente();
                     articul.setPrecioUnitarioNeto(arti.getPrecioUnitarioNeto());
                     // aca tengo que modificar el precio unitario segun el coeficiente del cliente y la lista
                     //Double precioU=arti.getPrecioUnitarioNeto();// * lista.getCoeficiente();
-
+                    /*
                     if(precio != cliT.getCoeficienteListaDeprecios()){
                         precio=articul.getPrecioUnitarioNeto()* precio;
                         String cartel="precio asignado: "+precio+" "+precio2;
@@ -795,7 +793,7 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
                         Double precioU= arti.getPrecioUnitarioNeto() * cliT.getCoeficienteListaDeprecios();
                         articul.setPrecioUnitarioNeto(precioU);
                     }
-
+                    */
                     detalleDelPedido.add(articul);
                     agregarRenglonTabla();
                     //                Double montoTotalX=(arti.getPrecioUnitario() * arti.getCantidad());
@@ -809,8 +807,10 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
                     jTextField1.setText(valorCargado);
                     //this.jTextField5.selectAll();
                     this.jTextField2.setText("");
+                    jTextField1.selectAll();
+                    jTextField1.requestFocus();
                     //this.jTextField5.requestFocus();
-                }
+                
             }
 
         }
@@ -838,6 +838,7 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
                 if(arti.getModificaPrecio()){
                     this.jLabel7.setVisible(true);
                     this.jTextField4.setVisible(true);
+                    this.jTextField4.setText(String.valueOf(arti.getPrecioUnitarioNeto()));
                     //this.jTextField4.setEnabled(true);
                     // this.jCheckBox1.setVisible(false);
 
@@ -846,26 +847,7 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
                     this.jLabel7.setVisible(false);
                     this.jTextField4.setVisible(false);
 
-                    if(arti.getPrecioServicio() > 0){
-                        this.jLabel7.setVisible(true);
-                        this.jTextField4.setVisible(true);
-
-                        this.jTextField4.setText(Numeros.ConvertirNumero(arti.getPrecioServicio()));
-                        //this.jTextField4.setEnabled(false);
-                        this.jCheckBox1.setVisible(true);
-                        Calendar calendario=new GregorianCalendar();
-                        int hora=calendario.get(Calendar.HOUR_OF_DAY);
-                        //System.out.println("LA HORA ACTUAL ES :"+hora);
-                        if(hora >= 0 || hora < 8){
-                            if(arti.getModificaServicio()){
-                                //System.err.println("SI TIENE QUE MODIFICAR EL SERVICIO");
-                                this.jCheckBox1.setEnabled(false);
-                            }else{
-                                //System.err.println("NO DEBE MODIFICAR EL SERVICIO");
-                                this.jCheckBox1.setEnabled(true);
-                            }
-                        }
-                    }
+                    
                 }
 
                 if(cliT.getCondicionDeVenta()==2)this.jCheckBox2.setEnabled(true);
@@ -899,8 +881,9 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
             columnasTabla.add("Stock:60:60");
 
             // Desplegando ventana emergente
-            tgp.desplegarPopUp("Seleccion Item", modiA.mostrarListadoBusqueda(listadoDeBusqueda), columnasTabla);
-
+            int elementoSeleccionado=tgp.desplegarPopUp("Seleccion Item", modiA.mostrarListadoBusqueda(listadoDeBusqueda), columnasTabla);
+            arti=(Articulos) listadoDeBusqueda.get(elementoSeleccionado);
+            jTextField1.setText(arti.getCodigoDeBarra());
 
         }
         if(evt.getKeyCode()==KeyEvent.VK_F4){
@@ -1173,7 +1156,7 @@ private void agregarRenglonTabla(){
         String total=String.valueOf(montoTotal);
         this.jLabel1.setText("TOTAL COTIZACION:  "+total);
         listadoDeBusqueda.clear();
-        cargarLista(listadoDeBusqueda);
+        //cargarLista(listadoDeBusqueda);
         this.jCheckBox1.setSelected(true);
         this.jCheckBox1.setVisible(false);
         if(detalleDelPedido.size()==0){

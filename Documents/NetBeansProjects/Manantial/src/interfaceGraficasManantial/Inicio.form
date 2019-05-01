@@ -7,7 +7,7 @@
         <Menu class="javax.swing.JMenu" name="jMenu1">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/imagen/developer_black.png"/>
+              <Image iconType="3" name="/imagen/nuevos/administracion.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Administracion"/>
           </Properties>
@@ -39,6 +39,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem20">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/imagen/nuevos/impuestos.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Administraci&#xf3;n de Impuestos"/>
               </Properties>
               <Events>
@@ -50,6 +53,9 @@
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                   <KeyStroke key="Alt+C"/>
                 </Property>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/imagen/nuevos/arqueoDeCaja.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Cajas"/>
               </Properties>
               <Events>
@@ -58,6 +64,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem21">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/imagen/nuevos/informes.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Informes"/>
               </Properties>
               <Events>
@@ -69,7 +78,7 @@
         <Menu class="javax.swing.JMenu" name="jMenu2">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/imagen/download_folder_black.png"/>
+              <Image iconType="3" name="/imagen/nuevos/compras.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Compras"/>
           </Properties>
@@ -97,7 +106,7 @@
                   <KeyStroke key="Ctrl+A"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/imagen/stuff_black.png"/>
+                  <Image iconType="3" name="/imagen/nuevos/articulos.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Articulos"/>
               </Properties>
@@ -109,6 +118,9 @@
               <Properties>
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                   <KeyStroke key="Ctrl+R"/>
+                </Property>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/imagen/nuevos/rubros.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Rubros"/>
               </Properties>
@@ -122,13 +134,16 @@
                   <KeyStroke key="Ctrl+C"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/imagen/documents_black.png"/>
+                  <Image iconType="3" name="/imagen/nuevos/consulta.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Consultas"/>
               </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem18">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/imagen/nuevos/stock.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Ajustar Stock"/>
               </Properties>
               <Events>
@@ -140,7 +155,7 @@
         <Menu class="javax.swing.JMenu" name="jMenu3">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/imagen/currency_black_dollar.png"/>
+              <Image iconType="3" name="/imagen/nuevos/ventas.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Ventas"/>
           </Properties>
@@ -165,7 +180,7 @@
                   <KeyStroke key="Ctrl+F"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/imagen/delete_ticket.png"/>
+                  <Image iconType="3" name="/imagen/nuevos/facturacion.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Facturacion"/>
               </Properties>
@@ -179,7 +194,7 @@
                   <KeyStroke key="Ctrl+Q"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/imagen/comment_edit.png"/>
+                  <Image iconType="3" name="/imagen/nuevos/arqueoDeCaja.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Arqueo de Caja"/>
               </Properties>
@@ -193,7 +208,7 @@
                   <KeyStroke key="Ctrl+J"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/imagen/numbers_black.png"/>
+                  <Image iconType="3" name="/imagen/nuevos/cierreCaja.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Cierre de Caja"/>
               </Properties>
@@ -203,6 +218,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem1">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/imagen/nuevos/credito.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Nta de Cr&#xe9;dito"/>
               </Properties>
               <Events>
@@ -211,6 +229,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem7">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/imagen/nuevos/debito.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Nta de D&#xe9;bito"/>
               </Properties>
               <Events>
@@ -234,7 +255,7 @@
         <Menu class="javax.swing.JMenu" name="jMenu6">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/imagen/groups_black.png"/>
+              <Image iconType="3" name="/imagen/nuevos/clientes.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Clientes"/>
           </Properties>

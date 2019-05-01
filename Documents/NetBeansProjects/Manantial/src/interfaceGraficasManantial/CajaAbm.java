@@ -117,6 +117,7 @@ public class CajaAbm extends javax.swing.JInternalFrame {
         setMaximizable(true);
         setResizable(true);
         setTitle("Caja");
+        setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/Mlogo.png"))); // NOI18N
 
         MiModeloTablaArticulos tablaCaja=new MiModeloTablaArticulos();
         this.jPanel2.setVisible(false);

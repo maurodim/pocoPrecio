@@ -92,8 +92,10 @@ public class Localidades implements Busquedas,Personalizable,Componable,Rubrable
         ArrayList listado=new ArrayList();
         
         sql="select * from localidades order by localidad";
-        rs=tra.leerConjuntoDeRegistros(sql);
+        
         try {
+            tra=new Conecciones();
+            rs=tra.leerConjuntoDeRegistros(sql);
             while(rs.next()){
                 Localidades localidad=new Localidades();
                 localidad.setId(rs.getInt("id"));
@@ -103,6 +105,10 @@ public class Localidades implements Busquedas,Personalizable,Componable,Rubrable
                 listado.add(localidad);
             }
         } catch (SQLException ex) {
+            Logger.getLogger(Localidades.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Localidades.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
             Logger.getLogger(Localidades.class.getName()).log(Level.SEVERE, null, ex);
         }
         

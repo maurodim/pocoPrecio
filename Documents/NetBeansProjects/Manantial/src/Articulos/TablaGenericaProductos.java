@@ -5,8 +5,12 @@
  */
 package Articulos;
 
+import java.awt.Component;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
@@ -25,7 +29,14 @@ public class TablaGenericaProductos {
     public TablaGenericaProductos() {
     }
     
-    public void desplegarPopUp(String tituloVentana, DefaultTableModel modeloDatos, List<String> parametros){
+    
+    public void eventoDeSeleccion(JTable tabla){
+        
+    }
+    
+    public int desplegarPopUp(String tituloVentana, DefaultTableModel modeloDatos, List<String> parametros){
+         AtomicInteger atomicInteger = new AtomicInteger(-1);
+        
         // Creando la ventana emergente
         JFrame jf = new JFrame(tituloVentana);
         JDialog emergente = new JDialog(jf, 
@@ -39,13 +50,7 @@ public class TablaGenericaProductos {
         // Crentado la tabla de datos
         JTable tabla = new JTable();
         tabla.setModel(modeloDatos);
-        /*tabla.setModel(
-                new DefaultTableModel(data, columnNames)
-                {
-                    boolean[] canEdit = new boolean [] {false, false, false, false, false};
-                    public boolean isCellEditable(int rowIndex, int columnIndex) {return canEdit [columnIndex];}
-                }
-        );*/
+       
         tabla.setFillsViewportHeight(true);
         tabla.setAutoCreateRowSorter(true);
         
@@ -67,8 +72,25 @@ public class TablaGenericaProductos {
         scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
         
+        // agregando boton para seleccionar de manera asincrona
+        JButton seleccionar = new JButton("SELECCIONAR");
+        seleccionar.setAlignmentX(Component.CENTER_ALIGNMENT);
+        seleccionar.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        seleccionar.addActionListener((accion) -> {
+            atomicInteger.set(tabla.getSelectedRow()); // almacenando el indice del elemento seleccionado de la tabla
+            emergente.dispose(); // Cerrando la ventana emergente
+        });
+        
         // Agregando todo el contenido a la ventana emergente
+        emergente.getContentPane().setLayout(new BoxLayout(emergente.getContentPane(), BoxLayout.Y_AXIS));
         emergente.getContentPane().add(scrollPane);
+        emergente.getContentPane().add(seleccionar);
+        
+        // Desplegando ventana emergente
         emergente.setVisible(true);
+        
+        //System.out.println("seleccionado: "+atomicInteger.get());
+        return atomicInteger.get();
     }
+    
 }

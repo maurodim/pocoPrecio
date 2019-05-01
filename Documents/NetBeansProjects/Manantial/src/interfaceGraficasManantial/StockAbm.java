@@ -79,6 +79,7 @@ public class StockAbm extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setTitle("Ajuste de Stock");
+        setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/Mlogo.png"))); // NOI18N
 
         jLabel1.setText("Articulo a descontar");
 

@@ -324,6 +324,7 @@ public class Clientes implements Busquedas,Facturar,Adeudable{
                     this.saldoActual=clientesTango.getSaldoActual();
                     this.saldo=clientesTango.getSaldo();
                     this.direccionDeEntrega=clientesTango.getDireccionDeEntrega();
+                    this.tipoIva=clientesTango.getTipoIva();
                     //cli.setNumeroPedido(rs.getString(3));
                     //cli.setObservaciones(rs.getString(5));
                     //System.out.println("CLIENTE "+cli.getRazonSocial() +"COMENTARIO "+cli.getCodigoCliente());
@@ -804,13 +805,29 @@ public class Clientes implements Busquedas,Facturar,Adeudable{
     }
 
     @Override
-    public Boolean guardarNuevoCliente(Object cliente) {
+    public Integer guardarNuevoCliente(Object cliente) {
         Clientes cli=(Clientes)cliente;
-        Boolean resultado=false;
+        Integer resultado=0;
         
-        String sql="insert into clientes (COD_CLIENT,RAZON_SOCI,DOMICILIO,TELEFONO_1,TIPO_IVA,NUMERODECUIT,COND_VTA,LISTADEPRECIO,empresa,cupodecredito,coeficiente,responsable,fantasia,celular,localidad,fax,direccionfantasia,email,dentrega,idtransporte) values ('"+cli.getCodigoCliente()+"','"+cli.getRazonSocial()+"','"+cli.getDireccion()+"','"+cli.getTelefono()+"','"+cli.getTipoIva()+"','"+cli.getNumeroDeCuit()+"',1,"+cli.getListaDePrecios()+",'"+cli.getEmpresa()+"',"+cli.getCupoDeCredito()+","+cli.getCoeficienteListaDeprecios()+",'"+cli.getResponsable()+"','"+cli.getFantasia()+"','"+cli.getCelular()+"','"+cli.getLocalidad()+"','"+cli.getFax()+"','"+cli.getDireccionFantasia()+"','"+cli.getEmail()+"','"+cli.getDireccionDeEntrega()+"',"+cli.getIdTransporte()+")";
+        String sql="insert into clientes (COD_CLIENT,RAZON_SOCI,DOMICILIO,TELEFONO_1,TIPO_IVA,NUMERODECUIT,COND_VTA,LISTADEPRECIO,empresa,cupodecredito,coeficiente,responsable,fantasia,celular,localidad,fax,direccionfantasia,email,dentrega,idtransporte) values ('"+cli.getCodigoCliente()+"','"+cli.getRazonSocial()+"','"+cli.getDireccion()+"','"+cli.getTelefono()+"',"+cli.getTipoIva()+",'"+cli.getNumeroDeCuit()+"',1,"+cli.getListaDePrecios()+",'"+cli.getEmpresa()+"',"+cli.getCupoDeCredito()+","+cli.getCoeficienteListaDeprecios()+",'"+cli.getResponsable()+"','"+cli.getFantasia()+"','"+cli.getCelular()+"',1,'"+cli.getFax()+"','"+cli.getDireccionFantasia()+"','"+cli.getEmail()+"','"+cli.getDireccionDeEntrega()+"',0)";
         System.out.println(sql);
-        resultado=tra.guardarRegistro(sql);
+            try {
+                tra=new Conecciones();
+                tra.guardarRegistro(sql);
+                sql="select id from clientes order by id desc fetch first 1 rows only";
+                ResultSet rs=tra.leerConjuntoDeRegistros(sql);
+                while(rs.next()){
+                    resultado=rs.getInt(("id"));
+                }
+                rs.close();
+            } catch (InstantiationException ex) {
+                Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IllegalAccessException ex) {
+                Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        
         cargarMap();
         return resultado;
     }
@@ -870,8 +887,10 @@ public class Clientes implements Busquedas,Facturar,Adeudable{
         String sql1="";
         Clientes cli=new Clientes();
         
-        rs=tra.leerConjuntoDeRegistros(sql);
+        
             try {
+                tra=new Conecciones();
+                rs=tra.leerConjuntoDeRegistros(sql);
                 while(rs.next()){
                     
                     cli.setCodigoId(rs.getInt("id"));
@@ -915,6 +934,10 @@ public class Clientes implements Busquedas,Facturar,Adeudable{
                 
                 }
             } catch (SQLException ex) {
+                Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InstantiationException ex) {
+                Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IllegalAccessException ex) {
                 Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
             }
             try {

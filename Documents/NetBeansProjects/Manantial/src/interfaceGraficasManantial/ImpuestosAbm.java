@@ -64,6 +64,7 @@ public class ImpuestosAbm extends javax.swing.JInternalFrame {
         setMaximizable(true);
         setResizable(true);
         setTitle("Alta y Modificacion de Impuestos");
+        setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/Mlogo.png"))); // NOI18N
 
         jButton1.setText("Nuevo Impuesto");
         jButton1.addActionListener(new java.awt.event.ActionListener() {

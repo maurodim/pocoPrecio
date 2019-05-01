@@ -5,24 +5,36 @@
  */
 package ConfiguracionR;
 
-import creardbderby.CrearDBDerby;
+import interfaces.Transaccionable;
 import java.io.File;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import static java.lang.Thread.sleep;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.Iterator;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import objetosActualizador.Formularios;
+import objetosActualizador.Licencias;
 import objetosDerby.Base;
+import objetosDerby.Configuracion;
+import objetosR.Conecciones;
+
+
 
 /**
  *
  * @author mauro
  */
 public class Propiedades {
+
     static String SERVER;//"localhost";
     static String BD;//"bbgestion";
     static String USUARIO;//"bambusoft";
@@ -60,7 +72,6 @@ public class Propiedades {
     public static String getINICIOACT() {
         return INICIOACT;
     }
-    
 
     public static String getARCHIVOCRT() {
         return ARCHIVOCRT;
@@ -73,8 +84,6 @@ public class Propiedades {
     public static String getTIPODEVENTA() {
         return TIPODEVENTA;
     }
-    
-    
 
     public static String getSERVER() {
         return SERVER;
@@ -111,76 +120,92 @@ public class Propiedades {
     public static String getCUIT() {
         return CUIT;
     }
-    
-    
-    
 
-    
-    
-    public static void CargarPropiedades1() throws ParseException, IOException{
-        File archivo = new File ("Configuracion\\bbsGestion.properties");
-        Properties p=new Properties();
-         if(archivo.exists()){
+    public static Boolean CargarPropiedades1() throws ParseException, IOException {
+        File archivo = new File("base14");
+        Properties p = new Properties();
+        Boolean resultado = true;
+        if (archivo.exists()) {
             try {
                 //Process px=Runtime.getRuntime().exec("c:/xampp/xampp_start.exe");
                 sleep(2000);
             } catch (InterruptedException ex) {
                 Logger.getLogger(Propiedades.class.getName()).log(Level.SEVERE, null, ex);
             }
-         
-        int verificado=0;
-        
-            p.load(new FileReader(archivo));
-            Enumeration<Object> keys = p.keys();
 
-            while (keys.hasMoreElements()){
-               Object key = keys.nextElement();
-               System.out.println(key + " = "+ p.get(key));
-            }   
-         
-            
-         //FileReader fr = null;
-            
+            int verificado = 0;
+            try {
+                /*
+                p.load(new FileReader(archivo));
+                Enumeration<Object> keys = p.keys();
+                
+                while (keys.hasMoreElements()) {
+                Object key = keys.nextElement();
+                System.out.println(key + " = " + p.get(key));
+                }
+                
+                //FileReader fr = null;
                 //fr = new FileReader (archivo);
                 //BufferedReader br = new BufferedReader(fr);
                 // Lectura del fichero
                 String linea;
-                int renglon=0;
+                int renglon = 0;
                 //Transaccionable tra=null;
-
-            //tra = new Conecciones();
-        
+                
+                //tra = new Conecciones();
                 //while((linea=br.readLine())!=null){
+                CREADA = p.getProperty("CREADA");
+                CUIT = p.getProperty("CUIT");
+                SERVER = p.getProperty("SERVER");
+                BD = p.getProperty("BD");
+                USUARIO = p.getProperty("USUARIO");
+                CLAVE = p.getProperty("CLAVE");
+                ARCHIVOCRT = p.getProperty("ARCHIVOCRT");
+                ARCHIVOKEY = p.getProperty("ARCHIVOKEY");
+                PUNTODEVENTA = p.getProperty("PUNTODEVENTA");
+                CONDICIONIVA = p.getProperty("CONDICIONIVA");
+                PUNTODEVENTA = p.getProperty("PUNTODEVENTA");
+                TIPODEVENTA = p.getProperty("TIPODEVENTA");
+                NOMBRECOMERCIO = p.getProperty("NOMBRECOMERCIO");
+                DIRECCION = p.getProperty("DIRECCION");
+                TELEFONO = p.getProperty("TELEFONO");
+                INGBRUTOS = p.getProperty("INGBRUTOS");
+                INICIOACT = p.getProperty("INICIOACT");
+                
+                */
+                Transaccionable tra=new Conecciones();
+                String sql="select * from configuracion";
+                ResultSet rs=tra.leerConjuntoDeRegistros(sql);
+                while(rs.next()){
                     
-                    
-                    
-                            CREADA=p.getProperty("CREADA");
-                            CUIT=p.getProperty("CUIT");
-                            SERVER=p.getProperty("SERVER");
-                            BD=p.getProperty("BD");
-                            USUARIO=p.getProperty("USUARIO");
-                            CLAVE=p.getProperty("CLAVE");
-                            ARCHIVOCRT=p.getProperty("ARCHIVOCRT");
-                            ARCHIVOKEY=p.getProperty("ARCHIVOKEY");
-                            PUNTODEVENTA=p.getProperty("PUNTODEVENTA");
-                            CONDICIONIVA=p.getProperty("CONDICIONIVA");
-                            PUNTODEVENTA=p.getProperty("PUNTODEVENTA");
-                            TIPODEVENTA=p.getProperty("TIPODEVENTA");
-                            NOMBRECOMERCIO=p.getProperty("NOMBRECOMERCIO");
-                            DIRECCION=p.getProperty("DIRECCION");
-                            TELEFONO=p.getProperty("TELEFONO");
-                            INGBRUTOS=p.getProperty("INGBRUTOS");
-                            INICIOACT=p.getProperty("INICIOACT");
-                            
-                        
-            
-            
-            
-        }else{
-             
+                
+                ARCHIVOCRT ="";// rs.getString("archivocrt");
+                ARCHIVOKEY ="";// rs.getString("archivokey");
+                PUNTODEVENTA ="";// rs.getString("puntodeventa");
+                CONDICIONIVA ="";// rs.getString("condicioniva");
+                CUIT="20229053834";
+                TIPODEVENTA = "";//rs.getString("tipodeventa");
+                NOMBRECOMERCIO = rs.getString("razon");
+                DIRECCION = rs.getString("direccion");
+                TELEFONO = rs.getString("telefono");
+                INGBRUTOS = "";//rs.getString("ingresosbrutos");
+                INICIOACT ="";// rs.getString("iniciodeactividades");
+                }
+                rs.close();
+            } catch (InstantiationException ex) {
+                Logger.getLogger(Propiedades.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IllegalAccessException ex) {
+                Logger.getLogger(Propiedades.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(Propiedades.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            return resultado;
+        } else {
+            /*
              ListadoConfiguracion confi=new ListadoConfiguracion();
              confi.setVisible(true);
              confi.toFront();
+
              CREADA="1";
              CUIT=confi.jTextField8.getText();
              SERVER=confi.jTextField1.getText();
@@ -207,17 +232,54 @@ public class Propiedades {
                     
              
              p.store(new FileWriter("Configuracion\\bbsGestion.properties"),"");
-             //CrearDBDerby crear=new CrearDBDerby();
-             Base base=new Base();
-             base.CrearBase("base14\\bambuPrueba.db", "mauro", "mauro");
-             //Runtime jpfBatch=Runtime.getRuntime();
-             //jpfBatch.exec("java -jar CrearDBDerby.jar");
+             */
+            //CrearDBDerby crear=new CrearDBDerby();
+            //ManantialActualizador actualizador=new ManantialActualizador();
+            Formulario forma = new Formulario(null, true);
+            forma.setVisible(true);
+            Formularios formu = new Formularios();
+            forma.toFront();
+            formu = forma.formulario;
+            ArrayList lstLicencias=new ArrayList();
+            lstLicencias=forma.listadoL;
+            System.out.println("cantidad licencias "+lstLicencias.size()+" datos configuracion "+formu.getNombre());
+            Base base = new Base();
+            base.CrearBase("base14\\bambuPrueba.db", "mauro", "mauro");
+            Connection con=base.ObtenerConexion("base14\\bambuPrueba.db", "mauro", "mauro");
+            Configuracion configura=new Configuracion();
+            configura.setCpu(formu.getCpu());
+            configura.setCuit(formu.getCuit());
+            configura.setDireccion(formu.getDireccion());
+            configura.setElectronica(formu.getElectronica());
+            configura.setIngBrutos(formu.getIngBrutos());
+            configura.setIva(formu.getIva());
+            configura.setLicencia(formu.getLicencia());
+            configura.setMail(formu.getMail());
+            configura.setNombre(formu.getNombre());
+            configura.setPresupuesto(formu.getPresupuesto());
+            configura.setRazonSocial(formu.getRazonSocial());
+            configura.setSerie(formu.getSerie());
+            configura.setTelefono(formu.getTelefono());
+            base.InicializarConfiguracion(con, configura);
+            Licencias licencia=null;
+            Iterator itL=lstLicencias.listIterator();
+            while(itL.hasNext()){
+            licencia=(Licencias) itL.next();
+                base.InicializarLicencias(con,licencia.getId(),licencia.getDescripcion(),licencia.getCantidadComprobantes());
             
-         }
+            }
+            JOptionPane.showMessageDialog(null, "INSTALACIÓN Y CONFIGURACION FINALIZADAS");
+            //actualizador.run();
+            //Base base=new Base();
+            //base.CrearBase("base\\manantial.db", "mauro", "mauro");
+            //Runtime jpfBatch=Runtime.getRuntime();
+            //jpfBatch.exec("java -jar CrearDBDerby.jar");
+            return false;
+
+        }
+        //return true;
         //BD="siglox";
-        
-        
-        
+
     }
-    
+
 }

@@ -71,6 +71,7 @@ public class EdicionMovimiento extends javax.swing.JInternalFrame {
         setMaximizable(true);
         setResizable(true);
         setTitle("Edición de Movimiento");
+        setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/Mlogo.png"))); // NOI18N
 
         jPanel1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
