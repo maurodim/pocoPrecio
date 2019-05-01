@@ -9,7 +9,6 @@ import Proveedores.AbmProveedores;
 import Articulos.RubrosAbm;
 import Actualizaciones.Actualiza;
 import Actualizaciones.Actualiza1;
-import Actualizaciones.BkDeConeccion;
 import Proveedores.Proveedores;
 import Depositos.Depositos;
 import Sucursales.Cajas;
@@ -36,14 +35,10 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import Articulos.Articulos;
 import Articulos.ArticulosAbm;
-import Extension.CodigosDeBarra;
-import Extension.CodigosDeBarraImpl;
 import Look.Fondo;
 import facturacion.pantallas.NotaDeCredito;
 import facturacion.pantallas.NotaDeDebito;
-import java.awt.Graphics2D;
 import java.io.InputStream;
 
 /**
