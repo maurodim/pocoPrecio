@@ -11,6 +11,7 @@ import Conversores.Numeros;
 import interfaces.Personalizable;
 import java.util.ArrayList;
 import java.util.Iterator;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -68,6 +69,11 @@ public class RubrosAbm extends javax.swing.JInternalFrame {
         jComboBox1.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 jComboBox1ItemStateChanged(evt);
+            }
+        });
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
             }
         });
 
@@ -193,10 +199,7 @@ public class RubrosAbm extends javax.swing.JInternalFrame {
 
     private void jComboBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox1ItemStateChanged
         
-        rubro=(Rubros)lstRubros.get(this.jComboBox1.getSelectedIndex());
-        this.jTextField1.setText(rubro.getDescripcion());
-        this.jTextField1.selectAll();
-        this.jTextField1.requestFocus();
+        
         
     }//GEN-LAST:event_jComboBox1ItemStateChanged
 
@@ -218,17 +221,30 @@ public class RubrosAbm extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        if(JOptionPane.showConfirmDialog(this,"Ésta por modicar los Precios de Venta en un "+this.jTextField2.getText() +"%, CONFIRMA DICHA OPERACIÓN?","Aplicar Modificación",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE)==1){
+        }else{
         Rubrable rub=new Rubros();
         Double coeficiente=Numeros.ConvertirStringADouble(this.jTextField2.getText());
         rub.modificarPrecioRubro(rubro.getId(), coeficiente);
+        }
         //this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        if(JOptionPane.showConfirmDialog(this,"Ésta por modicar los Precios de Costo en un "+this.jTextField2.getText() +"%, CONFIRMA DICHA OPERACIÓN?","Aplicar Modificación",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE)==1){
+        }else{
         Rubrable rub=new Rubros();
         Double coeficiente=Numeros.ConvertirStringADouble(this.jTextField2.getText());
         rub.modificarCostoPorRubro(rubro.getId(), coeficiente);
+        }
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        rubro=(Rubros)lstRubros.get(this.jComboBox1.getSelectedIndex());
+        this.jTextField1.setText(rubro.getDescripcion().toUpperCase());
+        this.jTextField1.selectAll();
+        this.jTextField1.requestFocus();
+    }//GEN-LAST:event_jComboBox1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

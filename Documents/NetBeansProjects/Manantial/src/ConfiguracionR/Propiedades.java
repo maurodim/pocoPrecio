@@ -135,44 +135,7 @@ public class Propiedades {
 
             int verificado = 0;
             try {
-                /*
-                p.load(new FileReader(archivo));
-                Enumeration<Object> keys = p.keys();
                 
-                while (keys.hasMoreElements()) {
-                Object key = keys.nextElement();
-                System.out.println(key + " = " + p.get(key));
-                }
-                
-                //FileReader fr = null;
-                //fr = new FileReader (archivo);
-                //BufferedReader br = new BufferedReader(fr);
-                // Lectura del fichero
-                String linea;
-                int renglon = 0;
-                //Transaccionable tra=null;
-                
-                //tra = new Conecciones();
-                //while((linea=br.readLine())!=null){
-                CREADA = p.getProperty("CREADA");
-                CUIT = p.getProperty("CUIT");
-                SERVER = p.getProperty("SERVER");
-                BD = p.getProperty("BD");
-                USUARIO = p.getProperty("USUARIO");
-                CLAVE = p.getProperty("CLAVE");
-                ARCHIVOCRT = p.getProperty("ARCHIVOCRT");
-                ARCHIVOKEY = p.getProperty("ARCHIVOKEY");
-                PUNTODEVENTA = p.getProperty("PUNTODEVENTA");
-                CONDICIONIVA = p.getProperty("CONDICIONIVA");
-                PUNTODEVENTA = p.getProperty("PUNTODEVENTA");
-                TIPODEVENTA = p.getProperty("TIPODEVENTA");
-                NOMBRECOMERCIO = p.getProperty("NOMBRECOMERCIO");
-                DIRECCION = p.getProperty("DIRECCION");
-                TELEFONO = p.getProperty("TELEFONO");
-                INGBRUTOS = p.getProperty("INGBRUTOS");
-                INICIOACT = p.getProperty("INICIOACT");
-                
-                */
                 Transaccionable tra=new Conecciones();
                 String sql="select * from configuracion";
                 ResultSet rs=tra.leerConjuntoDeRegistros(sql);
@@ -182,8 +145,8 @@ public class Propiedades {
                 ARCHIVOCRT ="";// rs.getString("archivocrt");
                 ARCHIVOKEY ="";// rs.getString("archivokey");
                 PUNTODEVENTA ="";// rs.getString("puntodeventa");
-                CONDICIONIVA ="";// rs.getString("condicioniva");
-                CUIT="20229053834";
+                CONDICIONIVA =rs.getString("condicioniva");
+                CUIT=rs.getString("cuit");
                 TIPODEVENTA = "";//rs.getString("tipodeventa");
                 NOMBRECOMERCIO = rs.getString("razon");
                 DIRECCION = rs.getString("direccion");

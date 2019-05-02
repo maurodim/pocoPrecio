@@ -282,7 +282,7 @@ public class ImpresoraServiceImpl implements Printable, ImpresoraService{
     public static void main(String[] args){
        ImpresoraServiceImpl impresoraServicio = new ImpresoraServiceImpl();
         
-        /* 
+        /*
         //-----------------TICKET DE COMPRA-------------------------------
         // Ejemplo para envio de informacion e impresion ticket
         // Creando las instancias
@@ -338,18 +338,19 @@ public class ImpresoraServiceImpl implements Printable, ImpresoraService{
         // Imprimiendo ticket
         String ticketFull = modeloTicket.procesarTicket(1);
         impresoraServicio.imprimirTicket(ticketFull);
-        */
-        //------------------ETIQUETA----------------------------------
-       
         
+        //------------------ETIQUETA----------------------------------
+       */
+       
+        /*
             String serialCodigoBarra = "123456789";
             CodigosDeBarra codigosDeBarra = new CodigosDeBarraImpl();
             Image imagen = codigosDeBarra.barraCode128(serialCodigoBarra);
-            imagen = codigosDeBarra.redimensionar(imagen, 500, 300);
+            imagen = codigosDeBarra.redimensionar(imagen, 100, 30);
             
             // Imagen desde la memoria
             impresoraServicio.imprimirCodigoDeBarra(imagen, serialCodigoBarra);
-       
+       */
         System.exit(0);
     }
 

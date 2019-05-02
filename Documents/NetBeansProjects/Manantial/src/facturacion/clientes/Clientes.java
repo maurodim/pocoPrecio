@@ -5,6 +5,7 @@
 package facturacion.clientes;
 
 
+import ConfiguracionR.Propiedades;
 import Conversores.Numeros;
 import interfaceGraficasManantial.Inicio;
 import interfaces.Adeudable;
@@ -325,6 +326,8 @@ public class Clientes implements Busquedas,Facturar,Adeudable{
                     this.saldo=clientesTango.getSaldo();
                     this.direccionDeEntrega=clientesTango.getDireccionDeEntrega();
                     this.tipoIva=clientesTango.getTipoIva();
+                    if(Propiedades.getCONDICIONIVA().equals("1"))
+                    this.tipoComprobante=1;
                     //cli.setNumeroPedido(rs.getString(3));
                     //cli.setObservaciones(rs.getString(5));
                     //System.out.println("CLIENTE "+cli.getRazonSocial() +"COMENTARIO "+cli.getCodigoCliente());

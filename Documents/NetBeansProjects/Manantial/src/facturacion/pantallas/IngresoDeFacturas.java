@@ -16,7 +16,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
-import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -24,7 +23,6 @@ import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import Articulos.Articulos;
 import Articulos.Rubrable;
@@ -38,16 +36,13 @@ import Sucursales.ListasDePrecios;
 import facturacion.clientes.ImprimirFactura;
 import interfaces.Comparables;
 import java.awt.event.KeyListener;
-import java.net.MalformedURLException;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.xml.parsers.ParserConfigurationException;
 import objetosR.Comprobantes;
-import objetosR.Conecciones;
 import org.xml.sax.SAXException;
-import tablas.MiModeloTablaBuscarCliente;
 import tablas.MiModeloTablaFacturacion;
 import Articulos.ModificableArticulos;
 
@@ -204,7 +199,7 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
 
         jLabel1.setText("TOTAL FACTURA :");
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/printer32.png"))); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/nuevos/impresora.png"))); // NOI18N
         jButton1.setText("FACT ELECT");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -319,7 +314,7 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
 
         jLabel6.setText("<HTML><strong>jLabel6</strong></html>");
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/groups_black.png"))); // NOI18N
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/nuevos/cliente_seleccion.png"))); // NOI18N
         jButton3.setText("Ingresar Cliente");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -327,7 +322,7 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
             }
         });
 
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/folder_new.png"))); // NOI18N
+        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/nuevos/clientes_nuevo.png"))); // NOI18N
         jButton5.setText("Nuevo Cliente");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

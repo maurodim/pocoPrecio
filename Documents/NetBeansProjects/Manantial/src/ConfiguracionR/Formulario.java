@@ -87,12 +87,9 @@ public class Formulario extends javax.swing.JDialog {
         iva_box = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jRadioButton1 = new javax.swing.JRadioButton();
         jRadioButton2 = new javax.swing.JRadioButton();
-        jRadioButton3 = new javax.swing.JRadioButton();
-        jRadioButton4 = new javax.swing.JRadioButton();
         licencia_box = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
         jLabel13 = new javax.swing.JLabel();
@@ -179,9 +176,6 @@ public class Formulario extends javax.swing.JDialog {
         jLabel10.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         jLabel10.setText("<html>IMPORTANTE:Los presupuestos <strong>\"NO SON DOCUMENTOS VÁLIDOS COMO FACTURA\"</strong></html>");
 
-        jLabel11.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
-        jLabel11.setText("Habilita FACTURA ELECTRÓNICA?");
-
         jLabel12.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         jLabel12.setText("Seleccione el Tipo de LICENCIA");
 
@@ -190,12 +184,6 @@ public class Formulario extends javax.swing.JDialog {
 
         jRadioButton2.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
         jRadioButton2.setText("NO");
-
-        jRadioButton3.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
-        jRadioButton3.setText("SI");
-
-        jRadioButton4.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
-        jRadioButton4.setText("NO");
 
         licencia_box.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
         licencia_box.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -236,17 +224,9 @@ public class Formulario extends javax.swing.JDialog {
                         .addComponent(jRadioButton2)
                         .addGap(150, 150, 150))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, 291, Short.MAX_VALUE)
-                            .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jRadioButton3)
-                                .addGap(18, 18, 18)
-                                .addComponent(jRadioButton4)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(licencia_box, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(licencia_box, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel10)
@@ -334,12 +314,7 @@ public class Formulario extends javax.swing.JDialog {
                     .addComponent(jRadioButton2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jRadioButton3)
-                    .addComponent(jRadioButton4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(licencia_box, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -379,8 +354,8 @@ public class Formulario extends javax.swing.JDialog {
         formulario.setIngBrutos(this.brutos_txt.getText());
         if(this.jRadioButton1.isSelected())formulario.setPresupuesto("si");
         if(this.jRadioButton2.isSelected())formulario.setPresupuesto("no");
-        if(this.jRadioButton3.isSelected())formulario.setElectronica("si");
-        if(this.jRadioButton4.isSelected())formulario.setElectronica("si");
+        //if(this.jRadioButton3.isSelected())formulario.setElectronica("si");
+        //if(this.jRadioButton4.isSelected())formulario.setElectronica("si");
         iva=listadoIva.get(this.iva_box.getSelectedIndex());
         licencia=(Licencias) listadoL.get(this.licencia_box.getSelectedIndex());
         formulario.setIva(String.valueOf(iva.getId()));
@@ -480,7 +455,6 @@ public class Formulario extends javax.swing.JDialog {
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
@@ -494,8 +468,6 @@ public class Formulario extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
-    private javax.swing.JRadioButton jRadioButton4;
     private javax.swing.JComboBox<String> licencia_box;
     private javax.swing.JTextField mail_txt;
     private javax.swing.JTextField nombre_txt;
