@@ -6,7 +6,6 @@
 package interfaceGraficasManantial;
 
 import Articulos.Articulos;
-import Articulos.Modificable;
 import Articulos.Rubrable;
 import Articulos.Rubros;
 import Articulos.SubRubros;
@@ -23,6 +22,7 @@ import java.util.Iterator;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
+import Articulos.ModificableArticulos;
 
 /**
  *
@@ -43,7 +43,7 @@ public class StockAbm extends javax.swing.JInternalFrame {
     private Articulos articuloHijo;
     private Clientes cliT;
     private DefaultTableModel modelo;
-    private Modificable modiA;
+    private ModificableArticulos modiA;
     
     /**
      * Creates new form StockAbm
@@ -234,7 +234,7 @@ public class StockAbm extends javax.swing.JInternalFrame {
                 rubro=(Rubros)iR.next();
                 listadoSubRubros=subRuble.listarPorRubro(rubro.getId());
             }
-            Modificable modiA=new Articulos();
+            ModificableArticulos modiA=new Articulos();
             Articulable modi=new ArticulosAsignados();
             listadoDeBusqueda=modi.convertirListadoEnArticulos(modi.filtrador(listadoSubRubros, listadoR, cliT));
             //listadoDeBusqueda=modi.filtrador(listadoSubRubros,listadoR);
@@ -270,7 +270,7 @@ public class StockAbm extends javax.swing.JInternalFrame {
                 rubro=(Rubros)iR.next();
                 listadoSubRubros=subRuble.listarPorRubro(rubro.getId());
             }
-            Modificable modiA=new Articulos();
+            ModificableArticulos modiA=new Articulos();
             Articulable modi=new ArticulosAsignados();
             listadoDeBusqueda=modi.convertirListadoEnArticulos(modi.filtrador(listadoSubRubros, listadoR, cliT));
             //listadoDeBusqueda=modi.filtrador(listadoSubRubros,listadoR);

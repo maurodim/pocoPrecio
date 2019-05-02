@@ -5,7 +5,6 @@
 package interfaceGraficasManantial;
 
 import ClientesPantallas.AbmClientes;
-import Proveedores.AbmProveedores;
 import Articulos.RubrosAbm;
 import Actualizaciones.Actualiza;
 import Actualizaciones.Actualiza1;
@@ -37,6 +36,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import Articulos.ArticulosAbm;
 import Look.Fondo;
+import Proveedores.AbmProveedores;
 import facturacion.pantallas.NotaDeCredito;
 import facturacion.pantallas.NotaDeDebito;
 import java.io.InputStream;

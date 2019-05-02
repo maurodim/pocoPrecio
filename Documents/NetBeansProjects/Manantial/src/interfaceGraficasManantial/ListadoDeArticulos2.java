@@ -5,7 +5,6 @@
 package interfaceGraficasManantial;
 
 import Articulos.Articulos;
-import Articulos.Modificable;
 import ListasDePrecios.Articulable;
 import ListasDePrecios.ArticulosAsignados;
 import facturacion.clientes.Clientes;
@@ -15,6 +14,7 @@ import interfacesPrograma.Facturar;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.table.TableColumn;
+import Articulos.ModificableArticulos;
 
 /**
  *
@@ -146,7 +146,7 @@ public class ListadoDeArticulos2 extends javax.swing.JDialog {
             String valorCargado=jTextField1.getText();
         Facturar fart=new Articulos();
         this.jTable1.removeAll();
-            Modificable modiA=new Articulos();
+            ModificableArticulos modiA=new Articulos();
             Articulable modi=new ArticulosAsignados();
             listadoDeBusqueda.clear();
             listadoDeBusqueda=modi.convertirListadoEnArticulos(modi.filtradorDeFormularios(listadoSubRubros, listadoR, cliT,this.jTextField1.getText()));
@@ -162,7 +162,7 @@ public class ListadoDeArticulos2 extends javax.swing.JDialog {
         }else{
             Facturar fart=new Articulos();
             this.jTable1.removeAll();
-            Modificable modiA=new Articulos();
+            ModificableArticulos modiA=new Articulos();
             Articulable modi=new ArticulosAsignados();
             listadoDeBusqueda.clear();
             listadoDeBusqueda=modi.convertirListadoEnArticulos(modi.filtradorDeFormularios(listadoSubRubros, listadoR, cliT,this.jTextField1.getText()));

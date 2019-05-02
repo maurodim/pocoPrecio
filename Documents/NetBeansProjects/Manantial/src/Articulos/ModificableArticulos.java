@@ -13,7 +13,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author mauro di
  */
-public interface Modificable {
+public interface ModificableArticulos {
     public ArrayList buscar(Integer rubro,Integer subRubro,String criterio);
     public Integer nuevoArticulo(Object objeto);
     public Boolean modificarArticulo(Object objeto);
@@ -28,4 +28,6 @@ public interface Modificable {
     public DefaultTableModel actualizarListado(ArrayList listado);
     public DefaultTableModel mostrarModificacionStock(ArrayList listado);
     public void cargarMovimientoDeAjuste(Object articulo);
+    public void NuevoMasivo(ArrayList listado);
+    public void ModificadoMasivo(ArrayList listado);
 }

@@ -27,7 +27,7 @@ import tablas.MiModeloTablaContacto;
  *
  * @author mauro
  */
-public class Articulos implements Facturar, Editables, Comparables, Modificable, Proveer {
+public class Articulos implements Facturar, Editables, Comparables, ModificableArticulos, Proveer {
 
     private String codigoDeBarra;
     private String codigoAsignado;
@@ -73,6 +73,11 @@ public class Articulos implements Facturar, Editables, Comparables, Modificable,
     private Double montoDescuento;
     private Double porcentajeDeDescuento;
 
+    public static ConcurrentHashMap getListadoBarr() {
+        return listadoBarr;
+    }
+
+    
     public Double getPorcentajeDeDescuento() {
         return porcentajeDeDescuento;
     }
@@ -1688,6 +1693,50 @@ public class Articulos implements Facturar, Editables, Comparables, Modificable,
             Logger.getLogger(Articulos.class.getName()).log(Level.SEVERE, null, ex);
         }
         return listado;
+    }
+
+    @Override
+    public void NuevoMasivo(ArrayList listado) {
+       Iterator it=listado.listIterator();
+        Articulos articulo;
+        Integer cantt=0;
+        int total=0;
+        String nuevo="insert into articulos (NOMBRE,COSTO,PRECIO,MINIMO,BARRAS,modificaPrecio,modificaServicio,idcombo,actualizacion) values ";
+        while(it.hasNext()){
+            articulo=(Articulos) it.next();
+            //AltaObjeto(artic);
+            nuevo+="('"+articulo.getDescripcionArticulo()+"',"+articulo.getPrecioDeCosto()+",round("+articulo.getPrecioUnitarioNeto()+",2),"+articulo.getStockMinimo()+",'"+articulo.getCodigoDeBarra()+"',"+articulo.getModificaPrecio()+","+articulo.getModificaServicio()+","+articulo.getIdCombo()+",3),";
+            if(cantt==200){
+                total=nuevo.length();
+                total=total -1;
+                nuevo=nuevo.substring(0,total);
+                tra.guardarRegistro(nuevo);
+                cantt=0;
+                nuevo="insert into articulos (NOMBRE,COSTO,PRECIO,MINIMO,BARRAS,modificaPrecio,modificaServicio,idcombo,actualizacion) values ";
+                total=0;
+            }
+            cantt++;
+        }
+        total=nuevo.length();
+        System.out.println("TOTAL SENTENCIA "+total);
+        total=total -1;
+        nuevo=nuevo.substring(0,total);
+        if(nuevo.length() > 153){
+            tra.guardarRegistro(nuevo);
+        }
+    }
+
+    @Override
+    public void ModificadoMasivo(ArrayList listado) {
+       Iterator it=listado.listIterator();
+        Articulos artic;
+        String modificar="update articulos set ";
+        String ww=" where id in(";
+        while(it.hasNext()){
+            artic=(Articulos) it.next();
+            ModificaionObjeto(artic);
+            //modificar+="nombre=case id when "+artic.getNumeroId()+" then '"+artic.getDescripcionArticulo()+"',barras= case id when "+artic.getNumeroId()+" then '"+artic.getCodigoDeBarra()+"'";
+        }
     }
 
 }

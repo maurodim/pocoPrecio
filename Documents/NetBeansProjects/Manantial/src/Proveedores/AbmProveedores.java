@@ -6,18 +6,10 @@ package Proveedores;
 
 import Conversores.Numeros;
 
-import Excel.LeerExcelProveedores;
 import interfaceGraficasManantial.Inicio;
 import interfaces.Personalizable;
-import interfacesPrograma.Busquedas;
-import interfacesPrograma.Facturar;
 import java.beans.PropertyVetoException;
-import java.io.File;
-import java.sql.SQLException;
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;

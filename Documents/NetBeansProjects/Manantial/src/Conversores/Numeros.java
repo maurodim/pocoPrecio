@@ -6,6 +6,7 @@ package Conversores;
 
 import interfaceGraficasManantial.Inicio;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -139,5 +140,38 @@ public class Numeros {
         String mmes=fr.format(mes);
         String fecha1=ano+"-"+mmes+"-"+ddia;
         return fecha1;
+    }
+    public static String ConvertirNumeroExcell(Double num){
+        DecimalFormatSymbols simbolo=new DecimalFormatSymbols();
+        simbolo.setDecimalSeparator(',');
+        DecimalFormat formato=new DecimalFormat("####.#",simbolo);
+        doble=formato.format(num);
+        return doble;
+    }
+    public static Double ConvertirEnCoeficiente(Double numero){
+        Double coe=numero / 100;
+        coe=coe + 1;
+        return coe;
+    }
+    public static String ReConvertirEnCoeficiente(Double numero){
+        Double coe=numero - 1;
+        coe=coe * 100;
+        String valor=String.valueOf(coe);
+        return valor;
+    }
+    public static Double ConvertirEnDescuento(Double numero){
+        Double coe=numero / 100;
+        //coe=coe + 1;
+        return coe;
+    }
+    public static String ConvetirDoubleAString(Double num){
+        DecimalFormat formato=new DecimalFormat("####.00");
+        doble=formato.format(num);
+        return doble;
+    }
+    public static String ConvetirNumeroDosDigitos(Double num){
+        DecimalFormat formato=new DecimalFormat("####.00");
+        doble=formato.format(num);
+        return doble;
     }
 }

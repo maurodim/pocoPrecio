@@ -27,7 +27,6 @@ import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import Articulos.Articulos;
-import Articulos.Modificable;
 import Articulos.Rubrable;
 import Articulos.Rubros;
 import Articulos.SubRubros;
@@ -42,6 +41,7 @@ import objetosR.Comprobantes;
 import objetosR.Conecciones;
 import tablas.MiModeloTablaBuscarCliente;
 import tablas.MiModeloTablaFacturacion;
+import Articulos.ModificableArticulos;
 
 
 /**
@@ -559,7 +559,7 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
             valorCargado=jTextField1.getText();
         Facturar fart=new Articulos();
         this.jTable2.removeAll();
-            Modificable modiA=new Articulos();
+            ModificableArticulos modiA=new Articulos();
             Articulable modi=new ArticulosAsignados();
             listadoDeBusqueda.clear();
             listadoDeBusqueda=modi.convertirListadoEnArticulos(modi.filtradorDeFormularios(listadoSubRubros, listadoR, cliT,this.jTextField1.getText()));
@@ -576,7 +576,7 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
             /*
             Facturar fart=new Articulos();
             this.jTable2.removeAll();
-            Modificable modiA=new Articulos();
+            ModificableArticulos modiA=new Articulos();
             Articulable modi=new ArticulosAsignados();
             listadoDeBusqueda.clear();
             listadoDeBusqueda=modi.convertirListadoEnArticulos(modi.filtradorDeFormularios(listadoSubRubros, listadoR, cliT,this.jTextField1.getText()));
@@ -1048,7 +1048,7 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
 
     private void jTextField5KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField5KeyPressed
         if(evt.getKeyCode()==KeyEvent.VK_ENTER){
-           Modificable modiA=new Articulos();
+           ModificableArticulos modiA=new Articulos();
            Rubrable subRuble=new SubRubros();
             if(rub.equals(this.jTextField5.getText())){
             }else{
@@ -1089,7 +1089,7 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
             listadoSubRubros.clear();
             listadoSubRubros.add(subRubro);
             this.jTable2.removeAll();
-            Modificable modiA=new Articulos();
+            ModificableArticulos modiA=new Articulos();
             Articulable modi=new ArticulosAsignados();
             listadoDeBusqueda=modi.convertirListadoEnArticulos(modi.filtradorDeFormularios(listadoSubRubros, listadoR, cliT,this.jTextField1.getText()));
             //listadoDeBusqueda=modi.filtrador(listadoSubRubros,listadoR);

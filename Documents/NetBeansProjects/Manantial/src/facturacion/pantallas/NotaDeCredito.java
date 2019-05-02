@@ -25,7 +25,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import Articulos.Articulos;
-import Articulos.Modificable;
 import Articulos.Rubrable;
 import Articulos.Rubros;
 import Articulos.SubRubros;
@@ -50,6 +49,7 @@ import objetos.TiposIva;
 import objetosR.Comprobantes;
 import objetosR.Conecciones;
 import tablas.MiModeloTablaFacturacion;
+import Articulos.ModificableArticulos;
 
 
 /**
@@ -533,7 +533,7 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
             valorCargado=jTextField1.getText();
         Facturar fart=new Articulos();
        // this.jTable2.removeAll();
-            Modificable modiA=new Articulos();
+            ModificableArticulos modiA=new Articulos();
             Articulable modi=new ArticulosAsignados();
             listadoDeBusqueda.clear();
             listadoDeBusqueda=modi.convertirListadoEnArticulos(modi.filtradorDeFormularios(listadoSubRubros, listadoR, cliT,this.jTextField1.getText()));

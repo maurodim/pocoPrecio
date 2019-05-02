@@ -53,7 +53,7 @@ public class AbmArticulos extends javax.swing.JInternalFrame {
         listadoRubros=rble.listarPorRubro(0);
         
         modelo2=rble.mostrarListado(listadoRubros);
-        Modificable artis=new Articulos();
+        ModificableArticulos artis=new Articulos();
         listadoGral=artis.buscar(0,0,"");
         System.out.println("CANTIDAD: "+listadoGral.size());
         modelo1=artis.mostrarListado(listadoGral);
@@ -354,7 +354,7 @@ public class AbmArticulos extends javax.swing.JInternalFrame {
                 lls.add(rubro);
             }
         }
-        Modificable att=new Articulos();
+        ModificableArticulos att=new Articulos();
         
         listadoSubRubros.clear();
         listadoSubRubros=sRble.listarPorSubRubro(lls);
@@ -399,7 +399,7 @@ public class AbmArticulos extends javax.swing.JInternalFrame {
         
             //coeficiente=listaDePrecios.getCoeficiente();
         
-        Modificable att=new Articulos();
+        ModificableArticulos att=new Articulos();
         Articulos articulo=new Articulos();
         
         ArrayList resultado=new ArrayList();
@@ -460,7 +460,7 @@ public class AbmArticulos extends javax.swing.JInternalFrame {
         }
             
         }
-        Modificable att=new Articulos();
+        ModificableArticulos att=new Articulos();
         listadoGral=att.filtrador(provisorio,provisorio);
         //listadoGral=att.filtrador(listadoSubRubros, listadoSubRubros);
         modelo1=att.mostrarListado(listadoGral);
@@ -517,7 +517,7 @@ public class AbmArticulos extends javax.swing.JInternalFrame {
                 //listadoGral.remove(b);
             }
         }
-        Modificable att=new Articulos();
+        ModificableArticulos att=new Articulos();
         att.depurarFiltrador(resTado);
         //listadoGral=att.filtrador(listadoSubRubros, listadoSubRubros);
         
