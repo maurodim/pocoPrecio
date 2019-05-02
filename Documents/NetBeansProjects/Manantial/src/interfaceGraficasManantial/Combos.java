@@ -6,7 +6,7 @@
 
 package interfaceGraficasManantial;
 
-import Articulos.ArticulosMod;
+import Articulos.Pantallas.ArticulosMod;
 import Conversores.Numeros;
 import interfacesPrograma.Facturar;
 import java.awt.event.KeyEvent;

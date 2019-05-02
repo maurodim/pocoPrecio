@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Articulos;
+package Articulos.Pantallas;
 
+import Articulos.ColumnasExcel;
+import Articulos.LeerExcel;
+import Articulos.Modelable;
 import Conversores.Numeros;
 import java.io.File;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFileChooser;
 
@@ -45,9 +45,11 @@ public class AbmIva extends javax.swing.JInternalFrame {
         setClosable(true);
         setMaximizable(true);
         setTitle("Importar Excell");
+        setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/Mlogo.png"))); // NOI18N
 
         jFileChooser1.setDialogTitle("Seleccion de Origen de Datos");
 
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/nuevos/procesar.png"))); // NOI18N
         jButton3.setText("Procesar Archivo");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -125,8 +127,8 @@ public class AbmIva extends javax.swing.JInternalFrame {
         selC.jComboBox3.setModel(mod.MostrarEnCombo(columm));
         selC.jComboBox6.setModel(mod.MostrarEnCombo(columm));
         selC.jComboBox7.setModel(mod.MostrarEnCombo(columm));
-        selC.jComboBox4.setModel(mod.MostrarEnCombo(columm));
-        selC.jComboBox5.setModel(mod.MostrarEnCombo(columm));
+        //selC.jComboBox4.setModel(mod.MostrarEnCombo(columm));
+        //selC.jComboBox5.setModel(mod.MostrarEnCombo(columm));
         selC.setVisible(true);
         selC.toFront();
         Double porcentaje=0.00;
@@ -152,28 +154,15 @@ public class AbmIva extends javax.swing.JInternalFrame {
         exCol=(ColumnasExcel) columm.get(sele);
         exCol.setNombreDato("PRECIO");
         enviarC.add(exCol);
-        sele=selC.jComboBox5.getSelectedIndex();
-        exCol=new ColumnasExcel();
-        exCol=(ColumnasExcel) columm.get(sele);
-        exCol.setNombreDato("MARCA");
-        enviarC.add(exCol);
-        sele=selC.jComboBox4.getSelectedIndex();
-        exCol=new ColumnasExcel();
-        exCol=(ColumnasExcel) columm.get(sele);
-        exCol.setNombreDato("PROVEEDOR");
-        enviarC.add(exCol);
+        
         System.out.println(selC.jComboBox1.getSelectedIndex()+" -- "+selC.jComboBox3.getSelectedIndex()+" -- "+selC.jComboBox6.getSelectedIndex());
-        porcentaje=Numeros.ConvertirStringADouble(selC.jTextField1.getText());
+        porcentaje=0.00;//Numeros.ConvertirStringADouble(selC.jTextField1.getText());
         porcentaje=Numeros.ConvertirEnCoeficiente(porcentaje);
-        bonificacion=Numeros.ConvertirStringADouble(selC.jTextField2.getText());
+        bonificacion=0.00;//Numeros.ConvertirStringADouble(selC.jTextField2.getText());
         bonificacion=Numeros.ConvertirEnDescuento(bonificacion);
         int ivva=0;
         int origen=0;
-        if(selC.jCheckBox1.isSelected()){
-            ivva=1;
-            if(selC.jRadioButton1.isSelected())origen=1;
-            if(selC.jRadioButton2.isSelected())origen=2;
-        }
+        
         exCol=(ColumnasExcel) columm.get(0);
         if(exCol.getId()!=null){
             

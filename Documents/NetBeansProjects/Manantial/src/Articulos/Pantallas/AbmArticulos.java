@@ -1,7 +1,12 @@
-package Articulos;
+package Articulos.Pantallas;
 
 
 
+import Articulos.Articulos;
+import Articulos.ModificableArticulos;
+import Articulos.Rubrable;
+import Articulos.Rubros;
+import Articulos.SubRubros;
 import Conversores.Numeros;
 import Sucursales.ListasDePrecios;
 import interfaceGraficasManantial.Inicio;

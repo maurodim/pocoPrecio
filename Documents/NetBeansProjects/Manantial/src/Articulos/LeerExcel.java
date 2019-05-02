@@ -144,7 +144,7 @@ private void printToConsole(List cellDataList)
         Double precio4=null;
         Double costo=null;
         String talle=null;
-        String sentencia="insert into articulos (BARRAS,NOMBRE,SERVICIO,COSTO,PRECIO,lista2,lista3,lista4,marca,prov) value ";
+        String sentencia="insert into articulos (BARRAS,NOMBRE,SERVICIO,COSTO,PRECIO) value ";
        ColumnasExcel col1; 
        ColumnasExcel col2; 
        ColumnasExcel col3; 
@@ -156,8 +156,8 @@ private void printToConsole(List cellDataList)
        col2=(ColumnasExcel) colmm.get(1);//descripcion
        col3=(ColumnasExcel) colmm.get(2);//costo
        col4=(ColumnasExcel) colmm.get(3);//precio de venta
-       col5=(ColumnasExcel) colmm.get(4);//marca
-       col6=(ColumnasExcel) colmm.get(5);//proveedor
+       //col5=(ColumnasExcel) colmm.get(4);//marca
+       //col6=(ColumnasExcel) colmm.get(5);//proveedor
       Articulos arti; 
       Facturar fact=new Articulos();
       Editables edi=new Articulos();
@@ -174,34 +174,11 @@ private void printToConsole(List cellDataList)
             HSSFCell hssfCell = (HSSFCell) cellTempList.get(j);
             String stringCellValue = hssfCell.toString();
             barra=" "+stringCellValue;
+            String pr=String.valueOf(barra);
             
-            if(col5.getId()!=null){
-                j=col5.getId();
-                hssfCell = (HSSFCell) cellTempList.get(j);
-                stringCellValue = hssfCell.toString();
-                marca=stringCellValue.replaceAll("'","");
-                //barra+=" "+stringCellValue;
-            }else{
-                marca="";
-            }
-            
-            if(col6.getId()!=null){
-                
-                j=col6.getId();
-                System.out.println("columna "+j+" "+proveedor+" fila "+i+" barra "+barra);
-                try{
-                hssfCell = (HSSFCell) cellTempList.get(j);
-                stringCellValue = hssfCell.toString();
-                }catch(java.lang.IndexOutOfBoundsException eex){
-                    stringCellValue="";
-                    System.err.println(eex);
-                }
-                proveedor=stringCellValue.replaceAll("'","");
-                //barra+=" "+stringCellValue;
-            }else{
-                proveedor="";
-            }
             barra=barra.replaceAll("'","");
+            barra=barra.trim();
+            if(barra.equals("0"))barra="";
             //arti=(Articulos) fact.cargarPorCodigoDeBarra(barra);
             arti=(Articulos) listadoArt.get(barra);
             if(arti==null){
@@ -220,6 +197,7 @@ private void printToConsole(List cellDataList)
                 descripcion=descripcion.replaceAll("'","");
             }
                 //if(j==col2.getId())descripcion=stringCellValue;
+                
             if(col4.getId() !=null){
                 j=col4.getId();
             hssfCell = (HSSFCell) cellTempList.get(j);
@@ -240,7 +218,11 @@ private void printToConsole(List cellDataList)
                  if(arti.getCodigoDeBarra()!=null){
                             System.err.println("EXISTE EL CODIGO "+arti.getCodigoDeBarra());
                             //modeloL.addElement("EXISTE EL CODIGO "+arti.getCodigoDeBarra()+".....");
-                            arti.setPrecioDeCosto(costo);
+                            if(costo != null){
+                                arti.setPrecioDeCosto(costo);
+                            }else{
+                                //arti.setp
+                            }
                             arti.setPrecioUnitarioNeto(precio);
                             arti.setModificaPrecio(true);
                             arti.setModificaServicio(false);
@@ -254,6 +236,7 @@ private void printToConsole(List cellDataList)
                             
                         }else{
                             //arti=new Articulos();
+                            
                             arti.setCodigoDeBarra(barra);
                             if(descripcion.length() > 100){
                                 descripcion=descripcion.substring(0,100);
@@ -264,11 +247,14 @@ private void printToConsole(List cellDataList)
                                 precio=0.00;
                             }
                             arti.setDescripcionArticulo(descripcion);
+                            if(costo != null){
                             arti.setPrecioDeCosto(costo);
-                            arti.setPrecioDeCosto(costo);
+                            }else{
+                                arti.setPrecioDeCosto(0.00);
+                            }
                             arti.setPrecioUnitarioNeto(precio);
                             arti.setPrecioServicio(precio);
-                            arti.setModificaPrecio(true);
+                            arti.setModificaPrecio(false);
                             arti.setModificaServicio(false);
                             arti.setRecargo(1.00);
                             //arti.setDolar(1.00);
@@ -395,8 +381,10 @@ private void printToConsole(List cellDataList)
                         //if(precio.equals("")){
                         //}else{
                         //barra=barra.replaceAll(".0","");
-                            sentencia+="('"+barra+"','"+descripcion+"',0,round("+precio+",2),round("+precio2+",2),round("+precio4+",2),round("+precio3+",2),round("+precio2+",2)),";
+                        if(precio != null){
+                            sentencia+="('"+barra+"','"+descripcion+"',0,"+precio+"),";
                             precio=null;
+                        }
                         //}
                     
                     }

@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package Articulos;
+package Articulos.Pantallas;
 
 import Proveedores.Proveedores;
 import Conversores.Numeros;
@@ -13,8 +13,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import javax.swing.JTextField;
 import Articulos.Articulos;
+import Articulos.Articulos;
+import Articulos.Rubrable;
 import Articulos.Rubrable;
 import Articulos.Rubros;
+import Articulos.Rubros;
+import Articulos.SubRubros;
 import Articulos.SubRubros;
 import Extension.CodigosDeBarra;
 import Extension.CodigosDeBarraImpl;

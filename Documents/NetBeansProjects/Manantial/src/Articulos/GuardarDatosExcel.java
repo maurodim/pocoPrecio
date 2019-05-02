@@ -38,8 +38,7 @@ public class GuardarDatosExcel implements Runnable{
     public void Inicio() {
         hilo=new Thread(this);
         hilo.start();
-        hilo2=new Thread(this);
-        hilo2.start();
+        
     }
     
     

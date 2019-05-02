@@ -5,7 +5,7 @@
 package interfaceGraficasManantial;
 
 import Proveedores.ProveedoresAbm;
-import Articulos.ArticulosMod;
+import Articulos.Pantallas.ArticulosMod;
 import Compras.FacturaProveedor;
 import Proveedores.Proveedores;
 import Compras.Remitos;

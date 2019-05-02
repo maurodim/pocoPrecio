@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package Articulos;
+package Articulos.Pantallas;
 
 import Conversores.Numeros;
 import Excel.InformeArticulos;
@@ -17,6 +17,9 @@ import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import Articulos.Articulos;
+import Articulos.Articulos;
+import Articulos.Rubrable;
+import Articulos.Rubros;
 import Articulos.Rubros;
 import Excel.PlanillaStock;
 import interfaceGraficasManantial.Inicio;

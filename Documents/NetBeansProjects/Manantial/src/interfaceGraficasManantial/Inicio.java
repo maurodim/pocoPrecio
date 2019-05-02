@@ -5,9 +5,10 @@
 package interfaceGraficasManantial;
 
 import ClientesPantallas.AbmClientes;
-import Articulos.RubrosAbm;
+import Articulos.Pantallas.RubrosAbm;
 import Actualizaciones.Actualiza;
 import Actualizaciones.Actualiza1;
+import Articulos.Pantallas.AbmIva;
 import Proveedores.Proveedores;
 import Depositos.Depositos;
 import Sucursales.Cajas;
@@ -34,7 +35,8 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import Articulos.ArticulosAbm;
+import Articulos.Pantallas.ArticulosAbm;
+import Etiquetador.Pantallas.Etiquetador;
 import Look.Fondo;
 import Proveedores.AbmProveedores;
 import facturacion.pantallas.NotaDeCredito;
@@ -177,6 +179,8 @@ public  void cargarImagen(javax.swing.JDesktopPane jDeskp,InputStream fileImagen
         jMenuItem12 = new javax.swing.JMenuItem();
         jMenuItem8 = new javax.swing.JMenuItem();
         jMenuItem18 = new javax.swing.JMenuItem();
+        jMenuItem9 = new javax.swing.JMenuItem();
+        jMenuItem10 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
@@ -284,6 +288,24 @@ public  void cargarImagen(javax.swing.JDesktopPane jDeskp,InputStream fileImagen
             }
         });
         jMenu2.add(jMenuItem18);
+
+        jMenuItem9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/nuevos/excel.png"))); // NOI18N
+        jMenuItem9.setText("Importar Artículos Por Excel");
+        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem9ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem9);
+
+        jMenuItem10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/nuevos/etiquetas.png"))); // NOI18N
+        jMenuItem10.setText("Generar Etiquetas");
+        jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem10ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem10);
 
         jMenuBar1.add(jMenu2);
 
@@ -614,6 +636,21 @@ public  void cargarImagen(javax.swing.JDesktopPane jDeskp,InputStream fileImagen
         
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
+    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+        AbmIva importacion=new AbmIva();
+        Inicio.jDesktopPane1.add(importacion);
+        importacion.setVisible(true);
+        importacion.toFront();
+        
+    }//GEN-LAST:event_jMenuItem9ActionPerformed
+
+    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
+        Etiquetador etiq=new Etiquetador();
+        Inicio.jDesktopPane1.add(etiq);
+        etiq.setVisible(true);
+        etiq.toFront();
+    }//GEN-LAST:event_jMenuItem10ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -680,6 +717,7 @@ public  void cargarImagen(javax.swing.JDesktopPane jDeskp,InputStream fileImagen
     private javax.swing.JMenu jMenu7;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem18;
@@ -692,5 +730,6 @@ public  void cargarImagen(javax.swing.JDesktopPane jDeskp,InputStream fileImagen
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
+    private javax.swing.JMenuItem jMenuItem9;
     // End of variables declaration//GEN-END:variables
 }

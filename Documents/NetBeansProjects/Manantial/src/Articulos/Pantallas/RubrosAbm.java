@@ -2,8 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package Articulos;
+package Articulos.Pantallas;
 
+import Articulos.Rubrable;
+import Articulos.Rubros;
 import Articulos.Rubros;
 import Conversores.Numeros;
 import interfaces.Personalizable;

@@ -1697,32 +1697,45 @@ public class Articulos implements Facturar, Editables, Comparables, ModificableA
 
     @Override
     public void NuevoMasivo(ArrayList listado) {
-       Iterator it=listado.listIterator();
-        Articulos articulo;
-        Integer cantt=0;
-        int total=0;
-        String nuevo="insert into articulos (NOMBRE,COSTO,PRECIO,MINIMO,BARRAS,modificaPrecio,modificaServicio,idcombo,actualizacion) values ";
-        while(it.hasNext()){
-            articulo=(Articulos) it.next();
-            //AltaObjeto(artic);
-            nuevo+="('"+articulo.getDescripcionArticulo()+"',"+articulo.getPrecioDeCosto()+",round("+articulo.getPrecioUnitarioNeto()+",2),"+articulo.getStockMinimo()+",'"+articulo.getCodigoDeBarra()+"',"+articulo.getModificaPrecio()+","+articulo.getModificaServicio()+","+articulo.getIdCombo()+",3),";
-            if(cantt==200){
-                total=nuevo.length();
-                total=total -1;
-                nuevo=nuevo.substring(0,total);
-                tra.guardarRegistro(nuevo);
-                cantt=0;
-                nuevo="insert into articulos (NOMBRE,COSTO,PRECIO,MINIMO,BARRAS,modificaPrecio,modificaServicio,idcombo,actualizacion) values ";
-                total=0;
+        Iterator it=listado.listIterator();
+            Articulos articulo;
+            Integer cantt=0;
+            int total=0;
+        try {
+            
+            tra=new Conecciones();
+            String nuevo="insert into articulos (NOMBRE,COSTO,PRECIO,BARRAS) values ";
+            while(it.hasNext()){
+                articulo=(Articulos) it.next();
+                //AltaObjeto(artic);
+                nuevo+="('"+articulo.getDescripcionArticulo()+"',"+articulo.getPrecioDeCosto()+","+articulo.getPrecioUnitarioNeto()+",'"+articulo.getCodigoDeBarra()+"'),";
+                if(cantt==200){
+                    total=nuevo.length();
+                    total=total -1;
+                    nuevo=nuevo.substring(0,total);
+                    tra.guardarRegistro(nuevo);
+                    cantt=0;
+                    nuevo="insert into articulos (NOMBRE,COSTO,PRECIO,BARRAS) values ";
+                    total=0;
+                }
+                cantt++;
             }
-            cantt++;
-        }
-        total=nuevo.length();
-        System.out.println("TOTAL SENTENCIA "+total);
-        total=total -1;
-        nuevo=nuevo.substring(0,total);
-        if(nuevo.length() > 153){
-            tra.guardarRegistro(nuevo);
+            total=nuevo.length();
+            System.out.println("TOTAL SENTENCIA "+total);
+            System.out.println(nuevo);
+            total=total -1;
+            nuevo=nuevo.substring(0,total);
+            if(nuevo.length() > 153){
+                tra.guardarRegistro(nuevo);
+            }
+            sql="update articulos set barras=cast(id as char(10)) where barras=''";
+            tra.guardarRegistro(sql);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Articulos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(Articulos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Articulos.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
