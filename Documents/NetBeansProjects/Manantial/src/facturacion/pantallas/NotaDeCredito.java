@@ -32,24 +32,22 @@ import Articulos.TablaGenericaProductos;
 import ConfiguracionR.Propiedades;
 import ListasDePrecios.Articulable;
 import ListasDePrecios.ArticulosAsignados;
-import Pedidos.Pedable;
-import Pedidos.Pedidos;
-import objetos.DetalleFacturas;
 import facturacion.clientes.Facturable;
 import facturacion.clientes.MovimientosClientes;
-import interfaces.FacturableE;
-import interfaces.Transaccionable;
-import java.sql.SQLException;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
-import objetos.FacturaElectronica;
-import objetos.TiposIva;
 import objetosR.Comprobantes;
 import objetosR.Conecciones;
 import tablas.MiModeloTablaFacturacion;
 import Articulos.ModificableArticulos;
+import FacturaElectronica.Interfaces.FacturableE;
+import FacturaElectronica.Objetos.DetalleFacturas;
+import FacturaElectronica.Objetos.FacturaElectronica;
+import FacturaElectronica.Objetos.TiposIva;
+import java.sql.Connection;
+import java.sql.SQLException;
 
 
 /**
@@ -725,26 +723,15 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_formInternalFrameClosing
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        //verificar();
-        //Impresora imp=new Impresora();        
         String cadena=cliT.getCodigoCliente()+" - "+cliT.getRazonSocial()+"\n"+cliT.getDireccion();
-        //comp.setCliente(cliT);
-        //VisorDeHojaDeRuta
+        int ok=0;
         
-        //comp.setVendedor(VisorDeHojaDeRuta.tG.getOperador());
-        if(this.jCheckBox1.isSelected()){
-        //    comp.setReparto(1);
-        //    comp.setEntrega(String.valueOf(this.jTextField3.getText()));
-        }
-        
-        //comp.setArticulos(detalleDelPedido);
         DecimalFormat fr=new DecimalFormat("00");
         Calendar c1=Calendar.getInstance();
-	Calendar c2=new GregorianCalendar();
-	String dia=Integer.toString(c2.get(Calendar.DAY_OF_MONTH));
-	String mes=Integer.toString(c2.get(Calendar.MONTH));
-	String ano=Integer.toString(c2.get(Calendar.YEAR));
-	
+        Calendar c2=new GregorianCalendar();
+        String dia=Integer.toString(c2.get(Calendar.DAY_OF_MONTH));
+        String mes=Integer.toString(c2.get(Calendar.MONTH));
+        String ano=Integer.toString(c2.get(Calendar.YEAR));
         int da=Integer.parseInt(dia);
         int me=Integer.parseInt(mes);
         me++;
@@ -752,14 +739,21 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
         mes=fr.format(me);
         String fecha=dia+"/"+mes+"/"+ano;
         String fecha2=ano+"-"+mes+"-"+dia;
-        //comp.setFechaComprobante(fecha2);
-        //comp.setFechaComprobante(fecha);
-        int comprobanteTipo=12;
-        //cliT.setCondicionIva("1");
-        if(cliT.getTipoIva()== 1)comprobanteTipo=10;
-        if(cliT.getTipoIva()== 2)comprobanteTipo=12;
-        if(cliT.getTipoIva()== 3)comprobanteTipo=12;
+        int comprobanteTipo=8;
+        if(cliT.getCondicionIva().equals("2"))comprobanteTipo=10;
+        if(cliT.getCondicionIva().equals("1")){
+            if(montoTotal > 1000){
+             if(cliT.getRazonSocial().equals("CONSUMIDOR FINAL") || cliT.getNumeroDeCuit().equals("0"))   {
+                 cliT.setRazonSocial(JOptionPane.showInputDialog("Ingrese el nombre del cliente",cliT.getRazonSocial()));
+                 cliT.setNumeroDeCuit(JOptionPane.showInputDialog("Ingrese el numero de documento del cliente",cliT.getNumeroDeCuit()));
+             }
+             comprobanteTipo=8;
+            }else{
+            comprobanteTipo=8;
+            }
+        }
         
+        if(cliT.getCondicionIva().equals("3"))comprobanteTipo=8;
         
         Comprobantes comprobante=new Comprobantes();
         comprobante.setFe(true);
@@ -771,20 +765,7 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
         comprobante.setUsuarioGenerador(Inicio.usuario.getNumero());
         comprobante.setIdSucursal(Inicio.sucursal.getNumero());
         comprobante.setIdDeposito(Inicio.deposito.getNumero());
-        if(factura.getIdPedido() != null){
-            comprobante.setIdPedido(factura.getIdPedido());
-            
-        }else{
-            comprobante.setIdPedido(0);
-        }
-        if(factura.getIdRemito() !=null){
-            comprobante.setIdRemito(factura.getIdRemito());
-        }else{
-            comprobante.setIdRemito(0);
-        }
-        
         Integer numeroCaja=Inicio.caja.getNumero();
-        //System.out.println("EL NUMERO DE CAJA ESSSSSSSS "+numeroCaja);
         comprobante.setIdCaja(numeroCaja);
         if(montoTotal == 0.00){
             String sqM="usuario :"+Inicio.usuario.getNombre()+" sucursal "+Inicio.sucursal.getNumero()+" idcaja "+Inicio.caja.getNumero();
@@ -796,19 +777,20 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
                 pw=new PrintWriter(fichero);
                 pw.println(sqM);
             } catch (IOException ex1) {
-                Logger.getLogger(IngresoDePedidos.class.getName()).log(Level.SEVERE, null, ex1);
+                Logger.getLogger(NotaDeCredito.class.getName()).log(Level.SEVERE, null, ex1);
             }finally{
-                         try {
-           // Nuevamente aprovechamos el finally para 
-           // asegurarnos que se cierra el fichero.
-           if (null != fichero)
-              fichero.close();
-           } catch (Exception e2) {
-              e2.printStackTrace();
-           }
+                try {
+                    // Nuevamente aprovechamos el finally para
+                    // asegurarnos que se cierra el fichero.
+                    if (null != fichero)
+                        fichero.close();
+                } catch (Exception e2) {
+                    e2.printStackTrace();
+                }
             }
         }
-        montoTotal=Math.round(montoTotal * 100.0) / 100.0;
+        //montoTotal=montoTo;
+            montoTotal=Math.round(montoTotal * 100.0) / 100.0;
             subTotal=montoTotal / 1.21;
             //Double ivv=subTotal / 1.21;
             subTotal=Math.round(subTotal * 100.0) / 100.0;
@@ -824,8 +806,7 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
                 sub=montoTotal;
             }
             
-        
-       comprobante.setMontoTotal(montoTotal);
+            comprobante.setMontoTotal(montoTotal);
             comprobante.setSubTotal(subTotal);
             comprobante.setMontoIva(tot);
             comprobante.setMontoBruto(subTotal);
@@ -841,24 +822,23 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
             * ACA DEBO COMPROBAR EL LIMITE DEL CLIENTE Y SI LO SUPERA LA COMPRA RECHAZAR LA VENTA
             *
             */
-            Double limite=cliT.getCupoDeCredito();
-            //Double saldo=cliT.getSaldo();
-            //Double totalGral=montoTotal + saldo;
-            Double totalGral=montoTotal;
-            if(limite < totalGral)noFacturar=1;
+           
             
         }
         if(noFacturar==0){
-        comprobante.setFe(true);
-            Facturar fat=new Comprobantes();
-        //comprobante=(Comprobantes)fat.guardar(comprobante);
-        // aqui hago el envio a factura  electronica, si aprueba no imprime
-        
-        FacturaElectronica fe=new FacturaElectronica();
+            comprobante.setFiscal(1);
+                Facturar fat=new Comprobantes();
+                fat.guardar(comprobante);
+                // aqui hago el envio a factura  electronica, si aprueba no imprime
+                
+                FacturaElectronica fe=new FacturaElectronica();
                 FacturableE fact=new FacturaElectronica();
                 ArrayList listadoIva=new ArrayList();
                 Double montoIva=0.00;
-                if(montoTotal > subTotal){
+                if(montoTotal < subTotal){
+                    subTotal=subTotal * (-1);
+                    tot=tot * (-1);
+                    
                     float subT=Float.parseFloat(String.valueOf(subTotal));
                     float totT=Float.parseFloat(String.valueOf(tot));
                     TiposIva iva=new TiposIva(5,subT,totT,21);
@@ -880,58 +860,114 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
                     detalle.setDescripcion(artic.getDescripcionArticulo());
                     detalle.setCantidadS(String.valueOf(artic.getCantidad()));
                     
-                    precio=Math.round(artic.getPrecioUnitarioNeto() * 100.0) / 100.0;
+                    precio=Math.round((artic.getPrecioUnitarioNeto()) * 100.0) / 100.0;
                     detalle.setPrecioUnitarioS(String.valueOf(precio));
                     listadoDetalle.add(detalle);
                 }
                 //montoIva=tot;
                 System.out.println(Propiedades.getARCHIVOCRT());
-                int condicion=Integer.parseInt(Propiedades.getCONDICIONIVA());
+                int condicion=1;//Integer.parseInt(Propiedades.getCONDICIONIVA());
                 int ptoVta=Integer.parseInt(Propiedades.getPUNTODEVENTA());
                 int tipoVta=Integer.parseInt(Propiedades.getTIPODEVENTA());
                 Integer idPed=0;
+                if(subTotal < 0)subTotal=subTotal * (-1);
+                if(montoTotal < 0)montoTotal =montoTotal * (-1);
+                if(montoIva < 0)montoIva=montoIva * (-1);
+                System.out.println("totales: $"+subTotal+" _ $"+montoTotal+" _ $"+montoIva);
+                
                 //if(pedido.getId() != null)idPed=pedido.getId();
-                Transaccionable tra=null;
-        try {
-            tra = new Conecciones();
-        }   catch (InstantiationException ex) {
+                
+                //System.out.println("COMPROBANTE FISCAL N° "+fact.generar(null, condicion, Propiedades.getARCHIVOKEY(),Propiedades.getARCHIVOCRT(),cliT.getCodigoId(), cliT.getNumeroDeCuit(), comprobante.getTipoComprobante(), montoTotal, subTotal, montoIva, ptoVta, Propiedades.getCUIT(), tipoVta, listadoIva, listadoTrib, cliT.getRazonSocial(), cliT.getDireccion(), cliT.getCondicionIva(), listadoDetalle,idPed));
+                int tipoComp=comprobante.getTipoComprobante();
+                if(comprobante.getTipoComprobante()==1){
+                    tipoComp=6;
+                }
+                if(comprobante.getTipoComprobante()==2){
+                    tipoComp=1;
+                }
+                if(comprobante.getTipoComprobante()==9){
+                    tipoComp=2;
+                }
+                if(comprobante.getTipoComprobante()==10){
+                    tipoComp=3;
+                }
+                if(comprobante.getTipoComprobante()==12){
+                    tipoComp=8;
+                }
+                if(comprobante.getTipoComprobante()==8){
+                    tipoComp=8;
+                }
+                if(comprobante.getTipoComprobante()==3){
+                    tipoComp=6;
+                }
+                
+                Conecciones conx;
+            try {
+                conx = new Conecciones();
+                Connection conexion=conx.obtenerConexion();
+        fact.generar(conexion, condicion, Propiedades.getARCHIVOKEY(), Propiedades.getARCHIVOCRT(), cliT.getCodigoId(), cliT.getNumeroDeCuit(), tipoComp, montoTotal, subTotal, montoIva, ptoVta, Propiedades.getCUIT(), tipoVta, listadoIva, listadoTrib, cliT.getRazonSocial(), cliT.getDireccion(), cliT.getCondicionIva(), listadoDetalle,idPed,Propiedades.getNOMBRECOMERCIO(),Propiedades.getNOMBRECOMERCIO(),"resp inscripto",Propiedades.getDIRECCION(),Propiedades.getTELEFONO(),Propiedades.getINGBRUTOS(),Propiedades.getINICIOACT());
+            } catch (InstantiationException ex) {
                 Logger.getLogger(NotaDeCredito.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IllegalAccessException ex) {
                 Logger.getLogger(NotaDeCredito.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
                 Logger.getLogger(NotaDeCredito.class.getName()).log(Level.SEVERE, null, ex);
             }
-                Integer compNum=fact.generar(tra.obtenerConexion(), condicion, Propiedades.getARCHIVOKEY(),Propiedades.getARCHIVOCRT(),cliT.getCodigoId(), cliT.getNumeroDeCuit(), comprobante.getTipoComprobante(), montoTotal, subTotal, montoIva, ptoVta, Propiedades.getCUIT(), tipoVta, listadoIva, listadoTrib, cliT.getRazonSocial(), cliT.getDireccion(), cliT.getCondicionIva(), listadoDetalle,idPed);
-                System.out.println("COMPROBANTE FISCAL N° "+compNum);
-                Facturable ffact=new MovimientosClientes();
-                comprobante.setNumero(compNum);
-                comprobante.setMontoTotal(comprobante.getMontoTotal() * (-1));
-            comprobante.setSubTotal(comprobante.getSubTotal() * (-1));
-            comprobante.setMontoIva(comprobante.getMontoIva() * (-1));
-            comprobante.setMontoBruto(comprobante.getMontoBruto() * (-1));
-            
-            comprobante.setDescuento(comprobante.getDescuento() * (-1));
+        
                 
-                Comprobantes comprobante1=(Comprobantes) fat.guardar(comprobante);
                 
-                factura=(MovimientosClientes) ffact.cargarIdFactura(comprobante1.getIdFactura());
-                factura.setNumeroFactura(compNum);
-                String numF;
-                if(comprobanteTipo==10){
-                    numF="A";
-                }else{
-                    numF="B";
+                
+                /*
+                FacturaElectronica fe=new FacturaElectronica();
+                try {
+
+                    fe=(FacturaElectronica) fe.leer(comprobante);
+                    if(fe.getRespuesta().equals("OK")){
+                        //JOptionPane.showMessageDialog(this,"aprobada id: "+fe.getId());
+                        pdfsJavaGenerador pdf=new pdfsJavaGenerador();
+                        pdf.setDoc(fe);
+                        pdf.setCliente(cliT);
+                        pdf.run();
+                        
+
+                    }else{
+                        if(fe.getRespuesta().equals("PARAMETROS"))JOptionPane.showMessageDialog(this,"Error en los parametros del cliente, modifiquelos en cae pendientes");
+                        JOptionPane.showMessageDialog(this,"error en la coneccion, intentelo mas tarde");
+                    }
+                } catch (IOException ex) {
+                    Logger.getLogger(IngresoDePedidos.class.getName()).log(Level.SEVERE, null, ex);
+                    System.err.println(ex);
+                } catch (ParserConfigurationException ex) {
+                    Logger.getLogger(IngresoDePedidos.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SAXException ex) {
+                    Logger.getLogger(IngresoDePedidos.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                factura.setNumeroFiscal(numF+" - "+compNum);
-                int iid=ffact.nuevoMovimiento(factura);
-                factura.setId(iid);
-                ffact.identificarPedidoAOtros(factura.getId(), comprobante.getIdFactura(), compNum,comprobanteTipo);
-                this.dispose();
+                */
+                /*
+                * ACA DEBO LIMPIAR TODOS LOS CAMPOS Y VARIABLES DE LA PANTALLA
+                *
+                */
+                //comp.setTipoComprobante(comprobanteTipo);
+                //comp.setMontoTotal(montoTotal);
+                detalleDelPedido.clear();
+                agregarRenglonTabla();
+                this.jCheckBox2.setSelected(true);
+                //this.jCheckBox2.setEnabled(false);
+                //this.jTable2.removeAll();
+                listadoDeBusqueda.clear();
+                //cargarLista(listadoDeBusqueda);
+                //cliT=new Clientes("99");
+                this.jLabel6.setText(cliT.getRazonSocial());
+                this.jTextField2.setText("");
+                jTextField1.setText("");
+                jTextField1.requestFocus();
+        
         }else{
             JOptionPane.showMessageDialog(this,"El cliente supera el límite de crédito, debe abonar la venta");
             noFacturar=0;
+            ok=1;
         }
-         
+        
         
     }//GEN-LAST:event_jButton1ActionPerformed
 

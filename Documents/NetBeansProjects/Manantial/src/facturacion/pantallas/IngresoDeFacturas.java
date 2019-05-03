@@ -8,7 +8,6 @@ import ClientesPantallas.NuevoCliente;
 import Pedidos.IngresoDePedidos;
 import Conversores.Numeros;
 import facturacion.clientes.Clientes;
-import FacturaE.FEl;
 import interfaceGraficasManantial.Inicio;
 import interfacesPrograma.Facturar;
 import java.awt.event.KeyEvent;
@@ -29,7 +28,6 @@ import Articulos.Rubrable;
 import Articulos.Rubros;
 import Articulos.SubRubros;
 import Articulos.TablaGenericaProductos;
-import FacturaE.pdfsJavaGenerador;
 import ListasDePrecios.Articulable;
 import ListasDePrecios.ArticulosAsignados;
 import Sucursales.ListasDePrecios;
@@ -40,11 +38,18 @@ import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
-import javax.xml.parsers.ParserConfigurationException;
 import objetosR.Comprobantes;
-import org.xml.sax.SAXException;
 import tablas.MiModeloTablaFacturacion;
 import Articulos.ModificableArticulos;
+import ConfiguracionR.Propiedades;
+import FacturaElectronica.Interfaces.FacturableE;
+import FacturaElectronica.Objetos.DetalleFacturas;
+import FacturaElectronica.Objetos.FacturaElectronica;
+import FacturaElectronica.Objetos.TiposIva;
+import interfaces.Transaccionable;
+import java.sql.Connection;
+import java.sql.SQLException;
+import objetosR.Conecciones;
 
 /**
  *
@@ -611,7 +616,7 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
                 int ptoVta=Integer.parseInt(Propiedades.getPUNTODEVENTA());
                 int tipoVta=Integer.parseInt(Propiedades.getTIPODEVENTA());
                 Integer idPed=1;
-                Transaccionable trr=new Conecciones();
+                
                 
                 //if(pedido.getId() != null)idPed=pedido.getId();
                 //System.out.println("COMPROBANTE FISCAL N° "+fact.generar(trr.obtenerConexion(), condicion, Propiedades.getARCHIVOKEY(),Propiedades.getARCHIVOCRT(),cliT.getCodigoId(), cliT.getNumeroDeCuit(), comprobante.getTipoComprobante(), montoTotal, subTotal, montoIva, ptoVta, Propiedades.getCUIT(), tipoVta, listadoIva, listadoTrib, cliT.getRazonSocial(), cliT.getDireccion(), cliT.getCondicionIva(), listadoDetalle,idPed));
@@ -638,18 +643,27 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
                     tipoComp=6;
                 }
                 
-                
+            try {
+                Transaccionable trr=new Conecciones();
                 Conecciones conx=new Conecciones();
         Connection conexion=conx.obtenerConexion();
-        fact.generar(conexion, condicion, Propiedades.getARCHIVOKEY(), Propiedades.getARCHIVOCRT(), cliT.getCodigoId(), cliT.getNumeroDeCuit(), tipoComp, montoTotal, subTotal, montoIva, ptoVta, Propiedades.getCUIT(), tipoVta, listadoIva, listadoTrib, cliT.getRazonSocial(), cliT.getDireccion(), cliT.getCondicionIva(), listadoDetalle,idPed,Propiedades.getRAZONSOCIAL(),Propiedades.getNOMBRECOMERCIO(),"resp inscripto",Propiedades.getDIRECCION(),Propiedades.getTELEFONO(),Propiedades.getINGBRUTOS(),Propiedades.getINICIOACT());
+        fact.generar(conexion, condicion, Propiedades.getARCHIVOKEY(), Propiedades.getARCHIVOCRT(), cliT.getCodigoId(), cliT.getNumeroDeCuit(), tipoComp, montoTotal, subTotal, montoIva, ptoVta, Propiedades.getCUIT(), tipoVta, listadoIva, listadoTrib, cliT.getRazonSocial(), cliT.getDireccion(), cliT.getCondicionIva(), listadoDetalle,idPed,Propiedades.getNOMBRECOMERCIO(),Propiedades.getNOMBRECOMERCIO(),"resp inscripto",Propiedades.getDIRECCION(),Propiedades.getTELEFONO(),Propiedades.getINGBRUTOS(),Propiedades.getINICIOACT());
+                
+            } catch (InstantiationException ex) {
+                Logger.getLogger(IngresoDeFacturas.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IllegalAccessException ex) {
+                Logger.getLogger(IngresoDeFacturas.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(IngresoDeFacturas.class.getName()).log(Level.SEVERE, null, ex);
+            }
                 
                 detalleDelPedido.clear();
                 agregarRenglonTabla();
                 this.jCheckBox2.setSelected(true);
                 //this.jCheckBox2.setEnabled(false);
-                this.jTable2.removeAll();
+                //this.jTable2.removeAll();
                 listadoDeBusqueda.clear();
-                cargarLista(listadoDeBusqueda);
+                //cargarLista(listadoDeBusqueda);
                 //cliT=new Clientes("99");
                 this.jLabel6.setText(cliT.getRazonSocial());
                 this.jTextField2.setText("");

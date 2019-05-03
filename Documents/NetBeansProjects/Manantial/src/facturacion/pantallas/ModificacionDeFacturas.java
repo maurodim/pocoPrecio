@@ -36,28 +36,21 @@ import Pedidos.Pedable;
 import Pedidos.Pedidos;
 import facturacion.clientes.Facturable;
 import facturacion.clientes.MovimientosClientes;
-import interfaces.FacturableE;
+
 import interfaces.Transaccionable;
 import java.sql.SQLException;
 import java.util.List;
-import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.ScrollPaneConstants;
-import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
 import objetosR.Comprobantes;
-import objetos.DetalleFacturas;
-import objetos.FacturaElectronica;
-import objetos.TiposIva;
 import objetosR.Conecciones;
 import tablas.MiModeloTablaFacturacion;
 import Articulos.ModificableArticulos;
+import FacturaElectronica.Interfaces.FacturableE;
+import FacturaElectronica.Objetos.DetalleFacturas;
+import FacturaElectronica.Objetos.FacturaElectronica;
+import FacturaElectronica.Objetos.TiposIva;
 
 
 /**
@@ -932,8 +925,8 @@ public class ModificacionDeFacturas extends javax.swing.JInternalFrame {
             } catch (SQLException ex) {
                 Logger.getLogger(ModificacionDeFacturas.class.getName()).log(Level.SEVERE, null, ex);
             }
-                Integer compNum=fact.generar(tra.obtenerConexion(), condicion, Propiedades.getARCHIVOKEY(),Propiedades.getARCHIVOCRT(),cliT.getCodigoId(), cliT.getNumeroDeCuit(), comprobante.getTipoComprobante(), montoTotal, subTotal, montoIva, ptoVta, Propiedades.getCUIT(), tipoVta, listadoIva, listadoTrib, cliT.getRazonSocial(), cliT.getDireccion(), cliT.getCondicionIva(), listadoDetalle,idPed);
-                System.out.println("COMPROBANTE FISCAL N° "+compNum);
+                //Integer compNum=fact.generar(tra.obtenerConexion(), condicion, Propiedades.getARCHIVOKEY(),Propiedades.getARCHIVOCRT(),cliT.getCodigoId(), cliT.getNumeroDeCuit(), comprobante.getTipoComprobante(), montoTotal, subTotal, montoIva, ptoVta, Propiedades.getCUIT(), tipoVta, listadoIva, listadoTrib, cliT.getRazonSocial(), cliT.getDireccion(), cliT.getCondicionIva(), listadoDetalle,idPed);
+                //System.out.println("COMPROBANTE FISCAL N° "+compNum);
                 Facturable ffact=new MovimientosClientes();
                 
                 
@@ -942,15 +935,15 @@ public class ModificacionDeFacturas extends javax.swing.JInternalFrame {
                 Pedable pedB=new Pedidos();
                 pedB.transformarEnFactura(pedido, null);
                 factura=(MovimientosClientes) ffact.cargarIdFactura(comprobante1.getIdFactura());
-                factura.setNumeroFactura(compNum);
+                //factura.setNumeroFactura(compNum);
                 String numF;
                 if(comprobanteTipo==2){
                     numF="A";
                 }else{
                     numF="B";
                 }
-                factura.setNumeroFiscal(numF+" - "+compNum);
-                ffact.identificarPedidoAFactura(pedido.getId(), comprobante.getIdFactura(), compNum,comprobanteTipo);
+                //factura.setNumeroFiscal(numF+" - "+compNum);
+                //ffact.identificarPedidoAFactura(pedido.getId(), comprobante.getIdFactura(), compNum,comprobanteTipo);
                 this.dispose();
             }else{
                 JOptionPane.showMessageDialog(this,"El cliente supera el límite de crédito, debe abonar la venta");

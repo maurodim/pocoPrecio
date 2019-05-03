@@ -53,6 +53,16 @@ public class Comprobantes implements Facturar{
     private Double descuento;
     private Integer idRemito;
     private Integer idPedido;
+    private int fiscal;
+
+    public int getFiscal() {
+        return fiscal;
+    }
+
+    public void setFiscal(int fiscal) {
+        this.fiscal = fiscal;
+    }
+    
 
     public Integer getIdPedido() {
         return idPedido;
