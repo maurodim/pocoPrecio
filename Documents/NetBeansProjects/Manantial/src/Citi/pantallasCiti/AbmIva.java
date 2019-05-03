@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pantallasCiti;
+package Citi.pantallasCiti;
 
+import Citi.Excel.LeerExcelCompras;
 import Excel.LeerExcel;
-import Excel.LeerExcelCompras;
 import Excel.Objetos.ColumnasExcel;
 import interfaces.Modelable;
 import java.io.File;

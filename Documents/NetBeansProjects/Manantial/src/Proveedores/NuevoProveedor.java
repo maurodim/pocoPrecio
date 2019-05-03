@@ -4,10 +4,8 @@
  */
 package Proveedores;
 
-import Proveedores.Proveedores;
 import Cotizaciones.Cotizacion;
 import Cotizaciones.IngresoDeCotizacion;
-import FacturaE.FacturableE;
 import Proveedores.objetos.ImprimirOrdenDeTrabajo;
 import Proveedores.objetos.MovimientoProveedores;
 import Proveedores.objetos.OrdenDePago;
@@ -15,6 +13,7 @@ import Recibos.Recidable;
 import facturacion.clientes.ListasDePrecios;
 import interfaceGraficasManantial.Inicio;
 import ClientesPantallas.NuevoCliente;
+import Proveedores.Interfaces.FacturableE;
 import interfaces.Personalizable;
 import interfacesPrograma.Busquedas;
 import java.beans.PropertyVetoException;

@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Excel;
+package Citi.Excel;
 
+import Citi.objetosDao.ComprasfiscalJpaController;
 import ConversoresCiti.Numeros;
 import Excel.Objetos.ColumnasExcel;
 import interfaces.Transaccionable;
@@ -17,7 +18,7 @@ import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import javax.swing.JOptionPane;
 import objetosCiti.Comprasfiscal;
-import objetosDao.ComprasfiscalJpaController;
+
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;

@@ -6,7 +6,7 @@
 package Impresiones.otro;
 
 import Articulos.Articulos;
-import conversiones.Numeros;
+import Conversores.Numeros;
 import interfaceGraficasManantial.Inicio;
 import java.awt.Font;
 import java.awt.Graphics;

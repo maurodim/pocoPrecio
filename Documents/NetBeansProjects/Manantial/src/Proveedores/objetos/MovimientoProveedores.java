@@ -2,7 +2,7 @@
 package Proveedores.objetos;
 
 import Conversores.Numeros;
-import FacturaE.FacturableE;
+import Proveedores.Interfaces.FacturableE;
 import interfaceGraficasManantial.Inicio;
 import interfaces.Transaccionable;
 import java.sql.ResultSet;

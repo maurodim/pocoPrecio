@@ -1,12 +1,13 @@
 package FacturaElectronica.Objetos;
 
-import conversiones.Numeros;
+
+import Conversores.Numeros;
+import FacturaElectronica.Interfaces.FacturableE;
+import FacturaElectronica.Interfaces.Instalable;
 import feafip.bi.ClassFactory;
 import feafip.bi.IwsPadron;
 import feafip.bi.Iwsfev1;
 import feafip.bi.TipoComprobante;
-import interfaces.FacturableE;
-import interfaces.Instalable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;

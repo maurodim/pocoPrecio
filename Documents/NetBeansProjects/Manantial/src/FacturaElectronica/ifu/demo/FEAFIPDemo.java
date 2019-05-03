@@ -3,16 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ifu.demo;
+package FacturaElectronica.ifu.demo;
 
-import interfaces.FacturableE;
-import java.sql.Connection;
 import java.text.ParseException;
-import java.util.ArrayList;
-import objetos.DetalleFacturas;
-import objetos.FacturaElectronica;
-import objetos.TiposIva;
-import objetosConexiones.Conecciones;
 
 /**
  *

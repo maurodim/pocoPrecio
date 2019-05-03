@@ -3,12 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package objetosDao;
+package Citi.objetosDao;
 
 import interfaces.Transaccionable;
 import java.io.Serializable;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import objetosCiti.Fiscal;
+import objetosR.Conecciones;
 
 
 /**
@@ -18,8 +22,16 @@ import objetosCiti.Fiscal;
 public class FiscalJpaController implements Serializable {
     private Transaccionable tra;
     public FiscalJpaController() {
-        //this.emf = Persistence.createEntityManagerFactory("GeneradorCitiPU");
-        tra=new Conecciones();
+        try {
+            //this.emf = Persistence.createEntityManagerFactory("GeneradorCitiPU");
+            tra=new Conecciones();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(FiscalJpaController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(FiscalJpaController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(FiscalJpaController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
 

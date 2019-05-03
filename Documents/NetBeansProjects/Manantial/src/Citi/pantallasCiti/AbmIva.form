@@ -76,7 +76,6 @@
         <Component class="javax.swing.JFileChooser" name="jFileChooser1">
           <Properties>
             <Property name="dialogTitle" type="java.lang.String" value="Seleccion de Origen de Datos"/>
-            <Property name="opaque" type="boolean" value="true"/>
           </Properties>
         </Component>
       </SubComponents>

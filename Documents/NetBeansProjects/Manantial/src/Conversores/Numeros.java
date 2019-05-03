@@ -178,4 +178,21 @@ public class Numeros {
         Double resultado=Math.round(nume * 100.0) / 100.0;
         return resultado;
     }
+    public static String ConvertirFechaFiscal(){
+        DecimalFormat fr=new DecimalFormat("00");
+        Calendar c1=Calendar.getInstance();
+	Calendar c2=new GregorianCalendar();
+	String dia=Integer.toString(c2.get(Calendar.DAY_OF_MONTH));
+	String mes=Integer.toString(c2.get(Calendar.MONTH));
+	String ano=Integer.toString(c2.get(Calendar.YEAR));
+	
+        int da=Integer.parseInt(dia);
+        int me=Integer.parseInt(mes);
+        me++;
+        dia=fr.format(da);
+        mes=fr.format(me);
+        fecha=ano+mes+dia;
+        
+        return fecha;
+    }
 }

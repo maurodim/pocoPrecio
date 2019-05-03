@@ -5,15 +5,7 @@
  */
 package FacturaElectronica.Objetos;
 
-
-import conversiones.Numeros;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.table.DefaultTableModel;
+import Conversores.Numeros;
 
 
 /**
