@@ -57,6 +57,7 @@ public class TablaGenericaProductos {
         // Configurando parametros de cada columna de interes
         TableColumnModel modeloColumnas = tabla.getColumnModel();
         for(String config : parametros){
+            
             String nombreColumna = config.split(":")[0];
             int anchoColumna = Integer.valueOf(config.split(":")[1]);
             int maxAncho = Integer.valueOf(config.split(":")[2]);

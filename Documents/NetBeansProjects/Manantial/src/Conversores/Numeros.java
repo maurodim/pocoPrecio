@@ -174,4 +174,8 @@ public class Numeros {
         doble=formato.format(num);
         return doble;
     }
+    public static Double Redondear(Double nume){
+        Double resultado=Math.round(nume * 100.0) / 100.0;
+        return resultado;
+    }
 }

@@ -191,7 +191,7 @@ public class MovimientosClientes implements Facturable, Movible, Editables {
         
         try {
             Transaccionable tra = new Conecciones();
-        String sql = "insert into facturas (idcliente,total,tipo,idusuario,idpedido,idremito,numerofactura,estado,saldo,subtotal,descuento,porcentajeD) values (" + factura.getIdCliente() + ",round(" + factura.getTotal() + ",4)," + factura.getTipo() + "," + factura.getIdUsuario() + "," + factura.getIdPedido() + "," + factura.getIdRemito() + "," + factura.getNumeroFactura() + "," + factura.getEstado() + ",round(" + factura.getTotal() + ",4)," + factura.getSubTotal() + "," + factura.getDescuento() + "," + factura.getPorcentajeDescuento() + ")";
+        String sql = "insert into facturas (idcliente,total,tipo,idusuario,idpedido,idremito,numerofactura,estado,saldo,subtotal,descuento,porcentajeD) values (" + factura.getIdCliente() + "," + factura.getTotal() + "," + factura.getTipo() + "," + factura.getIdUsuario() + ",1,1," + factura.getNumeroFactura() + "," + factura.getEstado() + "," + factura.getTotal() + "," + factura.getSubTotal() + "," + factura.getDescuento() + "," + factura.getPorcentajeDescuento() + ")";
         tra.guardarRegistro(sql);
         
         sql = "select * from facturas order by id desc fetch first 1 rows only";
@@ -217,7 +217,7 @@ public class MovimientosClientes implements Facturable, Movible, Editables {
     @Override
     public Object cargarEncabezadoFactura(Integer idPed, Integer tipo) {
         MovimientosClientes factura = new MovimientosClientes();
-        String sql = "select *,(select tipocomprobantes.descripcion from tipocomprobantes where tipocomprobantes.id=facturas.tipo)as descripcionTipo from facturas where numerofactura=" + idPed + " and tipo=" + tipo;
+        String sql = "select id,estado,fecha,idcliente,idpedido,idremito,idusuario,numerofactura,tipo,total,subtotal,descuento,porcentajeD,(select tipocomprobantes.descripcion from tipocomprobantes where tipocomprobantes.id=facturas.tipo)as descripcionTipo from facturas where numerofactura=" + idPed + " and tipo=" + tipo;
         
         try {
             Transaccionable tra = new Conecciones();

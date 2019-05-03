@@ -201,6 +201,7 @@ public class Propiedades {
             Formulario forma = new Formulario(null, true);
             forma.setVisible(true);
             Formularios formu = new Formularios();
+            forma.setLocationRelativeTo(null);
             forma.toFront();
             formu = forma.formulario;
             ArrayList lstLicencias=new ArrayList();
@@ -231,7 +232,7 @@ public class Propiedades {
                 base.InicializarLicencias(con,licencia.getId(),licencia.getDescripcion(),licencia.getCantidadComprobantes());
             
             }
-            JOptionPane.showMessageDialog(null, "INSTALACIÓN Y CONFIGURACION FINALIZADAS");
+            JOptionPane.showMessageDialog(null, "INSTALACIÓN Y CONFIGURACION FINALIZADAS, POR FAVOR RE INGRESE AL SISTEMA");
             //actualizador.run();
             //Base base=new Base();
             //base.CrearBase("base\\manantial.db", "mauro", "mauro");

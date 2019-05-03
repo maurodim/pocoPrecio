@@ -326,7 +326,9 @@ public class Clientes implements Busquedas,Facturar,Adeudable{
                     this.saldo=clientesTango.getSaldo();
                     this.direccionDeEntrega=clientesTango.getDireccionDeEntrega();
                     this.tipoIva=clientesTango.getTipoIva();
-                    if(Propiedades.getCONDICIONIVA().equals("1"))
+                    if(Propiedades.getCONDICIONIVA().equals("4")){
+                        this.tipoComprobante=1;
+                    }
                     this.tipoComprobante=1;
                     //cli.setNumeroPedido(rs.getString(3));
                     //cli.setObservaciones(rs.getString(5));
@@ -919,7 +921,7 @@ public class Clientes implements Busquedas,Facturar,Adeudable{
                     cli.setCelular(rs.getString("celular"));
                     cli.setFax(rs.getString("fax"));
                     cli.setTipoComprobante(rs.getInt("tipocomprobante"));
-                    cli.setIdTransporte(rs.getInt("idtransporte"));
+                    //cli.setIdTransporte(rs.getInt("idtransporte"));
                     // if(Inicio.usuario.getNivelDeAutorizacion()==1){
                     System.out.println("ACTUALIZACION :"+Inicio.actualizacionesClientes);
                     cli.setSaldo(rs.getDouble("saldo1"));

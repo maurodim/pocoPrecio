@@ -829,7 +829,7 @@ public class Articulos implements Facturar, Editables, Comparables, ModificableA
 
             Articulos articulo = null;
             criterio = criterio.toUpperCase();
-            String sql = "select id,nombre,barras,idsubrubro,idrubro,precio,equivalencia,costo,minimo,stock,servicio,servicio1,modificaprecio,modificaservicio,stock,recargo,idcombo,(select articulosMov.cantidad from articulosMov where articulosMov.idArticulo=articulos.ID)as sst from articulos where nombre like '%" + criterio + "%'";
+            String sql = "select id,nombre,barras,idsubrubro,idrubro,precio,equivalencia,costo,minimo,stock,servicio,servicio1,modificaprecio,modificaservicio,stock,recargo,idcombo,(select sum(movimientosarticulos.cantidad) from movimientosarticulos where movimientosarticulos.idArticulo=articulos.ID)as sst from articulos where nombre like '%" + criterio + "%'";
             Transaccionable tra = null;
 
             tra = new Conecciones();
@@ -1161,7 +1161,7 @@ public class Articulos implements Facturar, Editables, Comparables, ModificableA
         }else{
          */
 
-        sql = "select articulos.ID,articulos.idrubro,articulos.idsubrubro,articulos.NOMBRE,articulos.BARRAS,articulos.recargo,articulos.PRECIO,articulos.equivalencia,articulos.COSTO,articulos.MINIMO,(select articulosMov.cantidad from articulosMov where articulosMov.idArticulo=articulos.ID)as sst,articulos.SERVICIO, articulos.modificaPrecio,articulos.modificaServicio,articulos.SERVICIO1,articulos.idcombo from articulos where INHABILITADO=0 and id=" + id;
+        sql = "select articulos.ID,articulos.idrubro,articulos.idsubrubro,articulos.NOMBRE,articulos.BARRAS,articulos.recargo,articulos.PRECIO,articulos.equivalencia,articulos.COSTO,articulos.MINIMO,(select sum(movimientosarticulos.cantidad) from movimientosarticulos where movimientosarticulos.idArticulo=articulos.ID)as sst,articulos.SERVICIO, articulos.modificaPrecio,articulos.modificaServicio,articulos.SERVICIO1,articulos.idcombo from articulos where id=" + id;
 
         //}
         try {
@@ -1308,7 +1308,7 @@ public class Articulos implements Facturar, Editables, Comparables, ModificableA
         Articulos articulo = null;
         criterio = criterio.toUpperCase();
 
-        sql = "select id,nombre,barras,recargo,precio,equivalencia,costo,minimo,idrubro,idsubrubro,modificaprecio,(select articulosMov.cantidad from articulosMov where articulosMov.idArticulo=articulos.ID)as sst from articulos where nombre like '%" + criterio + "%' or idrubro=" + rubro + " or idsubrubro=" + subRubro + " order by nombre";
+        sql = "select id,nombre,barras,recargo,precio,equivalencia,costo,minimo,idrubro,idsubrubro,modificaprecio,(select sum(movimientosarticulos.cantidad) from movimientosarticulos where movimientosarticulos.idArticulo=articulos.ID)as sst from articulos where nombre like '%" + criterio + "%' or idrubro=" + rubro + " or idsubrubro=" + subRubro + " order by nombre";
 
         try {
             tra = new Conecciones();
@@ -1453,15 +1453,17 @@ public class Articulos implements Facturar, Editables, Comparables, ModificableA
         DefaultTableModel modelo = new DefaultTableModel();
         Iterator it = listado.listIterator();
         Articulos articulo = new Articulos();
+        modelo.addColumn("Código");
         modelo.addColumn("Descripcion");
         modelo.addColumn("Precio");
         modelo.addColumn("Stock");
-        Object[] fila = new Object[3];
+        Object[] fila = new Object[4];
         while (it.hasNext()) {
             articulo = (Articulos) it.next();
-            fila[0] = articulo.getDescripcionArticulo();
-            fila[1] = " $" + Numeros.ConvertirNumero(articulo.getPrecioUnitarioNeto());
-            fila[2] = String.valueOf(articulo.getStockActual());
+            fila[0]=articulo.getCodigoDeBarra();
+            fila[1] = articulo.getDescripcionArticulo();
+            fila[2] = " $" + Numeros.ConvertirNumero(articulo.getPrecioUnitarioNeto());
+            fila[3] = String.valueOf(articulo.getStockActual());
             //modelo.addElement(articulo.getDescripcionArticulo()+" $"+Numeros.ConvertirNumero(articulo.getPrecioUnitarioNeto()));
             modelo.addRow(fila);
         }

@@ -29,6 +29,7 @@ import java.util.GregorianCalendar;
 import java.util.Iterator;
 import javax.imageio.ImageIO;
 import Articulos.Articulos;
+import ConfiguracionR.Propiedades;
 import Conversores.NumberToLetterConverter;
 import interfaces.Personalizable;
 import objetosR.Localidades;
@@ -47,12 +48,13 @@ public class ImprimirFactura {
     Font fuente3 = new Font("Courier", Font.PLAIN, 7);
     Font fuente4 = new Font("Courier", Font.BOLD,7);
     Font fuente5=new Font("Courier",Font.PLAIN,16);
-    Font fuente6 = new Font("Courier", Font.BOLD, 9);
+    Font fuente6 = new Font("Courier", Font.PLAIN, 9);
     Font fuente7=new Font("Courier", Font.BOLD,7);
     Font fuente8=new Font("Courier",Font.PLAIN,8);
     Font fuente9 = new Font("Courier", Font.BOLD, 5);
     Font fuente10 = new Font("Courier", Font.PLAIN, 6);
     Font fuente11=new Font("Courier",Font.BOLD,11);
+    Font fuente12=new Font("Courier",Font.BOLD,10);
 	PrintJob pj;	
 	Graphics pagina;
 	
@@ -104,16 +106,18 @@ public class ImprimirFactura {
         pagina = pj.getGraphics();
         
         try{
-        BufferedImage imagen= ImageIO.read(new File("logo.png"));
+        //BufferedImage imagen= ImageIO.read(new File("logo.png"));
         //pagina.drawImage(imagen,63,20,174,93,null);
-        pagina.drawImage(imagen,30,20,232,144,null);
+        //pagina.drawImage(imagen,30,20,232,144,null);
         pagina.setFont(fuente6);
         pagina.setColor(Color.black);
         Double monto=0.00; //caja.getMontoMovimiento()* -1;
         
-        pagina.setFont(fuente6);
+        
+        
+        
        // pagina.drawString("N° "+cotizacion.getDescripcionTipo()+"-0000000"+cotizacion.getNumeroFactura(), 420,80);
-        pagina.drawString("FECHA: "+fec, 420,80);
+        
         String len=String.valueOf(cotizacion.getNumeroFactura());
         int cantiL=len.length();
         String cero="0";
@@ -129,33 +133,42 @@ public class ImprimirFactura {
             }
             
         }
+        pagina.setFont(fuente1);
+        pagina.drawString("PRESUPUESTO "+numero, 240, 25);
+        
         /*
         StringBuffer numero=new StringBuffer();
         numero.ensureCapacity(reemplazo);
         numero=numero.append(len);
         */
-        pagina.drawString("N° 0001-"+numero, 420,100);
+        pagina.setFont(fuente12);
+        pagina.drawString(Propiedades.getNOMBRECOMERCIO(), 30, 35);
+        pagina.drawString(Propiedades.getDIRECCION(), 30, 50);
+        pagina.drawString(Propiedades.getTELEFONO(), 30, 65);
+        //pagina.drawString("N° 0001-"+numero, 420,50);
         //pagina.drawString("ORIGINAL", 420,110);
-        pagina.drawString("RAZON SOCIAL: "+cliente.getRazonSocial(),30,185);
-        pagina.drawString("C.U.I.T.: "+cliente.getNumeroDeCuit(), 350,185);
-        pagina.drawString("DIRECCION: "+cliente.getDireccion(),30,200);
+        pagina.setFont(fuente6);
+        pagina.drawString("FECHA: "+fec, 420,40);
+        pagina.drawString("RAZON SOCIAL: "+cliente.getRazonSocial(),30,80);
+        pagina.drawString("C.U.I.T.: "+cliente.getNumeroDeCuit(), 350,80);
+        pagina.drawString("DIRECCION: "+cliente.getDireccion(),30,95);
         
-        pagina.drawString("LOCALIDAD: "+cliente.getLocalidad(),350,200);
-        pagina.drawString("COND IVA: "+cliente.getCondicionIva(),30,215);
+        pagina.drawString("LOCALIDAD: "+cliente.getLocalidad(),350,95);
+        pagina.drawString("COND IVA: "+cliente.getCondicionIva(),30,110);
         String pago="";
         if(cotizacion.getEstado()==0){
             pago="CTA. CTE";
         }else{
             pago="CONTADO";
         }
-        pagina.drawString("FORMA DE PAGO: "+pago,350,215);
+        pagina.drawString("FORMA DE PAGO: "+pago,350,110);
         
-        pagina.drawString("CODIGO",20,250);
-        pagina.drawString("DESCRIPCION",160,250);
-        pagina.drawString("DESCUENTO", 330,250);
-        pagina.drawString("CANTIDAD", 400,250);
-        pagina.drawString("P. UNITARIO",500,250);
-        int renglon=260;
+        pagina.drawString("CODIGO",20,130);
+        pagina.drawString("DESCRIPCION",160,130);
+        pagina.drawString("DESCUENTO", 330,130);
+        pagina.drawString("CANTIDAD", 400,130);
+        pagina.drawString("P. UNITARIO",500,130);
+        int renglon=145;
         Iterator it=listadoDetalle.listIterator();
         String unitario="";
         Double descuentoTotal=0.00;
@@ -181,36 +194,22 @@ public class ImprimirFactura {
             
             
             pagina.drawString(String.valueOf(detalleDeCotizacion.getCantidad()),420,renglon);
-            if(cotizacion.getTipo()==2){
+            
                 unitario=Numeros.ConvertirNumero(detalleDeCotizacion.getPrecioUnitario() * detalleDeCotizacion.getCantidad());
-            }else{
-                unitario=Numeros.ConvertirNumero((detalleDeCotizacion.getPrecioUnitario() * detalleDeCotizacion.getCantidad()) * 1.21);
-            }
+            
             pagina.drawString(unitario,520,renglon);
             renglon=renglon + 10;
         }
         //formulario derecho
-        
+        renglon=renglon + 15;
         //pagina.drawImage(imagen,363,20,174,93,null);
         String letras=NumberToLetterConverter.convertNumberToLetter(cotizacion.getTotal());
-        pagina.drawString("SON PESOS: "+letras, 30,735);
-        if(cotizacion.getTipo()==2){
-            Double sub=cotizacion.getTotal() / 1.21;
-            Double iva=cotizacion.getTotal() - sub;
-        pagina.drawString("MONTO BRUTO", 30,750);
-        pagina.drawString(Numeros.ConvertirNumero(sub),40,760);
-        pagina.drawString("DESCUENTO GRAL", 150,750);
-        pagina.drawString(Numeros.ConvertirNumero(descuentoTotal),150,760);
-        
-        pagina.drawString("MTO GRAV.", 250,750);
-        pagina.drawString(Numeros.ConvertirNumero(sub),250,760);
-        pagina.drawString("IVA 21%", 350, 750);
-        pagina.drawString(Numeros.ConvertirNumero(iva),350,760);            
-        }else{
-
-        }
-        pagina.drawString("TOTAL", 450, 750);
-        pagina.drawString(String.valueOf(cotizacion.getTotal()),450,760);
+        pagina.drawString("SON PESOS: "+letras, 30,renglon);
+        renglon=renglon + 15;
+        pagina.drawString("TOTAL", 450, renglon);
+        renglon=renglon + 10;
+        pagina.drawString("DOCUMENTO NO VÁLIDO COMO FACTURA", 30, renglon);
+        pagina.drawString(String.valueOf(cotizacion.getTotal()),450,renglon);
         
         pagina.dispose();
         //duplicado

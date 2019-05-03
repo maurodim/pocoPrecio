@@ -1,6 +1,6 @@
 ----------------------------------------------------------------
-Thu May 02 17:57:32 ART 2019:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.2.2 - (1181258): instance a816c00e-016a-7a56-889a-00000a7d1c40 
+Fri May 03 10:10:12 ART 2019:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.2.2 - (1181258): instance a816c00e-016a-7dd1-09c5-00000971d5f8 
 on database directory C:\Users\Usuario\Documents\NetBeansProjects\Manantial\base14\bambuPrueba.db  with class loader sun.misc.Launcher$AppClassLoader@610455d6 
 Loaded from file:/C:/Users/Usuario/Documents/NetBeansProjects/Manantial/lib/derby.jar
 java.vendor=Oracle Corporation

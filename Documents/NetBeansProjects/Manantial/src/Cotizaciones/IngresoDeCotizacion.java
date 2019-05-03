@@ -7,7 +7,7 @@ package Cotizaciones;
 import Conversores.Numeros;
 import facturacion.clientes.Clientes;
 import ClientesPantallas.NuevoCliente;
-import facturacion.pantallas.SeleccionDeClientes;
+import facturacion.pantallas.SeleccionDeClientes1;
 import interfaceGraficasManantial.Inicio;
 import interfaces.Comparables;
 import interfacesPrograma.Facturar;
@@ -935,7 +935,7 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        SeleccionDeClientes selCli=new SeleccionDeClientes();
+        SeleccionDeClientes1 selCli=new SeleccionDeClientes1();
         Inicio.jDesktopPane1.add(selCli);
         selCli.setVisible(true);
         selCli.toFront();

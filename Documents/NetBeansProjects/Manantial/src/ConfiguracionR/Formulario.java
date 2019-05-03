@@ -356,6 +356,7 @@ public class Formulario extends javax.swing.JDialog {
         if(this.jRadioButton2.isSelected())formulario.setPresupuesto("no");
         //if(this.jRadioButton3.isSelected())formulario.setElectronica("si");
         //if(this.jRadioButton4.isSelected())formulario.setElectronica("si");
+        formulario.setElectronica("no");
         iva=listadoIva.get(this.iva_box.getSelectedIndex());
         licencia=(Licencias) listadoL.get(this.licencia_box.getSelectedIndex());
         formulario.setIva(String.valueOf(iva.getId()));

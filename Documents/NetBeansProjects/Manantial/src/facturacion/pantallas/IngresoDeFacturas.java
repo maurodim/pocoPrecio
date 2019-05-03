@@ -46,48 +46,49 @@ import org.xml.sax.SAXException;
 import tablas.MiModeloTablaFacturacion;
 import Articulos.ModificableArticulos;
 
-
 /**
  *
  * @author hernan
  */
-public class IngresoDeFacturas extends javax.swing.JInternalFrame implements KeyListener{
+public class IngresoDeFacturas extends javax.swing.JInternalFrame implements KeyListener {
 
     /**
      * Creates new form IngresoDePedidos
      */
     public static Clientes cliT;
-    private ArrayList detalleDelPedido=new ArrayList();
+    private ArrayList detalleDelPedido = new ArrayList();
     private Articulos arti;
-    private static ArrayList listadoDeBusqueda=new ArrayList();
-    private static Double montoTotal=0.00;
-    private static Comprobantes comp=new Comprobantes();
+    private static ArrayList listadoDeBusqueda = new ArrayList();
+    private static Double montoTotal = 0.00;
+    private static Comprobantes comp = new Comprobantes();
     private ListasDePrecios lista;
-    private Rubros rubro=new Rubros();
+    private Rubros rubro = new Rubros();
     private SubRubros subRubro;
     private ArrayList listadoSubRubros;
-    private Rubrable ruble=new Rubros();
-    private ArrayList listadoR=new ArrayList();
-    private DefaultComboBoxModel combox=new DefaultComboBoxModel();
+    private Rubrable ruble = new Rubros();
+    private ArrayList listadoR = new ArrayList();
+    private DefaultComboBoxModel combox = new DefaultComboBoxModel();
     private TableColumn columnaCodigo;
     private String valorCargado;
     private Double porcentajeDescuento;
     private Double subTotal;
     private TablaGenericaProductos tgp;
-
-    private void desplegarPopUp(){
-
+    private Double montoDescuento;
+    
+    private void desplegarPopUp() {
+        
     }
-
+    
     public IngresoDeFacturas() {
         //Articulos.CargarMap();
-        cliT=new Clientes("1");
+        cliT = new Clientes("1");
         //cliT=(ClientesTango)oob;
         //comp.setCliente(cliT);
         initComponents();
         tgp = new TablaGenericaProductos();
-        porcentajeDescuento=0.00;
-        subTotal=0.00;
+        porcentajeDescuento = 0.00;
+        montoDescuento=0.00;
+        subTotal = 0.00;
         this.jCheckBox2.setEnabled(true);
         this.jCheckBox2.isSelected();
         this.jLabel6.setText(cliT.getRazonSocial());
@@ -99,15 +100,16 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
         //this.jPanel2.requestFocus();
 
     }
-    public IngresoDeFacturas(Object clienteTango){
-        cliT=new Clientes();
-        cliT=(Clientes)clienteTango;
-        lista=new ListasDePrecios(cliT.getListaDePrecios());
+
+    public IngresoDeFacturas(Object clienteTango) {
+        cliT = new Clientes();
+        cliT = (Clientes) clienteTango;
+        lista = new ListasDePrecios(cliT.getListaDePrecios());
 //cliT=(ClientesTango)oob;
         //comp.setCliente(cliT);
         initComponents();
-        porcentajeDescuento=0.00;
-        subTotal=0.00;
+        porcentajeDescuento = 0.00;
+        subTotal = 0.00;
         this.jButton3.setVisible(false);
         this.jButton5.setVisible(false);
         //this.jCheckBox2.isSelected();
@@ -119,6 +121,7 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
         this.jTextField1.requestFocus();
         //this.jPanel2.requestFocus();
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -207,7 +210,7 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
             }
         });
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/mac_trashcan_full_new.png"))); // NOI18N
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/nuevos/eliminar_des.png"))); // NOI18N
         jButton2.setText("Eliminar Item");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -226,9 +229,10 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
         jLabel5.setText("% DESCUENTO");
         jLabel5.setEnabled(false);
 
+        jCheckBox2.setSelected(true);
         jCheckBox2.setText("PAGADO");
 
-        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/currency_black_dollar.png"))); // NOI18N
+        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/nuevos/cierreCaja.png"))); // NOI18N
         jButton6.setText("Modificar Precio");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -448,35 +452,30 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
     private void formComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentHidden
         detalleDelPedido.clear();
         listadoDeBusqueda.clear();
-        montoTotal=0.00;
+        montoTotal = 0.00;
     }//GEN-LAST:event_formComponentHidden
 
     private void formInternalFrameClosing(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameClosing
         detalleDelPedido.clear();
         listadoDeBusqueda.clear();
-        montoTotal=0.00;
+        montoTotal = 0.00;
     }//GEN-LAST:event_formInternalFrameClosing
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        //verificar();
-        //Impresora imp=new Impresora();
         String cadena=cliT.getCodigoCliente()+" - "+cliT.getRazonSocial()+"\n"+cliT.getDireccion();
-        //comp.setCliente(cliT);
-        //VisorDeHojaDeRuta
-
-        //comp.setVendedor(VisorDeHojaDeRuta.tG.getOperador());
+        
         if(this.jCheckBox1.isSelected()){
-        //    comp.setReparto(1);
-        //    comp.setEntrega(String.valueOf(this.jTextField3.getText()));
+            //    comp.setReparto(1);
+            //    comp.setEntrega(String.valueOf(this.jTextField3.getText()));
         }
 
         //comp.setArticulos(detalleDelPedido);
         DecimalFormat fr=new DecimalFormat("00");
         Calendar c1=Calendar.getInstance();
-	Calendar c2=new GregorianCalendar();
-	String dia=Integer.toString(c2.get(Calendar.DAY_OF_MONTH));
-	String mes=Integer.toString(c2.get(Calendar.MONTH));
-	String ano=Integer.toString(c2.get(Calendar.YEAR));
+        Calendar c2=new GregorianCalendar();
+        String dia=Integer.toString(c2.get(Calendar.DAY_OF_MONTH));
+        String mes=Integer.toString(c2.get(Calendar.MONTH));
+        String ano=Integer.toString(c2.get(Calendar.YEAR));
 
         int da=Integer.parseInt(dia);
         int me=Integer.parseInt(mes);
@@ -487,13 +486,13 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
         String fecha2=ano+"-"+mes+"-"+dia;
         //comp.setFechaComprobante(fecha2);
         //comp.setFechaComprobante(fecha);
+        
         int comprobanteTipo=1;
         //cliT.setCondicionIva("1");
-        if(cliT.getTipoIva()== 1)comprobanteTipo=2;
-        if(cliT.getTipoIva()== 2)comprobanteTipo=1;
-        if(cliT.getTipoIva()== 3)comprobanteTipo=1;
-
-
+        if(cliT.getCondicionIva().equals("1"))comprobanteTipo=1;
+        if(cliT.getCondicionIva().equals("2"))comprobanteTipo=2;
+        if(cliT.getCondicionIva().equals("3"))comprobanteTipo=3;
+        
         Comprobantes comprobante=new Comprobantes();
         comprobante.setFe(true);
         comprobante.setCliente(cliT);
@@ -513,122 +512,158 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
             FileWriter fichero=null;
             PrintWriter pw=null;
             try {
-                fichero = new FileWriter("C:\\Gestion\\"+Inicio.fechaDia+" - errores en comprobantes.txt",true);
-                pw=new PrintWriter(fichero);
-                pw.println(sqM);
-            } catch (IOException ex1) {
-                Logger.getLogger(IngresoDePedidos.class.getName()).log(Level.SEVERE, null, ex1);
-            }finally{
-                         try {
-           // Nuevamente aprovechamos el finally para
-           // asegurarnos que se cierra el fichero.
-           if (null != fichero)
-              fichero.close();
-           } catch (Exception e2) {
-              e2.printStackTrace();
-           }
+                fichero = new FileWriter("Gestion\\"+Inicio.fechaDia+" - errores en comprobantes.txt",true);
+                    pw=new PrintWriter(fichero);
+                    pw.println(sqM);
+                } catch (IOException ex1) {
+                    Logger.getLogger(IngresoDePedidos.class.getName()).log(Level.SEVERE, null, ex1);
+                }finally{
+                    try {
+                        // Nuevamente aprovechamos el finally para
+                        // asegurarnos que se cierra el fichero.
+                        if (null != fichero)
+                        fichero.close();
+                    } catch (Exception e2) {
+                        e2.printStackTrace();
+                    }
+                }
             }
-        }
-        subTotal=montoTotal;
-        Double ivv=subTotal * 0.21;
-        Double sub=0.00;
-        Double tot=montoTotal + ivv;
-        if(porcentajeDescuento > 0.00){
-            sub = subTotal * porcentajeDescuento;
-            sub= montoTotal - sub;
-        }else{
-            sub=montoTotal;
-        }
-
-        comprobante.setMontoTotal(sub);
-        comprobante.setSubTotal(montoTotal);
-        Double descuen=montoTotal - sub;
-        comprobante.setDescuento(descuen);
-        comprobante.setPorcentajeDescuento(porcentajeDescuento);
-
-        int noFacturar=0;
-        if(IngresoDeFacturas.jCheckBox2.isSelected()){
-            comprobante.setPagado(1);
-        }else{
-            comprobante.setPagado(0);
-            /*
-            * ACA DEBO COMPROBAR EL LIMITE DEL CLIENTE Y SI LO SUPERA LA COMPRA RECHAZAR LA VENTA
-            *
-            */
-            Double limite=cliT.getCupoDeCredito();
-            //Double saldo=cliT.getSaldo();
-            //Double totalGral=montoTotal + saldo;
-            Double totalGral=montoTotal;
-            if(limite < totalGral)noFacturar=1;
-
-        }
-        if(noFacturar==0){
-        Facturar fat=new Comprobantes();
-        comprobante=(Comprobantes)fat.guardar(comprobante);
-        // aqui hago el envio a factura  electronica, si aprueba no imprime
-
-        FEl fe=new FEl();
-        try {
-
-           fe=(FEl) fe.leer(comprobante);
-           if(fe.getRespuesta().equals("OK")){
-               //JOptionPane.showMessageDialog(this,"aprobada id: "+fe.getId());
-               pdfsJavaGenerador pdf=new pdfsJavaGenerador();
-               pdf.setDoc(fe);
-               pdf.setCliente(cliT);
-               pdf.run();
-              /*
-        ImprimirFactura imprimir=new ImprimirFactura();
-            try {
-                imprimir.ImprimirFactura(comprobante.getNumero(),comprobante.getTipoComprobante());
-            } catch (IOException ex) {
-                Logger.getLogger(IngresoDeFacturas.class.getName()).log(Level.SEVERE, null, ex);
+            montoTotal=Math.round(montoTotal * 100.0) / 100.0;
+            subTotal=montoTotal / 1.21;
+            //Double ivv=subTotal / 1.21;
+            subTotal=Math.round(subTotal * 100.0) / 100.0;
+            //Double ivv=Math.round(ivv * 100.0) / 100.0;
+            Double sub=0.00;
+            Double tot=montoTotal - subTotal;
+            tot=Math.round(tot * 100.0) /100.0;
+            porcentajeDescuento=0.00;
+            if(porcentajeDescuento > 0.00){
+                sub = subTotal * porcentajeDescuento;
+                sub= montoTotal - sub;
+            }else{
+                sub=montoTotal;
             }
-            */
+            
+            comprobante.setMontoTotal(montoTotal);
+            comprobante.setSubTotal(subTotal);
+            comprobante.setMontoIva(tot);
+            comprobante.setMontoBruto(subTotal);
+            Double descuen=montoTotal - sub;
+            comprobante.setDescuento(descuen);
+            comprobante.setPorcentajeDescuento(porcentajeDescuento);
 
-           }else{
-               if(fe.getRespuesta().equals("PARAMETROS"))JOptionPane.showMessageDialog(this,"Error en los parametros del cliente, modifiquelos en cae pendientes");
-                              JOptionPane.showMessageDialog(this,"error en la coneccion, intentelo mas tarde");
-           }
-        } catch (IOException ex) {
-            Logger.getLogger(IngresoDeFacturas.class.getName()).log(Level.SEVERE, null, ex);
-            System.err.println(ex);
-        } catch (ParserConfigurationException ex) {
-            Logger.getLogger(IngresoDeFacturas.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SAXException ex) {
-            Logger.getLogger(IngresoDeFacturas.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InterruptedException ex) {
-                Logger.getLogger(IngresoDeFacturas.class.getName()).log(Level.SEVERE, null, ex);
+            int noFacturar=0;
+            if(IngresoDePedidos.jCheckBox2.isSelected()){
+                comprobante.setPagado(1);
+            }else{
+                comprobante.setPagado(0);
+                /*
+                * ACA DEBO COMPROBAR EL LIMITE DEL CLIENTE Y SI LO SUPERA LA COMPRA RECHAZAR LA VENTA
+                *
+                */
+                /*
+                Double limite=cliT.getCupoDeCredito();
+                //Double saldo=cliT.getSaldo();
+                //Double totalGral=montoTotal + saldo;
+                Double totalGral=montoTotal;
+                if(limite < totalGral)noFacturar=1;
+                */
             }
-        /*
-         * ACA DEBO LIMPIAR TODOS LOS CAMPOS Y VARIABLES DE LA PANTALLA
-         *
-         */
-        //comp.setTipoComprobante(comprobanteTipo);
-        //comp.setMontoTotal(montoTotal);
-        detalleDelPedido.clear();
-        agregarRenglonTabla();
-        this.jCheckBox2.setSelected(true);
-        //this.jCheckBox2.setEnabled(false);
-//        this.jTable2.removeAll();
-        listadoDeBusqueda.clear();
-        cargarLista(listadoDeBusqueda);
-        //cliT=new Clientes("99");
-        this.jLabel6.setText(cliT.getRazonSocial());
-        this.jTextField2.setText("");
-        jTextField1.setText("");
-        jTextField1.requestFocus();
-        }else{
-            JOptionPane.showMessageDialog(this,"El cliente supera el límite de crédito, debe abonar la venta");
-            noFacturar=0;
-        }
-
-
+            if(noFacturar==0){
+                comprobante.setFiscal(1);
+                Facturar fat=new Comprobantes();
+                fat.guardar(comprobante);
+                // aqui hago el envio a factura  electronica, si aprueba no imprime
+                
+                FacturaElectronica fe=new FacturaElectronica();
+                FacturableE fact=new FacturaElectronica();
+                ArrayList listadoIva=new ArrayList();
+                Double montoIva=0.00;
+                if(montoTotal > subTotal){
+                    float subT=Float.parseFloat(String.valueOf(subTotal));
+                    float totT=Float.parseFloat(String.valueOf(tot));
+                    TiposIva iva=new TiposIva(5,subT,totT,21);
+                    listadoIva.add(iva);
+                    montoIva=tot;
+                }else{
+                    listadoIva=null;
+                }
+                ArrayList listadoTrib=null;
+                ArrayList <DetalleFacturas> listadoDetalle=new ArrayList();
+                Iterator itD=detalleDelPedido.listIterator();
+                Articulos artic;
+                DetalleFacturas detalle;
+                double precio=0.00;
+                while(itD.hasNext()){
+                    artic=(Articulos) itD.next();
+                    detalle=new DetalleFacturas();
+                    detalle.setCodigo(artic.getCodigoAsignado());
+                    detalle.setDescripcion(artic.getDescripcionArticulo());
+                    detalle.setCantidadS(String.valueOf(artic.getCantidad()));
+                    
+                    precio=Math.round(artic.getPrecioUnitarioNeto() * 100.0) / 100.0;
+                    detalle.setPrecioUnitarioS(String.valueOf(precio));
+                    listadoDetalle.add(detalle);
+                }
+                //montoIva=tot;
+                System.out.println(Propiedades.getARCHIVOCRT());
+                int condicion=1;//Integer.parseInt(Propiedades.getCONDICIONIVA());
+                int ptoVta=Integer.parseInt(Propiedades.getPUNTODEVENTA());
+                int tipoVta=Integer.parseInt(Propiedades.getTIPODEVENTA());
+                Integer idPed=1;
+                Transaccionable trr=new Conecciones();
+                
+                //if(pedido.getId() != null)idPed=pedido.getId();
+                //System.out.println("COMPROBANTE FISCAL N° "+fact.generar(trr.obtenerConexion(), condicion, Propiedades.getARCHIVOKEY(),Propiedades.getARCHIVOCRT(),cliT.getCodigoId(), cliT.getNumeroDeCuit(), comprobante.getTipoComprobante(), montoTotal, subTotal, montoIva, ptoVta, Propiedades.getCUIT(), tipoVta, listadoIva, listadoTrib, cliT.getRazonSocial(), cliT.getDireccion(), cliT.getCondicionIva(), listadoDetalle,idPed));
+                int tipoComp=comprobante.getTipoComprobante();
+                if(comprobante.getTipoComprobante()==1){
+                    tipoComp=6;
+                }
+                if(comprobante.getTipoComprobante()==2){
+                    tipoComp=1;
+                }
+                if(comprobante.getTipoComprobante()==9){
+                    tipoComp=2;
+                }
+                if(comprobante.getTipoComprobante()==10){
+                    tipoComp=3;
+                }
+                if(comprobante.getTipoComprobante()==12){
+                    tipoComp=8;
+                }
+                if(comprobante.getTipoComprobante()==8){
+                    tipoComp=8;
+                }
+                if(comprobante.getTipoComprobante()==3){
+                    tipoComp=6;
+                }
+                
+                
+                Conecciones conx=new Conecciones();
+        Connection conexion=conx.obtenerConexion();
+        fact.generar(conexion, condicion, Propiedades.getARCHIVOKEY(), Propiedades.getARCHIVOCRT(), cliT.getCodigoId(), cliT.getNumeroDeCuit(), tipoComp, montoTotal, subTotal, montoIva, ptoVta, Propiedades.getCUIT(), tipoVta, listadoIva, listadoTrib, cliT.getRazonSocial(), cliT.getDireccion(), cliT.getCondicionIva(), listadoDetalle,idPed,Propiedades.getRAZONSOCIAL(),Propiedades.getNOMBRECOMERCIO(),"resp inscripto",Propiedades.getDIRECCION(),Propiedades.getTELEFONO(),Propiedades.getINGBRUTOS(),Propiedades.getINICIOACT());
+                
+                detalleDelPedido.clear();
+                agregarRenglonTabla();
+                this.jCheckBox2.setSelected(true);
+                //this.jCheckBox2.setEnabled(false);
+                this.jTable2.removeAll();
+                listadoDeBusqueda.clear();
+                cargarLista(listadoDeBusqueda);
+                //cliT=new Clientes("99");
+                this.jLabel6.setText(cliT.getRazonSocial());
+                this.jTextField2.setText("");
+                jTextField1.setText("");
+                jTextField1.requestFocus();
+            }else{
+                JOptionPane.showMessageDialog(this,"El cliente supera el límite de crédito, debe abonar la venta");
+                noFacturar=0;
+            }
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        int posicion=this.jTable1.getSelectedRow();
+        int posicion = this.jTable1.getSelectedRow();
         detalleDelPedido.remove(posicion);
         //detalleDelPedido.clear();
         agregarRenglonTabla();
@@ -644,15 +679,15 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
     }//GEN-LAST:event_formComponentShown
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-    //MODIFICAR PRECIO
-      int posicion=this.jTable1.getSelectedRow();
-      Articulos pedidos;
-        pedidos=(Articulos)detalleDelPedido.get(posicion);
-        Double precio=Double.parseDouble(JOptionPane.showInputDialog("Ingrese el nuevo valor unitario s/iva",pedidos.getPrecioUnitarioNeto()));
+        //MODIFICAR PRECIO
+        int posicion = this.jTable1.getSelectedRow();
+        Articulos pedidos;
+        pedidos = (Articulos) detalleDelPedido.get(posicion);
+        Double precio = Double.parseDouble(JOptionPane.showInputDialog("Ingrese el nuevo valor unitario s/iva", pedidos.getPrecioUnitarioNeto()));
         pedidos.setPrecioUnitarioNeto(precio);
 //detalleDelPedido.clear();
         agregarRenglonTabla();
-        System.out.println("total "+montoTotal);
+        System.out.println("total " + montoTotal);
         montrarMonto();
         jTextField1.setText("");
         jTextField1.requestFocus();
@@ -660,19 +695,19 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
-
+        
 
     }//GEN-LAST:event_formKeyPressed
 
     private void jTextField3KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField3KeyPressed
-        if(KeyEvent.VK_ENTER==evt.getKeyCode()){
-            Double descuentoGral=Numeros.ConvertirStringADouble(this.jTextField3.getText());
-            descuentoGral=descuentoGral / 100;
-            porcentajeDescuento=descuentoGral;
+        if (KeyEvent.VK_ENTER == evt.getKeyCode()) {
+            Double descuentoGral = Numeros.ConvertirStringADouble(this.jTextField3.getText());
+            descuentoGral = descuentoGral / 100;
+            porcentajeDescuento = descuentoGral;
             //cargarLista(detalleDelPedido);
             montrarMonto();
             agregarRenglonTabla();
-
+            
         }
     }//GEN-LAST:event_jTextField3KeyPressed
 
@@ -681,20 +716,22 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
     }//GEN-LAST:event_jCheckBox1ItemStateChanged
 
     private void jTextField4KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField4KeyPressed
-        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             Double servicio;
             //Articulos articuloss=new Articulos();
-            if(this.jCheckBox1.isSelected()){
-                servicio=arti.getPrecioServicio();
-            }else{
-                servicio=0.00;
+            if (this.jCheckBox1.isSelected()) {
+                servicio = arti.getPrecioServicio();
+            } else {
+                servicio = 0.00;
             }
-            if(arti.getModificaPrecio())servicio=Numeros.ConvertirStringADouble(String.valueOf(this.jTextField4.getText()));
-            Double tota= servicio;
+            if (arti.getModificaPrecio()) {
+                servicio = Numeros.ConvertirStringADouble(String.valueOf(this.jTextField4.getText()));
+            }
+            Double tota = servicio;
             //arti.setPrecioUnitarioNeto(tota);
             //arti.setPrecioServicio(servicio);
-            Double cantt=Double.parseDouble(this.jTextField2.getText());
-            Articulos articul=new Articulos();
+            Double cantt = Double.parseDouble(this.jTextField2.getText());
+            Articulos articul = new Articulos();
             articul.setCantidad(cantt);
             articul.setCodigoAsignado(arti.getCodigoAsignado());
             articul.setPrecioServicio(servicio);
@@ -729,51 +766,51 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
     }//GEN-LAST:event_jTextField4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        NuevoCliente nCli=new NuevoCliente();
+        NuevoCliente nCli = new NuevoCliente();
         Inicio.jDesktopPane1.add(nCli);
         nCli.setVisible(true);
         nCli.toFront();
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        SeleccionDeClientes selCli=new SeleccionDeClientes();
+        SeleccionDeClientes1 selCli = new SeleccionDeClientes1();
         Inicio.jDesktopPane1.add(selCli);
         selCli.setVisible(true);
         selCli.toFront();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jTextField2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField2KeyPressed
-        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
-            Double cantt=Double.parseDouble(this.jTextField2.getText());
-            Double precioUni=0.00;
-
-            if(arti.getModificaPrecio()){
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            Double cantt = Double.parseDouble(this.jTextField2.getText());
+            Double precioUni = 0.00;
+            
+            if (arti.getModificaPrecio()) {
                 this.jTextField4.selectAll();
                 this.jTextField4.requestFocus();
-            }else{
+            } else {
                 
-                    Articulos articul=new Articulos();
-                    articul.setCantidad(cantt);
-                    articul.setCodigoAsignado(arti.getCodigoAsignado());
-
-                    articul.setCodigoDeBarra(arti.getCodigoDeBarra());
-                    articul.setDescripcionArticulo(arti.getDescripcionArticulo());
-                    articul.setNumeroId(arti.getNumeroId());
-                    articul.setPrecioDeCosto(arti.getPrecioDeCosto());
-                    articul.setPrecioUnitario(arti.getPrecioUnitarioNeto());
-                    articul.setPrecioUnitarioNeto(arti.getPrecioUnitarioNeto());
-                    articul.setIdCombo(arti.getIdCombo());
-                    articul.setCombo(arti.getCombo());
-
-                    Comparables comparar=new Articulos();
-                    Double precio=1.00;//comparar.comparaConCotizaciones(cliT.getCodigoId(),arti.getNumeroId(),cliT.getCoeficienteListaDeprecios());
-                    String precio2=String.valueOf(arti.getPrecioUnitarioNeto());//comparar.comparaConPedidos(cliT.getCodigoId(),arti.getNumeroId());
-                    // aca tengo que modificar el precio unitario segun el coeficiente del cliente y la lista
-                    //Double precioU=arti.getPrecioUnitarioNeto();// * lista.getCoeficiente();
-                    articul.setPrecioUnitarioNeto(arti.getPrecioUnitarioNeto());
-                    // aca tengo que modificar el precio unitario segun el coeficiente del cliente y la lista
-                    //Double precioU=arti.getPrecioUnitarioNeto();// * lista.getCoeficiente();
-                    /*
+                Articulos articul = new Articulos();
+                articul.setCantidad(cantt);
+                articul.setCodigoAsignado(arti.getCodigoAsignado());
+                
+                articul.setCodigoDeBarra(arti.getCodigoDeBarra());
+                articul.setDescripcionArticulo(arti.getDescripcionArticulo());
+                articul.setNumeroId(arti.getNumeroId());
+                articul.setPrecioDeCosto(arti.getPrecioDeCosto());
+                articul.setPrecioUnitario(arti.getPrecioUnitarioNeto());
+                articul.setPrecioUnitarioNeto(arti.getPrecioUnitarioNeto());
+                articul.setIdCombo(arti.getIdCombo());
+                articul.setCombo(arti.getCombo());
+                
+                Comparables comparar = new Articulos();
+                Double precio = 1.00;//comparar.comparaConCotizaciones(cliT.getCodigoId(),arti.getNumeroId(),cliT.getCoeficienteListaDeprecios());
+                String precio2 = String.valueOf(arti.getPrecioUnitarioNeto());//comparar.comparaConPedidos(cliT.getCodigoId(),arti.getNumeroId());
+                // aca tengo que modificar el precio unitario segun el coeficiente del cliente y la lista
+                //Double precioU=arti.getPrecioUnitarioNeto();// * lista.getCoeficiente();
+                articul.setPrecioUnitarioNeto(arti.getPrecioUnitarioNeto());
+                // aca tengo que modificar el precio unitario segun el coeficiente del cliente y la lista
+                //Double precioU=arti.getPrecioUnitarioNeto();// * lista.getCoeficiente();
+                /*
                     if(precio != cliT.getCoeficienteListaDeprecios()){
                         precio=articul.getPrecioUnitarioNeto()* precio;
                         String cartel="precio asignado: "+precio+" "+precio2;
@@ -788,26 +825,26 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
                         Double precioU= arti.getPrecioUnitarioNeto() * cliT.getCoeficienteListaDeprecios();
                         articul.setPrecioUnitarioNeto(precioU);
                     }
-                    */
-                    detalleDelPedido.add(articul);
-                    agregarRenglonTabla();
-                    //                Double montoTotalX=(arti.getPrecioUnitario() * arti.getCantidad());
-                    //                montoTotal=montoTotal + montoTotalX;
-                    montrarMonto();
-                    //System.err.println("MONTO TOTAL "+montoTotal);
-                    this.jLabel8.setText("");
+                 */
+                detalleDelPedido.add(articul);
+                agregarRenglonTabla();
+                //                Double montoTotalX=(arti.getPrecioUnitario() * arti.getCantidad());
+                //                montoTotal=montoTotal + montoTotalX;
+                montrarMonto();
+                //System.err.println("MONTO TOTAL "+montoTotal);
+                this.jLabel8.setText("");
 //                    this.jTable2.removeAll();
-                    this.jButton1.setVisible(true);
-                    //String valorCargado;
-                    jTextField1.setText(valorCargado);
-                    //this.jTextField5.selectAll();
-                    this.jTextField2.setText("");
-                    jTextField1.selectAll();
-                    jTextField1.requestFocus();
-                    //this.jTextField5.requestFocus();
+                this.jButton1.setVisible(true);
+                //String valorCargado;
+                jTextField1.setText(valorCargado);
+                //this.jTextField5.selectAll();
+                this.jTextField2.setText("");
+                jTextField1.selectAll();
+                jTextField1.requestFocus();
+                //this.jTextField5.requestFocus();
                 
             }
-
+            
         }
     }//GEN-LAST:event_jTextField2KeyPressed
 
@@ -816,49 +853,50 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
     }//GEN-LAST:event_jTextField2ActionPerformed
 
     private void jTextField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyPressed
-        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             //System.out.println("ENTRO CON EL ENTER¡¡¡¡¡¡");
             listadoDeBusqueda.clear();
-            Facturar fart=new Articulos();
-            arti=new Articulos();
-            arti=(Articulos)fart.cargarPorCodigoDeBarra(jTextField1.getText());
-            if(arti.getCodigoDeBarra().equals("")){
-
+            Facturar fart = new Articulos();
+            arti = new Articulos();
+            arti = (Articulos) fart.cargarPorCodigoDeBarra(jTextField1.getText());
+            if (arti.getCodigoDeBarra().equals("")) {
+                
                 jTextField1.setText("");
-            }else{
+            } else {
                 listadoDeBusqueda.add(arti);
                 //jTextField1.setText(arti.getCodigoAsignado());
                 jTextField2.setText("1");
                 this.jLabel8.setText(arti.getDescripcionArticulo());
-                if(arti.getModificaPrecio()){
+                if (arti.getModificaPrecio()) {
                     this.jLabel7.setVisible(true);
                     this.jTextField4.setVisible(true);
                     this.jTextField4.setText(String.valueOf(arti.getPrecioUnitarioNeto()));
                     //this.jTextField4.setEnabled(true);
                     // this.jCheckBox1.setVisible(false);
 
-                }else{
-
+                } else {
+                    
                     this.jLabel7.setVisible(false);
                     this.jTextField4.setVisible(false);
-
                     
                 }
-
-                if(cliT.getCondicionDeVenta()==2)this.jCheckBox2.setEnabled(true);
+                
+                if (cliT.getCondicionDeVenta() == 2) {
+                    this.jCheckBox2.setEnabled(true);
+                }
                 this.jTextField2.selectAll();
                 this.jTextField2.requestFocus();
             }
         }
-        if(evt.getKeyCode()==KeyEvent.VK_F1){
+        if (evt.getKeyCode() == KeyEvent.VK_F1) {
             //System.out.println("ENTRO CON F1¡¡¡¡¡");
-            valorCargado=jTextField1.getText();
-            Facturar fart=new Articulos();
+            valorCargado = jTextField1.getText();
+            Facturar fart = new Articulos();
 //            this.jTable2.removeAll();
-            ModificableArticulos modiA=new Articulos();
-            Articulable modi=new ArticulosAsignados();
+            ModificableArticulos modiA = new Articulos();
+            Articulable modi = new ArticulosAsignados();
             listadoDeBusqueda.clear();
-            listadoDeBusqueda=fart.listadoBusqueda(jTextField1.getText());
+            listadoDeBusqueda = fart.listadoBusqueda(jTextField1.getText());
             //listadoDeBusqueda=modi.filtrador(listadoSubRubros,listadoR);
 
 //            this.jTable2.setModel(modiA.mostrarListadoBusqueda(listadoDeBusqueda));
@@ -869,54 +907,54 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
 //            columnaCodigo.setPreferredWidth(60);
 //            columnaCodigo.setMaxWidth(60);
 //            this.jTable2.requestFocus();
-
             // Configurando parametros de algunas columnas de interes
             List<String> columnasTabla = new ArrayList<>();
+            columnasTabla.add("Código:100:100");
             columnasTabla.add("Descripcion:600:600");
             columnasTabla.add("Stock:60:60");
 
             // Desplegando ventana emergente
-            int elementoSeleccionado=tgp.desplegarPopUp("Seleccion Item", modiA.mostrarListadoBusqueda(listadoDeBusqueda), columnasTabla);
-            arti=(Articulos) listadoDeBusqueda.get(elementoSeleccionado);
+            int elementoSeleccionado = tgp.desplegarPopUp("Seleccion Item", modiA.mostrarListadoBusqueda(listadoDeBusqueda), columnasTabla);
+            arti = (Articulos) listadoDeBusqueda.get(elementoSeleccionado);
             jTextField1.setText(arti.getCodigoDeBarra());
-
+            
         }
-        if(evt.getKeyCode()==KeyEvent.VK_F4){
+        if (evt.getKeyCode() == KeyEvent.VK_F4) {
             //verificar();
             //Impresora imp=new Impresora();
             //verificar();
             //Impresora imp=new Impresora();
-            String cadena=cliT.getCodigoCliente()+" - "+cliT.getRazonSocial()+"\n"+cliT.getDireccion();
+            String cadena = cliT.getCodigoCliente() + " - " + cliT.getRazonSocial() + "\n" + cliT.getDireccion();
             //comp.setCliente(cliT);
             //VisorDeHojaDeRuta
 
             //comp.setVendedor(VisorDeHojaDeRuta.tG.getOperador());
-            if(this.jCheckBox1.isSelected()){
+            if (this.jCheckBox1.isSelected()) {
                 //    comp.setReparto(1);
                 //    comp.setEntrega(String.valueOf(this.jTextField3.getText()));
             }
 
             //comp.setArticulos(detalleDelPedido);
-            DecimalFormat fr=new DecimalFormat("00");
-            Calendar c1=Calendar.getInstance();
-            Calendar c2=new GregorianCalendar();
-            String dia=Integer.toString(c2.get(Calendar.DAY_OF_MONTH));
-            String mes=Integer.toString(c2.get(Calendar.MONTH));
-            String ano=Integer.toString(c2.get(Calendar.YEAR));
-
-            int da=Integer.parseInt(dia);
-            int me=Integer.parseInt(mes);
+            DecimalFormat fr = new DecimalFormat("00");
+            Calendar c1 = Calendar.getInstance();
+            Calendar c2 = new GregorianCalendar();
+            String dia = Integer.toString(c2.get(Calendar.DAY_OF_MONTH));
+            String mes = Integer.toString(c2.get(Calendar.MONTH));
+            String ano = Integer.toString(c2.get(Calendar.YEAR));
+            
+            int da = Integer.parseInt(dia);
+            int me = Integer.parseInt(mes);
             me++;
-
-            dia=fr.format(da);
-            mes=fr.format(me);
-            String fecha=dia+"/"+mes+"/"+ano;
-            String fecha2=ano+"-"+mes+"-"+dia;
+            
+            dia = fr.format(da);
+            mes = fr.format(me);
+            String fecha = dia + "/" + mes + "/" + ano;
+            String fecha2 = ano + "-" + mes + "-" + dia;
             //comp.setFechaComprobante(fecha2);
             //comp.setFechaComprobante(fecha);
-            int comprobanteTipo=cliT.getTipoComprobante();
-
-            Comprobantes comprobante=new Comprobantes();
+            int comprobanteTipo = cliT.getTipoComprobante();
+            
+            Comprobantes comprobante = new Comprobantes();
             comprobante.setFe(false);
             comprobante.setCliente(cliT);
             comprobante.setTipoMovimiento(1);
@@ -926,85 +964,95 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
             comprobante.setUsuarioGenerador(Inicio.usuario.getNumero());
             comprobante.setIdSucursal(Inicio.sucursal.getNumero());
             comprobante.setIdDeposito(Inicio.deposito.getNumero());
-            Integer numeroCaja=Inicio.caja.getNumero();
+            
+            Integer numeroCaja = Inicio.caja.getNumero();
             //System.out.println("EL NUMERO DE CAJA ESSSSSSSS "+numeroCaja);
             comprobante.setIdCaja(numeroCaja);
-            if(montoTotal == 0.00){
-                String sqM="usuario :"+Inicio.usuario.getNombre()+" sucursal "+Inicio.sucursal.getNumero()+" idcaja "+Inicio.caja.getNumero();
-                JOptionPane.showMessageDialog(this,"OJO EL MONTO DE ESTE COMPROBANTE ES $ 0, AVISE PARA DETECTAR EL ERROR");
-                FileWriter fichero=null;
-                PrintWriter pw=null;
+            if (montoTotal == 0.00) {
+                String sqM = "usuario :" + Inicio.usuario.getNombre() + " sucursal " + Inicio.sucursal.getNumero() + " idcaja " + Inicio.caja.getNumero();
+                JOptionPane.showMessageDialog(this, "OJO EL MONTO DE ESTE COMPROBANTE ES $ 0, AVISE PARA DETECTAR EL ERROR");
+                FileWriter fichero = null;
+                PrintWriter pw = null;
                 try {
-                    fichero = new FileWriter("C:\\Gestion\\"+Inicio.fechaDia+" - errores en comprobantes.txt",true);
-                        pw=new PrintWriter(fichero);
-                        pw.println(sqM);
-                    } catch (IOException ex1) {
-                        Logger.getLogger(IngresoDePedidos.class.getName()).log(Level.SEVERE, null, ex1);
-                    }finally{
-                        try {
-                            // Nuevamente aprovechamos el finally para
-                            // asegurarnos que se cierra el fichero.
-                            if (null != fichero)
+                    fichero = new FileWriter("C:\\Gestion\\" + Inicio.fechaDia + " - errores en comprobantes.txt", true);
+                    pw = new PrintWriter(fichero);
+                    pw.println(sqM);
+                } catch (IOException ex1) {
+                    Logger.getLogger(IngresoDePedidos.class.getName()).log(Level.SEVERE, null, ex1);
+                } finally {
+                    try {
+                        // Nuevamente aprovechamos el finally para
+                        // asegurarnos que se cierra el fichero.
+                        if (null != fichero) {
                             fichero.close();
-                        } catch (Exception e2) {
-                            e2.printStackTrace();
                         }
+                    } catch (Exception e2) {
+                        e2.printStackTrace();
                     }
                 }
-                comprobante.setMontoTotal(montoTotal);
-                int noFacturar=0;
-                if(IngresoDeFacturas.jCheckBox2.isSelected()){
-                    comprobante.setPagado(1);
-                }else{
-                    comprobante.setPagado(0);
-                    /*
+            }
+            comprobante.setSubTotal(subTotal);
+            comprobante.setMontoIva(montoTotal - subTotal);
+            comprobante.setMontoTotal(montoTotal);
+            comprobante.setDescuento(montoDescuento);
+            comprobante.setPorcentajeDescuento(porcentajeDescuento);
+            int noFacturar = 0;
+            if (IngresoDeFacturas.jCheckBox2.isSelected()) {
+                comprobante.setPagado(1);
+            } else {
+                comprobante.setPagado(0);
+                /*
                     * ACA DEBO COMPROBAR EL LIMITE DEL CLIENTE Y SI LO SUPERA LA COMPRA RECHAZAR LA VENTA
                     *
-                    */
-                    Double limite=cliT.getCupoDeCredito();
-                    //Double saldo=cliT.getSaldo();
-                    //Double totalGral=montoTotal + saldo;
-                    Double totalGral=montoTotal;
-                    if(limite < totalGral)noFacturar=1;
-
+                 */
+                Double limite = cliT.getCupoDeCredito();
+                //Double saldo=cliT.getSaldo();
+                //Double totalGral=montoTotal + saldo;
+                Double totalGral = montoTotal;
+                if (limite < totalGral) {
+                    noFacturar = 1;
                 }
-                if(noFacturar==0){
-                    Facturar fat=new Comprobantes();
-                    comprobante=(Comprobantes)fat.guardar(comprobante);
-                    // aqui hago el envio a factura  electronica, si aprueba no imprime
+                
+            }
+            if (noFacturar == 0) {
+                Facturar fat = new Comprobantes();
+                comprobante = (Comprobantes) fat.guardar(comprobante);
+                // aqui hago el envio a factura  electronica, si aprueba no imprime
 
-                    ImprimirFactura imprimir=new ImprimirFactura();
-                    try {
-                        imprimir.ImprimirFactura(comprobante.getNumero(),comprobante.getTipoComprobante());
-                    } catch (IOException ex) {
-                        Logger.getLogger(IngresoDeFacturas.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                ImprimirFactura imprimir = new ImprimirFactura();
+                try {
+                    imprimir.ImprimirFactura(comprobante.getNumero(), comprobante.getTipoComprobante());
+                } catch (IOException ex) {
+                    Logger.getLogger(IngresoDeFacturas.class.getName()).log(Level.SEVERE, null, ex);
+                }catch(java.lang.NullPointerException eex){
+                    System.err.println(eex);
+                }
 
-                    /*
+                /*
                     * ACA DEBO LIMPIAR TODOS LOS CAMPOS Y VARIABLES DE LA PANTALLA
                     *
-                    */
-                    //comp.setTipoComprobante(comprobanteTipo);
-                    //comp.setMontoTotal(montoTotal);
-                    detalleDelPedido.clear();
-                    agregarRenglonTabla();
-                    this.jCheckBox2.setSelected(true);
-                    //this.jCheckBox2.setEnabled(false);
+                 */
+                //comp.setTipoComprobante(comprobanteTipo);
+                //comp.setMontoTotal(montoTotal);
+                detalleDelPedido.clear();
+                agregarRenglonTabla();
+                this.jCheckBox2.setSelected(true);
+                //this.jCheckBox2.setEnabled(false);
 //                    this.jTable2.removeAll();
-                    listadoDeBusqueda.clear();
-                    cargarLista(listadoDeBusqueda);
-                    //cliT=new Clientes("99");
-                    this.jLabel6.setText(cliT.getRazonSocial());
-                    this.jTextField2.setText("");
-                    //jTextField1.setText("");
-                    jTextField1.requestFocus();
-                }else{
-                    JOptionPane.showMessageDialog(this,"El cliente supera el límite de crédito, debe abonar la venta");
-                    noFacturar=0;
-                }
-
+                listadoDeBusqueda.clear();
+                //cargarLista(listadoDeBusqueda);
+                //cliT=new Clientes("99");
+                this.jLabel6.setText(cliT.getRazonSocial());
+                this.jTextField2.setText("");
+                //jTextField1.setText("");
+                jTextField1.requestFocus();
+            } else {
+                JOptionPane.showMessageDialog(this, "El cliente supera el límite de crédito, debe abonar la venta");
+                noFacturar = 0;
             }
-            //if(evt.getKeyCode()==KeyEvent.VK_F3)this.jComboBox2.requestFocus();
+            
+        }
+        //if(evt.getKeyCode()==KeyEvent.VK_F3)this.jComboBox2.requestFocus();
     }//GEN-LAST:event_jTextField1KeyPressed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -1014,23 +1062,22 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
     private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField5ActionPerformed
-private void cargarLista(ArrayList lista){
-    DefaultTableModel modelo=new DefaultTableModel();
-    Iterator il=lista.listIterator();
-    Articulos art=new Articulos();
-    modelo.addColumn("Descripcion");
+    private void cargarLista(ArrayList lista) {
+        DefaultTableModel modelo = new DefaultTableModel();
+        Iterator il = lista.listIterator();
+        Articulos art = new Articulos();
+        modelo.addColumn("Descripcion");
         modelo.addColumn("Precio");
         modelo.addColumn("Stock");
-        Object [] fila=new Object[3];
-        while(il.hasNext()){
-            art=(Articulos)il.next();
-            fila[0]=art.getDescripcionArticulo();
-            fila[1]=" $"+Numeros.ConvertirNumero(art.getPrecioUnitarioNeto());
-            fila[2]=String.valueOf(art.getStockActual());
+        Object[] fila = new Object[3];
+        while (il.hasNext()) {
+            art = (Articulos) il.next();
+            fila[0] = art.getDescripcionArticulo();
+            fila[1] = " $" + Numeros.ConvertirNumero(art.getPrecioUnitarioNeto());
+            fila[2] = String.valueOf(art.getStockActual());
             //modelo.addElement(articulo.getDescripcionArticulo()+" $"+Numeros.ConvertirNumero(articulo.getPrecioUnitarioNeto()));
             modelo.addRow(fila);
         }
-
 
 //    this.jTable2.setModel(modelo);
 //    columnaCodigo = this.jTable2.getColumn("Descripcion");
@@ -1039,21 +1086,20 @@ private void cargarLista(ArrayList lista){
 //    columnaCodigo = this.jTable2.getColumn("Stock");
 //    columnaCodigo.setPreferredWidth(60);
 //    columnaCodigo.setMaxWidth(60);
+        // Configurando parametros de algunas columnas de interes
+        List<String> columnasTabla = new ArrayList<>();
+        columnasTabla.add("Descripcion:600:600");
+        columnasTabla.add("Stock:60:60");
 
-    // Configurando parametros de algunas columnas de interes
-    List<String> columnasTabla = new ArrayList<>();
-    columnasTabla.add("Descripcion:600:600");
-    columnasTabla.add("Stock:60:60");
+        // Desplegando ventana emergente
+        tgp.desplegarPopUp("Seleccion Item", modelo, columnasTabla);
+        
+    }
 
-    // Desplegando ventana emergente
-    tgp.desplegarPopUp("Seleccion Item", modelo, columnasTabla);
-
-
-}
-private void agregarRenglonTabla(){
-        MiModeloTablaFacturacion busC=new MiModeloTablaFacturacion();
+    private void agregarRenglonTabla() {
+        MiModeloTablaFacturacion busC = new MiModeloTablaFacturacion();
         this.jTable1.removeAll();
-        montoTotal=0.00;
+        montoTotal = 0.00;
         //ArrayList listadoPedidos=new ArrayList();
         this.jTable1.setModel(busC);
         Articulos pedidos;
@@ -1065,136 +1111,148 @@ private void agregarRenglonTabla(){
         busC.addColumn("PRECIO TOTAL");
         busC.addColumn("IVA");
         busC.addColumn("PRECIO FINAL");
-        Object[] fila=new Object[8];
-        Iterator irP=detalleDelPedido.listIterator();
-        while(irP.hasNext()){
-            pedidos=new Articulos();
-            pedidos=(Articulos) irP.next();
+        Object[] fila = new Object[8];
+        Iterator irP = detalleDelPedido.listIterator();
+        while (irP.hasNext()) {
+            pedidos = new Articulos();
+            pedidos = (Articulos) irP.next();
             //fila[0]=pedidos.getCodigo();
-            String codig=pedidos.getCodigoAsignado();
-            String desc=pedidos.getDescripcionArticulo();
-            String cant=String.valueOf(pedidos.getCantidad());
-
-            fila[0]=codig;
-            fila[1]=desc;
-            Double precioUnitario=pedidos.getPrecioUnitarioNeto();
+            String codig = pedidos.getCodigoAsignado();
+            String desc = pedidos.getDescripcionArticulo();
+            String cant = String.valueOf(pedidos.getCantidad());
+            
+            fila[0] = codig;
+            fila[1] = desc;
+            Double precioUnitario = pedidos.getPrecioUnitarioNeto();
 
             //precioUnitario=precioUnitario * cliT.getCoeficienteListaDeprecios();
-
-            Double valor=precioUnitario * pedidos.getCantidad();
+            Double valor = precioUnitario * pedidos.getCantidad();
             //precioUnitario= pedidos.getPrecioUnitario() * cliT.getCoeficienteListaDeprecios();
             //Double valor=(pedidos.getCantidad() * precioUnitario);
             //valor=valor * cliT.getCoeficienteListaDeprecios();
             pedidos.setPrecioUnitario(valor);
-            String val=Numeros.ConvertirNumero(valor);
-            montoTotal=montoTotal + valor;
+            String val = Numeros.ConvertirNumero(valor);
+            valor = Numeros.Redondear(valor);
+            montoTotal = montoTotal + valor;
             //precioUnitario=precioUnitario * cliT.getCoeficienteListaDeprecios();
             //fila[2]=cant;
-
-            fila[5]=val;
-            fila[3]=Numeros.ConvertirNumero(precioUnitario);
-            fila[2]=Numeros.ConvertirNumero(pedidos.getPrecioDeCosto());
-            Double iva=valor * 0.21;
-            fila[6]=Numeros.ConvertirNumero(iva);
-            fila[4]=cant;
-            Double pFinal=valor + iva;
-            fila[7]=Numeros.ConvertirNumero(pFinal);
+            precioUnitario = Numeros.Redondear(precioUnitario);
+            Double precioSIva = precioUnitario / 1.21;
+            precioSIva = Numeros.Redondear(precioSIva);
+            Double iva = precioUnitario - precioSIva;
+            Double pFinal = valor;
+            pFinal = Numeros.Redondear(pFinal);
+            fila[5] = val;
+            fila[3] = Numeros.ConvertirNumero(precioSIva);
+            fila[2] = Numeros.ConvertirNumero(pedidos.getPrecioDeCosto());
+            //Double iva=valor / 1.21;//valor * 0.21;
+            fila[6] = Numeros.ConvertirNumero(iva);
+            fila[4] = cant;
+            
+            fila[7] = Numeros.ConvertirNumero(pFinal);
             busC.addRow(fila);
         }
-        subTotal=montoTotal;
-        Double ivv=subTotal *0.21;
-        Double sub=subTotal + ivv;
-        Double tot=montoTotal + ivv;
-        if(porcentajeDescuento > 0.00){
-            sub = sub * porcentajeDescuento;
-            sub= tot - sub;
+        if (porcentajeDescuento > 0.00) {
+            Double subD = montoTotal * porcentajeDescuento;
+            montoDescuento=Numeros.Redondear(subD);
+            montoTotal = montoTotal - montoDescuento;
         }
-        fila[0]="";
-        fila[1]="<html><strong>SUBTOTAL</strong></html>";
-        fila[2]="";
-        fila[3]="";
-        fila[4]="";
-        fila[5]="";
-        fila[6]="";
-        fila[7]="<html><strong>"+Numeros.ConvertirNumero(tot)+"</strong></html>";
-        Double descuen=tot - sub;
+        subTotal = montoTotal / 1.21;
+        subTotal = Numeros.Redondear(subTotal);
+        Double ivv = Numeros.Redondear(subTotal * 0.21);
+        Double sub = subTotal;
+        Double tot = montoTotal;
+        //Double descuen = tot - sub;
+        
+        
+        fila[0] = "";
+        fila[1] = "<html><strong>SUBTOTAL</strong></html>";
+        fila[2] = "";
+        fila[3] = "";
+        fila[4] = "";
+        fila[5] = "";
+        fila[6] = "";
+        fila[7] = "<html><strong>" + Numeros.ConvertirNumero(subTotal) + "</strong></html>";
+        
         busC.addRow(fila);
-        fila[0]="";
-        fila[1]="<html><strong>DESCUENTO </strong></html>";
-        fila[2]="";
-        fila[3]="";
-        fila[4]="";
-        fila[5]="";
-        fila[6]="";
-        fila[7]="<html><strong> - "+Numeros.ConvertirNumero(descuen)+"</strong></html>";
+        fila[0] = "";
+        fila[1] = "<html><strong>DESCUENTO </strong></html>";
+        fila[2] = "";
+        fila[3] = "";
+        fila[4] = "";
+        fila[5] = "";
+        fila[6] = "";
+        fila[7] = "<html><strong> - " + Numeros.ConvertirNumero(montoDescuento) + "</strong></html>";
         busC.addRow(fila);
-        fila[0]="";
-        fila[1]="<html><strong>TOTAL</strong></html>";
-        fila[2]="";
-        fila[3]="";
-        fila[4]="";
-        fila[5]="";
-        fila[6]="";
-        fila[7]="<html><strong>"+Numeros.ConvertirNumero(sub)+"</strong></html>";
+        fila[0] = "";
+        fila[1] = "<html><strong>TOTAL</strong></html>";
+        fila[2] = "";
+        fila[3] = "";
+        fila[4] = "";
+        fila[5] = "";
+        fila[6] = "";
+        fila[7] = "<html><strong>" + Numeros.ConvertirNumero(montoTotal) + "</strong></html>";
         busC.addRow(fila);
-        columnaCodigo=this.jTable1.getColumn("CODIGO");
+        columnaCodigo = this.jTable1.getColumn("CODIGO");
         columnaCodigo.setPreferredWidth(40);
         columnaCodigo.setMaxWidth(40);
-        columnaCodigo=this.jTable1.getColumn("DESCRIPCION");
+        columnaCodigo = this.jTable1.getColumn("DESCRIPCION");
         columnaCodigo.setPreferredWidth(400);
         //columnaCodigo.setMaxWidth(400);
         columnaCodigo.setMinWidth(300);
-        columnaCodigo=this.jTable1.getColumn("CANTIDAD");
+        columnaCodigo = this.jTable1.getColumn("CANTIDAD");
         columnaCodigo.setPreferredWidth(80);
         columnaCodigo.setMaxWidth(80);
-        montoTotal=montoTotal * 1.21;
-        String total=String.valueOf(montoTotal);
-        this.jLabel1.setText("TOTAL COTIZACION:  "+total);
+        //montoTotal = montoTotal * 1.21;
+        String total = String.valueOf(montoTotal);
+        this.jLabel1.setText("TOTAL COTIZACION:  " + total);
         listadoDeBusqueda.clear();
         //cargarLista(listadoDeBusqueda);
         this.jCheckBox1.setSelected(true);
         this.jCheckBox1.setVisible(false);
-        if(detalleDelPedido.size()==0){
+        if (detalleDelPedido.size() == 0) {
             this.jButton1.setEnabled(false);
-        }else{
+        } else {
             this.jButton1.setEnabled(true);
         }
-}
-private void montrarMonto(){
-    //System.err.println("DESCUENTO :"+cliT.getDescuento());
-    String total1=Numeros.ConvertirNumero(montoTotal);
-    String total="";
-    if(cliT.getTipoIva()==1){
-        String bruto=Numeros.ConvertirNumero( montoTotal /1.21);
-        String iva=Numeros.ConvertirNumero(montoTotal * 0.21);
-        total="<html>Bruto :"+bruto+" <br>IVA 21% "+iva+" <br>Neto "+total1+"</html>";
-    }else{
-        total="<html>Neto "+total1+"</html>";
     }
-    //Double total=montoTotal * cliT.getDescuento();
-    //comp.setMontoTotal(total);
-    this.jLabel1.setText(total);
-}
-private void verificar(){
-    int cantidad=this.jTable1.getRowCount();
-    Articulos art=new Articulos();
-    cantidad=cantidad - 1;
-    for(int ah=0;ah < cantidad;ah++){
 
-        art=(Articulos)detalleDelPedido.get(ah);
-        //ah++;
-        String descripcion=(String) this.jTable1.getValueAt(ah,1);
-        art.setDescripcionArticulo(descripcion);
-        String cant=String.valueOf(this.jTable1.getValueAt(ah, 2));
-        Double cantida=Double.valueOf(cant).doubleValue();
-        art.setCantidad(cantida);
-        Double precioUni=(Double) this.jTable1.getValueAt(ah,3);
-        Double tot=precioUni;
-        art.setPrecioUnitario(tot);
-        //montoTotal=montoTotal + tot;
-        //System.err.println("nimero "+ah+" decripcion "+descripcion+" limite "+cantidad);
+    private void montrarMonto() {
+        //System.err.println("DESCUENTO :"+cliT.getDescuento());
+        String total1 = Numeros.ConvertirNumero(montoTotal);
+        String total = "";
+        if (cliT.getTipoIva() == 1) {
+            String bruto = Numeros.ConvertirNumero(montoTotal / 1.21);
+            String iva = Numeros.ConvertirNumero(montoTotal * 0.21);
+            total = "<html>Bruto :" + bruto + " <br>IVA 21% " + iva + " <br>Neto " + total1 + "</html>";
+        } else {
+            total = "<html>Neto " + total1 + "</html>";
+        }
+        //Double total=montoTotal * cliT.getDescuento();
+        //comp.setMontoTotal(total);
+        this.jLabel1.setText(total);
     }
-}
+
+    private void verificar() {
+        int cantidad = this.jTable1.getRowCount();
+        Articulos art = new Articulos();
+        cantidad = cantidad - 1;
+        for (int ah = 0; ah < cantidad; ah++) {
+            
+            art = (Articulos) detalleDelPedido.get(ah);
+            //ah++;
+            String descripcion = (String) this.jTable1.getValueAt(ah, 1);
+            art.setDescripcionArticulo(descripcion);
+            String cant = String.valueOf(this.jTable1.getValueAt(ah, 2));
+            Double cantida = Double.valueOf(cant).doubleValue();
+            art.setCantidad(cantida);
+            Double precioUni = (Double) this.jTable1.getValueAt(ah, 3);
+            Double tot = precioUni;
+            art.setPrecioUnitario(tot);
+            //montoTotal=montoTotal + tot;
+            //System.err.println("nimero "+ah+" decripcion "+descripcion+" limite "+cantidad);
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -1225,12 +1283,12 @@ private void verificar(){
     public void keyTyped(KeyEvent ke) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
     @Override
     public void keyPressed(KeyEvent ke) {
-        System.out.println("entro con F4    ¡¡¡¡¡¡");
+        System.err.println("entro con F4    ¡¡¡¡¡¡");
     }
-
+    
     @Override
     public void keyReleased(KeyEvent ke) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

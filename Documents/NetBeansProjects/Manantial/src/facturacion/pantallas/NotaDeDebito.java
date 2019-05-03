@@ -208,7 +208,7 @@ public class NotaDeDebito extends javax.swing.JInternalFrame implements KeyListe
 
         jLabel1.setText("TOTAL FACTURA :");
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/printer32.png"))); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/nuevos/impresora.png"))); // NOI18N
         jButton1.setText("FACT ELECT");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -216,7 +216,7 @@ public class NotaDeDebito extends javax.swing.JInternalFrame implements KeyListe
             }
         });
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/mac_trashcan_full_new.png"))); // NOI18N
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/nuevos/eliminar_des.png"))); // NOI18N
         jButton2.setText("Eliminar Item");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -235,9 +235,10 @@ public class NotaDeDebito extends javax.swing.JInternalFrame implements KeyListe
         jLabel5.setText("% DESCUENTO");
         jLabel5.setEnabled(false);
 
+        jCheckBox2.setSelected(true);
         jCheckBox2.setText("PAGADO");
 
-        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/currency_black_dollar.png"))); // NOI18N
+        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/nuevos/cierreCaja.png"))); // NOI18N
         jButton6.setText("Modificar Precio");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -326,7 +327,7 @@ public class NotaDeDebito extends javax.swing.JInternalFrame implements KeyListe
 
         jLabel6.setText("<HTML><strong>jLabel6</strong></html>");
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/groups_black.png"))); // NOI18N
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/nuevos/cliente_seleccion.png"))); // NOI18N
         jButton3.setText("Ingresar Cliente");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -334,7 +335,7 @@ public class NotaDeDebito extends javax.swing.JInternalFrame implements KeyListe
             }
         });
 
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/folder_new.png"))); // NOI18N
+        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/nuevos/clientes_nuevo.png"))); // NOI18N
         jButton5.setText("Nuevo Cliente");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -967,7 +968,7 @@ public class NotaDeDebito extends javax.swing.JInternalFrame implements KeyListe
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        SeleccionDeClientes selCli=new SeleccionDeClientes();
+        SeleccionDeClientes1 selCli=new SeleccionDeClientes1();
         Inicio.jDesktopPane1.add(selCli);
         selCli.setVisible(true);
         selCli.toFront();

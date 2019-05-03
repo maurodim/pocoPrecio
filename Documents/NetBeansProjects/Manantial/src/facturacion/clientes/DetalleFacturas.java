@@ -101,7 +101,7 @@ public class DetalleFacturas implements Facturable{
         DetalleFacturas detalle=new DetalleFacturas();
         int id=0;
         detalle=(DetalleFacturas)ped;
-        String sql="insert into detallefacturas (idfactura,idarticulo,cantidad,preciounitario,descuento,cantidadremitida) values ("+detalle.getIdFactura()+","+detalle.getIdArticulo()+","+detalle.getCantidad()+",round("+detalle.getPrecioUnitario()+",4),"+detalle.getDescuento()+","+detalle.getCantidadRemitida()+")";
+        String sql="insert into detallefacturas (idfactura,idarticulo,cantidad,preciounitario,descuento,cantidadremitida,descripcionarticulo) values ("+detalle.getIdFactura()+","+detalle.getIdArticulo()+","+detalle.getCantidad()+","+detalle.getPrecioUnitario()+","+detalle.getDescuento()+","+detalle.getCantidadRemitida()+",'"+detalle.getDescripcionArticulo()+"')";
         Transaccionable tra=null;
         try {
             tra = new Conecciones();
@@ -120,7 +120,7 @@ public class DetalleFacturas implements Facturable{
     public ArrayList cargarDetallefactura(Integer idPed) {
         DetalleFacturas detalle;
         ArrayList listadoDetalle=new ArrayList();
-        String sql="select *,(select articulos.nombre from articulos where articulos.id=detallefacturas.idarticulo)as descripcion from detallefacturas where idfactura="+idPed;
+        String sql="select id,idarticulo,cantidad,preciounitario,cantidadremitida,(select articulos.nombre from articulos where articulos.id=detallefacturas.idarticulo)as descripcion from detallefacturas where idfactura="+idPed;
         Transaccionable tra=null;
         try {
             tra = new Conecciones();

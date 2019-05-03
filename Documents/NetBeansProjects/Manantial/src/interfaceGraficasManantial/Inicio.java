@@ -171,7 +171,6 @@ public  void cargarImagen(javax.swing.JDesktopPane jDeskp,InputStream fileImagen
         };
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenuItem20 = new javax.swing.JMenuItem();
         jMenuItem14 = new javax.swing.JMenuItem();
         jMenuItem21 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
@@ -216,15 +215,6 @@ public  void cargarImagen(javax.swing.JDesktopPane jDeskp,InputStream fileImagen
                 jMenu1ActionPerformed(evt);
             }
         });
-
-        jMenuItem20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/nuevos/impuestos.png"))); // NOI18N
-        jMenuItem20.setText("Administración de Impuestos");
-        jMenuItem20.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem20ActionPerformed(evt);
-            }
-        });
-        jMenu1.add(jMenuItem20);
 
         jMenuItem14.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.ALT_MASK));
         jMenuItem14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/nuevos/arqueoDeCaja.png"))); // NOI18N
@@ -594,22 +584,6 @@ public  void cargarImagen(javax.swing.JDesktopPane jDeskp,InputStream fileImagen
                 
     }//GEN-LAST:event_jMenuItem18ActionPerformed
 
-    private void jMenuItem20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem20ActionPerformed
-        ImpuestosAbm impu=new ImpuestosAbm();
-        
-        Inicio.jDesktopPane1.add(impu);
-        impu.setVisible(true);
-        impu.setMaximizable(true);
-        try {
-            impu.setMaximum(true);
-        } catch (PropertyVetoException ex) {
-            Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        impu.pack();
-        impu.toFront();
-    }//GEN-LAST:event_jMenuItem20ActionPerformed
-
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         NotaDeCredito credito=new NotaDeCredito();
         Inicio.jDesktopPane1.add(credito);
@@ -722,7 +696,6 @@ public  void cargarImagen(javax.swing.JDesktopPane jDeskp,InputStream fileImagen
     private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem18;
     private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem20;
     private javax.swing.JMenuItem jMenuItem21;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
