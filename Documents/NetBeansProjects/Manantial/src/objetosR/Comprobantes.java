@@ -54,6 +54,43 @@ public class Comprobantes implements Facturar{
     private Integer idRemito;
     private Integer idPedido;
     private int fiscal;
+    private int idForma1;
+    private int idForma2;
+    private double monto1;
+    private double monto2;
+
+    public int getIdForma1() {
+        return idForma1;
+    }
+
+    public void setIdForma1(int idForma1) {
+        this.idForma1 = idForma1;
+    }
+
+    public int getIdForma2() {
+        return idForma2;
+    }
+
+    public void setIdForma2(int idForma2) {
+        this.idForma2 = idForma2;
+    }
+
+    public double getMonto1() {
+        return monto1;
+    }
+
+    public void setMonto1(double monto1) {
+        this.monto1 = monto1;
+    }
+
+    public double getMonto2() {
+        return monto2;
+    }
+
+    public void setMonto2(double monto2) {
+        this.monto2 = monto2;
+    }
+    
 
     public int getFiscal() {
         return fiscal;
@@ -455,12 +492,13 @@ public class Comprobantes implements Facturar{
                 detalle.setCantidadRemitida(0.00);
             }
             ffD.nuevaFactura(detalle);
+            
             sql="insert into movimientosarticulos (tipoMovimiento,idArticulo,cantidad,numeroDeposito,tipoComprobante,numeroComprobante,numeroCliente,fechaComprobante,numeroUsuario,precioDeVenta,precioServicio,preciodecosto,idcaja,estado) values ("+comp.getTipoMovimiento()+","+articulo.getNumeroId()+","+cantidad+","+Inicio.deposito.getNumero()+","+comp.getTipoComprobante()+","+comp.getNumero()+","+comp.getCliente().getCodigoId()+",'"+comp.getFechaEmision()+"',"+comp.getUsuarioGenerador()+","+articulo.getPrecioUnitario()+","+articulo.getPrecioServicio()+","+articulo.getPrecioDeCosto()+","+Inicio.caja.getNumero()+",0)";
             tra.guardarRegistro(sql);
             
         }
         
-            sql="insert into movimientoscaja (numeroUsuario,numeroSucursal,numeroComprobante,tipoComprobante,monto,tipoMovimiento,idCaja,idCliente,tipoCliente,pagado) values ("+comp.getUsuarioGenerador()+","+comp.getIdSucursal()+","+comp.getNumero()+","+comp.getTipoComprobante()+","+comp.getMontoTotal()+","+comp.getTipoMovimiento()+","+Inicio.caja.getNumero()+","+comp.getCliente().getCodigoId()+",1,"+comp.getPagado()+")";
+            sql="insert into movimientoscaja (numeroUsuario,numeroSucursal,numeroComprobante,tipoComprobante,monto,tipoMovimiento,idCaja,idCliente,tipoCliente,pagado,idforma1,monto1,idforma2,monto2) values ("+comp.getUsuarioGenerador()+","+comp.getIdSucursal()+","+comp.getNumero()+","+comp.getTipoComprobante()+","+comp.getMontoTotal()+","+comp.getTipoMovimiento()+","+Inicio.caja.getNumero()+","+comp.getCliente().getCodigoId()+",1,"+comp.getPagado()+","+comp.getIdForma1()+","+comp.getMonto1()+","+comp.getIdForma2()+","+comp.getMonto2()+")";
             tra.guardarRegistro(sql);
             sql="insert into movimientosclientes (numeroProveedor,monto,pagado,numeroComprobante,idUsuario,idCaja,idSucursal,tipoComprobante) values ("+comp.getCliente().getCodigoId()+","+comp.getMontoTotal()+","+comp.getPagado()+",'"+numeroComprobante+"',"+Inicio.usuario.getNumeroId()+","+Inicio.caja.getNumero()+","+Inicio.sucursal.getNumero()+","+comp.getTipoComprobante()+")";
             System.out.println(sql);

@@ -564,7 +564,8 @@ public class LeerExcel {
     private ArrayList printToConsoleA(List cellDataList) {
         String error = "";
         int fila = 0;
-        ArrayList columnas1 = new ArrayList();
+        ArrayList<ColumnasExcel> columnas1;
+        columnas1 = new ArrayList();
         ColumnasExcel col;
         Boolean verif = false;
         ArrayList lstArt = new ArrayList();
