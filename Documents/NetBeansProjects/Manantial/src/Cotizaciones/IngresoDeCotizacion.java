@@ -935,7 +935,7 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        SeleccionDeClientes1 selCli=new SeleccionDeClientes1();
+        SeleccionDeClientes1 selCli=new SeleccionDeClientes1(5);
         Inicio.jDesktopPane1.add(selCli);
         selCli.setVisible(true);
         selCli.toFront();

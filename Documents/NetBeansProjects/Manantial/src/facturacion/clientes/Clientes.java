@@ -326,6 +326,7 @@ public class Clientes implements Busquedas,Facturar,Adeudable{
                     this.saldo=clientesTango.getSaldo();
                     this.direccionDeEntrega=clientesTango.getDireccionDeEntrega();
                     this.tipoIva=clientesTango.getTipoIva();
+                    
                     if(Propiedades.getCONDICIONIVA().equals("4")){
                         this.tipoComprobante=1;
                     }
@@ -615,7 +616,7 @@ public class Clientes implements Busquedas,Facturar,Adeudable{
         ArrayList ped=new ArrayList();
             Clientes cli=null;
             
-            String sql="select id,idtransporte,clientes.fax,dentrega,clientes.direccionfantasia,(select condicionesiva.tipocomprobante from condicionesiva where condicionesiva.id=clientes.tipo_iva)as tipocomprobante,clientes.email,clientes.celular,clientes.COD_CLIENT,clientes.fantasia,clientes.RAZON_SOCI,clientes.DOMICILIO,clientes.COND_VTA,(clientes.LISTADEPRECIO)as NRO_LISTA,(select coeficienteslistas.coeficiente from coeficienteslistas where coeficienteslistas.id=clientes.listadeprecio)as descuento,(clientes.NUMERODECUIT)as IDENTIFTRI,clientes.empresa,clientes.TELEFONO_1,clientes.coeficiente,(clientes.CUPODECREDITO) AS CUPO_CREDI,clientes.saldo,clientes.TIPO_IVA,(select condicionesiva.descripcion from condicionesiva where id=clientes.tipo_iva)as tipo_iva2,(select localidades.localidad from localidades where id=clientes.localidad)as localidad1,clientes.responsable,(select localidades.codigo_postal from localidades where id=clientes.localidad)as postal from clientes where razon_soci like '%"+cliente+"%' or responsable like '%"+cliente+"%' or fantasia like '%"+cliente+"%' order by razon_soci";
+            String sql="select id,idtransporte,clientes.fax,dentrega,clientes.direccionfantasia,(select condicionesiva.tipocomprobante from condicionesiva where condicionesiva.id=clientes.tipo_iva)as tipocomprobante,clientes.email,clientes.celular,clientes.COD_CLIENT,clientes.fantasia,clientes.RAZON_SOCI,clientes.DOMICILIO,clientes.COND_VTA,(clientes.LISTADEPRECIO)as NRO_LISTA,(select coeficienteslistas.coeficiente from coeficienteslistas where coeficienteslistas.id=clientes.listadeprecio)as descuento,(clientes.NUMERODECUIT)as IDENTIFTRI,clientes.empresa,clientes.TELEFONO_1,clientes.coeficiente,(clientes.CUPODECREDITO) AS CUPO_CREDI,clientes.saldo,clientes.TIPO_IVA,(select localidades.localidad from localidades where id=clientes.localidad)as localidad1,clientes.responsable,(select localidades.codigo_postal from localidades where id=clientes.localidad)as postal from clientes where razon_soci like '%"+cliente+"%' or responsable like '%"+cliente+"%' or fantasia like '%"+cliente+"%' order by razon_soci";
             rs=tra.leerConjuntoDeRegistros(sql);
             try {
                 while(rs.next()){
@@ -631,8 +632,13 @@ public class Clientes implements Busquedas,Facturar,Adeudable{
                 //cli.setDescuento(descuento);
                 cli.setNumeroDeCuit(rs.getString("IDENTIFTRI"));
                 cli.setEmpresa(rs.getString("empresa"));
-                cli.setCondicionIva(rs.getString("TIPO_IVA2"));
                 cli.setTipoIva(rs.getInt("tipo_iva"));
+                if(cli.getTipoIva()==1)cli.setCondicionIva("RESP INSCRIPTO");
+                if(cli.getTipoIva()==4)cli.setCondicionIva("SUJETO EXENTO");
+                if(cli.getTipoIva()==5)cli.setCondicionIva("CONS FINAL");
+                if(cli.getTipoIva()==6)cli.setCondicionIva("RESP MONOTRIBUTO");
+                
+                
                 cli.setTelefono(rs.getString("TELEFONO_1"));
                 cli.setLocalidad(rs.getString("localidad1"));
                 cli.setCoeficienteListaDeprecios(rs.getDouble("coeficiente"));
@@ -814,7 +820,7 @@ public class Clientes implements Busquedas,Facturar,Adeudable{
         Clientes cli=(Clientes)cliente;
         Integer resultado=0;
         
-        String sql="insert into clientes (COD_CLIENT,RAZON_SOCI,DOMICILIO,TELEFONO_1,TIPO_IVA,NUMERODECUIT,COND_VTA,LISTADEPRECIO,empresa,cupodecredito,coeficiente,responsable,fantasia,celular,localidad,fax,direccionfantasia,email,dentrega,idtransporte) values ('"+cli.getCodigoCliente()+"','"+cli.getRazonSocial()+"','"+cli.getDireccion()+"','"+cli.getTelefono()+"',"+cli.getTipoIva()+",'"+cli.getNumeroDeCuit()+"',1,"+cli.getListaDePrecios()+",'"+cli.getEmpresa()+"',"+cli.getCupoDeCredito()+","+cli.getCoeficienteListaDeprecios()+",'"+cli.getResponsable()+"','"+cli.getFantasia()+"','"+cli.getCelular()+"',1,'"+cli.getFax()+"','"+cli.getDireccionFantasia()+"','"+cli.getEmail()+"','"+cli.getDireccionDeEntrega()+"',0)";
+        String sql="insert into clientes (COD_CLIENT,RAZON_SOCI,DOMICILIO,TELEFONO_1,TIPO_IVA,NUMERODECUIT,COND_VTA,LISTADEPRECIO,empresa,cupodecredito,coeficiente,responsable,fantasia,celular,localidad,fax,direccionfantasia,email,dentrega,idtransporte,saldo,saldoactual) values ('"+cli.getCodigoCliente()+"','"+cli.getRazonSocial()+"','"+cli.getDireccion()+"','"+cli.getTelefono()+"',"+cli.getTipoIva()+",'"+cli.getNumeroDeCuit()+"',1,"+cli.getListaDePrecios()+",'"+cli.getEmpresa()+"',"+cli.getCupoDeCredito()+","+cli.getCoeficienteListaDeprecios()+",'"+cli.getResponsable()+"','"+cli.getFantasia()+"','"+cli.getCelular()+"',1,'"+cli.getFax()+"','"+cli.getDireccionFantasia()+"','"+cli.getEmail()+"','"+cli.getDireccionDeEntrega()+"',0,0.00,0.00)";
         System.out.println(sql);
             try {
                 tra=new Conecciones();

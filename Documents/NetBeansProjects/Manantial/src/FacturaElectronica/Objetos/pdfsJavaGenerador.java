@@ -515,13 +515,16 @@ public class pdfsJavaGenerador {
                 Integer condIvv = Integer.parseInt(cliente.getCondicionIva());
                 switch (condIvv) {
                     case 1:
-                        cb.showText("Cond. Iva: Consumidor Final");
-                        break;
-                    case 2:
                         cb.showText("Cond. Iva: Responsable Inscripto");
                         break;
-                    case 3:
+                    case 5:
+                        cb.showText("Cond. Iva: Cons. Final");
+                        break;
+                    case 4:
                         cb.showText("Cond. Iva: Exento");
+                        break;
+                    case 6:
+                        cb.showText("Cond. Iva: Resp. Monotributo");
                         break;
                     default:
                         cb.showText("Cond. Iva: Consumidor Final");

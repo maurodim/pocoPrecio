@@ -965,7 +965,7 @@ public class NotaDeDebito extends javax.swing.JInternalFrame implements KeyListe
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        SeleccionDeClientes1 selCli=new SeleccionDeClientes1();
+        SeleccionDeClientes1 selCli=new SeleccionDeClientes1(3);
         Inicio.jDesktopPane1.add(selCli);
         selCli.setVisible(true);
         selCli.toFront();
@@ -980,7 +980,7 @@ public class NotaDeDebito extends javax.swing.JInternalFrame implements KeyListe
     }//GEN-LAST:event_formComponentShown
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        NuevoCliente nCli=new NuevoCliente();
+        NuevoCliente nCli=new NuevoCliente(3);
         Inicio.jDesktopPane1.add(nCli);
         nCli.setVisible(true);
         nCli.toFront();

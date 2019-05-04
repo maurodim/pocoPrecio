@@ -6,13 +6,10 @@ package facturacion.pantallas;
 
 import Cotizaciones.IngresoDeCotizacion;
 import facturacion.clientes.Clientes;
-import interfaceGraficasManantial.Inicio;
 import interfacesPrograma.Busquedas;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Iterator;
-import javax.swing.DefaultListModel;
-import javax.swing.table.DefaultTableModel;
 import tablas.MiModeloTablaBuscarCliente;
 
 /**
@@ -24,10 +21,13 @@ public class SeleccionDeClientes1 extends javax.swing.JInternalFrame {
     /**
      * Creates new form SeleccionDeClientes1
      */
-    private ArrayList resultado=new ArrayList();
-    private Clientes cliT=new Clientes();
-    public SeleccionDeClientes1() {
+    private ArrayList resultado = new ArrayList();
+    private Clientes cliT = new Clientes();
+    private int originario;
+
+    public SeleccionDeClientes1(int origen) {
         initComponents();
+        originario = origen;
     }
 
     /**
@@ -235,13 +235,13 @@ public class SeleccionDeClientes1 extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String nombre=jTextField1.getText();
-        Clientes resCli=new Clientes();
-        Busquedas mcli=new Clientes();
+        String nombre = jTextField1.getText();
+        Clientes resCli = new Clientes();
+        Busquedas mcli = new Clientes();
         resultado.clear();
         //ArrayList resultado=new ArrayList();
-        resultado=mcli.listar(nombre.toUpperCase());
-        int cant=resultado.size();
+        resultado = mcli.listar(nombre.toUpperCase());
+        int cant = resultado.size();
         //Iterator ir=resultado.listIterator();
         this.jPanel2.setVisible(true);
         cargarTabla();
@@ -258,43 +258,59 @@ public class SeleccionDeClientes1 extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_formComponentShown
 
     private void jTextField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyPressed
-        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             //System.err.println("FUE PRESIONADO EL ENTEERRRRRRRRRRRRRRRRRRRRR");
         }
     }//GEN-LAST:event_jTextField1KeyPressed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-       
-       int posicion=this.jTable1.getSelectedRow();
-       cliT=(Clientes)resultado.get(posicion);
-       this.jPanel3.setVisible(true);
-       this.jTextField2.setText(String.valueOf(cliT.getListaDePrecios()));
-       this.jTextField4.setText(String.valueOf(cliT.getCondicionDeVenta()));
-       this.jTextField3.setText(String.valueOf("0"));
+
+        int posicion = this.jTable1.getSelectedRow();
+        cliT = (Clientes) resultado.get(posicion);
+        this.jPanel3.setVisible(true);
+        this.jTextField2.setText(String.valueOf(cliT.getListaDePrecios()));
+        this.jTextField4.setText(String.valueOf(cliT.getCondicionDeVenta()));
+        this.jTextField3.setText(String.valueOf("0"));
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        Double desc=Double.parseDouble(this.jTextField3.getText());
-        desc=desc / 100;
-        desc= 1 - desc;
-        int condicionVta=Integer.parseInt(this.jTextField4.getText());
-        if(condicionVta==2)IngresoDeCotizacion.jCheckBox2.setSelected(false);
-        int listaDePrecio=Integer.parseInt(this.jTextField2.getText());
+        Double desc = Double.parseDouble(this.jTextField3.getText());
+        desc = desc / 100;
+        desc = 1 - desc;
+        int condicionVta = Integer.parseInt(this.jTextField4.getText());
+        if (condicionVta == 2) {
+            IngresoDeCotizacion.jCheckBox2.setSelected(false);
+        }
+        int listaDePrecio = Integer.parseInt(this.jTextField2.getText());
         cliT.setDescuento(desc);
         cliT.setCondicionDeVenta(condicionVta);
         cliT.setListaDePrecios(listaDePrecio);
         //System.out.println(" DESCUENTO PANTALLA CLIENTE"+desc);
-        IngresoDeCotizacion.cliT=cliT;
-        IngresoDeCotizacion.jLabel6.setText(cliT.getRazonSocial());
-        IngresoDeCotizacion.jTextField1.requestFocus();
-        this.dispose();
+        if (originario == 1) {
+            IngresoDeFacturas.cliT = cliT;
+            IngresoDeFacturas.jLabel6.setText(cliT.getRazonSocial());
+            IngresoDeFacturas.jTextField1.requestFocus();
+            this.dispose();
+        }
+        if(originario==2){
+            NotaDeCredito.cliT = cliT;
+            NotaDeCredito.jLabel6.setText(cliT.getRazonSocial());
+            NotaDeCredito.jTextField1.requestFocus();
+            this.dispose();
+        }
+        if(originario==3){
+            NotaDeDebito.cliT = cliT;
+            NotaDeDebito.jLabel6.setText(cliT.getRazonSocial());
+            NotaDeDebito.jTextField1.requestFocus();
+            this.dispose();
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
-private void cargarTabla(){
-        MiModeloTablaBuscarCliente busC=new MiModeloTablaBuscarCliente();
+    private void cargarTabla() {
+        MiModeloTablaBuscarCliente busC = new MiModeloTablaBuscarCliente();
         this.jTable1.removeAll();
         //ArrayList listadoPedidos=new ArrayList();
         this.jTable1.setModel(busC);
-        Clientes pedidos=new Clientes();
+        Clientes pedidos = new Clientes();
         busC.addColumn("CODIGO CLIENTE");
         busC.addColumn("RAZON SOCIAL");
         busC.addColumn("DIRECCION");
@@ -303,23 +319,22 @@ private void cargarTabla(){
         busC.addColumn("LOCALIDAD");
         busC.addColumn("LISTA DE PRECIOS");
         busC.addColumn("FORMA DE PAGO");
-        Object[] fila=new Object[8];
-        Iterator irP=resultado.listIterator();
-        while(irP.hasNext()){
-            pedidos=(Clientes) irP.next();
-            fila[0]=pedidos.getCodigoCliente();
-            fila[1]=pedidos.getRazonSocial();
-            fila[2]=pedidos.getDireccion();
-            fila[3]=pedidos.getNumeroDeCuit();
-            fila[4]=pedidos.getTelefono();
-            fila[5]=pedidos.getLocalidad();
-            fila[6]=pedidos.getListaDePrecios();
-            fila[7]=pedidos.getCondicionDeVenta();
+        Object[] fila = new Object[8];
+        Iterator irP = resultado.listIterator();
+        while (irP.hasNext()) {
+            pedidos = (Clientes) irP.next();
+            fila[0] = pedidos.getCodigoCliente();
+            fila[1] = pedidos.getRazonSocial();
+            fila[2] = pedidos.getDireccion();
+            fila[3] = pedidos.getNumeroDeCuit();
+            fila[4] = pedidos.getTelefono();
+            fila[5] = pedidos.getLocalidad();
+            fila[6] = pedidos.getListaDePrecios();
+            fila[7] = pedidos.getCondicionDeVenta();
             busC.addRow(fila);
         }
-        
 
-}
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
@@ -346,4 +361,3 @@ private void cargarTabla(){
     private javax.swing.JTextField jTextField4;
     // End of variables declaration//GEN-END:variables
 }
-

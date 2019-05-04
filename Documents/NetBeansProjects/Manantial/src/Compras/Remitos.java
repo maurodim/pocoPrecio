@@ -146,7 +146,8 @@ public class Remitos implements Comprobable{
             while(listA.hasNext()){
                 Articulos art=(Articulos)listA.next();
                 Double cantidad=art.getCantidad();
-                sql="insert into movimientosarticulos (tipoMovimiento,idArticulo,cantidad,numeroDeposito,tipoComprobante,numeroComprobante,numeroCliente,fechaComprobante,numerousuario,precioDeCosto,idcaja,precioDeVenta,precioServicio) values (5,"+art.getNumeroId()+","+cantidad+","+rem.getNumeroDeposito()+",3,'"+rem.getNumeroRemito()+"',"+rem.getIdProveedor()+",'"+rem.getFechaRecepcion()+"',"+rem.getIdUsuario()+","+art.getPrecioDeCosto()+","+Inicio.caja.getNumero()+",0.00,0.00)";
+                sql="insert into movimientosarticulos (tipoMovimiento,idArticulo,cantidad,numeroDeposito,tipoComprobante,numeroComprobante,numeroCliente,fechaComprobante,numerousuario,precioDeCosto,idcaja,precioDeVenta,precioServicio,estado) values (5,"+art.getNumeroId()+","+cantidad+","+rem.getNumeroDeposito()+",3,"+rem.getNumeroRemito()+","+rem.getIdProveedor()+",'"+rem.getFechaRecepcion()+"',"+rem.getIdUsuario()+","+art.getPrecioDeCosto()+","+Inicio.caja.getNumero()+",0.00,0.00,0)";
+                System.out.println(sql);
                 if(tra.guardarRegistro(sql))//System.out.println(sql);
                 
                 sql1="update articulos set COSTO="+art.getPrecioDeCosto()+" where id="+art.getNumeroId();

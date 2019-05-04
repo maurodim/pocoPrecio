@@ -139,20 +139,23 @@ public class Propiedades {
                 Transaccionable tra=new Conecciones();
                 String sql="select * from configuracion";
                 ResultSet rs=tra.leerConjuntoDeRegistros(sql);
+                String fec="03052019";
+                String fFecha=String.format("%8s", fec).replace(' ','0');
+                System.out.println("FORMATO DE FECHA "+fFecha);
                 while(rs.next()){
                     
                 
-                ARCHIVOCRT ="";// rs.getString("archivocrt");
-                ARCHIVOKEY ="";// rs.getString("archivokey");
-                PUNTODEVENTA ="";// rs.getString("puntodeventa");
+                ARCHIVOCRT =rs.getString("archivocrt");
+                ARCHIVOKEY =rs.getString("archivokey");
+                PUNTODEVENTA ="2";// rs.getString("puntodeventa");
                 CONDICIONIVA =rs.getString("condicioniva");
                 CUIT=rs.getString("cuit");
-                TIPODEVENTA = "";//rs.getString("tipodeventa");
+                TIPODEVENTA = "1";//rs.getString("tipodeventa");
                 NOMBRECOMERCIO = rs.getString("razon");
                 DIRECCION = rs.getString("direccion");
                 TELEFONO = rs.getString("telefono");
-                INGBRUTOS = "";//rs.getString("ingresosbrutos");
-                INICIOACT ="";// rs.getString("iniciodeactividades");
+                INGBRUTOS = "011-1161616116";//rs.getString("ingresosbrutos");
+                INICIOACT ="01/08/2013";// rs.getString("iniciodeactividades");
                 }
                 rs.close();
             } catch (InstantiationException ex) {

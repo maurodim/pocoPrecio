@@ -77,6 +77,7 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
     private Double porcentajeDescuento;
     private Double subTotal;
     private TablaGenericaProductos tgp;
+    private Double montoDescuento;
     
     public NotaDeCredito() {
         //Articulos.CargarMap();
@@ -87,6 +88,7 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
         tgp = new TablaGenericaProductos();
         
         porcentajeDescuento=0.00;
+        montoDescuento=0.00;
         subTotal=0.00;
         this.jCheckBox2.setEnabled(true);
         this.jCheckBox2.isSelected();
@@ -669,6 +671,7 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
     private void jTextField2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField2KeyPressed
         if(evt.getKeyCode()==KeyEvent.VK_ENTER){
             Double cantt=Double.parseDouble(this.jTextField2.getText());
+            cantt=cantt * -1;
             Double precioUni=0.00;
             if(cantt < 1000){
             if(arti.getModificaPrecio()){
@@ -740,8 +743,8 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
         String fecha=dia+"/"+mes+"/"+ano;
         String fecha2=ano+"-"+mes+"-"+dia;
         int comprobanteTipo=8;
-        if(cliT.getCondicionIva().equals("2"))comprobanteTipo=10;
-        if(cliT.getCondicionIva().equals("1")){
+        if(cliT.getTipoIva()==1)comprobanteTipo=10;
+        if(cliT.getTipoIva()==5){
             if(montoTotal > 1000){
              if(cliT.getRazonSocial().equals("CONSUMIDOR FINAL") || cliT.getNumeroDeCuit().equals("0"))   {
                  cliT.setRazonSocial(JOptionPane.showInputDialog("Ingrese el nombre del cliente",cliT.getRazonSocial()));
@@ -753,7 +756,7 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
             }
         }
         
-        if(cliT.getCondicionIva().equals("3"))comprobanteTipo=8;
+        if(cliT.getTipoIva()==4)comprobanteTipo=8;
         
         Comprobantes comprobante=new Comprobantes();
         comprobante.setFe(true);
@@ -858,7 +861,7 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
                     detalle=new DetalleFacturas();
                     detalle.setCodigo(artic.getCodigoAsignado());
                     detalle.setDescripcion(artic.getDescripcionArticulo());
-                    detalle.setCantidadS(String.valueOf(artic.getCantidad()));
+                    detalle.setCantidadS(String.valueOf(artic.getCantidad() * -1));
                     
                     precio=Math.round((artic.getPrecioUnitarioNeto()) * 100.0) / 100.0;
                     detalle.setPrecioUnitarioS(String.valueOf(precio));
@@ -869,7 +872,7 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
                 int condicion=1;//Integer.parseInt(Propiedades.getCONDICIONIVA());
                 int ptoVta=Integer.parseInt(Propiedades.getPUNTODEVENTA());
                 int tipoVta=Integer.parseInt(Propiedades.getTIPODEVENTA());
-                Integer idPed=0;
+                Integer idPed=1;
                 if(subTotal < 0)subTotal=subTotal * (-1);
                 if(montoTotal < 0)montoTotal =montoTotal * (-1);
                 if(montoIva < 0)montoIva=montoIva * (-1);
@@ -879,6 +882,17 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
                 
                 //System.out.println("COMPROBANTE FISCAL N° "+fact.generar(null, condicion, Propiedades.getARCHIVOKEY(),Propiedades.getARCHIVOCRT(),cliT.getCodigoId(), cliT.getNumeroDeCuit(), comprobante.getTipoComprobante(), montoTotal, subTotal, montoIva, ptoVta, Propiedades.getCUIT(), tipoVta, listadoIva, listadoTrib, cliT.getRazonSocial(), cliT.getDireccion(), cliT.getCondicionIva(), listadoDetalle,idPed));
                 int tipoComp=comprobante.getTipoComprobante();
+                if(Propiedades.getCONDICIONIVA().equals("1")){
+                    if(cliT.getTipoIva()==1){
+                        tipoComp=3;
+                    }else{
+                        tipoComp=8;
+                    }
+                }else{
+                    tipoComp=13;
+                }
+                comprobante.setTipoComprobante(tipoComp);
+                /*
                 if(comprobante.getTipoComprobante()==1){
                     tipoComp=6;
                 }
@@ -900,7 +914,7 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
                 if(comprobante.getTipoComprobante()==3){
                     tipoComp=6;
                 }
-                
+                */
                 Conecciones conx;
             try {
                 conx = new Conecciones();
@@ -984,7 +998,7 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        SeleccionDeClientes1 selCli=new SeleccionDeClientes1();
+        SeleccionDeClientes1 selCli=new SeleccionDeClientes1(2);
         Inicio.jDesktopPane1.add(selCli);
         selCli.setVisible(true);
         selCli.toFront();
@@ -999,7 +1013,7 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_formComponentShown
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        NuevoCliente nCli=new NuevoCliente();
+        NuevoCliente nCli=new NuevoCliente(2);
         Inicio.jDesktopPane1.add(nCli);
         nCli.setVisible(true);
         nCli.toFront();
@@ -1167,24 +1181,33 @@ private void agregarRenglonTabla(){
             //precioUnitario=precioUnitario * cliT.getCoeficienteListaDeprecios();
             //fila[2]=cant;
             
+            precioUnitario = Numeros.Redondear(precioUnitario);
+            Double precioSIva = precioUnitario / 1.21;
+            precioSIva = Numeros.Redondear(precioSIva);
+            Double iva = precioUnitario - precioSIva;
+            Double pFinal = valor;
+            pFinal = Numeros.Redondear(pFinal);
+            
             fila[5]=val;
-            fila[3]=Numeros.ConvertirNumero(precioUnitario);
+            fila[3]=Numeros.ConvertirNumero(precioSIva);
             fila[2]=Numeros.ConvertirNumero(pedidos.getPrecioDeCosto());
-            Double iva=valor * 0.21;
+            
             fila[6]=Numeros.ConvertirNumero(iva);
             fila[4]=cant;
-            Double pFinal=valor + iva;
+            
             fila[7]=Numeros.ConvertirNumero(pFinal);
             busC.addRow(fila);
         }
-        subTotal=montoTotal;
-        Double ivv=subTotal *0.21;
-        Double sub=subTotal + ivv;
-        Double tot=montoTotal + ivv;
-        if(porcentajeDescuento != null){
-            sub = sub * porcentajeDescuento;
-            sub= tot - sub;
+        if (porcentajeDescuento > 0.00) {
+            Double subD = montoTotal * porcentajeDescuento;
+            montoDescuento=Numeros.Redondear(subD);
+            montoTotal = montoTotal - montoDescuento;
         }
+        subTotal = montoTotal / 1.21;
+        subTotal = Numeros.Redondear(subTotal);
+        Double ivv = Numeros.Redondear(subTotal * 0.21);
+        Double sub = subTotal;
+        Double tot = montoTotal;
         fila[0]="";
         fila[1]="<html><strong>SUBTOTAL</strong></html>";
         fila[2]="";
@@ -1192,8 +1215,8 @@ private void agregarRenglonTabla(){
         fila[4]="";
         fila[5]="";
         fila[6]="";
-        fila[7]="<html><strong>"+Numeros.ConvertirNumero(tot)+"</strong></html>";
-        Double descuen=tot - sub;
+        fila[7]="<html><strong>"+Numeros.ConvertirNumero(subTotal)+"</strong></html>";
+        //Double descuen=tot - sub;
         busC.addRow(fila);
         fila[0]="";
         fila[1]="<html><strong>DESCUENTO </strong></html>";
@@ -1202,7 +1225,7 @@ private void agregarRenglonTabla(){
         fila[4]="";
         fila[5]="";
         fila[6]="";
-        fila[7]="<html><strong> - "+Numeros.ConvertirNumero(descuen)+"</strong></html>";
+        fila[7]="<html><strong> - "+Numeros.ConvertirNumero(montoDescuento)+"</strong></html>";
         busC.addRow(fila);
         fila[0]="";
         fila[1]="<html><strong>TOTAL</strong></html>";
@@ -1211,7 +1234,7 @@ private void agregarRenglonTabla(){
         fila[4]="";
         fila[5]="";
         fila[6]="";
-        fila[7]="<html><strong>"+Numeros.ConvertirNumero(sub)+"</strong></html>";
+        fila[7]="<html><strong>"+Numeros.ConvertirNumero(montoTotal)+"</strong></html>";
         busC.addRow(fila);
         columnaCodigo=this.jTable1.getColumn("CODIGO");
         columnaCodigo.setPreferredWidth(40);
@@ -1223,11 +1246,11 @@ private void agregarRenglonTabla(){
         columnaCodigo=this.jTable1.getColumn("CANTIDAD");
         columnaCodigo.setPreferredWidth(80);
         columnaCodigo.setMaxWidth(80);
-        montoTotal=montoTotal * 1.21;
+        //montoTotal=montoTotal * 1.21;
         String total=String.valueOf(montoTotal);
         this.jLabel1.setText("TOTAL COTIZACION:  "+total);
         listadoDeBusqueda.clear();
-        cargarLista(listadoDeBusqueda);
+        //cargarLista(listadoDeBusqueda);
         this.jCheckBox1.setSelected(true);
         this.jCheckBox1.setVisible(false);
         if(detalleDelPedido.size()==0){

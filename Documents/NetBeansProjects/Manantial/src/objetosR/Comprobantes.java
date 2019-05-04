@@ -325,7 +325,41 @@ public class Comprobantes implements Facturar{
             }else{
                 tx=fc;   
             }
-            String sql="select * from tipocomprobantes where id="+tipoComprobante+" and numeroSucursal =1";
+            int tipoComp=30;
+            switch(tipoComprobante){
+                case 1:
+                    tipoComp=2;//FC A
+                    break;
+                case 2:
+                    tipoComp=31;//ND A
+                    break;
+                case 3:
+                    tipoComp=26;//NCA
+                    break;
+                case 6:
+                    tipoComp=1;// FC B
+                    break;
+                case 7:
+                       tipoComp=32;// ND B
+                    break;
+                case 8:
+                    tipoComp=27;//NC B
+                    break;
+                case 11:
+                    tipoComp=29;//FC C
+                    break;
+                case 12:
+                    tipoComp=33;//ND C
+                    break;
+                case 13:
+                    tipoComp=28;//NC C
+                    break;
+                default:
+                    tipoComp=30;
+                    break;
+                    
+            }
+            String sql="select * from tipocomprobantes where id="+tipoComp;
             ResultSet rs=tra.leerConjuntoDeRegistros(sql);
             try {
                 while(rs.next()){
@@ -446,11 +480,7 @@ public class Comprobantes implements Facturar{
         System.out.println("SE RECEPCIONO BARBARO");
         sql="update tipocomprobantes set numeroActivo="+numeroComprobante+" where id="+idComp;
         try {
-            /*
-            if(Inicio.coneccionRemota){
-            
-            }else{
-            * */
+            System.out.println("tipo de comprobante "+sql);
             tra=new Conecciones();
             tra.guardarRegistro(sql);
         } catch (InstantiationException ex) {

@@ -338,11 +338,15 @@ public class FacturaElectronica implements FacturableE, Instalable {
         if (cuit.equals("1")) {
             cuit = "0";
         }
-        String sql = "insert into fiscal (fecha,tipo,pto,numero,gravado,impuesto,total,idcliente,tipoClienteId,razon,cuit) values (lpad(" + fecha + ",8,'0'),'" + tipo + "',lpad(" + this.numeroPuntoDeVenta + ",5,'0'),'" + numero + "'," + this.importeNeto + "," + this.impuestoLiquido + "," + this.importeTotal + "," + this.idCliente + "," + tipoClienteId + ",'" + razonS + "','" + cuit + "')";
-        //System.out.println("fiscal: " + sql);
+        String fFecha=String.format("%8s", fecha).replace(' ','0');
+        String ptoVta=String.format("%05d", this.numeroPuntoDeVenta);
+        String sql = "insert into fiscal (fecha,tipo,pto,numero,gravado,impuesto,total,idcliente,tipoClienteId,razon,cuit,estado) values ('" + fFecha + "','" + tipo + "','" + ptoVta + "','" + numero + "'," + Numeros.Redondear(this.importeNeto) + "," + Numeros.Redondear(this.impuestoLiquido) + "," + Numeros.Redondear(this.importeTotal) + "," + this.idCliente + "," + tipoClienteId + ",'" + razonS + "','" + cuit + "',0)";
+        System.out.println("fiscal: " + sql);
         try {
             st = this.conexion.prepareStatement(sql);
-            st.execute();
+            if(numero != null){
+                st.execute();
+            }
         } catch (SQLException ex) {
             Logger.getLogger(FacturaElectronica.class.getName()).log(Level.SEVERE, null, ex);
         }

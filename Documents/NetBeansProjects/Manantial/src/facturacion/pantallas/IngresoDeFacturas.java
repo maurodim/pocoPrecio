@@ -494,9 +494,9 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
         
         int comprobanteTipo=1;
         //cliT.setCondicionIva("1");
-        if(cliT.getCondicionIva().equals("1"))comprobanteTipo=1;
-        if(cliT.getCondicionIva().equals("2"))comprobanteTipo=2;
-        if(cliT.getCondicionIva().equals("3"))comprobanteTipo=3;
+        if(cliT.getTipoIva()==5)comprobanteTipo=1;
+        if(cliT.getTipoIva()==1)comprobanteTipo=2;
+        if(cliT.getTipoIva()==4)comprobanteTipo=3;
         
         Comprobantes comprobante=new Comprobantes();
         comprobante.setFe(true);
@@ -558,7 +558,7 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
             comprobante.setPorcentajeDescuento(porcentajeDescuento);
 
             int noFacturar=0;
-            if(IngresoDePedidos.jCheckBox2.isSelected()){
+            if(this.jCheckBox2.isSelected()){
                 comprobante.setPagado(1);
             }else{
                 comprobante.setPagado(0);
@@ -615,11 +615,24 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
                 int condicion=1;//Integer.parseInt(Propiedades.getCONDICIONIVA());
                 int ptoVta=Integer.parseInt(Propiedades.getPUNTODEVENTA());
                 int tipoVta=Integer.parseInt(Propiedades.getTIPODEVENTA());
-                Integer idPed=1;
+                Integer idPed=1;//SEÑALA SI ES HOMOLAGACION O PRODUCCION
                 
                 
                 //if(pedido.getId() != null)idPed=pedido.getId();
                 //System.out.println("COMPROBANTE FISCAL N° "+fact.generar(trr.obtenerConexion(), condicion, Propiedades.getARCHIVOKEY(),Propiedades.getARCHIVOCRT(),cliT.getCodigoId(), cliT.getNumeroDeCuit(), comprobante.getTipoComprobante(), montoTotal, subTotal, montoIva, ptoVta, Propiedades.getCUIT(), tipoVta, listadoIva, listadoTrib, cliT.getRazonSocial(), cliT.getDireccion(), cliT.getCondicionIva(), listadoDetalle,idPed));
+                
+                int tipoComp=comprobante.getTipoComprobante();
+                if(Propiedades.getCONDICIONIVA().equals("1")){
+                    if(cliT.getTipoIva()==1){
+                        tipoComp=1;
+                    }else{
+                        tipoComp=6;
+                    }
+                }else{
+                    tipoComp=11;
+                }
+                comprobante.setTipoComprobante(tipoComp);
+                /*
                 int tipoComp=comprobante.getTipoComprobante();
                 if(comprobante.getTipoComprobante()==1){
                     tipoComp=6;
@@ -642,12 +655,12 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
                 if(comprobante.getTipoComprobante()==3){
                     tipoComp=6;
                 }
-                
+                */
             try {
                 Transaccionable trr=new Conecciones();
                 Conecciones conx=new Conecciones();
         Connection conexion=conx.obtenerConexion();
-        fact.generar(conexion, condicion, Propiedades.getARCHIVOKEY(), Propiedades.getARCHIVOCRT(), cliT.getCodigoId(), cliT.getNumeroDeCuit(), tipoComp, montoTotal, subTotal, montoIva, ptoVta, Propiedades.getCUIT(), tipoVta, listadoIva, listadoTrib, cliT.getRazonSocial(), cliT.getDireccion(), cliT.getCondicionIva(), listadoDetalle,idPed,Propiedades.getNOMBRECOMERCIO(),Propiedades.getNOMBRECOMERCIO(),"resp inscripto",Propiedades.getDIRECCION(),Propiedades.getTELEFONO(),Propiedades.getINGBRUTOS(),Propiedades.getINICIOACT());
+        fact.generar(conexion, condicion, Propiedades.getARCHIVOKEY(), Propiedades.getARCHIVOCRT(), cliT.getCodigoId(), cliT.getNumeroDeCuit(), tipoComp, montoTotal, subTotal, montoIva, ptoVta, Propiedades.getCUIT(), tipoVta, listadoIva, listadoTrib, cliT.getRazonSocial(), cliT.getDireccion(), String.valueOf(cliT.getTipoIva()), listadoDetalle,idPed,Propiedades.getNOMBRECOMERCIO(),Propiedades.getNOMBRECOMERCIO(),"resp inscripto",Propiedades.getDIRECCION(),Propiedades.getTELEFONO(),Propiedades.getINGBRUTOS(),Propiedades.getINICIOACT());
                 
             } catch (InstantiationException ex) {
                 Logger.getLogger(IngresoDeFacturas.class.getName()).log(Level.SEVERE, null, ex);
@@ -664,7 +677,7 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
                 //this.jTable2.removeAll();
                 listadoDeBusqueda.clear();
                 //cargarLista(listadoDeBusqueda);
-                //cliT=new Clientes("99");
+                cliT=new Clientes("1");
                 this.jLabel6.setText(cliT.getRazonSocial());
                 this.jTextField2.setText("");
                 jTextField1.setText("");
@@ -780,14 +793,14 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
     }//GEN-LAST:event_jTextField4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        NuevoCliente nCli = new NuevoCliente();
+        NuevoCliente nCli = new NuevoCliente(1);
         Inicio.jDesktopPane1.add(nCli);
         nCli.setVisible(true);
         nCli.toFront();
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        SeleccionDeClientes1 selCli = new SeleccionDeClientes1();
+        SeleccionDeClientes1 selCli = new SeleccionDeClientes1(1);
         Inicio.jDesktopPane1.add(selCli);
         selCli.setVisible(true);
         selCli.toFront();
