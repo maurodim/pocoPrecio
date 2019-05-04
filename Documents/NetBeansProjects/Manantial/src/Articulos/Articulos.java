@@ -1222,7 +1222,7 @@ public class Articulos implements Facturar, Editables, Comparables, ModificableA
         Articulos articulo = (Articulos) objeto;
         Articulos articuloI;
         ArrayList listado = new ArrayList();
-        String sql = "select sum(cantidad),idArticulo,numeroDeposito FROM movimientosarticulos where idArticulo=" + String.valueOf(articulo.getCodigoAsignado()) + " group by idArticulo,numeroDeposito";
+        String sql = "select sum(cantidad) as cantidads,idArticulo,numeroDeposito FROM movimientosarticulos where idArticulo=" + String.valueOf(articulo.getCodigoAsignado()) + " group by idArticulo,numeroDeposito";
 
         try {
             Transaccionable tra = null;
@@ -1232,7 +1232,7 @@ public class Articulos implements Facturar, Editables, Comparables, ModificableA
             ResultSet rs = tra.leerConjuntoDeRegistros(sql);
             while (rs.next()) {
                 articuloI = new Articulos();
-                articuloI.setCantidad(rs.getDouble("sum(cantidad)"));
+                articuloI.setCantidad(rs.getDouble("cantidads"));
                 articuloI.setNumeroId(rs.getInt("idArticulo"));
                 articuloI.setIdDeposito(rs.getInt("numeroDeposito"));
                 System.out.println(sql);

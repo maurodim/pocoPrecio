@@ -7,7 +7,7 @@ package bbsgestion;
 import Actualizaciones.BkDeConeccion;
 import ConfiguracionR.PortalWeb;
 import ConfiguracionR.Propiedades;
-import Sucursales.Usuarios;
+import Cajas.Usuarios;
 import interfaceGraficasManantial.Inicio;
 //import interfaceGraficas.LoguinBbsGestion;
 import interfaces.Backpeable;

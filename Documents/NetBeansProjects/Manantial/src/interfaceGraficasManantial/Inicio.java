@@ -4,6 +4,8 @@
  */
 package interfaceGraficasManantial;
 
+import Cajas.ArqueoDeCaja;
+import Cajas.CajaAbm;
 import ClientesPantallas.AbmClientes;
 import Articulos.Pantallas.RubrosAbm;
 import Actualizaciones.Actualiza;
@@ -11,10 +13,10 @@ import Actualizaciones.Actualiza1;
 import Articulos.Pantallas.AbmIva;
 import Proveedores.Proveedores;
 import Depositos.Depositos;
-import Sucursales.Cajas;
+import Cajas.Cajas;
 import Sucursales.ListasDePrecios;
 import Sucursales.Sucursales;
-import Sucursales.Usuarios;
+import Cajas.Usuarios;
 import facturacion.clientes.Clientes;
 import interfacesPrograma.Cajeables;
 import java.awt.Dimension;

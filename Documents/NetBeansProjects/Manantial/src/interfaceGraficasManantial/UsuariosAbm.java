@@ -5,7 +5,7 @@
 package interfaceGraficasManantial;
 
 import Sucursales.Sucursales;
-import Sucursales.Usuarios;
+import Cajas.Usuarios;
 import interfaces.Personalizable;
 import java.util.ArrayList;
 import java.util.Iterator;

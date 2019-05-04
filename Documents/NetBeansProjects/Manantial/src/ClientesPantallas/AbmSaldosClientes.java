@@ -8,7 +8,7 @@ package ClientesPantallas;
 
 import Excel.InformesClientes;
 import Excel.InformesMovimientos;
-import Sucursales.Cajas;
+import Cajas.Cajas;
 import facturacion.clientes.Clientes;
 import facturacion.clientes.Editables;
 import facturacion.clientes.Movible;

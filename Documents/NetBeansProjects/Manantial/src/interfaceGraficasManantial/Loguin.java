@@ -4,7 +4,7 @@
  */
 package interfaceGraficasManantial;
 
-import Sucursales.Usuarios;
+import Cajas.Usuarios;
 import static java.lang.Thread.sleep;
 import java.util.logging.Level;
 import java.util.logging.Logger;

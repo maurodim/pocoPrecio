@@ -10,7 +10,7 @@ package facturacion.clientes;
 import Conversores.Numeros;
 import Impresiones.*;
 import Depositos.RemitosInternos;
-import Sucursales.Cajas;
+import Cajas.Cajas;
 import facturacion.clientes.Clientes;
 import interfaceGraficasManantial.Inicio;
 import interfacesPrograma.Facturar;

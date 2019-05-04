@@ -437,18 +437,7 @@ public class Comprobantes implements Facturar{
             articulo=(Articulos)iComp.next();
             Double cantidad=articulo.getCantidad() * -1;
             
-            if(articulo.getIdCombo() == 1){
-                Iterator itC=articulo.getCombo().listIterator();
-                Double cant=0.00;
-                art=new Articulos();
-                while(itC.hasNext()){
-                    art=(Articulos)itC.next();
-                    cantidad=cantidad * art.getCantidad();
-                    sql="insert into movimientosarticulos (tipoMovimiento,idArticulo,cantidad,numeroDeposito,tipoComprobante,numeroComprobante,numeroCliente,fechaComprobante,numeroUsuario,precioDeVenta,precioServicio,preciodecosto,idcaja) values ("+comp.getTipoMovimiento()+","+art.getNumeroId()+","+cantidad+","+Inicio.deposito.getNumero()+","+comp.getTipoComprobante()+","+comp.getNumero()+","+comp.getCliente().getCodigoId()+",'"+comp.getFechaEmision()+"',"+comp.getUsuarioGenerador()+","+articulo.getPrecioUnitario()+","+articulo.getPrecioServicio()+","+articulo.getPrecioDeCosto()+","+Inicio.caja.getNumero()+")";
-                    tra.guardarRegistro(sql);
-                    // aca debe grabar en detalle de facturas
-                }
-            }else{
+            
             detalle.setIdArticulo(articulo.getNumeroId());
             detalle.setCantidad(articulo.getCantidad());
             detalle.setIdFactura(factura.getId());
@@ -468,7 +457,7 @@ public class Comprobantes implements Facturar{
             ffD.nuevaFactura(detalle);
             sql="insert into movimientosarticulos (tipoMovimiento,idArticulo,cantidad,numeroDeposito,tipoComprobante,numeroComprobante,numeroCliente,fechaComprobante,numeroUsuario,precioDeVenta,precioServicio,preciodecosto,idcaja,estado) values ("+comp.getTipoMovimiento()+","+articulo.getNumeroId()+","+cantidad+","+Inicio.deposito.getNumero()+","+comp.getTipoComprobante()+","+comp.getNumero()+","+comp.getCliente().getCodigoId()+",'"+comp.getFechaEmision()+"',"+comp.getUsuarioGenerador()+","+articulo.getPrecioUnitario()+","+articulo.getPrecioServicio()+","+articulo.getPrecioDeCosto()+","+Inicio.caja.getNumero()+",0)";
             tra.guardarRegistro(sql);
-            }
+            
         }
         
             sql="insert into movimientoscaja (numeroUsuario,numeroSucursal,numeroComprobante,tipoComprobante,monto,tipoMovimiento,idCaja,idCliente,tipoCliente,pagado) values ("+comp.getUsuarioGenerador()+","+comp.getIdSucursal()+","+comp.getNumero()+","+comp.getTipoComprobante()+","+comp.getMontoTotal()+","+comp.getTipoMovimiento()+","+Inicio.caja.getNumero()+","+comp.getCliente().getCodigoId()+",1,"+comp.getPagado()+")";

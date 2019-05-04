@@ -5,7 +5,7 @@
 package interfaceGraficasManantial;
 
 import Actualizaciones.BkDeConeccion;
-import Sucursales.Usuarios;
+import Cajas.Usuarios;
 import interfaces.Backpeable;
 import static java.lang.Thread.sleep;
 import java.util.logging.Level;

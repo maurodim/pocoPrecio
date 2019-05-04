@@ -4,6 +4,8 @@
  */
 package Sucursales;
 
+import Cajas.Usuarios;
+import Cajas.Cajas;
 import Administracion.Administracion;
 import Depositos.Depositos;
 import interfaceGraficasManantial.Inicio;

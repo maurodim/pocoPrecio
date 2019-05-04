@@ -2,9 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package interfaceGraficasManantial;
+package Cajas;
 
-import Sucursales.Cajas;
+import Cajas.Cajas;
 import interfacesPrograma.Cajeables;
 
 /**

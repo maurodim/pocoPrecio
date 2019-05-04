@@ -155,7 +155,7 @@ public class FacturaProveedor implements Comprobable,Facturar,Adeudable{
         } catch (SQLException ex) {
             Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
         }
-        String sql="select * from tipocomprobantes where numero=11";
+        String sql="select * from tipocomprobantes where id=11";
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
         try {
             while(rs.next()){
@@ -178,7 +178,7 @@ public class FacturaProveedor implements Comprobable,Facturar,Adeudable{
         } catch (SQLException ex) {
             Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
         }
-        String sql="update tipocomprobantes set numeroActivo="+numeroRecibo+" where numero=11";
+        String sql="update tipocomprobantes set numeroActivo="+numeroRecibo+" where id=11";
         tra.guardarRegistro(sql);
     }
     private static void numeroActualFactura(){
@@ -427,22 +427,24 @@ public class FacturaProveedor implements Comprobable,Facturar,Adeudable{
        Transaccionable tra=null;
         try {
             tra = new Conecciones();
-        } catch (InstantiationException ex) {
+        
+       String sql="insert into movimientosproveedores (numeroProveedor,monto,numeroComprobante,idUsuario,tipoComprobante,idSucursal,idRemito,pagado,idcaja,fechapago,numerofactura,numeroremito,subtotal,saldo,idcomprobante,porcentajedescuento) values ("+factProv.getNumeroProveedor()+","+factProv.getMontoFinal()+",'"+numeroRecibo+"',"+factProv.getIdUsuario()+",11,"+factProv.getIdSucursal()+",0,1,"+Inicio.caja.getNumero()+",'"+Inicio.fechaDia+"','00','00',"+factProv.getMontoFinal()+",0.00,0,0.00)";
+       //String sql="update movimientosproveedores set pagado=1,numeroComprobante="+numeroRecibo+",idCaja="+Inicio.caja.getNumero()+",fechaPago='"+fech+"',idSucursal="+Inicio.sucursal.getNumero()+" where id="+factProv.getId();
+       //System.out.println("VEAMOS "+sql);
+       tra.guardarRegistro(sql);
+       String ttx="PAGO A PROVEEDOR "+factProv.getNombreProveedor();
+       Double monto=factProv.getMontoFinal();
+       sql="insert into movimientoscaja (numeroUsuario,numeroSucursal,numeroComprobante,tipoComprobante,monto,tipoMovimiento,idCaja,idCliente,tipoCliente,pagado,observaciones) values ("+Inicio.usuario.getNumeroId()+","+Inicio.sucursal.getNumero()+","+numeroRecibo+",6,"+monto+",11,"+Inicio.caja.getNumero()+","+factProv.getNumeroProveedor()+",2,1,'"+ttx+"')";
+        System.out.println("cajaa "+sql);
+       tra.guardarRegistro(sql);
+       GuardarNumeroRecibo();
+       } catch (InstantiationException ex) {
             Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
             Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
         }
-       String sql="insert into movimientosproveedores (numeroProveedor,monto,numeroComprobante,idUsuario,tipoComprobante,idSucursal,idRemito) values ("+factProv.getNumeroProveedor()+","+factProv.getMontoFinal()+","+numeroRecibo+","+factProv.getIdUsuario()+",11,"+factProv.getIdSucursal()+",0)";
-       //String sql="update movimientosproveedores set pagado=1,numeroComprobante="+numeroRecibo+",idCaja="+Inicio.caja.getNumero()+",fechaPago='"+fech+"',idSucursal="+Inicio.sucursal.getNumero()+" where id="+factProv.getId();
-       //System.out.println("VEAMOS "+sql);
-       tra.guardarRegistro(sql);
-       String ttx="PAGO A PROVEEDOR "+factProv.getNombreProveedor();
-       Double monto=factProv.getMontoFinal();
-       sql="insert into movimientoscaja (numeroUsuario,numeroSucursal,numeroComprobante,tipoComprobante,monto,tipoMovimiento,idCaja,idCliente,tipoCliente,pagado,observaciones) value ("+Inicio.usuario.getNumeroId()+","+Inicio.sucursal.getNumero()+","+numeroRecibo+",6,"+monto+",11,"+Inicio.caja.getNumero()+","+factProv.getNumeroProveedor()+",2,1,'"+ttx+"')";
-       tra.guardarRegistro(sql);
-       GuardarNumeroRecibo();
        return factProv;
     }
 

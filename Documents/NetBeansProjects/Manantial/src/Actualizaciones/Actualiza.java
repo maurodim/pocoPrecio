@@ -6,10 +6,10 @@ package Actualizaciones;
 
 import Proveedores.Proveedores;
 import Depositos.Depositos;
-import Sucursales.Cajas;
+import Cajas.Cajas;
 import Sucursales.ListasDePrecios;
 import Sucursales.Sucursales;
-import Sucursales.Usuarios;
+import Cajas.Usuarios;
 import facturacion.clientes.Clientes;
 import interfaceGraficasManantial.Inicio;
 import interfaces.Transaccionable;

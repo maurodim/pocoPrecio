@@ -494,6 +494,7 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
             if(arti.getModificaPrecio()){
                 this.jLabel7.setVisible(true);
                 this.jTextField4.setVisible(true);
+                this.jTextField4.setText(String.valueOf(arti.getPrecioUnitarioNeto()));
                 //this.jTextField4.setEnabled(true);
                // this.jCheckBox1.setVisible(false);
                 
@@ -675,6 +676,7 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
             Double precioUni=0.00;
             if(cantt < 1000){
             if(arti.getModificaPrecio()){
+                this.jTextField4.selectAll();
                 this.jTextField4.requestFocus();
             }else{
                 if(arti.getPrecioServicio()>0){
@@ -1029,7 +1031,7 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
                 servicio=0.00;
             }
             if(arti.getModificaPrecio())servicio=Numeros.ConvertirStringADouble(String.valueOf(this.jTextField4.getText()));
-            Double tota=arti.getPrecioUnitarioNeto() + servicio;
+            Double tota=servicio;
             //arti.setPrecioUnitarioNeto(tota);
             //arti.setPrecioServicio(servicio);
             Double cantt=Double.parseDouble(this.jTextField2.getText());

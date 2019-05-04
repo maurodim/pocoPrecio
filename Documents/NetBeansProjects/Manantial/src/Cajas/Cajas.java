@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package Sucursales;
+package Cajas;
 
 import Actualizaciones.BkDeConeccion;
 import Conversores.Numeros;
@@ -22,6 +22,8 @@ import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import Articulos.Articulos;
+import Sucursales.Billetes;
+import Sucursales.Sucursales;
 import objetosR.Comprobantes;
 import objetosR.ConeccionLocal;
 import objetosR.Conecciones;
@@ -540,7 +542,7 @@ public class Cajas extends Sucursales implements Cajeables{
             */
                 
                 int nume=NumeroDeComprobanteActivoMovCaja();
-                sql="insert into movimientoscaja (numeroUsuario,numeroSucursal,monto,tipoMovimiento,idCaja,numerocomprobante,tipocomprobante,pagado) values ("+Inicio.usuario.getNumeroId()+","+Inicio.sucursal.getNumero()+","+cajaNueva.getSaldoInicial()+",1,"+cajaNumeroAct+","+nume+",0,0)";
+                sql="insert into movimientoscaja (numeroUsuario,numeroSucursal,monto,tipoMovimiento,idCaja,numerocomprobante,tipocomprobante,pagado) values ("+Inicio.usuario.getNumeroId()+","+Inicio.sucursal.getNumero()+","+cajaNueva.getSaldoInicial()+",1,"+cajaNumeroAct+","+nume+",0,1)";
                 tra.guardarRegistro(sql);
                 cajaNueva.setNumero(cajaNumeroAct);
                 int pos=cajaNueva.getTipoMovimiento();
@@ -784,12 +786,19 @@ public class Cajas extends Sucursales implements Cajeables{
             Logger.getLogger(Cajas.class.getName()).log(Level.SEVERE, null, ex);
         }
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
+        Double vtas=0.00;
+        Double gtos=0.00;
+        
         try {
             while(rs.next()){
                 cajass=new Cajas();
                 cajass.setNumero(cajas.numero);
                 cajass.setNumeroDeComprobante(rs.getInt("numeroComprobante"));
                 cajass.setTipoMovimiento(rs.getInt("tipoMovimiento"));
+                if(rs.getInt("pagado")== 1){
+                    if(cajass.getTipoMovimiento()==1 || cajas.getTipoMovimiento()==7 || cajass.getTipoMovimiento()==13)vtas=vtas + rs.getDouble("monto");
+                }
+                if(cajass.getTipoMovimiento()==12 || cajass.getTipoMovimiento()==4 || cajass.getTipoMovimiento()==11)gtos=gtos + rs.getDouble("monto");
                 cajass.setMontoMovimiento(rs.getDouble("monto"));
                 saldoFinal= saldoFinal + rs.getDouble("monto");
                 cajass.setTipoDeComprobante(rs.getInt("tipoComprobante"));
@@ -802,6 +811,8 @@ public class Cajas extends Sucursales implements Cajeables{
             }
             rs.close();
             cajas.saldoFinal=saldoFinal;
+            cajas.totalVentas=vtas;
+            cajas.totalGastos=gtos;
         } catch (SQLException ex) {
             Logger.getLogger(Cajas.class.getName()).log(Level.SEVERE, null, ex);
         } catch(NullPointerException ee){
@@ -1049,7 +1060,7 @@ public class Cajas extends Sucursales implements Cajeables{
                break;
            case 11:
                //pago a proveedores -- leo en movimientos de caja, devuelvo un objeto caja
-               sql="select *,(select proveedores.nombre from proveedores where proveedores.numero=movimientoscaja.idCliente)as nombreP from movimientoscaja where tipoComprobante="+tipoComprobante+" and numeroComprobante="+idComprobante+" and numeroUsuario="+Inicio.usuario.getNumeroId()+" and movimientoscaja.tipoMovimiento=11"; 
+               sql="select fecha,idcliente,monto,observaciones,(select proveedores.nombre from proveedores where proveedores.id=movimientoscaja.idCliente)as nombreP from movimientoscaja where tipoComprobante="+tipoComprobante+" and numeroComprobante="+idComprobante+" and numeroUsuario="+Inicio.usuario.getNumeroId()+" and movimientoscaja.tipoMovimiento=11"; 
                rs=tra.leerConjuntoDeRegistros(sql);
         try {
             while(rs.next()){
@@ -1081,12 +1092,13 @@ public class Cajas extends Sucursales implements Cajeables{
                break;
            case 13:
                //cobro cta cte clientes -- leo en movimientos caja, devuelvo un obejto caja
-               sql="select *,(select clientes.RAZON_SOCI from clientes where clientesc.id=movimientoscaja.idCliente)as nombreP from movimientoscaja where tipoComprobante="+tipoComprobante+" and numeroComprobante="+idComprobante+" and numeroUsuario="+Inicio.usuario.getNumeroId()+" and movimientoscaja.tipoMovimiento=4"; 
+               sql="select fecha,idcliente,monto,(select clientes.RAZON_SOCI from clientes where clientes.id=movimientoscaja.idCliente)as nombreP from movimientoscaja where tipoComprobante="+tipoComprobante+" and numeroComprobante="+idComprobante+" and numeroUsuario="+Inicio.usuario.getNumeroId()+" and movimientoscaja.tipoMovimiento=13"; 
+               System.out.println("cobranza "+sql);
                rs=tra.leerConjuntoDeRegistros(sql);
         try {
             while(rs.next()){
                resultado="fecha :"+rs.getDate("fecha")+" Cobranza Cliente: "+rs.getString("nombreP")+"\n\r";
-               Double monto=rs.getDouble("monto")* -1;
+               Double monto=rs.getDouble("monto");
                resultado+="Monto :"+monto;
                modelo.addElement(resultado);
             }

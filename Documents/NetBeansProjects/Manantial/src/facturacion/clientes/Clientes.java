@@ -594,7 +594,7 @@ public class Clientes implements Busquedas,Facturar,Adeudable{
     }
     private static void numeroActualRecibo(){
         
-        String sql="select * from tipocomprobantes where numero=11";
+        String sql="select * from tipocomprobantes where id=11";
         rs=tra.leerConjuntoDeRegistros(sql);
         try {
             while(rs.next()){
@@ -608,7 +608,7 @@ public class Clientes implements Busquedas,Facturar,Adeudable{
     }
     private void GuardarNumeroRecibo(){
         
-        String sql="update tipocomprobantes set numeroActivo="+numeroRecibo+" where numero=11";
+        String sql="update tipocomprobantes set numeroActivo="+numeroRecibo+" where id=11";
         tra.guardarRegistro(sql);
     }
     @Override
@@ -982,13 +982,13 @@ public class Clientes implements Busquedas,Facturar,Adeudable{
        String fech=Numeros.ConvertirFecha(Inicio.fechaVal);
        
        Double montt=factProv.getMontoTotal() * -1;
-       String sql="insert into movimientosclientes (numeroProveedor,monto,numeroComprobante,idUsuario,tipoComprobante,idSucursal,idRemito) values ("+factProv.getCliente().getCodigoId()+","+montt+","+numeroRecibo+","+factProv.getUsuarioGenerador()+",11,"+factProv.getIdSucursal()+",0)";
+       String sql="insert into movimientosclientes (numeroProveedor,monto,numeroComprobante,idUsuario,tipoComprobante,idSucursal,idRemito,pagado,idcaja) values ("+factProv.getCliente().getCodigoId()+","+montt+",'"+numeroRecibo+"',"+factProv.getUsuarioGenerador()+",11,"+factProv.getIdSucursal()+",0,1,"+Inicio.caja.getNumero()+")";
        //String sql="update movimientosproveedores set pagado=1,numeroComprobante="+numeroRecibo+",idCaja="+Inicio.caja.getNumero()+",fechaPago='"+fech+"',idSucursal="+Inicio.sucursal.getNumero()+" where id="+factProv.getId();
        //System.out.println("VEAMOS "+sql);
        tra.guardarRegistro(sql);
        //String ttx="PAGO A PROVEEDOR "+factProv.getNombreProveedor();
        Double monto=factProv.getMontoTotal();
-       sql="insert into movimientoscaja (numeroUsuario,numeroSucursal,numeroComprobante,tipoComprobante,monto,tipoMovimiento,idCaja,idCliente,tipoCliente,pagado) value ("+Inicio.usuario.getNumeroId()+","+Inicio.sucursal.getNumero()+","+numeroRecibo+",6,"+monto+",13,"+Inicio.caja.getNumero()+","+factProv.getCliente().getCodigoId()+",1,1)";
+       sql="insert into movimientoscaja (numeroUsuario,numeroSucursal,numeroComprobante,tipoComprobante,monto,tipoMovimiento,idCaja,idCliente,tipoCliente,pagado) values ("+Inicio.usuario.getNumeroId()+","+Inicio.sucursal.getNumero()+","+numeroRecibo+",6,"+monto+",13,"+Inicio.caja.getNumero()+","+factProv.getCliente().getCodigoId()+",1,1)";
        tra.guardarRegistro(sql);
        GuardarNumeroRecibo();
        return factProv;

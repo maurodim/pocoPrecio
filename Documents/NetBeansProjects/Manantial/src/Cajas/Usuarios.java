@@ -2,9 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package Sucursales;
+package Cajas;
 
 import Administracion.TipoAcceso;
+import Sucursales.Sucursales;
 import interfaceGraficasManantial.Inicio;
 import interfaces.Personalizable;
 import interfaces.Transaccionable;

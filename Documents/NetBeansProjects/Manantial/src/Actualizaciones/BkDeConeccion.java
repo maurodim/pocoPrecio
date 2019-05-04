@@ -5,7 +5,7 @@
 package Actualizaciones;
 
 import Sucursales.Sucursales;
-import Sucursales.Usuarios;
+import Cajas.Usuarios;
 import interfaceGraficasManantial.Inicio;
 import interfaces.Backpeable;
 import interfaces.Transaccionable;

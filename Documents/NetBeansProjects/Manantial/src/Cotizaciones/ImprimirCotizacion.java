@@ -7,7 +7,7 @@ package Cotizaciones;
 
 import Impresiones.*;
 import Depositos.RemitosInternos;
-import Sucursales.Cajas;
+import Cajas.Cajas;
 import interfaceGraficasManantial.Inicio;
 import java.awt.Color;
 import java.awt.Font;

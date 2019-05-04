@@ -4,7 +4,7 @@
  */
 package ClientesPantallas;
 
-import Sucursales.Cajas;
+import Cajas.Cajas;
 import interfacesPrograma.Facturar;
 import objetosR.Comprobantes;
 

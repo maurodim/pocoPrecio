@@ -4,6 +4,8 @@
  */
 package facturacion.clientes;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author mauro di
@@ -11,6 +13,7 @@ package facturacion.clientes;
 public class FormasDePago {
     private int numeroFormaDePago;
     private String descripcionFormaDePago;
+    private double recargo;
 
     public int getNumeroFormaDePago() {
         return numeroFormaDePago;
@@ -31,6 +34,11 @@ public class FormasDePago {
     public FormasDePago() {
         this.numeroFormaDePago = 1;
         this.descripcionFormaDePago = "CONTADO";
+    }
+    public ArrayList ListarFormas(){
+        ArrayList lst=new ArrayList();
+        
+        return lst;
     }
     
 }
