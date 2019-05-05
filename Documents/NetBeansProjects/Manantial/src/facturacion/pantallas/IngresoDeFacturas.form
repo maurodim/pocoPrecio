@@ -397,7 +397,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel25">
           <Properties>
-            <Property name="text" type="java.lang.String" value="&lt;html&gt;PRESIONE F1 PARA CONSULTAR POR DESCRIPCION&lt;br&gt; PRESIONE F3 PARA FILTRAR POR SUBRUBRO&lt;br&gt; PRESIONE F4 PARA IMPRIMIR &lt;/html&gt;"/>
+            <Property name="text" type="java.lang.String" value="&lt;html&gt;PRESIONE F1 PARA CONSULTAR POR DESCRIPCION&lt;br&gt; PRESIONE F3 PARA SELECCIONAR FORMA DE PAGO&lt;br&gt; PRESIONE F4 PARA IMPRIMIR &lt;/html&gt;"/>
           </Properties>
         </Component>
       </SubComponents>

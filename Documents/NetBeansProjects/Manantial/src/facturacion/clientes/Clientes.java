@@ -583,7 +583,7 @@ public class Clientes implements Busquedas,Facturar,Adeudable{
                 Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
             }
         String sql="delete from clientes";
-        tt.guardarRegistro(sql);
+        //tt.guardarRegistro(sql);
         while(ilC.hasNext()){
             cli=(Clientes)ilC.next();
             

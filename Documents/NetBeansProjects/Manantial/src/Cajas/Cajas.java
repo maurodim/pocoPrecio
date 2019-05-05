@@ -59,6 +59,84 @@ public class Cajas extends Sucursales implements Cajeables{
     private String descripcionMovimiento;
     private static Integer numeroDeComprobanteBk=0;
     private static ArrayList listadoDeComprobantes=new ArrayList();
+    private int idForma1;
+    private int idForma2;
+    private double monto1;
+    private double monto2;
+    private double totalOtrosPagos;
+    private String descripcionForma1;
+    private String descripcionForma2;
+    private double totalEfectivo;
+
+    public int getIdForma2() {
+        return idForma2;
+    }
+
+    public void setIdForma2(int idForma2) {
+        this.idForma2 = idForma2;
+    }
+
+    public double getMonto2() {
+        return monto2;
+    }
+
+    public void setMonto2(double monto2) {
+        this.monto2 = monto2;
+    }
+
+    
+    public double getTotalEfectivo() {
+        return totalEfectivo;
+    }
+
+    public void setTotalEfectivo(double totalEfectivo) {
+        this.totalEfectivo = totalEfectivo;
+    }
+    
+
+    public String getDescripcionForma1() {
+        return descripcionForma1;
+    }
+
+    public void setDescripcionForma1(String descripcionForma1) {
+        this.descripcionForma1 = descripcionForma1;
+    }
+
+    public String getDescripcionForma2() {
+        return descripcionForma2;
+    }
+
+    public void setDescripcionForma2(String descripcionForma2) {
+        this.descripcionForma2 = descripcionForma2;
+    }
+    
+
+    public double getTotalOtrosPagos() {
+        return totalOtrosPagos;
+    }
+
+    public void setTotalOtrosPagos(double totalOtrosPagos) {
+        this.totalOtrosPagos = totalOtrosPagos;
+    }
+    
+
+    public int getIdForma1() {
+        return idForma1;
+    }
+
+    public void setIdForma1(int idForma) {
+        this.idForma1 = idForma;
+    }
+
+    public double getMonto1() {
+        return monto1;
+    }
+
+    public void setMonto1(double monto1) {
+        this.monto1 = monto1;
+    }
+    
+    
 
     public Integer getTipo() {
         return tipo;
@@ -774,7 +852,7 @@ public class Cajas extends Sucursales implements Cajeables{
         Cajas cajas=(Cajas)caja;
         Cajas cajass=null;
         Double saldoFinal=cajas.saldoInicial;
-        String sql="select * from movimientoscaja where idCaja="+cajas.numero;
+        String sql="select numeroComprobante,idcaja,tipomovimiento,pagado,monto,tipocomprobante,idforma1,monto1,idforma2,monto2,(select descripcion from formasdepago where formasdepago.id=movimientoscaja.idforma1) as descForma1,(select descripcion from formasdepago where formasdepago.id=movimientoscaja.idforma2) as descForma2 from movimientoscaja where idCaja="+cajas.numero;
         Transaccionable tra=null;
         try {
             tra = new Conecciones();
@@ -788,24 +866,43 @@ public class Cajas extends Sucursales implements Cajeables{
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
         Double vtas=0.00;
         Double gtos=0.00;
-        
+        Double tarjetas=0.00;
+        double mmonto=0.00;
+        //int incluir=0;
         try {
             while(rs.next()){
                 cajass=new Cajas();
+                //incluir=0;
                 cajass.setNumero(cajas.numero);
                 cajass.setNumeroDeComprobante(rs.getInt("numeroComprobante"));
                 cajass.setTipoMovimiento(rs.getInt("tipoMovimiento"));
+                mmonto=rs.getDouble("monto");
                 if(rs.getInt("pagado")== 1){
-                    if(cajass.getTipoMovimiento()==1 || cajas.getTipoMovimiento()==7 || cajass.getTipoMovimiento()==13)vtas=vtas + rs.getDouble("monto");
+                    if(cajass.getTipoMovimiento()==1 || cajass.getTipoMovimiento()==7 || cajass.getTipoMovimiento()==13){
+                        vtas=vtas + rs.getDouble("monto");
+                        
+                        
+                    }
                 }
+                
                 if(cajass.getTipoMovimiento()==12 || cajass.getTipoMovimiento()==4 || cajass.getTipoMovimiento()==11)gtos=gtos + rs.getDouble("monto");
-                cajass.setMontoMovimiento(rs.getDouble("monto"));
+                cajass.setMontoMovimiento(mmonto);
+                cajass.setIdForma1(rs.getInt("idforma1"));
+                        
+                        cajass.setMonto1(rs.getDouble("monto1"));
+                        cajass.setDescripcionForma1(rs.getString("descForma1"));
+                        cajass.setIdForma2(rs.getInt("idforma2"));
+                        
+                        cajass.setMonto2(rs.getDouble("monto2"));
+                        cajass.setDescripcionForma2(rs.getString("descForma2"));
+                
                 saldoFinal= saldoFinal + rs.getDouble("monto");
                 cajass.setTipoDeComprobante(rs.getInt("tipoComprobante"));
                 int pos=cajass.getTipoMovimiento() -1;
                 Operaciones operacion=(Operaciones)listOperaciones.get(pos);
                  String desc=operacion.getDescripcion();
                 cajass.setDescripcionMovimiento(desc);
+                
                 listadoCajas.add(cajass);
                 
             }
@@ -813,6 +910,9 @@ public class Cajas extends Sucursales implements Cajeables{
             cajas.saldoFinal=saldoFinal;
             cajas.totalVentas=vtas;
             cajas.totalGastos=gtos;
+            cajas.totalOtrosPagos=tarjetas;
+            cajas.totalEfectivo=vtas - tarjetas;
+            
         } catch (SQLException ex) {
             Logger.getLogger(Cajas.class.getName()).log(Level.SEVERE, null, ex);
         } catch(NullPointerException ee){

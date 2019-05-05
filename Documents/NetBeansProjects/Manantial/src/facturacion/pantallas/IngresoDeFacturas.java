@@ -46,6 +46,7 @@ import FacturaElectronica.Interfaces.FacturableE;
 import FacturaElectronica.Objetos.DetalleFacturas;
 import FacturaElectronica.Objetos.FacturaElectronica;
 import FacturaElectronica.Objetos.TiposIva;
+import facturacion.clientes.FormasDePago;
 import interfaces.Transaccionable;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -79,6 +80,8 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
     private Double subTotal;
     private TablaGenericaProductos tgp;
     private Double montoDescuento;
+    private ArrayList listadoFormas;
+    private FormasDePago formas;
     
     private void desplegarPopUp() {
         
@@ -91,6 +94,7 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
         //comp.setCliente(cliT);
         initComponents();
         tgp = new TablaGenericaProductos();
+        listadoFormas=new ArrayList();
         porcentajeDescuento = 0.00;
         montoDescuento=0.00;
         subTotal = 0.00;
@@ -113,6 +117,7 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
 //cliT=(ClientesTango)oob;
         //comp.setCliente(cliT);
         initComponents();
+        listadoFormas=new ArrayList();
         porcentajeDescuento = 0.00;
         subTotal = 0.00;
         this.jButton3.setVisible(false);
@@ -361,7 +366,7 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
             }
         });
 
-        jLabel25.setText("<html>PRESIONE F1 PARA CONSULTAR POR DESCRIPCION<br> PRESIONE F3 PARA FILTRAR POR SUBRUBRO<br> PRESIONE F4 PARA IMPRIMIR </html>");
+        jLabel25.setText("<html>PRESIONE F1 PARA CONSULTAR POR DESCRIPCION<br> PRESIONE F3 PARA SELECCIONAR FORMA DE PAGO<br> PRESIONE F4 PARA IMPRIMIR </html>");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -492,11 +497,11 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
         //comp.setFechaComprobante(fecha2);
         //comp.setFechaComprobante(fecha);
         
-        int comprobanteTipo=1;
+        int comprobanteTipo=6;
         //cliT.setCondicionIva("1");
-        if(cliT.getTipoIva()==5)comprobanteTipo=1;
-        if(cliT.getTipoIva()==1)comprobanteTipo=2;
-        if(cliT.getTipoIva()==4)comprobanteTipo=3;
+        if(cliT.getTipoIva()==5)comprobanteTipo=6;
+        if(cliT.getTipoIva()==1)comprobanteTipo=1;
+        if(cliT.getTipoIva()==4)comprobanteTipo=6;
         
         Comprobantes comprobante=new Comprobantes();
         comprobante.setFe(true);
@@ -577,7 +582,7 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
             if(noFacturar==0){
                 comprobante.setFiscal(1);
                 Facturar fat=new Comprobantes();
-                fat.guardar(comprobante);
+                comprobante=(Comprobantes) fat.guardar(comprobante);
                 // aqui hago el envio a factura  electronica, si aprueba no imprime
                 
                 FacturaElectronica fe=new FacturaElectronica();
@@ -660,8 +665,11 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
                 Transaccionable trr=new Conecciones();
                 Conecciones conx=new Conecciones();
         Connection conexion=conx.obtenerConexion();
-        fact.generar(conexion, condicion, Propiedades.getARCHIVOKEY(), Propiedades.getARCHIVOCRT(), cliT.getCodigoId(), cliT.getNumeroDeCuit(), tipoComp, montoTotal, subTotal, montoIva, ptoVta, Propiedades.getCUIT(), tipoVta, listadoIva, listadoTrib, cliT.getRazonSocial(), cliT.getDireccion(), String.valueOf(cliT.getTipoIva()), listadoDetalle,idPed,Propiedades.getNOMBRECOMERCIO(),Propiedades.getNOMBRECOMERCIO(),"resp inscripto",Propiedades.getDIRECCION(),Propiedades.getTELEFONO(),Propiedades.getINGBRUTOS(),Propiedades.getINICIOACT());
-                
+        Integer numeFc=0;
+        
+        numeFc=fact.generar(conexion, condicion, Propiedades.getARCHIVOKEY(), Propiedades.getARCHIVOCRT(), cliT.getCodigoId(), cliT.getNumeroDeCuit(), tipoComp, montoTotal, subTotal, montoIva, ptoVta, Propiedades.getCUIT(), tipoVta, listadoIva, listadoTrib, cliT.getRazonSocial(), cliT.getDireccion(), String.valueOf(cliT.getTipoIva()), listadoDetalle,idPed,Propiedades.getNOMBRECOMERCIO(),Propiedades.getNOMBRECOMERCIO(),"resp inscripto",Propiedades.getDIRECCION(),Propiedades.getTELEFONO(),Propiedades.getINGBRUTOS(),Propiedades.getINICIOACT());
+                //comprobante.setNumero(numeFc);
+                comprobante.GuardarNumeroFiscalEnCaja(numeFc, comprobante.getNumeroRegistro(),tipoComp);
             } catch (InstantiationException ex) {
                 Logger.getLogger(IngresoDeFacturas.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IllegalAccessException ex) {
@@ -985,13 +993,34 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
             comprobante.setFe(false);
             comprobante.setCliente(cliT);
             comprobante.setTipoMovimiento(1);
-            comprobante.setTipoComprobante(comprobanteTipo);
+            comprobante.setTipoComprobante(28);
             comprobante.setFechaEmision((Date.valueOf(fecha2)));
             comprobante.setListadoDeArticulos(detalleDelPedido);
             comprobante.setUsuarioGenerador(Inicio.usuario.getNumero());
             comprobante.setIdSucursal(Inicio.sucursal.getNumero());
             comprobante.setIdDeposito(Inicio.deposito.getNumero());
             
+            int indice=0;
+            int cantidadF=listadoFormas.size();
+            if(cantidadF > 0){
+            for(int aaa=0;aaa < cantidadF;aaa++){
+                formas=(FormasDePago) listadoFormas.get(aaa);
+               if(aaa==0){
+                comprobante.setIdForma1(formas.getNumeroFormaDePago());
+                comprobante.setMonto1(formas.getMonto());
+               }
+               if(aaa==1){
+                //formas=(FormasDePago) listadoFormas.get(1);
+                comprobante.setIdForma2(formas.getNumeroFormaDePago());
+                comprobante.setMonto2(formas.getMonto());
+               }
+            }
+            }else{
+                comprobante.setIdForma1(1);
+                comprobante.setMonto1(montoTotal);
+                //comprobante.setIdForma2(0);
+                //comprobante.setMonto2(0.00);
+            }
             Integer numeroCaja = Inicio.caja.getNumero();
             //System.out.println("EL NUMERO DE CAJA ESSSSSSSS "+numeroCaja);
             comprobante.setIdCaja(numeroCaja);
@@ -1079,7 +1108,32 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
             }
             
         }
-        //if(evt.getKeyCode()==KeyEvent.VK_F3)this.jComboBox2.requestFocus();
+        if(evt.getKeyCode()==KeyEvent.VK_F3){
+            SelectorFormaDePago slector=new SelectorFormaDePago(null,true,montoTotal);
+            slector.monto_txt.setText(String.valueOf(montoTotal));
+            slector.monto_txt.selectAll();
+            slector.jComboBox1.requestFocus();
+            slector.setVisible(true);
+            
+            if(slector.saldo > montoTotal){
+                
+                double monto=slector.saldo - montoTotal;
+                String descripcion=JOptionPane.showInputDialog("Ingrese descripción del recargo ","");
+                Articulos pedidos=new Articulos();
+        pedidos.setNumeroId(0);
+        pedidos.setCantidad(1.00);
+        pedidos.setPrecioUnitarioNeto(monto);
+        pedidos.setPrecioDeCosto(0.00);
+        pedidos.setDescripcionArticulo(descripcion.toUpperCase());
+        pedidos.setCodigoAsignado(String.valueOf(0));
+        pedidos.setIdCombo(0);
+        detalleDelPedido.add(pedidos);
+        agregarRenglonTabla();
+        montrarMonto();
+                
+            }
+            listadoFormas=slector.listadoPagos;
+        }
     }//GEN-LAST:event_jTextField1KeyPressed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed

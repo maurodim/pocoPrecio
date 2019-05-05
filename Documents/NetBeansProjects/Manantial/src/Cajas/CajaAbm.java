@@ -35,6 +35,7 @@ public class CajaAbm extends javax.swing.JInternalFrame {
     private static Double totalVentas;
     private static Double totalGastos;
     private static Double totalEfect;
+    private static double totalOtros;
     private ArrayList listadoP;
     private Integer operacionSelect = 0;
 
@@ -82,7 +83,7 @@ public class CajaAbm extends javax.swing.JInternalFrame {
             fila[2] = cajj.getMontoMovimiento();
             tablaCaja.addRow(fila);
         }
-        ModificarLabels();
+        ModificarLabels(cajj.getTotalVentas(), cajj.getTotalGastos(), cajj.getTotalEfectivo(), cajj.getTotalOtrosPagos());
 
     }
 
@@ -114,6 +115,7 @@ public class CajaAbm extends javax.swing.JInternalFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
 
         setClosable(true);
         setMaximizable(true);
@@ -172,7 +174,8 @@ public class CajaAbm extends javax.swing.JInternalFrame {
             fila[2]=cajj.getMontoMovimiento();
             tablaCaja.addRow(fila);
         }
-        ModificarLabels();
+
+        ModificarLabels(totalVentas,totalGastos,totalEfect,totalVentas);
         jTable1.setModel(tablaCaja);
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -323,6 +326,8 @@ public class CajaAbm extends javax.swing.JInternalFrame {
 
         jLabel8.setText("Total Efect en Caja:");
 
+        jLabel9.setText("Total Otros Pagos:");
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -333,7 +338,8 @@ public class CajaAbm extends javax.swing.JInternalFrame {
                     .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
                     .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -347,6 +353,8 @@ public class CajaAbm extends javax.swing.JInternalFrame {
                 .addComponent(jLabel7)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel8)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel9)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -515,7 +523,7 @@ public class CajaAbm extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameActivated
-        
+
     }//GEN-LAST:event_formInternalFrameActivated
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
@@ -526,10 +534,12 @@ public class CajaAbm extends javax.swing.JInternalFrame {
         totalVentas = 0.00;
         totalGastos = 0.00;
         totalEfect = 0.00;
+        totalOtros = 0.00;
         Cajas cajj = new Cajas();
         tablaCaja.addColumn("COMPROBANTE");
         tablaCaja.addColumn("MOVIMIENTO");
         tablaCaja.addColumn("MONTO");
+        //tablaCaja.addColumn("FORMA DE PAGO");
         Object[] fila = new Object[3];
         while (itC.hasNext()) {
             cajj = (Cajas) itC.next();
@@ -537,6 +547,12 @@ public class CajaAbm extends javax.swing.JInternalFrame {
             fila[1] = cajj.getDescripcionMovimiento();
             if (cajj.getTipoMovimiento() == 1 || cajj.getTipoMovimiento() == 7 || cajj.getTipoMovimiento() == 13) {
                 totalVentas = totalVentas + cajj.getMontoMovimiento();
+                if (cajj.getIdForma1() != 1) {
+                    totalOtros = totalOtros + cajj.getMonto1();
+                }
+                if (cajj.getIdForma2() != 1) {
+                    totalOtros = totalOtros + cajj.getMonto2();
+                }
             } else {
                 if (cajj.getTipoMovimiento() == 9) {
 
@@ -547,16 +563,18 @@ public class CajaAbm extends javax.swing.JInternalFrame {
             }
 
             fila[2] = cajj.getMontoMovimiento();
+            //fila[3]=cajj.getIdForma();
             tablaCaja.addRow(fila);
         }
-        ModificarLabels();
+        ModificarLabels(totalVentas, totalGastos, totalEfect, totalOtros);
         this.jTable1.setModel(tablaCaja);
     }//GEN-LAST:event_formMouseClicked
-    private void ModificarLabels() {
-        this.jLabel6.setText("T. INGRESOS " + totalVentas);
-        this.jLabel7.setText("T. EGRESOS " + totalGastos);
-        totalEfect = Inicio.caja.getSaldoInicial() + totalVentas + totalGastos;
+    private void ModificarLabels(double totalVtas, double totalGtos, double totalEf, double totalOtros) {
+        this.jLabel6.setText("T. INGRESOS " + totalVtas);
+        this.jLabel7.setText("T. EGRESOS " + totalGtos);
+        totalEfect = Inicio.caja.getSaldoInicial() + totalVentas + totalGastos - totalOtros;
         this.jLabel8.setText("T. EFECT EN CAJA " + totalEfect);
+        this.jLabel9.setText("TOTAL OTROS PAGOS: "+totalOtros);
     }
 
     private void ListarProveedores() {
@@ -644,6 +662,7 @@ public class CajaAbm extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

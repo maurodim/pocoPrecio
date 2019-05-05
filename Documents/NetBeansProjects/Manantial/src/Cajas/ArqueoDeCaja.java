@@ -107,11 +107,13 @@ public class ArqueoDeCaja extends javax.swing.JInternalFrame {
         Double diferencia=0.00;
         Double entrega=0.00;
         saldoInicial=Inicio.sucursal.getCaja().getSaldoInicial();
-        saldoFinal=totalB - saldoInicial;
+        
         Cajeables caj=new Cajas();
         Cajas cajas=new Cajas();
         cajas=(Cajas)caj.ArquearCaja(Inicio.sucursal.getCaja());
         Double totalMovimientos=(Double)cajas.getSaldoFinal();
+        totalB=cajas.getTotalVentas();
+        saldoFinal=totalB - saldoInicial;
         diferencia=saldoFinal - totalMovimientos;
         //cajas.setMontoMovimiento(diferencia);
         entrega=0.00;

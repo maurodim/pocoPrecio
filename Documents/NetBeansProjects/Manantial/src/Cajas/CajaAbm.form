@@ -126,7 +126,7 @@
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTable1MouseClicked"/>
               </Events>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="MiModeloTablaArticulos tablaCaja=new MiModeloTablaArticulos();&#xa;this.jPanel2.setVisible(false);&#xa;Iterator itC=Cajas.getListadoCajas().listIterator();&#xa;totalVentas=0.00;&#xa;totalGastos=0.00;&#xa;totalEfect=0.00;&#xa;Cajas cajj=new Cajas();&#xa;tablaCaja.addColumn(&quot;COMPROBANTE&quot;);&#xa;tablaCaja.addColumn(&quot;MOVIMIENTO&quot;);&#xa;tablaCaja.addColumn(&quot;MONTO&quot;);&#xa;Object[] fila=new Object[3];&#xa;while(itC.hasNext()){&#xa;    cajj=(Cajas)itC.next();&#xa;    fila[0]=cajj.getNumeroDeComprobante();&#xa;    fila[1]=cajj.getDescripcionMovimiento();&#xa;    if(cajj.getTipoMovimiento()==1 || cajj.getTipoMovimiento()==7 || cajj.getTipoMovimiento()==13){&#xa;    totalVentas=totalVentas + cajj.getMontoMovimiento();&#xa;    }else{&#xa;    if(cajj.getTipoMovimiento()==9){&#xa;&#xa;    }else{&#xa;&#xa;        totalGastos=totalGastos + cajj.getMontoMovimiento();&#xa;    }&#xa;    }&#xa;    &#xa;    fila[2]=cajj.getMontoMovimiento();&#xa;    tablaCaja.addRow(fila);&#xa;}&#xa;ModificarLabels();"/>
+                <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="MiModeloTablaArticulos tablaCaja=new MiModeloTablaArticulos();&#xa;this.jPanel2.setVisible(false);&#xa;Iterator itC=Cajas.getListadoCajas().listIterator();&#xa;totalVentas=0.00;&#xa;totalGastos=0.00;&#xa;totalEfect=0.00;&#xa;Cajas cajj=new Cajas();&#xa;tablaCaja.addColumn(&quot;COMPROBANTE&quot;);&#xa;tablaCaja.addColumn(&quot;MOVIMIENTO&quot;);&#xa;tablaCaja.addColumn(&quot;MONTO&quot;);&#xa;Object[] fila=new Object[3];&#xa;while(itC.hasNext()){&#xa;    cajj=(Cajas)itC.next();&#xa;    fila[0]=cajj.getNumeroDeComprobante();&#xa;    fila[1]=cajj.getDescripcionMovimiento();&#xa;    if(cajj.getTipoMovimiento()==1 || cajj.getTipoMovimiento()==7 || cajj.getTipoMovimiento()==13){&#xa;    totalVentas=totalVentas + cajj.getMontoMovimiento();&#xa;    }else{&#xa;    if(cajj.getTipoMovimiento()==9){&#xa;&#xa;    }else{&#xa;&#xa;        totalGastos=totalGastos + cajj.getMontoMovimiento();&#xa;    }&#xa;    }&#xa;    &#xa;    fila[2]=cajj.getMontoMovimiento();&#xa;    tablaCaja.addRow(fila);&#xa;}&#xa;&#xa;ModificarLabels(totalVentas,totalGastos,totalEfect,totalVentas);"/>
               </AuxValues>
             </Component>
           </SubComponents>
@@ -269,6 +269,7 @@
                       <Component id="jLabel5" pref="170" max="32767" attributes="0"/>
                       <Component id="jLabel7" alignment="0" max="32767" attributes="0"/>
                       <Component id="jLabel8" alignment="0" max="32767" attributes="0"/>
+                      <Component id="jLabel9" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -285,6 +286,8 @@
                   <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -309,6 +312,11 @@
         <Component class="javax.swing.JLabel" name="jLabel8">
           <Properties>
             <Property name="text" type="java.lang.String" value="Total Efect en Caja:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel9">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Total Otros Pagos:"/>
           </Properties>
         </Component>
       </SubComponents>

@@ -46,6 +46,7 @@ import FacturaElectronica.Interfaces.FacturableE;
 import FacturaElectronica.Objetos.DetalleFacturas;
 import FacturaElectronica.Objetos.FacturaElectronica;
 import FacturaElectronica.Objetos.TiposIva;
+import facturacion.clientes.FormasDePago;
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -78,6 +79,8 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
     private Double subTotal;
     private TablaGenericaProductos tgp;
     private Double montoDescuento;
+    private ArrayList listadoFormas;
+    private FormasDePago formas;
     
     public NotaDeCredito() {
         //Articulos.CargarMap();
@@ -594,12 +597,36 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
         Comprobantes comprobante=new Comprobantes();
         comprobante.setCliente(cliT);
         comprobante.setTipoMovimiento(1);
-        comprobante.setTipoComprobante(comprobanteTipo);
+        comprobante.setTipoComprobante(28);
         comprobante.setFechaEmision((Date.valueOf(fecha2)));
         comprobante.setListadoDeArticulos(detalleDelPedido);
         comprobante.setUsuarioGenerador(Inicio.usuario.getNumero());
         comprobante.setIdSucursal(Inicio.sucursal.getNumero());
         comprobante.setIdDeposito(Inicio.deposito.getNumero());
+        
+        
+            int indice=0;
+            int cantidadF=listadoFormas.size();
+            if(cantidadF > 0){
+            for(int aaa=0;aaa < cantidadF;aaa++){
+                formas=(FormasDePago) listadoFormas.get(aaa);
+               if(aaa==0){
+                comprobante.setIdForma1(formas.getNumeroFormaDePago());
+                comprobante.setMonto1(formas.getMonto());
+               }
+               if(aaa==1){
+                //formas=(FormasDePago) listadoFormas.get(1);
+                comprobante.setIdForma2(formas.getNumeroFormaDePago());
+                comprobante.setMonto2(formas.getMonto());
+               }
+            }
+            }else{
+                comprobante.setIdForma1(1);
+                comprobante.setMonto1(montoTotal);
+                //comprobante.setIdForma2(0);
+                //comprobante.setMonto2(0.00);
+            }
+        
         comprobante.setIdCaja(Inicio.caja.getNumero());
         if(montoTotal == 0.00){
             String sqM="usuario :"+Inicio.usuario.getNombre()+" sucursal "+Inicio.sucursal.getNumero()+" idcaja "+Inicio.caja.getNumero();
@@ -666,7 +693,32 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
             noFacturar=0;
         }
         }
-        //if(evt.getKeyCode()==KeyEvent.VK_F3)this.jComboBox2.requestFocus();
+        if(evt.getKeyCode()==KeyEvent.VK_F3){
+            SelectorFormaDePago slector=new SelectorFormaDePago(null,true,montoTotal);
+            slector.monto_txt.setText(String.valueOf(montoTotal));
+            slector.monto_txt.selectAll();
+            slector.jComboBox1.requestFocus();
+            slector.setVisible(true);
+            
+            if(slector.saldo > montoTotal){
+                
+                double monto=slector.saldo - montoTotal;
+                String descripcion=JOptionPane.showInputDialog("Ingrese descripción del recargo ","");
+                Articulos pedidos=new Articulos();
+        pedidos.setNumeroId(0);
+        pedidos.setCantidad(1.00);
+        pedidos.setPrecioUnitarioNeto(monto);
+        pedidos.setPrecioDeCosto(0.00);
+        pedidos.setDescripcionArticulo(descripcion.toUpperCase());
+        pedidos.setCodigoAsignado(String.valueOf(0));
+        pedidos.setIdCombo(0);
+        detalleDelPedido.add(pedidos);
+        agregarRenglonTabla();
+        montrarMonto();
+                
+            }
+            listadoFormas=slector.listadoPagos;
+        }
     }//GEN-LAST:event_jTextField1KeyPressed
 
     private void jTextField2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField2KeyPressed
@@ -833,7 +885,7 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
         if(noFacturar==0){
             comprobante.setFiscal(1);
                 Facturar fat=new Comprobantes();
-                fat.guardar(comprobante);
+                comprobante=(Comprobantes) fat.guardar(comprobante);
                 // aqui hago el envio a factura  electronica, si aprueba no imprime
                 
                 FacturaElectronica fe=new FacturaElectronica();
@@ -921,7 +973,9 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
             try {
                 conx = new Conecciones();
                 Connection conexion=conx.obtenerConexion();
-        fact.generar(conexion, condicion, Propiedades.getARCHIVOKEY(), Propiedades.getARCHIVOCRT(), cliT.getCodigoId(), cliT.getNumeroDeCuit(), tipoComp, montoTotal, subTotal, montoIva, ptoVta, Propiedades.getCUIT(), tipoVta, listadoIva, listadoTrib, cliT.getRazonSocial(), cliT.getDireccion(), cliT.getCondicionIva(), listadoDetalle,idPed,Propiedades.getNOMBRECOMERCIO(),Propiedades.getNOMBRECOMERCIO(),"resp inscripto",Propiedades.getDIRECCION(),Propiedades.getTELEFONO(),Propiedades.getINGBRUTOS(),Propiedades.getINICIOACT());
+                Integer numeFc=0;
+        numeFc=fact.generar(conexion, condicion, Propiedades.getARCHIVOKEY(), Propiedades.getARCHIVOCRT(), cliT.getCodigoId(), cliT.getNumeroDeCuit(), tipoComp, montoTotal, subTotal, montoIva, ptoVta, Propiedades.getCUIT(), tipoVta, listadoIva, listadoTrib, cliT.getRazonSocial(), cliT.getDireccion(), cliT.getCondicionIva(), listadoDetalle,idPed,Propiedades.getNOMBRECOMERCIO(),Propiedades.getNOMBRECOMERCIO(),"resp inscripto",Propiedades.getDIRECCION(),Propiedades.getTELEFONO(),Propiedades.getINGBRUTOS(),Propiedades.getINICIOACT());
+        comprobante.GuardarNumeroFiscalEnCaja(numeFc, comprobante.getNumeroRegistro(),tipoComp);
             } catch (InstantiationException ex) {
                 Logger.getLogger(NotaDeCredito.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IllegalAccessException ex) {

@@ -24,7 +24,8 @@ import java.util.logging.Logger;
  *
  * @author mauro
  */
-public class Comprobantes implements Facturar{
+public class Comprobantes implements Facturar {
+
     private int numero;
     private String descripcion;
     private int destinatarioCondicion;
@@ -58,366 +59,348 @@ public class Comprobantes implements Facturar{
     private int idForma2;
     private double monto1;
     private double monto2;
+    private Integer numeroRegistro;
 
+    public Integer getNumeroRegistro() {
+        return numeroRegistro;
+    }
+
+    public void setNumeroRegistro(Integer numeroRegistro) {
+        this.numeroRegistro = numeroRegistro;
+    }
+    
+    
     public int getIdForma1() {
         return idForma1;
     }
-
+    
     public void setIdForma1(int idForma1) {
         this.idForma1 = idForma1;
     }
-
+    
     public int getIdForma2() {
         return idForma2;
     }
-
+    
     public void setIdForma2(int idForma2) {
         this.idForma2 = idForma2;
     }
-
+    
     public double getMonto1() {
         return monto1;
     }
-
+    
     public void setMonto1(double monto1) {
         this.monto1 = monto1;
     }
-
+    
     public double getMonto2() {
         return monto2;
     }
-
+    
     public void setMonto2(double monto2) {
         this.monto2 = monto2;
     }
     
-
     public int getFiscal() {
         return fiscal;
     }
-
+    
     public void setFiscal(int fiscal) {
         this.fiscal = fiscal;
     }
     
-
     public Integer getIdPedido() {
         return idPedido;
     }
-
+    
     public void setIdPedido(Integer idPedido) {
         this.idPedido = idPedido;
     }
     
-    
-
     public Integer getIdRemito() {
         return idRemito;
     }
-
+    
     public void setIdRemito(Integer idRemito) {
         this.idRemito = idRemito;
     }
     
-
     public Double getDescuento() {
         return descuento;
     }
-
+    
     public void setDescuento(Double descuento) {
         this.descuento = descuento;
     }
     
-
     public Double getSubTotal() {
         return subTotal;
     }
-
+    
     public void setSubTotal(Double subTotal) {
         this.subTotal = subTotal;
     }
-
+    
     public Double getPorcentajeDescuento() {
         return porcentajeDescuento;
     }
-
+    
     public void setPorcentajeDescuento(Double porcentajeDescuento) {
         this.porcentajeDescuento = porcentajeDescuento;
     }
     
-    
-
     public Boolean getFe() {
         return fe;
     }
-
+    
     public void setFe(Boolean fe) {
         this.fe = fe;
     }
     
-
     public Integer getIdFactura() {
         return idFactura;
     }
-
+    
     public void setIdFactura(Integer idFactura) {
         this.idFactura = idFactura;
     }
     
-
     public Date getVencimiento() {
         return vencimiento;
     }
-
+    
     public void setVencimiento(Date vencimiento) {
         this.vencimiento = vencimiento;
     }
     
-    
     public Integer getPagado() {
         return pagado;
     }
-
+    
     public void setPagado(Integer pagado) {
         this.pagado = pagado;
     }
     
-    
-
     public Integer getIdCaja() {
         return idCaja;
     }
-
+    
     public void setIdCaja(int idCaja) {
         this.idCaja = idCaja;
     }
-
+    
     public Double getMontoBruto() {
         return montoBruto;
     }
-
+    
     public void setMontoBruto(Double montoBruto) {
         this.montoBruto = montoBruto;
     }
-
+    
     public Double getMontoIva() {
         return montoIva;
     }
-
+    
     public void setMontoIva(Double montoIva) {
         this.montoIva = montoIva;
     }
-
+    
     public Double getMontoRet() {
         return montoRet;
     }
-
+    
     public void setMontoRet(Double montoRet) {
         this.montoRet = montoRet;
     }
     
-
     public Clientes getCliente() {
         return cliente;
     }
-
+    
     public void setCliente(Clientes cliente) {
         this.cliente = cliente;
     }
-
+    
     public ArrayList getListadoDeArticulos() {
         return listadoDeArticulos;
     }
-
+    
     public void setListadoDeArticulos(ArrayList listadoDeArticulos) {
         this.listadoDeArticulos = listadoDeArticulos;
     }
-
+    
     public int getTipoComprobante() {
         return tipoComprobante;
     }
-
+    
     public void setTipoComprobante(int tipoComprobante) {
         this.tipoComprobante = tipoComprobante;
     }
-
+    
     public Date getFechaEmision() {
         return fechaEmision;
     }
-
+    
     public void setFechaEmision(Date fechaEmision) {
         this.fechaEmision = fechaEmision;
     }
-
+    
     public int getTipoMovimiento() {
         return tipoMovimiento;
     }
-
+    
     public void setTipoMovimiento(int tipoMovimiento) {
         this.tipoMovimiento = tipoMovimiento;
     }
-
+    
     public Double getMontoTotal() {
         return montoTotal;
     }
-
+    
     public void setMontoTotal(Double montoTotal) {
         this.montoTotal = montoTotal;
     }
-
+    
     public int getUsuarioGenerador() {
         return usuarioGenerador;
     }
-
+    
     public void setUsuarioGenerador(int usuarioGenerador) {
         this.usuarioGenerador = usuarioGenerador;
     }
-
+    
     public int getIdSucursal() {
         return idSucursal;
     }
-
+    
     public void setIdSucursal(int idSucursal) {
         this.idSucursal = idSucursal;
     }
-
+    
     public int getIdDeposito() {
         return idDeposito;
     }
-
+    
     public void setIdDeposito(int idDeposito) {
         this.idDeposito = idDeposito;
     }
     
-
     public Comprobantes(int numero) {
-            this.idCaja=0;
-        this.idDeposito=0;
-        this.idSucursal=0;
-        this.numero=0;
-        this.tipoComprobante=0;
-        this.tipoMovimiento=0;
-        this.usuarioGenerador=0;
-
+        this.idCaja = 0;
+        this.idDeposito = 0;
+        this.idSucursal = 0;
+        this.numero = 0;
+        this.tipoComprobante = 0;
+        this.tipoMovimiento = 0;
+        this.usuarioGenerador = 0;
+        
         this.numero = numero;
-
+        
     }
-
+    
     public Comprobantes() {
-        this.idCaja=0;
-        this.idDeposito=0;
-        this.idSucursal=0;
-        this.numero=0;
-        this.tipoComprobante=0;
-        this.tipoMovimiento=0;
-        this.usuarioGenerador=0;
+        this.idCaja = 0;
+        this.idDeposito = 0;
+        this.idSucursal = 0;
+        this.numero = 0;
+        this.tipoComprobante = 0;
+        this.tipoMovimiento = 0;
+        this.usuarioGenerador = 0;
     }
-
+    
     public int getNumero() {
         return numero;
     }
-
+    
     public void setNumero(int numero) {
         this.numero = numero;
     }
-
+    
     public String getDescripcion() {
         return descripcion;
     }
-
+    
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-
+    
     public int getDestinatarioCondicion() {
         return destinatarioCondicion;
     }
-
+    
     public void setDestinatarioCondicion(int destinatarioCondicion) {
         this.destinatarioCondicion = destinatarioCondicion;
     }
-
+    
     public int getDescargaStock() {
         return descargaStock;
     }
-
+    
     public void setDescargaStock(int descargaStock) {
         this.descargaStock = descargaStock;
     }
-    private static void numeroActual(int tipoComprobante){
+
+    private static void numeroActual(int tipoComprobante) {
         try {
             Transaccionable tra;
             /*
             if(Inicio.coneccionRemota){
             tra=new Conecciones();
             }else{
-            */ 
-            tra=new Conecciones();
+             */            
+            tra = new Conecciones();
             //}
-            String tc="ticket";
-            String fc="FCA A";
-            String tx="";
-            if(tipoComprobante==1){
-                tx=tc;
-            }else{
-                tx=fc;   
-            }
-            int tipoComp=30;
-            switch(tipoComprobante){
-                case 1:
-                    tipoComp=2;//FC A
-                    break;
-                case 2:
-                    tipoComp=31;//ND A
-                    break;
-                case 3:
-                    tipoComp=26;//NCA
-                    break;
-                case 6:
-                    tipoComp=1;// FC B
-                    break;
-                case 7:
-                       tipoComp=32;// ND B
-                    break;
-                case 8:
-                    tipoComp=27;//NC B
-                    break;
-                case 11:
-                    tipoComp=29;//FC C
-                    break;
-                case 12:
-                    tipoComp=33;//ND C
-                    break;
-                case 13:
-                    tipoComp=28;//NC C
-                    break;
-                default:
-                    tipoComp=30;
-                    break;
-                    
-            }
-            String sql="select * from tipocomprobantes where id="+tipoComp;
-            ResultSet rs=tra.leerConjuntoDeRegistros(sql);
+            String tc = "ticket";
+            String fc = "FCA A";
+            String tx = "";
+            
+                tx = tc;
+            
+            int tipoComp = tipoComprobante;
+            
+            String sql = "select * from tipocomprobantes where id=" + tipoComp;
+            ResultSet rs = tra.leerConjuntoDeRegistros(sql);
             try {
-                while(rs.next()){
-                    numeroComprobante=rs.getInt("numeroActivo");
-                    idComp=rs.getInt("id");
+                while (rs.next()) {
+                    numeroComprobante = rs.getInt("numeroActivo");
+                    idComp = rs.getInt("id");
                 }
                 rs.close();
             } catch (SQLException ex) {
                 Logger.getLogger(Comprobantes.class.getName()).log(Level.SEVERE, null, ex);
-            }catch(NullPointerException ee){
-                Inicio.coneccionRemota=false;
+            } catch (NullPointerException ee) {
+                Inicio.coneccionRemota = false;
                 numeroActual(tipoComprobante);
             }
         } catch (InstantiationException ex) {
             Logger.getLogger(Comprobantes.class.getName()).log(Level.SEVERE, null, ex);
-        }catch(IllegalAccessException ex){
+        } catch (IllegalAccessException ex) {
             Logger.getLogger(Comprobantes.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(Comprobantes.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    public void GuardarNumeroFiscalEnCaja(Integer numero,Integer registro,int tipo){
+        try {
+            Transaccionable tra=new Conecciones();
+            String sql="update movimientoscaja set numerocomprobante="+numero+",tipocomprobante="+tipo+" where numero="+registro;
+            System.out.println(sql);
+            tra.guardarRegistro(sql);
+            sql="update tipocomprobantes set numeroactivo="+numero+" where id="+tipo;
+            tra.guardarRegistro(sql);
+            sql="";//MOVIMIENTOS ARTICULOS
+            sql="";//MOVIMIENTOS CLIENTES
+            
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Comprobantes.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(Comprobantes.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Comprobantes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     @Override
     public Object guardar(Object oob) {
         // GUARDA EL OBJETO COMPROBANTE COMO EL O LOS MOVIMIENTOS CORRESPONDIENTES
@@ -429,16 +412,18 @@ public class Comprobantes implements Facturar{
          * QUE GRABO EL MONTO TOTAL.
          * 
          */
-        Comprobantes comp=(Comprobantes)oob;
-        Iterator iComp=comp.listadoDeArticulos.listIterator();
+        Comprobantes comp = (Comprobantes) oob;
+        Iterator iComp = comp.listadoDeArticulos.listIterator();
         numeroActual(comp.getTipoComprobante());
-        if(comp.getFe()){
-            numeroComprobante=0;
-        }else{
-        numeroComprobante++;
-        }
+        /*
+        if (comp.getFe()) {
+            numeroComprobante = 0;
+        } else {
+        */
+            numeroComprobante++;
+        //}
         comp.setNumero(numeroComprobante);
-        Transaccionable tra=null;
+        Transaccionable tra = null;
         try {
             tra = new Conecciones();
         } catch (InstantiationException ex) {
@@ -448,9 +433,9 @@ public class Comprobantes implements Facturar{
         } catch (SQLException ex) {
             Logger.getLogger(Comprobantes.class.getName()).log(Level.SEVERE, null, ex);
         }
-        Articulos articulo=new Articulos();
+        Articulos articulo = new Articulos();
         Articulos art;
-        MovimientosClientes factura=new MovimientosClientes();
+        MovimientosClientes factura = new MovimientosClientes();
         factura.setEstado(comp.getPagado());
         factura.setIdCliente(comp.getCliente().getCodigoId());
         factura.setIdPedido(comp.getIdPedido());
@@ -462,18 +447,17 @@ public class Comprobantes implements Facturar{
         factura.setNumeroFactura(numeroComprobante);
         factura.setTipo(comp.getTipoComprobante());
         factura.setTotal(comp.getMontoTotal());
-        Facturable ff=new MovimientosClientes();
+        Facturable ff = new MovimientosClientes();
         factura.setId(ff.nuevaFactura(factura));
         comp.setIdFactura(factura.getId());
-        DetalleFacturas detalle=new DetalleFacturas();
-        Facturable ffD=new DetalleFacturas();
+        DetalleFacturas detalle = new DetalleFacturas();
+        Facturable ffD = new DetalleFacturas();
         
-        Boolean verif=false;
-        String sql="";
-        while(iComp.hasNext()){
-            articulo=(Articulos)iComp.next();
-            Double cantidad=articulo.getCantidad() * -1;
-            
+        Boolean verif = false;
+        String sql = "";
+        while (iComp.hasNext()) {
+            articulo = (Articulos) iComp.next();
+            Double cantidad = articulo.getCantidad() * -1;
             
             detalle.setIdArticulo(articulo.getNumeroId());
             detalle.setCantidad(articulo.getCantidad());
@@ -481,34 +465,45 @@ public class Comprobantes implements Facturar{
             detalle.setDescripcionArticulo(articulo.getDescripcionArticulo());
             detalle.setPrecioUnitario(articulo.getPrecioUnitarioNeto());
             detalle.setDescuento(articulo.getDescuento());
-            if(detalle.getDescuento()!=null){
+            if (detalle.getDescuento() != null) {
                 
-            }else{
+            } else {
                 detalle.setDescuento(0);
             }
-            if(detalle.getCantidadRemitida()!=null){
+            if (detalle.getCantidadRemitida() != null) {
                 
-            }else{
+            } else {
                 detalle.setCantidadRemitida(0.00);
             }
             ffD.nuevaFactura(detalle);
             
-            sql="insert into movimientosarticulos (tipoMovimiento,idArticulo,cantidad,numeroDeposito,tipoComprobante,numeroComprobante,numeroCliente,fechaComprobante,numeroUsuario,precioDeVenta,precioServicio,preciodecosto,idcaja,estado) values ("+comp.getTipoMovimiento()+","+articulo.getNumeroId()+","+cantidad+","+Inicio.deposito.getNumero()+","+comp.getTipoComprobante()+","+comp.getNumero()+","+comp.getCliente().getCodigoId()+",'"+comp.getFechaEmision()+"',"+comp.getUsuarioGenerador()+","+articulo.getPrecioUnitario()+","+articulo.getPrecioServicio()+","+articulo.getPrecioDeCosto()+","+Inicio.caja.getNumero()+",0)";
+            sql = "insert into movimientosarticulos (tipoMovimiento,idArticulo,cantidad,numeroDeposito,tipoComprobante,numeroComprobante,numeroCliente,fechaComprobante,numeroUsuario,precioDeVenta,precioServicio,preciodecosto,idcaja,estado) values (" + comp.getTipoMovimiento() + "," + articulo.getNumeroId() + "," + cantidad + "," + Inicio.deposito.getNumero() + "," + comp.getTipoComprobante() + "," + numeroComprobante + "," + comp.getCliente().getCodigoId() + ",'" + comp.getFechaEmision() + "'," + comp.getUsuarioGenerador() + "," + articulo.getPrecioUnitario() + "," + articulo.getPrecioServicio() + "," + articulo.getPrecioDeCosto() + "," + Inicio.caja.getNumero() + ",0)";
             tra.guardarRegistro(sql);
+            System.out.println(sql);
             
         }
         
-            sql="insert into movimientoscaja (numeroUsuario,numeroSucursal,numeroComprobante,tipoComprobante,monto,tipoMovimiento,idCaja,idCliente,tipoCliente,pagado,idforma1,monto1,idforma2,monto2) values ("+comp.getUsuarioGenerador()+","+comp.getIdSucursal()+","+comp.getNumero()+","+comp.getTipoComprobante()+","+comp.getMontoTotal()+","+comp.getTipoMovimiento()+","+Inicio.caja.getNumero()+","+comp.getCliente().getCodigoId()+",1,"+comp.getPagado()+","+comp.getIdForma1()+","+comp.getMonto1()+","+comp.getIdForma2()+","+comp.getMonto2()+")";
-            tra.guardarRegistro(sql);
-            sql="insert into movimientosclientes (numeroProveedor,monto,pagado,numeroComprobante,idUsuario,idCaja,idSucursal,tipoComprobante) values ("+comp.getCliente().getCodigoId()+","+comp.getMontoTotal()+","+comp.getPagado()+",'"+numeroComprobante+"',"+Inicio.usuario.getNumeroId()+","+Inicio.caja.getNumero()+","+Inicio.sucursal.getNumero()+","+comp.getTipoComprobante()+")";
-            System.out.println(sql);
-            tra.guardarRegistro(sql);
+        sql = "insert into movimientoscaja (numeroUsuario,numeroSucursal,numeroComprobante,tipoComprobante,monto,tipoMovimiento,idCaja,idCliente,tipoCliente,pagado,idforma1,monto1,idforma2,monto2) values (" + comp.getUsuarioGenerador() + "," + comp.getIdSucursal() + "," + numeroComprobante + "," + comp.getTipoComprobante() + "," + comp.getMontoTotal() + "," + comp.getTipoMovimiento() + "," + Inicio.caja.getNumero() + "," + comp.getCliente().getCodigoId() + ",1," + comp.getPagado() + "," + comp.getIdForma1() + "," + comp.getMonto1() + "," + comp.getIdForma2() + "," + comp.getMonto2() + ")";
+        System.out.println(sql);
+        tra.guardarRegistro(sql);
+        sql = "select numero from movimientoscaja order by numero desc fetch first 1 rows only";
+        ResultSet rs = tra.leerConjuntoDeRegistros(sql);
+        try {
+            while (rs.next()) {
+                comp.setNumeroRegistro(rs.getInt("numero"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Comprobantes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        sql = "insert into movimientosclientes (numeroProveedor,monto,pagado,numeroComprobante,idUsuario,idCaja,idSucursal,tipoComprobante) values (" + comp.getCliente().getCodigoId() + "," + comp.getMontoTotal() + "," + comp.getPagado() + ",'" + numeroComprobante + "'," + Inicio.usuario.getNumeroId() + "," + Inicio.caja.getNumero() + "," + Inicio.sucursal.getNumero() + "," + comp.getTipoComprobante() + ")";
+        System.out.println(sql);
+        tra.guardarRegistro(sql);
         
         System.out.println("SE RECEPCIONO BARBARO");
-        sql="update tipocomprobantes set numeroActivo="+numeroComprobante+" where id="+idComp;
+        sql = "update tipocomprobantes set numeroActivo=" + numeroComprobante + " where id=" + idComp;
         try {
-            System.out.println("tipo de comprobante "+sql);
-            tra=new Conecciones();
+            System.out.println("tipo de comprobante " + sql);
+            tra = new Conecciones();
             tra.guardarRegistro(sql);
         } catch (InstantiationException ex) {
             Logger.getLogger(Comprobantes.class.getName()).log(Level.SEVERE, null, ex);
@@ -521,62 +516,62 @@ public class Comprobantes implements Facturar{
         
         return comp;
     }
-
+    
     @Override
     public Boolean modificar(Object oob) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-
+    
     @Override
     public Boolean nuevo(Object oob) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-
+    
     @Override
     public ArrayList listar() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-
+    
     @Override
     public Object leer(Object oob) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-
+    
     @Override
     public void imprimirComprobante(int tipoComprobante, Object oob) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-
+    
     @Override
     public ArrayList listadoBusqueda(String criterio) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-
+    
     @Override
     public Integer guardarNuevoCliente(Object cliente) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-
+    
     @Override
     public Boolean modificarDatosDelCliente(Object cliente) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-
+    
     @Override
     public ArrayList listarClientes(String nombre) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-
+    
     @Override
     public Object cargarPorCodigoDeBarra(String codigoDeBarra) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-
+    
     @Override
     public Integer leerNumeroDeComprobanteSiguiente(Integer numeroComprobante) {
-        Integer numeroSiguiente=0;
-        String sql="select tipocomprobantes.numeroActivo from tipocomprobantes where numero="+numeroComprobante+" and numeroSucursal="+Inicio.sucursal.getNumero();
-        Transaccionable tra=null;
+        Integer numeroSiguiente = 0;
+        String sql = "select tipocomprobantes.numeroActivo from tipocomprobantes where numero=" + numeroComprobante + " and numeroSucursal=" + Inicio.sucursal.getNumero();
+        Transaccionable tra = null;
         try {
             tra = new Conecciones();
         } catch (InstantiationException ex) {
@@ -586,10 +581,10 @@ public class Comprobantes implements Facturar{
         } catch (SQLException ex) {
             Logger.getLogger(Comprobantes.class.getName()).log(Level.SEVERE, null, ex);
         }
-        ResultSet rs=tra.leerConjuntoDeRegistros(sql);
+        ResultSet rs = tra.leerConjuntoDeRegistros(sql);
         try {
-            while(rs.next()){
-                numeroSiguiente=rs.getInt("numeroActivo");
+            while (rs.next()) {
+                numeroSiguiente = rs.getInt("numeroActivo");
                 numeroSiguiente++;
             }
             rs.close();
@@ -599,8 +594,9 @@ public class Comprobantes implements Facturar{
         
         return numeroSiguiente;
     }
-    private Integer numeroComprobante(Integer tipoComp){
-               Transaccionable tra=null;
+
+    private Integer numeroComprobante(Integer tipoComp) {
+        Transaccionable tra = null;
         try {
             tra = new Conecciones();
         } catch (InstantiationException ex) {
@@ -610,12 +606,12 @@ public class Comprobantes implements Facturar{
         } catch (SQLException ex) {
             Logger.getLogger(Comprobantes.class.getName()).log(Level.SEVERE, null, ex);
         }
-               Integer numeroAct=0;
-        String sql="select * from tipocomprobantes where numero="+tipoComp+" and numeroSucursal="+Inicio.sucursal.getNumero();
-        ResultSet rs=tra.leerConjuntoDeRegistros(sql);
+        Integer numeroAct = 0;
+        String sql = "select * from tipocomprobantes where numero=" + tipoComp + " and numeroSucursal=" + Inicio.sucursal.getNumero();
+        ResultSet rs = tra.leerConjuntoDeRegistros(sql);
         try {
-            while(rs.next()){
-            numeroAct=rs.getInt("numeroActivo");
+            while (rs.next()) {
+                numeroAct = rs.getInt("numeroActivo");
                 
             }
             rs.close();
@@ -624,7 +620,7 @@ public class Comprobantes implements Facturar{
         }
         return numeroAct++;
     }
-
+    
     @Override
     public Object cargarPorCodigoAsignado(Integer id) {
         throw new UnsupportedOperationException("Not supported yet.");
