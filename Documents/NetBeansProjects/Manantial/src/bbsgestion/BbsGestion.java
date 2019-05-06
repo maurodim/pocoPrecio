@@ -5,6 +5,7 @@
 package bbsgestion;
 
 import Actualizaciones.BkDeConeccion;
+import Administracion.Licencias;
 import ConfiguracionR.PortalWeb;
 import ConfiguracionR.Propiedades;
 import Cajas.Usuarios;
@@ -16,12 +17,16 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.xml.parsers.ParserConfigurationException;
 import org.jvnet.substance.SubstanceLookAndFeel;
+import org.xml.sax.SAXException;
 
 /**
  *
@@ -149,7 +154,14 @@ public class BbsGestion {
                 Backpeable bk1 = new BkDeConeccion();
                 usuarios = (Usuarios) bk1.leerUsuarios("adm", "adm");
                 //}
-                
+                Licencias licencia=new Licencias();
+                ArrayList lstLic=new ArrayList();
+                lstLic=licencia.ListarLicencias();
+                licencia.ActualizarLicencia(lstLic);
+                licencia=(Licencias) licencia.LeerYActualizarLicencia();
+                licencia.UpdateLicenciaLocal(licencia);
+                licencia=(Licencias) licencia.LeerActualLocal();
+                System.out.println("cantidad "+licencia.getActualFc()+" presupuestos "+licencia.getActualPresupuestos());
                 /*
                 PortalWeb puerta=new PortalWeb();
                 puerta.setCuit(Propiedades.getCUIT());
@@ -168,6 +180,12 @@ public class BbsGestion {
                 in.toFront();
             }
         } catch (ParseException ex) {
+            Logger.getLogger(BbsGestion.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(BbsGestion.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParserConfigurationException ex) {
+            Logger.getLogger(BbsGestion.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SAXException ex) {
             Logger.getLogger(BbsGestion.class.getName()).log(Level.SEVERE, null, ex);
         }
 

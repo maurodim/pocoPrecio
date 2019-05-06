@@ -37,6 +37,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import Articulos.Pantallas.ArticulosAbm;
+import Cajas.PagosAbm;
 import Etiquetador.Pantallas.Etiquetador;
 import Look.Fondo;
 import Proveedores.AbmProveedores;
@@ -175,6 +176,7 @@ public  void cargarImagen(javax.swing.JDesktopPane jDeskp,InputStream fileImagen
         jMenu1 = new javax.swing.JMenu();
         jMenuItem14 = new javax.swing.JMenuItem();
         jMenuItem21 = new javax.swing.JMenuItem();
+        jMenuItem11 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem12 = new javax.swing.JMenuItem();
@@ -236,6 +238,15 @@ public  void cargarImagen(javax.swing.JDesktopPane jDeskp,InputStream fileImagen
             }
         });
         jMenu1.add(jMenuItem21);
+
+        jMenuItem11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/nuevos/pagos.png"))); // NOI18N
+        jMenuItem11.setText("Formas de Pago");
+        jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem11ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem11);
 
         jMenuBar1.add(jMenu1);
 
@@ -511,6 +522,11 @@ public  void cargarImagen(javax.swing.JDesktopPane jDeskp,InputStream fileImagen
         jDesktopPane1.add(cajA);
         cajA.setVisible(true);
         cajA.toFront();
+        try {
+            cajA.setMaximum(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jMenuItem14ActionPerformed
 
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
@@ -538,6 +554,7 @@ public  void cargarImagen(javax.swing.JDesktopPane jDeskp,InputStream fileImagen
         cajaA.setTitle("CIERRE DE CAJA");
         cajaA.setVisible(true);
         cajaA.toFront();
+        
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItem21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem21ActionPerformed
@@ -627,6 +644,13 @@ public  void cargarImagen(javax.swing.JDesktopPane jDeskp,InputStream fileImagen
         etiq.toFront();
     }//GEN-LAST:event_jMenuItem10ActionPerformed
 
+    private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
+        PagosAbm pago=new PagosAbm();
+        Inicio.jDesktopPane1.add(pago);
+        pago.setVisible(true);
+        pago.toFront();
+    }//GEN-LAST:event_jMenuItem11ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -694,6 +718,7 @@ public  void cargarImagen(javax.swing.JDesktopPane jDeskp,InputStream fileImagen
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
+    private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem18;

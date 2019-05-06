@@ -44,7 +44,7 @@ public class Formulario extends javax.swing.JDialog {
         listadoIva=iva.Listar();
         try {
             listadoL=lic.CargarLicencias();
-            this.licencia_box.setModel(lic.MostrarCombo(listadoL));
+            //this.licencia_box.setModel(lic.MostrarCombo(listadoL));
             this.iva_box.setModel(iva.MostrarEnCombo(listadoIva));
         } catch (IOException ex) {
             Logger.getLogger(Formulario.class.getName()).log(Level.SEVERE, null, ex);
@@ -87,10 +87,8 @@ public class Formulario extends javax.swing.JDialog {
         iva_box = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
         jRadioButton1 = new javax.swing.JRadioButton();
         jRadioButton2 = new javax.swing.JRadioButton();
-        licencia_box = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
         jLabel13 = new javax.swing.JLabel();
         mail_txt = new javax.swing.JTextField();
@@ -176,17 +174,11 @@ public class Formulario extends javax.swing.JDialog {
         jLabel10.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         jLabel10.setText("<html>IMPORTANTE:Los presupuestos <strong>\"NO SON DOCUMENTOS VÁLIDOS COMO FACTURA\"</strong></html>");
 
-        jLabel12.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
-        jLabel12.setText("Seleccione el Tipo de LICENCIA");
-
         jRadioButton1.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
         jRadioButton1.setText("SI");
 
         jRadioButton2.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
         jRadioButton2.setText("NO");
-
-        licencia_box.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
-        licencia_box.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jButton1.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         jButton1.setText("CONTINUAR");
@@ -223,10 +215,6 @@ public class Formulario extends javax.swing.JDialog {
                         .addGap(18, 18, 18)
                         .addComponent(jRadioButton2)
                         .addGap(150, 150, 150))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(licencia_box, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel10)
@@ -314,11 +302,7 @@ public class Formulario extends javax.swing.JDialog {
                     .addComponent(jRadioButton2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(licencia_box, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(72, 72, 72)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -358,14 +342,15 @@ public class Formulario extends javax.swing.JDialog {
         //if(this.jRadioButton4.isSelected())formulario.setElectronica("si");
         formulario.setElectronica("no");
         iva=listadoIva.get(this.iva_box.getSelectedIndex());
-        licencia=(Licencias) listadoL.get(this.licencia_box.getSelectedIndex());
+        licencia=(Licencias) listadoL.get(0);
         formulario.setIva(String.valueOf(iva.getId()));
         formulario.setLicencia(String.valueOf(licencia.getId()));
         FormControlador control=new FormControlador();
         if(control.Verificar(formulario.getSerie())){
             
         
-        if(control.Enviar(formulario))System.out.println("ACTUALIZADO!!!!");
+        formulario.setIdRemoto(control.Enviar(formulario));
+                //System.out.println("ACTUALIZADO!!!!");
         
         
         this.dispose();
@@ -456,7 +441,6 @@ public class Formulario extends javax.swing.JDialog {
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -469,7 +453,6 @@ public class Formulario extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JComboBox<String> licencia_box;
     private javax.swing.JTextField mail_txt;
     private javax.swing.JTextField nombre_txt;
     private javax.swing.JTextField razon_txt;

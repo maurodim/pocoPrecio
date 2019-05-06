@@ -195,4 +195,18 @@ public class Numeros {
         
         return fecha;
     }
+    public static Calendar SumarDias(Date fecha,int dias){
+        Calendar cal=Calendar.getInstance();
+        SimpleDateFormat fh=new SimpleDateFormat("yyyy-mm-dd");
+        cal.setTime(fecha);
+        cal.add(Calendar.DAY_OF_WEEK, dias);
+        return cal;
+    }
+    public static Calendar RestarDias(Date fecha,int dias){
+        Calendar cal=Calendar.getInstance();
+        SimpleDateFormat fh=new SimpleDateFormat("yyyy-mm-dd");
+        cal.setTime(fecha);
+        cal.add(Calendar.DAY_OF_WEEK, dias);
+        return cal;
+    }
 }

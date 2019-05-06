@@ -5,6 +5,7 @@
  */
 package ConfiguracionR;
 
+import Conversores.Numeros;
 import interfaces.Transaccionable;
 import java.io.File;
 import java.io.FileReader;
@@ -15,6 +16,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.Properties;
@@ -23,6 +25,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import objetosActualizador.Formularios;
 import objetosActualizador.Licencias;
+import objetosActualizador.Serial;
 import objetosDerby.Base;
 import objetosDerby.Configuracion;
 import objetosR.Conecciones;
@@ -52,6 +55,23 @@ public class Propiedades {
     static String TELEFONO;
     static String INGBRUTOS;
     static String INICIOACT;
+    static Integer IDREMOTO;
+    static String CPU;
+    static int IDLICENCIA;
+
+    public static int getIDLICENCIA() {
+        return IDLICENCIA;
+    }
+    
+
+    public static Integer getIDREMOTO() {
+        return IDREMOTO;
+    }
+
+    public static String getCpu() {
+        return CPU;
+    }
+    
 
     public static String getNOMBRECOMERCIO() {
         return NOMBRECOMERCIO;
@@ -135,7 +155,8 @@ public class Propiedades {
 
             int verificado = 0;
             try {
-                
+                Serial serial = new Serial();
+                CPU = serial.LeerSerial();
                 Transaccionable tra=new Conecciones();
                 String sql="select * from configuracion";
                 ResultSet rs=tra.leerConjuntoDeRegistros(sql);
@@ -156,6 +177,9 @@ public class Propiedades {
                 TELEFONO = rs.getString("telefono");
                 INGBRUTOS = "011-1161616116";//rs.getString("ingresosbrutos");
                 INICIOACT ="01/08/2013";// rs.getString("iniciodeactividades");
+                IDREMOTO=rs.getInt("idclienteremoto");
+                //CPU=rs.getString("cpu");
+                IDLICENCIA=rs.getInt("idlicencia");
                 }
                 rs.close();
             } catch (InstantiationException ex) {
@@ -227,12 +251,19 @@ public class Propiedades {
             configura.setRazonSocial(formu.getRazonSocial());
             configura.setSerie(formu.getSerie());
             configura.setTelefono(formu.getTelefono());
+            configura.setIdRemoto(formu.getIdRemoto());
             base.InicializarConfiguracion(con, configura);
             Licencias licencia=null;
             Iterator itL=lstLicencias.listIterator();
             while(itL.hasNext()){
             licencia=(Licencias) itL.next();
-                base.InicializarLicencias(con,licencia.getId(),licencia.getDescripcion(),licencia.getCantidadComprobantes());
+            java.util.Date fHoy = new java.util.Date();
+            java.sql.Date fechaSQL = new java.sql.Date(fHoy.getTime());
+            //licencia.getActualizacion();
+            Calendar dia=Numeros.SumarDias(fechaSQL, licencia.getCantidadDias());
+            String ffecha=Numeros.ConvertirFechaCalendarEnString(dia);
+            //licencia.setActualizacion(Numeros.SumarDias(fechaSQL, licencia.getCantidadDias()));
+                base.InicializarLicencias(con,licencia.getId(),licencia.getDescripcion(),licencia.getCantidadComprobantes(),licencia.getCantidadPresupuestos(),ffecha);
             
             }
             JOptionPane.showMessageDialog(null, "INSTALACIÓN Y CONFIGURACION FINALIZADAS, POR FAVOR RE INGRESE AL SISTEMA");

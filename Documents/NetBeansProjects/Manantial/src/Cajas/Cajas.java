@@ -1069,11 +1069,18 @@ public class Cajas extends Sucursales implements Cajeables{
                 comprobante.setCliente(cliente);
                 //comprobante.setFechaEmision(rs.getDate("fecha"));
                 reg++;
+                if(rs.getInt("idarticulo") != 0){
+                
                 articulo=(Articulos) fact.cargarPorCodigoAsignado(rs.getInt("idArticulo"));
+                }else{
+                    articulo.setCodigoAsignado("0");
+                    articulo.setDescripcionArticulo("Recargo");
+                }
                 cant=rs.getDouble("cantidad");
                 cant=cant * -1;
                 articulo.setPrecioUnitario(rs.getDouble("precioDeVenta"));
                 articulo.setPrecioServicio(rs.getDouble("precioServicio"));
+                
                 //total=rs.getDouble("total");
                 //articulo.setCantidad(cant);
                 //articulo.setPrecioUnitario(rs.getDouble("precioDeVenta"));
