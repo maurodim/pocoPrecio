@@ -5,6 +5,7 @@
 package facturacion.pantallas;
 
 import Administracion.Licencias;
+import Administracion.LicenciasControl;
 import ClientesPantallas.NuevoCliente;
 import Pedidos.IngresoDePedidos;
 import Conversores.Numeros;
@@ -670,7 +671,7 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
         if(noFacturar==0){
         Facturar fat=new Comprobantes();
         fat.guardar(comprobante);
-        Licencias licencia=new Licencias();
+        LicenciasControl licencia=new LicenciasControl();
                     licencia.RestarPresupuesto();
         /*
          * ACA DEVO LIMPIAR TODOS LOS CAMPOS Y VARIABLES DE LA PANTALLA
@@ -979,7 +980,7 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
                 Integer numeFc=0;
         numeFc=fact.generar(conexion, condicion, Propiedades.getARCHIVOKEY(), Propiedades.getARCHIVOCRT(), cliT.getCodigoId(), cliT.getNumeroDeCuit(), tipoComp, montoTotal, subTotal, montoIva, ptoVta, Propiedades.getCUIT(), tipoVta, listadoIva, listadoTrib, cliT.getRazonSocial(), cliT.getDireccion(), cliT.getCondicionIva(), listadoDetalle,idPed,Propiedades.getNOMBRECOMERCIO(),Propiedades.getNOMBRECOMERCIO(),"resp inscripto",Propiedades.getDIRECCION(),Propiedades.getTELEFONO(),Propiedades.getINGBRUTOS(),Propiedades.getINICIOACT());
         comprobante.GuardarNumeroFiscalEnCaja(numeFc, comprobante.getNumeroRegistro(),tipoComp);
-        Licencias licencia=new Licencias();
+        LicenciasControl licencia=new LicenciasControl();
                     licencia.RestarFc();
             } catch (InstantiationException ex) {
                 Logger.getLogger(NotaDeCredito.class.getName()).log(Level.SEVERE, null, ex);

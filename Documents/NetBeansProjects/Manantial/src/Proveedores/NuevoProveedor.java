@@ -106,7 +106,7 @@ public class NuevoProveedor extends javax.swing.JInternalFrame implements Intern
             }
             rengl++;
         }
-        this.jComboBox3.setSelectedIndex(posicion);
+        //this.jComboBox3.setSelectedIndex(posicion);
         //this.jTextField5.setText(String.valueOf(cliTa.getCupoDeCredito()));
         Double coef=1.00;
         //coef=cliTa.getCoeficienteListaDeprecios() - 1;
@@ -187,8 +187,6 @@ public class NuevoProveedor extends javax.swing.JInternalFrame implements Intern
         jTextField9 = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
         jTextField12 = new javax.swing.JTextField();
-        jLabel17 = new javax.swing.JLabel();
-        jComboBox3 = new javax.swing.JComboBox();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         jLabel6 = new javax.swing.JLabel();
@@ -273,17 +271,6 @@ public class NuevoProveedor extends javax.swing.JInternalFrame implements Intern
 
         jLabel16.setText("email  :");
 
-        jLabel17.setText("Localidad :");
-
-        Localidades localidad1=new Localidades();
-        Busquedas busca=new Localidades();
-        listadoLoc=busca.listar("");
-        Iterator iLoc=listadoLoc.listIterator();
-        while(iLoc.hasNext()){
-            localidad1=(Localidades)iLoc.next();
-            jComboBox3.addItem(localidad1.getDescripcion());
-        }
-
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
@@ -298,7 +285,6 @@ public class NuevoProveedor extends javax.swing.JInternalFrame implements Intern
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
-                    .addComponent(jLabel17, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel16, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -318,7 +304,6 @@ public class NuevoProveedor extends javax.swing.JInternalFrame implements Intern
                     .addComponent(jTextField7)
                     .addComponent(jTextField9)
                     .addComponent(jTextField12)
-                    .addComponent(jComboBox3, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 297, Short.MAX_VALUE))
                 .addContainerGap(939, Short.MAX_VALUE))
         );
@@ -357,17 +342,13 @@ public class NuevoProveedor extends javax.swing.JInternalFrame implements Intern
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel16)
                     .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel17)
-                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jButton1)
-                .addContainerGap(40, Short.MAX_VALUE))
+                .addContainerGap(59, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Perfil", jPanel1);
@@ -504,8 +485,8 @@ public class NuevoProveedor extends javax.swing.JInternalFrame implements Intern
        //cli.setFax(this.jTextField11.getText());
        //cli.setDireccionFantasia(this.jTextField10.getText());
        cli.setMail(this.jTextField12.getText());
-       localidad=(Localidades)listadoLoc.get(this.jComboBox3.getSelectedIndex());
-       cli.setLocalidad(String.valueOf(localidad.getId()));
+       //localidad=(Localidades)listadoLoc.get(this.jComboBox3.getSelectedIndex());
+       //cli.setLocalidad(String.valueOf(localidad.getId()));
        cli.setAnexo(this.jTextArea1.getText());
        Personalizable fact=new Proveedores();
        if(modificacion==1){
@@ -668,12 +649,10 @@ public class NuevoProveedor extends javax.swing.JInternalFrame implements Intern
     private javax.swing.JButton jButton16;
     private javax.swing.JButton jButton17;
     private javax.swing.JComboBox jComboBox1;
-    private javax.swing.JComboBox jComboBox3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

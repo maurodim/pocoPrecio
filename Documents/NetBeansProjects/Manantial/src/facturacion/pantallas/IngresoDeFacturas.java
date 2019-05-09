@@ -5,6 +5,7 @@
 package facturacion.pantallas;
 
 import Administracion.Licencias;
+import Administracion.LicenciasControl;
 import ClientesPantallas.NuevoCliente;
 import Pedidos.IngresoDePedidos;
 import Conversores.Numeros;
@@ -671,7 +672,7 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
         numeFc=fact.generar(conexion, condicion, Propiedades.getARCHIVOKEY(), Propiedades.getARCHIVOCRT(), cliT.getCodigoId(), cliT.getNumeroDeCuit(), tipoComp, montoTotal, subTotal, montoIva, ptoVta, Propiedades.getCUIT(), tipoVta, listadoIva, listadoTrib, cliT.getRazonSocial(), cliT.getDireccion(), String.valueOf(cliT.getTipoIva()), listadoDetalle,idPed,Propiedades.getNOMBRECOMERCIO(),Propiedades.getNOMBRECOMERCIO(),"resp inscripto",Propiedades.getDIRECCION(),Propiedades.getTELEFONO(),Propiedades.getINGBRUTOS(),Propiedades.getINICIOACT());
                 //comprobante.setNumero(numeFc);
                 comprobante.GuardarNumeroFiscalEnCaja(numeFc, comprobante.getNumeroRegistro(),tipoComp);
-                Licencias licencia=new Licencias();
+                LicenciasControl licencia=new LicenciasControl();
                     licencia.RestarFc();
             } catch (InstantiationException ex) {
                 Logger.getLogger(IngresoDeFacturas.class.getName()).log(Level.SEVERE, null, ex);
@@ -1081,7 +1082,7 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
                 ImprimirFactura imprimir = new ImprimirFactura();
                 try {
                     imprimir.ImprimirFactura(comprobante.getNumero(), comprobante.getTipoComprobante());
-                    Licencias licencia=new Licencias();
+                    LicenciasControl licencia=new LicenciasControl();
                     licencia.RestarPresupuesto();
                 } catch (IOException ex) {
                     Logger.getLogger(IngresoDeFacturas.class.getName()).log(Level.SEVERE, null, ex);

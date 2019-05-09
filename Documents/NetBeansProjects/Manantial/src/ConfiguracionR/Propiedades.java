@@ -58,6 +58,50 @@ public class Propiedades {
     static Integer IDREMOTO;
     static String CPU;
     static int IDLICENCIA;
+    static String NOMBRE;
+    static String MAIL;
+    static int ELECTRONICA;
+    static int PRESUPUESTOS;
+    static String USUARIOMAIL;
+    static String CLAVEMAIL;
+    static String SERVVIDORMAIL;
+    static Integer PUERTOMAIL;
+
+    public static String getUSUARIOMAIL() {
+        return USUARIOMAIL;
+    }
+
+    public static String getCLAVEMAIL() {
+        return CLAVEMAIL;
+    }
+
+    public static String getSERVVIDORMAIL() {
+        return SERVVIDORMAIL;
+    }
+
+    public static Integer getPUERTOMAIL() {
+        return PUERTOMAIL;
+    }
+    
+
+    public static int getELECTRONICA() {
+        return ELECTRONICA;
+    }
+
+    public static int getPRESUPUESTOS() {
+        return PRESUPUESTOS;
+    }
+    
+
+    public static String getMAIL() {
+        return MAIL;
+    }
+    
+
+    public static String getNOMBRE() {
+        return NOMBRE;
+    }
+    
 
     public static int getIDLICENCIA() {
         return IDLICENCIA;
@@ -142,7 +186,7 @@ public class Propiedades {
     }
 
     public static Boolean CargarPropiedades1() throws ParseException, IOException {
-        File archivo = new File("base14");
+        File archivo = new File("base");
         Properties p = new Properties();
         Boolean resultado = true;
         if (archivo.exists()) {
@@ -168,18 +212,23 @@ public class Propiedades {
                 
                 ARCHIVOCRT =rs.getString("archivocrt");
                 ARCHIVOKEY =rs.getString("archivokey");
-                PUNTODEVENTA ="2";// rs.getString("puntodeventa");
+                PUNTODEVENTA = rs.getString("puntodeventa");
                 CONDICIONIVA =rs.getString("condicioniva");
                 CUIT=rs.getString("cuit");
-                TIPODEVENTA = "1";//rs.getString("tipodeventa");
+                TIPODEVENTA = rs.getString("tipodeventa");
                 NOMBRECOMERCIO = rs.getString("razon");
                 DIRECCION = rs.getString("direccion");
                 TELEFONO = rs.getString("telefono");
-                INGBRUTOS = "011-1161616116";//rs.getString("ingresosbrutos");
-                INICIOACT ="01/08/2013";// rs.getString("iniciodeactividades");
+                INGBRUTOS = rs.getString("ingresosbrutos");
+                INICIOACT =rs.getString("iniciodeactividades");
+                
                 IDREMOTO=rs.getInt("idclienteremoto");
                 //CPU=rs.getString("cpu");
                 IDLICENCIA=rs.getInt("idlicencia");
+                NOMBRE=rs.getString("nombre");
+                MAIL=rs.getString("mail");
+                ELECTRONICA=rs.getInt("electronica");
+                PRESUPUESTOS=rs.getInt("presupuestos");
                 }
                 rs.close();
             } catch (InstantiationException ex) {
@@ -235,8 +284,8 @@ public class Propiedades {
             lstLicencias=forma.listadoL;
             System.out.println("cantidad licencias "+lstLicencias.size()+" datos configuracion "+formu.getNombre());
             Base base = new Base();
-            base.CrearBase("base14\\bambuPrueba.db", "mauro", "mauro");
-            Connection con=base.ObtenerConexion("base14\\bambuPrueba.db", "mauro", "mauro");
+            base.CrearBase("base\\bambuPrueba.db", "mauro", "mauro");
+            Connection con=base.ObtenerConexion("base\\bambuPrueba.db", "mauro", "mauro");
             Configuracion configura=new Configuracion();
             configura.setCpu(formu.getCpu());
             configura.setCuit(formu.getCuit());
@@ -278,6 +327,12 @@ public class Propiedades {
         //return true;
         //BD="siglox";
 
+    }
+    public static void ModificarConfiguracion(){
+        
+    }
+    public static void ParametrosDeMail(){
+        
     }
 
 }

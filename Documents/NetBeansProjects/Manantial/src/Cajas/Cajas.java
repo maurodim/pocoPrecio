@@ -8,7 +8,7 @@ import Actualizaciones.BkDeConeccion;
 import Conversores.Numeros;
 import facturacion.clientes.Clientes;
 import interfaceGraficasManantial.Inicio;
-import interfaceGraficasManantial.ListadoDeArticulos;
+import Articulos.Pantallas.ListadoDeArticulos;
 import interfaces.Transaccionable;
 import interfacesPrograma.Cajeables;
 import interfacesPrograma.Facturar;

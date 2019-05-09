@@ -65,7 +65,7 @@ public class Numeros {
     public static Date ConvertirStringEnDate(String ff){
         //ff=ff.substring(0,10);
         System.out.println(ff);
-        SimpleDateFormat fh=new SimpleDateFormat("yyyy-mm-dd");
+        SimpleDateFormat fh=new SimpleDateFormat("yyyy-MM-dd");
         Date fechaVal = null;    
        
         
@@ -197,7 +197,7 @@ public class Numeros {
     }
     public static Calendar SumarDias(Date fecha,int dias){
         Calendar cal=Calendar.getInstance();
-        SimpleDateFormat fh=new SimpleDateFormat("yyyy-mm-dd");
+        //SimpleDateFormat fh=new SimpleDateFormat("yyyy-MM-dd");
         cal.setTime(fecha);
         cal.add(Calendar.DAY_OF_WEEK, dias);
         return cal;
@@ -209,4 +209,28 @@ public class Numeros {
         cal.add(Calendar.DAY_OF_WEEK, dias);
         return cal;
     }
+    public static int RestarAFechaActual(Date fechaInicial){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+ 
+		//Date fechaInicial=dateFormat.parse("2016-02-14");
+		Date fechaFinal=new Date();
+ 
+		int dias=(int) ((fechaInicial.getTime()-fechaFinal.getTime())/86400000);
+                return dias;
+ 
+    }
+    public static Date SumarDiasDate(Date fecha,int dias){
+        Calendar cal=Calendar.getInstance();
+        //SimpleDateFormat fh=new SimpleDateFormat("yyyy-MM-dd");
+        cal.setTime(fecha);
+        cal.add(Calendar.DAY_OF_YEAR, dias);
+        return cal.getTime();
+    }
+    public static String ConvertirDateAString(Date fecha){
+        String resulta;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        resulta=dateFormat.format(fecha);
+        return resulta;
+    }
+    
 }

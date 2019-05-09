@@ -259,18 +259,13 @@
         <Menu class="javax.swing.JMenu" name="jMenu5">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/imagen/nuevos/licencia.png"/>
+              <Image iconType="3" name="/imagen/nuevos/procesar.png"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Licencia"/>
+            <Property name="text" type="java.lang.String" value="Configuraci&#xf3;n"/>
           </Properties>
-        </Menu>
-        <Menu class="javax.swing.JMenu" name="jMenu7">
-          <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/imagen/nuevos/factura electronica.png"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Factura Electr&#xf3;nica"/>
-          </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jMenu5MouseClicked"/>
+          </Events>
         </Menu>
       </SubComponents>
     </Menu>

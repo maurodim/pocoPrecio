@@ -6,11 +6,11 @@ package bbsgestion;
 
 import Actualizaciones.BkDeConeccion;
 import Administracion.Licencias;
-import ConfiguracionR.PortalWeb;
+import Administracion.LicenciasControl;
 import ConfiguracionR.Propiedades;
 import Cajas.Usuarios;
+import Conversores.Numeros;
 import interfaceGraficasManantial.Inicio;
-//import interfaceGraficas.LoguinBbsGestion;
 import interfaces.Backpeable;
 import java.io.BufferedReader;
 import java.io.File;
@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
@@ -55,7 +56,7 @@ public class BbsGestion {
         }
         File folder = new File("Gestion");
         File archivos = new File("Informes");
-        File bases = new File("base14");
+        File bases = new File("base");
         File configuracion = new File("Configuracion");
         //File imagenes=new File("C:\\Gestion\\imagenes\\saynomore.jpg");
         File bk;
@@ -155,19 +156,47 @@ public class BbsGestion {
                 usuarios = (Usuarios) bk1.leerUsuarios("adm", "adm");
                 //}
                 Licencias licencia=new Licencias();
+                Licencias licenciaWeb=new Licencias();
+                LicenciasControl control=new LicenciasControl();
                 ArrayList lstLic=new ArrayList();
-                lstLic=licencia.ListarLicencias();
-                licencia.ActualizarLicencia(lstLic);
-                licencia=(Licencias) licencia.LeerYActualizarLicencia();
-                licencia.UpdateLicenciaLocal(licencia);
-                licencia=(Licencias) licencia.LeerActualLocal();
-                System.out.println("cantidad "+licencia.getActualFc()+" presupuestos "+licencia.getActualPresupuestos());
+                lstLic=control.ListarLicencias();
+                control.ActualizarLicencia(lstLic);
+                licenciaWeb=(Licencias) control.LeerYActualizarLicencia();
+                if(Propiedades.getIDLICENCIA() != licenciaWeb.getId()){
+                    control.UpdateLicenciaLocal(licenciaWeb);
+                    JOptionPane.showMessageDialog(null, "LICENCIA MODIFICADA");
+                }
+                licencia=(Licencias) control.LeerActualLocal(licenciaWeb.getId());
+                System.out.println("cantidad "+licencia.getActualFc()+" presupuestos "+licencia.getActualPresupuestos()+" vencimeinto "+licencia.getFechadeVencimiento());
+                if(licencia.getActualFc() < 3 || licencia.getActualPresupuestos() < 3){
+                    JOptionPane.showMessageDialog(null, "Renueve su Licencia, quedán pocos comprobantes disponibles!!");
+                }
+                java.util.Date vencimiento=(java.util.Date) Numeros.ConvertirStringEnDate(licencia.getFechadeVencimiento());
+                int dias=Numeros.RestarAFechaActual(vencimiento);
+                if(dias < 5 && dias > -1){
+                    JOptionPane.showMessageDialog(null, "Renueve su Licencia, quedán "+dias+" para su vencimiento!!");
+                }
+//ACA DEBERÍA PONER LAS ALERTAS PARA QUE CARGUEN UNA NUEVA LICENCIA
+                
+                
                 /*
                 PortalWeb puerta=new PortalWeb();
                 puerta.setCuit(Propiedades.getCUIT());
                 puerta.setRazonSocial(Propiedades.getNOMBRECOMERCIO());
                 puerta.GenerarCertificadosAfip();
                 */
+                if(dias < 0){
+                    if(licencia.getId()==1){
+                        //Calendar calen=Numeros.SumarDiasDate(vencimiento,licencia.getDiasLicencia());
+                        java.util.Date fecc=Numeros.SumarDiasDate(vencimiento,licencia.getDiasLicencia());
+                        String veneN=Numeros.ConvertirDateAString(fecc);
+                        licencia.setFechadeVencimiento(veneN);
+                        control.RenovarLicencia(licencia);
+                        JOptionPane.showMessageDialog(null, "LICENCIA GRATUITA RENOVADA");
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Renueve su Licencia, LICENCIA CADUCADA");
+                    }
+                }else{
                 Inicio in = new Inicio(2);
                 //Inicio in=new Inicio();
                 Inicio.niv = usuarios.getNivelDeAutorizacion();
@@ -178,6 +207,7 @@ public class BbsGestion {
                 in.setExtendedState(JFrame.MAXIMIZED_BOTH);
                 in.setVisible(true);
                 in.toFront();
+                }
             }
         } catch (ParseException ex) {
             Logger.getLogger(BbsGestion.class.getName()).log(Level.SEVERE, null, ex);

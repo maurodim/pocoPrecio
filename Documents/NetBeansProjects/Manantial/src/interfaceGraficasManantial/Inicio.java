@@ -4,6 +4,7 @@
  */
 package interfaceGraficasManantial;
 
+import Articulos.Pantallas.IngresoDeMercaderia;
 import Cajas.ArqueoDeCaja;
 import Cajas.CajaAbm;
 import ClientesPantallas.AbmClientes;
@@ -38,6 +39,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import Articulos.Pantallas.ArticulosAbm;
 import Cajas.PagosAbm;
+import ConfiguracionR.Configuracion;
 import Etiquetador.Pantallas.Etiquetador;
 import Look.Fondo;
 import Proveedores.AbmProveedores;
@@ -194,7 +196,6 @@ public  void cargarImagen(javax.swing.JDesktopPane jDeskp,InputStream fileImagen
         jMenu4 = new javax.swing.JMenu();
         jMenu6 = new javax.swing.JMenu();
         jMenu5 = new javax.swing.JMenu();
-        jMenu7 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SISITEMA DE GESTION BAMBU SOFTWARE");
@@ -403,13 +404,14 @@ public  void cargarImagen(javax.swing.JDesktopPane jDeskp,InputStream fileImagen
         });
         jMenuBar1.add(jMenu6);
 
-        jMenu5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/nuevos/licencia.png"))); // NOI18N
-        jMenu5.setText("Licencia");
+        jMenu5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/nuevos/procesar.png"))); // NOI18N
+        jMenu5.setText("Configuración");
+        jMenu5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu5MouseClicked(evt);
+            }
+        });
         jMenuBar1.add(jMenu5);
-
-        jMenu7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/nuevos/factura electronica.png"))); // NOI18N
-        jMenu7.setText("Factura Electrónica");
-        jMenuBar1.add(jMenu7);
 
         setJMenuBar(jMenuBar1);
 
@@ -589,6 +591,11 @@ public  void cargarImagen(javax.swing.JDesktopPane jDeskp,InputStream fileImagen
         jDesktopPane1.add(abmP);
         abmP.setVisible(true);
         abmP.toFront();
+        try {
+            abmP.setMaximum(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jMenu4MouseClicked
 
     private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1ActionPerformed
@@ -650,6 +657,18 @@ public  void cargarImagen(javax.swing.JDesktopPane jDeskp,InputStream fileImagen
         pago.setVisible(true);
         pago.toFront();
     }//GEN-LAST:event_jMenuItem11ActionPerformed
+
+    private void jMenu5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu5MouseClicked
+        Configuracion configuracion=new Configuracion();
+        Inicio.jDesktopPane1.add(configuracion);
+        configuracion.setVisible(true);
+        configuracion.toFront();
+        try {
+            configuracion.setMaximum(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jMenu5MouseClicked
 
     /**
      * @param args the command line arguments
@@ -714,7 +733,6 @@ public  void cargarImagen(javax.swing.JDesktopPane jDeskp,InputStream fileImagen
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
-    private javax.swing.JMenu jMenu7;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
