@@ -16,29 +16,60 @@ punto_txt punto de venta propiedades - tabla confiuracion
  */
 package ConfiguracionR;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import objetosActualizador.Iva;
+
 /**
  *
  * @author Usuario
  */
 public class Configuracion extends javax.swing.JInternalFrame {
-
-    /**
-     * Creates new form Configuracion
-     */
+    ConfiguracionGeneral confi;
+    ConfiguracionControlador control;
+    Iva iva;
+    ArrayList lstIva;
+   
     public Configuracion() {
         initComponents();
-        this.nombre_txt.setText(Propiedades.getNOMBRE());
-        this.razon_txt.setText(Propiedades.getNOMBRECOMERCIO());
-        this.direccion_txt.setText(Propiedades.getDIRECCION());
-        this.telefono_txt.setText(Propiedades.getTELEFONO());
-        this.mail_txt.setText(Propiedades.getMAIL());
-        this.punto_txt.setText(Propiedades.getPUNTODEVENTA());
+        control=new ConfiguracionControlador();
+        confi=control.CargarConfiguracion();
+        iva=new Iva();
+        lstIva=new ArrayList();
+        lstIva=iva.Listar();
+        this.condicion_cmb.setModel(iva.MostrarEnCombo(lstIva));
+        int posicion=0;
+        Iterator it=lstIva.listIterator();
+        while(it.hasNext()){
+            iva=(Iva) it.next();
+            if(iva.getId()==confi.getCondicionIva()){
+                this.condicion_cmb.setSelectedIndex(posicion);
+            }
+            posicion++;
+        }
+        this.nombre_txt.setText(confi.getNombre());
+        this.razon_txt.setText(confi.getRazon());
+        this.direccion_txt.setText(confi.getDireccion());
+        this.telefono_txt.setText(confi.getTelefono());
+        this.mail_txt.setText(confi.getMail());
+        this.punto_txt.setText(String.valueOf(confi.getPuntoDeVenta()));
         
         
         //this.condicion_cmb.setSelectedIndex(Integer.parseInt(Propiedades.getCONDICIONIVA()));
-        this.cuit_txt.setText(Propiedades.getCUIT());
-        this.brutos_txt.setText(Propiedades.getINGBRUTOS());
-        this.inicio_txt.setText(Propiedades.getINICIOACT());
+        this.cuit_txt.setText(confi.getCuit());
+        this.brutos_txt.setText(confi.getIngresosBrutos());
+        this.inicio_txt.setText(confi.getInicioActividades());
+        if(confi.getElectronica()==1){
+            this.bloquear_btn.setVisible(true);
+            this.habilitar_btn.setVisible(false);
+        }else{
+            this.bloquear_btn.setVisible(false);
+            this.habilitar_btn.setVisible(true);
+        }
+        if(confi.getPresupuestos()==1)this.presu_si_rdo.setSelected(true);
 
     }
 
@@ -52,6 +83,7 @@ public class Configuracion extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
+        buttonGroup2 = new javax.swing.ButtonGroup();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -76,6 +108,9 @@ public class Configuracion extends javax.swing.JInternalFrame {
         jLabel18 = new javax.swing.JLabel();
         presu_no_rdo = new javax.swing.JRadioButton();
         presu_si_rdo = new javax.swing.JRadioButton();
+        jLabel19 = new javax.swing.JLabel();
+        tique_no_rdo1 = new javax.swing.JRadioButton();
+        tique_si_rdo1 = new javax.swing.JRadioButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         punto_txt = new javax.swing.JTextField();
@@ -92,8 +127,8 @@ public class Configuracion extends javax.swing.JInternalFrame {
         condicion_cmb = new javax.swing.JComboBox<>();
         tipo_cmb = new javax.swing.JComboBox<>();
         jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        habilitar_btn = new javax.swing.JButton();
+        bloquear_btn = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel17 = new javax.swing.JLabel();
         descripcion_lbl = new javax.swing.JLabel();
@@ -127,6 +162,11 @@ public class Configuracion extends javax.swing.JInternalFrame {
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/nuevos/guardar.png"))); // NOI18N
         jButton1.setText("Guardar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jLabel9.setText("Puerto salida");
 
@@ -138,6 +178,15 @@ public class Configuracion extends javax.swing.JInternalFrame {
 
         buttonGroup1.add(presu_si_rdo);
         presu_si_rdo.setText("SI");
+
+        jLabel19.setText("Configura Impresora de Tiquet?");
+
+        buttonGroup2.add(tique_no_rdo1);
+        tique_no_rdo1.setSelected(true);
+        tique_no_rdo1.setText("NO");
+
+        buttonGroup2.add(tique_si_rdo1);
+        tique_si_rdo1.setText("SI");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -178,7 +227,8 @@ public class Configuracion extends javax.swing.JInternalFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jLabel18, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
-                            .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE))
+                            .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
+                            .addComponent(jLabel19, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -187,7 +237,11 @@ public class Configuracion extends javax.swing.JInternalFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(presu_no_rdo)
                                 .addGap(18, 18, 18)
-                                .addComponent(presu_si_rdo)))))
+                                .addComponent(presu_si_rdo))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(tique_no_rdo1)
+                                .addGap(18, 18, 18)
+                                .addComponent(tique_si_rdo1)))))
                 .addContainerGap(378, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -234,9 +288,14 @@ public class Configuracion extends javax.swing.JInternalFrame {
                     .addComponent(jLabel18)
                     .addComponent(presu_no_rdo)
                     .addComponent(presu_si_rdo))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel19)
+                    .addComponent(tique_no_rdo1)
+                    .addComponent(tique_si_rdo1))
                 .addGap(21, 21, 21)
                 .addComponent(jButton1)
-                .addContainerGap(120, Short.MAX_VALUE))
+                .addContainerGap(90, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Parámetros", new javax.swing.ImageIcon(getClass().getResource("/imagen/nuevos/administracion.png")), jPanel1); // NOI18N
@@ -253,6 +312,11 @@ public class Configuracion extends javax.swing.JInternalFrame {
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/nuevos/guardar.png"))); // NOI18N
         jButton2.setText("Guardar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jLabel15.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
         jLabel15.setText("<html>\nPara habilitar el módulo de FACTURA ELECTRÓNICA:<br>\n- complete los campos y guarde<br>\n- descargue los archivos y siga los pasos del tutorial<br>\n- Vuelva a ésta pantalla y presione Habilitar<br>\n\n\n</html>");
@@ -261,7 +325,7 @@ public class Configuracion extends javax.swing.JInternalFrame {
 
         condicion_cmb.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        tipo_cmb.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        tipo_cmb.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Productos", "Servicios" }));
 
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/nuevos/descargar.png"))); // NOI18N
         jButton3.setText("Descargar Archivos");
@@ -271,11 +335,16 @@ public class Configuracion extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/nuevos/habilitar.png"))); // NOI18N
-        jButton4.setText("Habilitar");
+        habilitar_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/nuevos/habilitar.png"))); // NOI18N
+        habilitar_btn.setText("Habilitar");
+        habilitar_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                habilitar_btnActionPerformed(evt);
+            }
+        });
 
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/nuevos/desblock.png"))); // NOI18N
-        jButton5.setText("Bloquear");
+        bloquear_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/nuevos/desblock.png"))); // NOI18N
+        bloquear_btn.setText("Bloquear");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -315,8 +384,8 @@ public class Configuracion extends javax.swing.JInternalFrame {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE)
-                            .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(habilitar_btn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(bloquear_btn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(0, 238, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -339,9 +408,9 @@ public class Configuracion extends javax.swing.JInternalFrame {
                             .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(tipo_cmb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jButton4)
+                        .addComponent(habilitar_btn)
                         .addGap(22, 22, 22)
-                        .addComponent(jButton5)))
+                        .addComponent(bloquear_btn)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -468,22 +537,76 @@ public class Configuracion extends javax.swing.JInternalFrame {
         puerta.GenerarCertificadosAfip();
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        confi.setNombre(this.nombre_txt.getText());
+        confi.setRazon(this.razon_txt.getText());
+        confi.setDireccion(this.direccion_txt.getText());
+        confi.setTelefono(this.telefono_txt.getText());
+        confi.setMail(this.mail_txt.getText());
+        confi.setClave(this.clave_txt.getText());
+        confi.setServidor(this.servidor_txt.getText());
+        confi.setPuerto(Integer.parseInt(this.puerto_txt.getText()));
+        if(this.presu_no_rdo.isSelected()){
+            confi.setPresupuestos(0);
+        }else{
+            confi.setPresupuestos(1);
+        }
+        if(this.tique_no_rdo1.isSelected()){
+            confi.setTiqueadora(0);
+        }else{
+            confi.setTiqueadora(1);
+        }
+        
+        control.ActualizarConfiguracion(confi);
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        confi.setPuntoDeVenta(Integer.parseInt(this.punto_txt.getText()));
+        confi.setCuit(this.cuit_txt.getText());
+        confi.setIngresosBrutos(this.brutos_txt.getText());
+        confi.setInicioActividades(this.inicio_txt.getText());
+        int posi=this.condicion_cmb.getSelectedIndex();
+        iva=(Iva) lstIva.get(posi);
+        confi.setCondicionIva(iva.getId());
+        int tipo=this.tipo_cmb.getSelectedIndex();
+        if(tipo==0){
+            confi.setTipoDeVenta(1);
+        }else{
+            confi.setTipoDeVenta(2);
+        }
+        control.ActualizarConfiguracion(confi);
+        this.dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void habilitar_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_habilitar_btnActionPerformed
+        try {
+            Process p=Runtime.getRuntime().exec("Registrar.bat -user admin");
+            p.waitFor();
+        } catch (IOException ex) {
+            Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_habilitar_btnActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bloquear_btn;
     private javax.swing.JTextField brutos_txt;
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JTextField clave_txt;
     private javax.swing.JComboBox<String> condicion_cmb;
     private javax.swing.JTextField cuit_txt;
     private javax.swing.JLabel descripcion_lbl;
     private javax.swing.JTextField direccion_txt;
     private javax.swing.JLabel fc_lbl;
+    private javax.swing.JButton habilitar_btn;
     private javax.swing.JTextField inicio_txt;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -494,6 +617,7 @@ public class Configuracion extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
@@ -521,6 +645,8 @@ public class Configuracion extends javax.swing.JInternalFrame {
     private javax.swing.JTextField servidor_txt;
     private javax.swing.JTextField telefono_txt;
     private javax.swing.JComboBox<String> tipo_cmb;
+    private javax.swing.JRadioButton tique_no_rdo1;
+    private javax.swing.JRadioButton tique_si_rdo1;
     private javax.swing.JTextField usuario_txt;
     private javax.swing.JLabel vencimiento_lbl;
     // End of variables declaration//GEN-END:variables
