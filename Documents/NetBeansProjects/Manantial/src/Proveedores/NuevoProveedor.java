@@ -586,7 +586,7 @@ public class NuevoProveedor extends javax.swing.JInternalFrame implements Intern
                 MovimientoProveedores comprobante=new MovimientoProveedores();
         int posicion=this.jTable3.getSelectedRow();
         comprobante=(MovimientoProveedores)listadoCot.get(posicion);
-        IngresoDeFacturas factu=new IngresoDeFacturas(comprobante,cliTa);
+        IngresoFcProveedor factu=new IngresoFcProveedor(comprobante,cliTa);
         Inicio.jDesktopPane1.add(factu);
         try {
             factu.setMaximum(true);
@@ -612,7 +612,7 @@ public class NuevoProveedor extends javax.swing.JInternalFrame implements Intern
     }//GEN-LAST:event_formKeyPressed
 
     private void jButton16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton16ActionPerformed
-        IngresoDeFacturas abmP=new IngresoDeFacturas(cliTa);
+        IngresoFcProveedor abmP=new IngresoFcProveedor(cliTa);
         Inicio.jDesktopPane1.add(abmP);
         abmP.setVisible(true);
         abmP.toFront();

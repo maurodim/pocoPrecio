@@ -82,7 +82,12 @@ public class Numeros {
     public static Double ConvertirStringADouble(String num){
         num=num.replace(",",".");
         //System.out.println(" rsultado "+num);
-        Double dd=Double.parseDouble(num);
+        Double dd;
+        try{
+            dd=Double.parseDouble(num);
+        }catch(NumberFormatException ex){
+            dd=0.00;
+        }
         return dd;
     }
     public static String ConvertirFechaLeidaDeDateChooser(Calendar dateC){

@@ -16,6 +16,7 @@ punto_txt punto de venta propiedades - tabla confiuracion
  */
 package ConfiguracionR;
 
+import com.sun.glass.events.KeyEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -56,7 +57,10 @@ public class Configuracion extends javax.swing.JInternalFrame {
         this.telefono_txt.setText(confi.getTelefono());
         this.mail_txt.setText(confi.getMail());
         this.punto_txt.setText(String.valueOf(confi.getPuntoDeVenta()));
-        
+        this.servidor_txt.setText(confi.getServidor());
+        this.clave_txt.setText(confi.getClave());
+        this.puerto_txt.setText(String.valueOf(confi.getPuerto()));
+        this.usuario_txt.setText(confi.getMail());
         
         //this.condicion_cmb.setSelectedIndex(Integer.parseInt(Propiedades.getCONDICIONIVA()));
         this.cuit_txt.setText(confi.getCuit());
@@ -146,17 +150,59 @@ public class Configuracion extends javax.swing.JInternalFrame {
 
         jLabel1.setText("Nombre");
 
+        nombre_txt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                nombre_txtKeyPressed(evt);
+            }
+        });
+
         jLabel2.setText("Razon Social");
 
+        razon_txt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                razon_txtKeyPressed(evt);
+            }
+        });
+
         jLabel3.setText("Direccion");
+
+        direccion_txt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                direccion_txtKeyPressed(evt);
+            }
+        });
+
+        telefono_txt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                telefono_txtKeyPressed(evt);
+            }
+        });
 
         jLabel4.setText("Teléfono");
 
         jLabel5.setText("Mail");
 
+        mail_txt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                mail_txtKeyPressed(evt);
+            }
+        });
+
         jLabel6.setText("Usuario mail");
 
         jLabel7.setText("Clave mail");
+
+        clave_txt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                clave_txtKeyPressed(evt);
+            }
+        });
+
+        servidor_txt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                servidor_txtKeyPressed(evt);
+            }
+        });
 
         jLabel8.setText("Servidor SMTP");
 
@@ -169,6 +215,12 @@ public class Configuracion extends javax.swing.JInternalFrame {
         });
 
         jLabel9.setText("Puerto salida");
+
+        puerto_txt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                puerto_txtKeyPressed(evt);
+            }
+        });
 
         jLabel18.setText("Presupuesto Impactan en Caja?");
 
@@ -302,13 +354,31 @@ public class Configuracion extends javax.swing.JInternalFrame {
 
         jLabel10.setText("Punto de Venta");
 
+        punto_txt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                punto_txtKeyPressed(evt);
+            }
+        });
+
         jLabel11.setText("Condicion de Iva");
 
         jLabel12.setText("Tipo de Venta");
 
+        cuit_txt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                cuit_txtKeyPressed(evt);
+            }
+        });
+
         jLabel13.setText("CUIT");
 
         jLabel14.setText("ING BRUTOS");
+
+        brutos_txt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                brutos_txtKeyPressed(evt);
+            }
+        });
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/nuevos/guardar.png"))); // NOI18N
         jButton2.setText("Guardar");
@@ -345,6 +415,11 @@ public class Configuracion extends javax.swing.JInternalFrame {
 
         bloquear_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/nuevos/desblock.png"))); // NOI18N
         bloquear_btn.setText("Bloquear");
+        bloquear_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bloquear_btnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -558,7 +633,7 @@ public class Configuracion extends javax.swing.JInternalFrame {
         }
         
         control.ActualizarConfiguracion(confi);
-        this.dispose();
+        ActualizarCampos();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -576,20 +651,123 @@ public class Configuracion extends javax.swing.JInternalFrame {
             confi.setTipoDeVenta(2);
         }
         control.ActualizarConfiguracion(confi);
-        this.dispose();
+        ActualizarCampos();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void habilitar_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_habilitar_btnActionPerformed
-        try {
-            Process p=Runtime.getRuntime().exec("Registrar.bat -user admin");
-            p.waitFor();
-        } catch (IOException ex) {
-            Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
-        }
+       confi.setElectronica(1);
+       control.ActualizarConfiguracion(confi);
+        ActualizarCampos();
     }//GEN-LAST:event_habilitar_btnActionPerformed
 
+    private void nombre_txtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nombre_txtKeyPressed
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+            this.razon_txt.selectAll();
+            this.razon_txt.requestFocus();
+        }
+    }//GEN-LAST:event_nombre_txtKeyPressed
+
+    private void razon_txtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_razon_txtKeyPressed
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+            this.direccion_txt.selectAll();
+            this.direccion_txt.requestFocus();
+        }
+    }//GEN-LAST:event_razon_txtKeyPressed
+
+    private void direccion_txtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_direccion_txtKeyPressed
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+            this.telefono_txt.selectAll();
+            this.telefono_txt.requestFocus();
+        }
+    }//GEN-LAST:event_direccion_txtKeyPressed
+
+    private void telefono_txtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_telefono_txtKeyPressed
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+            this.mail_txt.selectAll();
+            this.mail_txt.requestFocus();
+        }
+    }//GEN-LAST:event_telefono_txtKeyPressed
+
+    private void mail_txtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_mail_txtKeyPressed
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+            this.usuario_txt.setText(this.mail_txt.getText());
+            this.clave_txt.selectAll();
+            this.clave_txt.requestFocus();
+        }
+    }//GEN-LAST:event_mail_txtKeyPressed
+
+    private void clave_txtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_clave_txtKeyPressed
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+            this.servidor_txt.selectAll();
+            this.servidor_txt.requestFocus();
+        }
+    }//GEN-LAST:event_clave_txtKeyPressed
+
+    private void servidor_txtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_servidor_txtKeyPressed
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+            this.puerto_txt.selectAll();
+            this.puerto_txt.requestFocus();
+        }
+    }//GEN-LAST:event_servidor_txtKeyPressed
+
+    private void puerto_txtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_puerto_txtKeyPressed
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+            this.nombre_txt.selectAll();
+            this.nombre_txt.requestFocus();
+        }
+    }//GEN-LAST:event_puerto_txtKeyPressed
+
+    private void punto_txtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_punto_txtKeyPressed
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+            this.cuit_txt.selectAll();
+            this.cuit_txt.requestFocus();
+        }
+    }//GEN-LAST:event_punto_txtKeyPressed
+
+    private void cuit_txtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cuit_txtKeyPressed
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+            this.brutos_txt.selectAll();
+            this.brutos_txt.requestFocus();
+        }
+    }//GEN-LAST:event_cuit_txtKeyPressed
+
+    private void brutos_txtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_brutos_txtKeyPressed
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+            this.inicio_txt.selectAll();
+            this.inicio_txt.requestFocus();
+        }
+    }//GEN-LAST:event_brutos_txtKeyPressed
+
+    private void bloquear_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bloquear_btnActionPerformed
+        confi.setElectronica(0);
+       control.ActualizarConfiguracion(confi);
+        ActualizarCampos();
+    }//GEN-LAST:event_bloquear_btnActionPerformed
+private void ActualizarCampos(){
+    this.nombre_txt.setText(confi.getNombre());
+        this.razon_txt.setText(confi.getRazon());
+        this.direccion_txt.setText(confi.getDireccion());
+        this.telefono_txt.setText(confi.getTelefono());
+        this.mail_txt.setText(confi.getMail());
+        this.punto_txt.setText(String.valueOf(confi.getPuntoDeVenta()));
+        this.servidor_txt.setText(confi.getServidor());
+        this.clave_txt.setText(confi.getClave());
+        this.puerto_txt.setText(String.valueOf(confi.getPuerto()));
+        this.usuario_txt.setText(confi.getMail());
+        //this.condicion_cmb.setSelectedIndex(Integer.parseInt(Propiedades.getCONDICIONIVA()));
+        this.cuit_txt.setText(confi.getCuit());
+        this.brutos_txt.setText(confi.getIngresosBrutos());
+        this.inicio_txt.setText(confi.getInicioActividades());
+        if(confi.getElectronica()==1){
+            this.bloquear_btn.setVisible(true);
+            this.habilitar_btn.setVisible(false);
+        }else{
+            this.bloquear_btn.setVisible(false);
+            this.habilitar_btn.setVisible(true);
+        }
+        if(confi.getPresupuestos()==1)this.presu_si_rdo.setSelected(true);
+
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bloquear_btn;

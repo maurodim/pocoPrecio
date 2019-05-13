@@ -38,6 +38,7 @@ public class ConfiguracionControlador {
                 confi.setIdLicencia(rs.getInt("idlicencia"));
                 confi.setIngresosBrutos(rs.getString("ingresosbrutos"));
                 confi.setInicioActividades(rs.getString("iniciodeactividades"));
+                confi.setCuit(rs.getString("cuit"));
                 confi.setMail(rs.getString("mail"));
                 confi.setNombre(rs.getString("nombre"));
                 confi.setPresupuestos(rs.getInt("presupuestos"));
@@ -67,7 +68,7 @@ public class ConfiguracionControlador {
         try {
             Transaccionable tra=new Conecciones();
             
-            String sql="update configuracion set clavemail='"+confi.getClave()+"',condicioniva='"+String.valueOf(confi.getCondicionIva())+"',direccion='"+confi.getDireccion()+"',electronica="+confi.getElectronica()+",ingresosbrutos='"+confi.getIngresosBrutos()+"',iniciodeactividades='"+confi.getInicioActividades()+"',mail='"+confi.getMail()+"',nombre='"+confi.getNombre()+"',presupuestos="+confi.getPresupuestos()+",puertomail="+confi.getPuerto()+",puntodeventa='"+String.valueOf(confi.getPuntoDeVenta())+"',razon='"+confi.getRazon()+"',servidormail='"+confi.getServidor()+"',telefono='"+confi.getTelefono()+"',tipodeventa='"+String.valueOf(confi.getTipoDeVenta())+"' where serie='"+confi.getSerie()+"'";
+            String sql="update configuracion set clavemail='"+confi.getClave()+"',condicioniva='"+String.valueOf(confi.getCondicionIva())+"',direccion='"+confi.getDireccion()+"',electronica="+confi.getElectronica()+",ingresosbrutos='"+confi.getIngresosBrutos()+"',iniciodeactividades='"+confi.getInicioActividades()+"',mail='"+confi.getMail()+"',nombre='"+confi.getNombre()+"',presupuestos="+confi.getPresupuestos()+",puertomail="+confi.getPuerto()+",puntodeventa='"+String.valueOf(confi.getPuntoDeVenta())+"',razon='"+confi.getRazon()+"',servidormail='"+confi.getServidor()+"',telefono='"+confi.getTelefono()+"',tipodeventa='"+String.valueOf(confi.getTipoDeVenta())+"',cuit='"+confi.getCuit()+"' where serie='"+confi.getSerie()+"'";
             tra.leerConjuntoDeRegistros(sql);
                 
             
