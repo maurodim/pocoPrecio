@@ -685,7 +685,7 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
                 detalleDelPedido.clear();
                 agregarRenglonTabla();
                 this.jCheckBox2.setSelected(true);
-                //this.jCheckBox2.setEnabled(false);
+                this.jCheckBox2.setEnabled(false);
                 //this.jTable2.removeAll();
                 listadoDeBusqueda.clear();
                 //cargarLista(listadoDeBusqueda);
@@ -1069,10 +1069,11 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
                 //Double saldo=cliT.getSaldo();
                 //Double totalGral=montoTotal + saldo;
                 Double totalGral = montoTotal;
+                /*
                 if (limite < totalGral) {
                     noFacturar = 1;
                 }
-                
+                */
             }
             if (noFacturar == 0) {
                 Facturar fat = new Comprobantes();
@@ -1099,11 +1100,11 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
                 detalleDelPedido.clear();
                 agregarRenglonTabla();
                 this.jCheckBox2.setSelected(true);
-                //this.jCheckBox2.setEnabled(false);
+                this.jCheckBox2.setEnabled(false);
 //                    this.jTable2.removeAll();
                 listadoDeBusqueda.clear();
                 //cargarLista(listadoDeBusqueda);
-                //cliT=new Clientes("99");
+                cliT=new Clientes("1");
                 this.jLabel6.setText(cliT.getRazonSocial());
                 this.jTextField2.setText("");
                 //jTextField1.setText("");

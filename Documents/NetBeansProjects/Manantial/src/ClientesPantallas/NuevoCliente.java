@@ -18,17 +18,58 @@ import java.util.ArrayList;
  * @author hernan
  */
 public class NuevoCliente extends javax.swing.JInternalFrame {
-    private ArrayList listadoL=new ArrayList();
+
+    private ArrayList listadoL = new ArrayList();
     private int originario;
+    private Clientes cli;
+    private int modificacion;
+
     /**
      * Creates new form NuevoCliente
      */
     public NuevoCliente() {
         initComponents();
+        modificacion=0;
     }
+
     public NuevoCliente(int origen) {
         initComponents();
-        originario=origen;
+        originario = origen;
+        cli=new Clientes();
+        modificacion=0;
+    }
+    public NuevoCliente(int origen,Clientes cliente) {
+        initComponents();
+        originario = origen;
+        cli=cliente;
+        this.jTextField1.setText(cli.getRazonSocial());
+        this.jTextField2.setText(cli.getDireccion());
+        this.jTextField3.setText(cli.getNumeroDeCuit());
+        this.jTextField4.setText(cli.getTelefono());
+        if(cli.getCupoDeCredito()==0){
+            this.jCheckBox1.setSelected(false);
+        }else{
+            this.jCheckBox1.setSelected(true);
+        }
+        modificacion=1;
+        int posicion=0;
+        int tipo=cli.getTipoIva();
+        switch (tipo) {
+            case 5:
+                posicion=0;
+                break;
+            case 1:
+                posicion=1;
+                break;
+            case 4:
+                posicion=2;
+                break;
+            case 6:
+                posicion=3;
+                break;
+                
+        }
+        this.jComboBox2.setSelectedIndex(posicion);
     }
 
     /**
@@ -52,6 +93,7 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
         jButton1 = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         jComboBox2 = new javax.swing.JComboBox();
+        jCheckBox1 = new javax.swing.JCheckBox();
 
         setClosable(true);
         setResizable(true);
@@ -100,9 +142,11 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel6.setText("Lista de precios :");
+        jLabel6.setText("Cond IVA");
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Consumidor Final", "Responsable Inscripto", "Exento", "Monotributo" }));
+
+        jCheckBox1.setText("Habilita Cta Cte ?");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -126,7 +170,9 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
                             .addComponent(jTextField3)
                             .addComponent(jTextField4)
                             .addComponent(jComboBox2, 0, 297, Short.MAX_VALUE))))
-                .addContainerGap(342, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(87, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -134,7 +180,8 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jCheckBox1))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -177,86 +224,122 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       Clientes cli=new Clientes();
-       //cli.setCodigoCliente(title);
-       cli.setRazonSocial(this.jTextField1.getText());
-       cli.setDireccion(this.jTextField2.getText());
-       String condicion="1";
-       //Double limite=Numeros.ConvertirStringADouble(this.jTextField5.getText());
-       //cli.setCupoDeCredito(limite);
-       //if(limite > 0){
-       //    cli.setCondicionDeVenta(2);
-       //}else{
-           cli.setCondicionDeVenta(1);
-       //}
-           cli.setEmpresa("bu");
-       int tipoIva=0;
-       switch(this.jComboBox2.getSelectedIndex()){
-           case 0:
-               tipoIva=5;
-               break;
-           case 1:
-               tipoIva=1;
-               break;
-           case 2:
-               tipoIva=4;
-               break;
-           case 3:
-               tipoIva=6;
-               break;
-       }
-       condicion=String.valueOf(tipoIva);
-       //ListasDePrecios lista=new ListasDePrecios();
-       int posLista=0;
-       if(posLista < 0)posLista=0;
-       //lista=(ListasDePrecios)listadoL.get(posLista);
-       //lista=new 
-       cli.setListaDePrecios(1);
-       /*
+        
+        //cli.setCodigoCliente(title);
+        cli.setRazonSocial(this.jTextField1.getText());
+        cli.setDireccion(this.jTextField2.getText());
+        String condicion = "1";
+        //Double limite=Numeros.ConvertirStringADouble(this.jTextField5.getText());
+        //cli.setCupoDeCredito(limite);
+        //if(limite > 0){
+        //    cli.setCondicionDeVenta(2);
+        //}else{
+        cli.setCondicionDeVenta(1);
+        //}
+        cli.setEmpresa("bu");
+        int tipoIva = 0;
+        switch (this.jComboBox2.getSelectedIndex()) {
+            case 0:
+                tipoIva = 5;
+                break;
+            case 1:
+                tipoIva = 1;
+                break;
+            case 2:
+                tipoIva = 4;
+                break;
+            case 3:
+                tipoIva = 6;
+                break;
+        }
+        condicion = String.valueOf(tipoIva);
+        //ListasDePrecios lista=new ListasDePrecios();
+        int posLista = 0;
+        if (posLista < 0) {
+            posLista = 0;
+        }
+        //lista=(ListasDePrecios)listadoL.get(posLista);
+        //lista=new 
+        cli.setListaDePrecios(1);
+        /*
        if(cli.getCupoDeCredito() > 0.00){
            cli.setCondicionDeVenta(2);
        }else{
         cli.setCondicionDeVenta(1);
        }
-               */
-       cli.setCoeficienteListaDeprecios(1.00);
-       cli.setCondicionIva(condicion);
-       cli.setTipoIva(tipoIva);
-       cli.setCupoDeCredito(0.00);
-       cli.setNumeroDeCuit(this.jTextField3.getText().replace("-","").trim());
-       cli.setTelefono(this.jTextField4.getText());
-       Facturar fact=new Clientes();
+         */
+        cli.setCoeficienteListaDeprecios(1.00);
+        cli.setCondicionIva(condicion);
+        cli.setTipoIva(tipoIva);
+        if (this.jCheckBox1.isSelected()) {
+            cli.setCupoDeCredito(1.00);
+        } else {
+            cli.setCupoDeCredito(0.00);
+        }
+        cli.setNumeroDeCuit(this.jTextField3.getText().replace("-", "").trim());
+        cli.setTelefono(this.jTextField4.getText());
+        Facturar fact = new Clientes();
+        if(modificacion==0){
         cli.setCodigoId(fact.guardarNuevoCliente(cli));
+        }else{
+            fact.modificarDatosDelCliente(cli);
+        }
         cli.setCodigoCliente(String.valueOf(cli.getCodigoId()));
-       IngresoDeFacturas.jCheckBox2.setSelected(true);
-       IngresoDeFacturas.jCheckBox2.setEnabled(false);
-       
-       if (originario == 1) {
+
+        if (originario == 1) {
+            if (cli.getCupoDeCredito() == 0) {
+                IngresoDeFacturas.jCheckBox2.setSelected(true);
+                IngresoDeFacturas.jCheckBox2.setEnabled(false);
+            } else {
+                IngresoDeFacturas.jCheckBox2.setSelected(false);
+                IngresoDeFacturas.jCheckBox2.setEnabled(true);
+            }
             IngresoDeFacturas.cliT = cli;
             IngresoDeFacturas.jLabel6.setText(cli.getRazonSocial());
             IngresoDeFacturas.jTextField1.requestFocus();
             this.dispose();
         }
-        if(originario==2){
+        if (originario == 2) {
+            if (cli.getCupoDeCredito() == 0) {
+                NotaDeCredito.jCheckBox2.setSelected(true);
+                NotaDeCredito.jCheckBox2.setEnabled(false);
+            } else {
+                NotaDeCredito.jCheckBox2.setSelected(false);
+                NotaDeCredito.jCheckBox2.setEnabled(true);
+            }
             NotaDeCredito.cliT = cli;
             NotaDeCredito.jLabel6.setText(cli.getRazonSocial());
             NotaDeCredito.jTextField1.requestFocus();
             this.dispose();
         }
-        if(originario==3){
+        if (originario == 3) {
+            if (cli.getCupoDeCredito() == 0) {
+                NotaDeDebito.jCheckBox2.setSelected(true);
+                NotaDeDebito.jCheckBox2.setEnabled(false);
+            } else {
+                NotaDeDebito.jCheckBox2.setSelected(false);
+                NotaDeDebito.jCheckBox2.setEnabled(true);
+            }
             NotaDeDebito.cliT = cli;
             NotaDeDebito.jLabel6.setText(cli.getRazonSocial());
             NotaDeDebito.jTextField1.requestFocus();
             this.dispose();
         }
+        if (originario == 4) {
+            this.dispose();
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyPressed
-        if(evt.getKeyCode()==KeyEvent.VK_ENTER)this.jTextField2.requestFocus();
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            this.jTextField2.requestFocus();
+        }
     }//GEN-LAST:event_jTextField1KeyPressed
 
     private void jTextField2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField2KeyPressed
-        if(evt.getKeyCode()==KeyEvent.VK_ENTER)this.jTextField3.requestFocus();
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            this.jTextField3.requestFocus();
+        }
     }//GEN-LAST:event_jTextField2KeyPressed
 
     private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
@@ -264,11 +347,14 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jTextField4ActionPerformed
 
     private void jTextField3KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField3KeyPressed
-        if(evt.getKeyCode()==KeyEvent.VK_ENTER)this.jTextField4.requestFocus();
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            this.jTextField4.requestFocus();
+        }
     }//GEN-LAST:event_jTextField3KeyPressed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JComboBox jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

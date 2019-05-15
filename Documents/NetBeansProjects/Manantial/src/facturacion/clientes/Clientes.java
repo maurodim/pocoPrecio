@@ -616,7 +616,7 @@ public class Clientes implements Busquedas,Facturar,Adeudable{
         ArrayList ped=new ArrayList();
             Clientes cli=null;
             
-            String sql="select id,idtransporte,clientes.fax,dentrega,clientes.direccionfantasia,(select condicionesiva.tipocomprobante from condicionesiva where condicionesiva.id=clientes.tipo_iva)as tipocomprobante,clientes.email,clientes.celular,clientes.COD_CLIENT,clientes.fantasia,clientes.RAZON_SOCI,clientes.DOMICILIO,clientes.COND_VTA,(clientes.LISTADEPRECIO)as NRO_LISTA,(select coeficienteslistas.coeficiente from coeficienteslistas where coeficienteslistas.id=clientes.listadeprecio)as descuento,(clientes.NUMERODECUIT)as IDENTIFTRI,clientes.empresa,clientes.TELEFONO_1,clientes.coeficiente,(clientes.CUPODECREDITO) AS CUPO_CREDI,clientes.saldo,clientes.TIPO_IVA,(select localidades.localidad from localidades where id=clientes.localidad)as localidad1,clientes.responsable,(select localidades.codigo_postal from localidades where id=clientes.localidad)as postal from clientes where razon_soci like '%"+cliente+"%' or responsable like '%"+cliente+"%' or fantasia like '%"+cliente+"%' order by razon_soci";
+            String sql="select id,idtransporte,clientes.fax,dentrega,clientes.direccionfantasia,(select condicionesiva.tipocomprobante from condicionesiva where condicionesiva.id=clientes.tipo_iva)as tipocomprobante,clientes.email,clientes.celular,clientes.COD_CLIENT,clientes.fantasia,clientes.RAZON_SOCI,clientes.DOMICILIO,clientes.COND_VTA,(clientes.LISTADEPRECIO)as NRO_LISTA,(select coeficienteslistas.coeficiente from coeficienteslistas where coeficienteslistas.id=clientes.listadeprecio)as descuento,(clientes.NUMERODECUIT)as IDENTIFTRI,clientes.empresa,clientes.TELEFONO_1,clientes.coeficiente,(clientes.CUPODECREDITO) AS CUPO_CREDI,(select sum(monto) from movimientosclientes where movimientosclientes.NUMEROPROVEEDOR=clientes.id and movimientosclientes.pagado=0) as saldocli,clientes.TIPO_IVA,(select localidades.localidad from localidades where id=clientes.localidad)as localidad1,clientes.responsable,(select localidades.codigo_postal from localidades where id=clientes.localidad)as postal from clientes where razon_soci like '%"+cliente+"%' or responsable like '%"+cliente+"%' or fantasia like '%"+cliente+"%' order by razon_soci";
             rs=tra.leerConjuntoDeRegistros(sql);
             try {
                 while(rs.next()){
@@ -653,6 +653,7 @@ public class Clientes implements Busquedas,Facturar,Adeudable{
                 cli.setDireccionDeEntrega(rs.getString("dentrega"));
                 cli.setCodigoPostal(rs.getString("postal"));
                 cli.setIdTransporte(rs.getInt("idtransporte"));
+                cli.setSaldo(rs.getDouble("saldocli"));
                // if(Inicio.usuario.getNivelDeAutorizacion()==1){
                 //System.out.println("ACTUALIZACION :"+Inicio.actualizacionesClientes); 
                 ped.add(cli);
@@ -850,7 +851,8 @@ public class Clientes implements Busquedas,Facturar,Adeudable{
         
         
         //String sql="insert into clientes (COD_CLIENT,RAZON_SOCI,DOMICILIO,LOCALIDAD,TELEFONO_1,TIPO_IVA,IDENTIFTRI,COND_VTA,NRO_LISTA,empresa) values ('"+cli.getCodigoCliente()+"','"+cli.getRazonSocial()+"','"+cli.getDireccion()+"','SANTA FE','"+cli.getTelefono()+"',"+cli.getCondicionIva()+",'"+cli.getNumeroDeCuit()+"',1,1,'"+cli.getEmpresa()+"')";
-        String sql="update clientes set RAZON_SOCI='"+cli.getRazonSocial()+"',idtransporte="+cli.getIdTransporte()+",listadeprecio="+cli.getListaDePrecios()+",DOMICILIO='"+cli.getDireccion()+"',TELEFONO_1='"+cli.getTelefono()+"',localidad='"+cli.getLocalidad()+"',responsable='"+cli.getResponsable()+"',numerodecuit='"+cli.getNumeroDeCuit()+"',tipo_iva="+cli.getTipoIva()+",cupodecredito="+cli.getCupoDeCredito()+",coeficiente="+cli.getCoeficienteListaDeprecios()+",fantasia='"+cli.getFantasia()+"',celular='"+cli.getCelular()+"',fax='"+cli.getFax()+"',direccionfantasia='"+cli.getDireccionFantasia()+"',email='"+cli.getEmail()+"',dentrega='"+cli.getDireccionDeEntrega()+"' where id ="+cli.getCodigoId();
+        String sql="update clientes set RAZON_SOCI='"+cli.getRazonSocial()+"',idtransporte=0,listadeprecio=1,DOMICILIO='"+cli.getDireccion()+"',TELEFONO_1='"+cli.getTelefono()+"',localidad=1,responsable='"+cli.getResponsable()+"',numerodecuit='"+cli.getNumeroDeCuit()+"',tipo_iva="+cli.getTipoIva()+",cupodecredito="+cli.getCupoDeCredito()+",coeficiente="+cli.getCoeficienteListaDeprecios()+",fantasia='"+cli.getFantasia()+"',celular='"+cli.getCelular()+"',fax='"+cli.getFax()+"',direccionfantasia='"+cli.getDireccionFantasia()+"',email='"+cli.getEmail()+"',dentrega='"+cli.getDireccionDeEntrega()+"' where id ="+cli.getCodigoId();
+        System.out.println("modificacion "+sql);
         resultado=tra.guardarRegistro(sql);
         cargarMap();
         return resultado;
@@ -982,7 +984,7 @@ public class Clientes implements Busquedas,Facturar,Adeudable{
        String fech=Numeros.ConvertirFecha(Inicio.fechaVal);
        
        Double montt=factProv.getMontoTotal() * -1;
-       String sql="insert into movimientosclientes (numeroProveedor,monto,numeroComprobante,idUsuario,tipoComprobante,idSucursal,idRemito,pagado,idcaja) values ("+factProv.getCliente().getCodigoId()+","+montt+",'"+numeroRecibo+"',"+factProv.getUsuarioGenerador()+",11,"+factProv.getIdSucursal()+",0,1,"+Inicio.caja.getNumero()+")";
+       String sql="insert into movimientosclientes (numeroProveedor,monto,numeroComprobante,idUsuario,tipoComprobante,idSucursal,idRemito,pagado,idcaja) values ("+factProv.getCliente().getCodigoId()+","+montt+",'"+numeroRecibo+"',"+factProv.getUsuarioGenerador()+",11,"+factProv.getIdSucursal()+",0,"+factProv.getPagado()+","+Inicio.caja.getNumero()+")";
        //String sql="update movimientosproveedores set pagado=1,numeroComprobante="+numeroRecibo+",idCaja="+Inicio.caja.getNumero()+",fechaPago='"+fech+"',idSucursal="+Inicio.sucursal.getNumero()+" where id="+factProv.getId();
        //System.out.println("VEAMOS "+sql);
        tra.guardarRegistro(sql);
@@ -1040,6 +1042,60 @@ public class Clientes implements Busquedas,Facturar,Adeudable{
                 Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
             }
             return listadoP;
+    }
+
+    @Override
+    public ArrayList listarDeudores() {
+        ArrayList ped=new ArrayList();
+            Clientes cli=null;
+            
+            String sql="select id,idtransporte,clientes.fax,dentrega,clientes.direccionfantasia,(select condicionesiva.tipocomprobante from condicionesiva where condicionesiva.id=clientes.tipo_iva)as tipocomprobante,clientes.email,clientes.celular,clientes.COD_CLIENT,clientes.fantasia,clientes.RAZON_SOCI,clientes.DOMICILIO,clientes.COND_VTA,(clientes.LISTADEPRECIO)as NRO_LISTA,(select coeficienteslistas.coeficiente from coeficienteslistas where coeficienteslistas.id=clientes.listadeprecio)as descuento,(clientes.NUMERODECUIT)as IDENTIFTRI,clientes.empresa,clientes.TELEFONO_1,clientes.coeficiente,(clientes.CUPODECREDITO) AS CUPO_CREDI,(select sum(monto) from movimientosclientes where movimientosclientes.NUMEROPROVEEDOR=clientes.id and movimientosclientes.pagado=0) as saldocli,clientes.TIPO_IVA,(select localidades.localidad from localidades where id=clientes.localidad)as localidad1,clientes.responsable,(select localidades.codigo_postal from localidades where id=clientes.localidad)as postal from clientes where cupodecredito=1 order by razon_soci";
+            rs=tra.leerConjuntoDeRegistros(sql);
+            try {
+                while(rs.next()){
+                  cli=new Clientes();
+                cli.setCodigoId(rs.getInt("id"));
+                cli.setCodigoCliente(rs.getString("id"));
+                cli.setRazonSocial(rs.getString("RAZON_SOCI"));
+                cli.setDireccion(rs.getString("DOMICILIO"));
+                cli.setCondicionDeVenta(rs.getInt("COND_VTA"));
+                cli.setListaDePrecios(rs.getInt("NRO_LISTA"));
+                //Double descuento=Double.parseDouble(rs.getString("PORC_DESC"));
+                cli.setDescuento(rs.getDouble("descuento"));
+                //cli.setDescuento(descuento);
+                cli.setNumeroDeCuit(rs.getString("IDENTIFTRI"));
+                cli.setEmpresa(rs.getString("empresa"));
+                cli.setTipoIva(rs.getInt("tipo_iva"));
+                if(cli.getTipoIva()==1)cli.setCondicionIva("RESP INSCRIPTO");
+                if(cli.getTipoIva()==4)cli.setCondicionIva("SUJETO EXENTO");
+                if(cli.getTipoIva()==5)cli.setCondicionIva("CONS FINAL");
+                if(cli.getTipoIva()==6)cli.setCondicionIva("RESP MONOTRIBUTO");
+                
+                
+                cli.setTelefono(rs.getString("TELEFONO_1"));
+                cli.setLocalidad(rs.getString("localidad1"));
+                cli.setCoeficienteListaDeprecios(rs.getDouble("coeficiente"));
+                cli.setCupoDeCredito(rs.getDouble("CUPO_CREDI"));
+                cli.setResponsable(rs.getString("responsable"));
+                cli.setFantasia(rs.getString("fantasia"));
+                cli.setCelular(rs.getString("celular"));
+                cli.setFax(rs.getString("fax"));
+                cli.setDireccionFantasia(rs.getString("direccionfantasia"));
+                cli.setEmail(rs.getString("email"));
+                cli.setTipoComprobante(rs.getInt("tipocomprobante"));
+                cli.setDireccionDeEntrega(rs.getString("dentrega"));
+                cli.setCodigoPostal(rs.getString("postal"));
+                cli.setIdTransporte(rs.getInt("idtransporte"));
+                cli.setSaldo(rs.getDouble("saldocli"));
+               // if(Inicio.usuario.getNivelDeAutorizacion()==1){
+                //System.out.println("ACTUALIZACION :"+Inicio.actualizacionesClientes); 
+                ped.add(cli);
+                }
+                rs.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            return ped;
     }
         
 }

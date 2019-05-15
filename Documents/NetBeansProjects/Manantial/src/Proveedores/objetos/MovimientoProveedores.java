@@ -5,6 +5,7 @@ import Conversores.Numeros;
 import Proveedores.Interfaces.FacturableE;
 import interfaceGraficasManantial.Inicio;
 import interfaces.Transaccionable;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -251,7 +252,11 @@ public class MovimientoProveedores implements FacturableE{
         } catch (SQLException ex) {
             Logger.getLogger(MovimientoProveedores.class.getName()).log(Level.SEVERE, null, ex);
         }
-        String sql="insert into movimientosproveedores (numeroProveedor,monto,numeroComprobante,idUsuario,tipoComprobante,subtotal,saldo,fecha,porcentajedescuento) values ("+mov.getIdProveedor()+",round("+mov.getMonto()+",4),'"+mov.getNumeroComprobante()+"',"+Inicio.usuario.getNumeroId()+","+mov.getTipoComprobante()+","+mov.getSubTotal()+","+mov.getSaldo()+",'"+mov.getFecha()+"',"+mov.getPorcentajeDescuento()+")";
+        //java.util.Date fechaMov=(Date) Numeros.ConvertirStringEnSqlDate(mov.getFecha());
+        //Date fechaMov=(Date) Numeros.ConvertirStringEnDate(mov.getFecha());
+        String fechaMov=mov.getFecha()+" 00:00:00.000";
+        String sql="insert into movimientosproveedores (numeroProveedor,monto,numeroComprobante,idUsuario,tipoComprobante,subtotal,saldo,fecha,porcentajedescuento,pagado,idremito,idcaja,idcomprobante) values ("+mov.getIdProveedor()+","+mov.getMonto()+",'"+mov.getNumeroComprobante()+"',"+Inicio.usuario.getNumeroId()+","+mov.getTipoComprobante()+","+mov.getSubTotal()+","+mov.getSaldo()+",'"+fechaMov+"',"+mov.getPorcentajeDescuento()+",0,0,"+Inicio.caja.getNumero()+","+mov.getIdComprobante()+")";
+        System.out.println("sql: "+sql);
         tra.guardarRegistro(sql);
         sql="select * from movimientosproveedores order by id desc fetch first 1 rows only";
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
@@ -274,7 +279,7 @@ public class MovimientoProveedores implements FacturableE{
     @Override
     public ArrayList listarPorEstado(Integer estado) {
         //LO VOY A UTILIZAR PARA LISTAR POR PROVEEDOR
-        String sql="select * from movimientosproveedores where numeroProveedor="+estado+" order by fecha desc";
+        String sql="select fecha,id,numeroproveedor,monto,numerocomprobante,tipocomprobante,saldo,idcomprobante,porcentajedescuento,(select tipocomprobantes.descripcion from tipocomprobantes where tipocomprobantes.id=movimientosproveedores.tipocomprobante) as descripcioncomprobante from movimientosproveedores where numeroProveedor="+estado+" order by fecha desc";
         Transaccionable tra=null;
         try {
             tra = new Conecciones();
@@ -300,8 +305,7 @@ public class MovimientoProveedores implements FacturableE{
                 mov.setSaldo(rs.getDouble("saldo"));
                 mov.setIdComprobante(rs.getInt("idcomprobante"));
                 mov.setPorcentajeDescuento(rs.getDouble("porcentajedescuento"));
-                if(mov.getTipoComprobante()==1)mov.setDescripcionTipoComprobante("FACTURA PROVEEDOR");
-                if(mov.getTipoComprobante()==2)mov.setDescripcionTipoComprobante("ORDEN DE PAGO");
+                mov.setDescripcionTipoComprobante(rs.getString("descripcioncomprobante"));
                 
                 listado.add(mov);
             }

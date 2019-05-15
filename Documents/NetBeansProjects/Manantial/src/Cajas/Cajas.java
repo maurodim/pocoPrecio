@@ -601,7 +601,7 @@ public class Cajas extends Sucursales implements Cajeables{
             
             
             Double saldoI=cajaNueva.getSaldoInicial();
-            String sql="insert into caja (numeroSucursal,numeroUsuario,tipoMovimiento,saldoInicial,tipo,estado) values ("+Inicio.sucursal.getNumero()+","+Inicio.usuario.getNumero()+",1,"+cajaNueva.saldoInicial+","+tipo+",0)";
+            String sql="insert into caja (numeroSucursal,numeroUsuario,tipoMovimiento,saldoInicial,tipo,estado) values ("+Inicio.sucursal.getNumero()+","+Inicio.usuario.getNumero()+",9,"+cajaNueva.saldoInicial+","+tipo+",0)";
             tra.guardarRegistro(sql);
             sql="select * from caja order by numero desc fetch first 1 rows only";
             rs=tra.leerConjuntoDeRegistros(sql);
@@ -620,7 +620,7 @@ public class Cajas extends Sucursales implements Cajeables{
             */
                 
                 int nume=NumeroDeComprobanteActivoMovCaja();
-                sql="insert into movimientoscaja (numeroUsuario,numeroSucursal,monto,tipoMovimiento,idCaja,numerocomprobante,tipocomprobante,pagado) values ("+Inicio.usuario.getNumeroId()+","+Inicio.sucursal.getNumero()+","+cajaNueva.getSaldoInicial()+",1,"+cajaNumeroAct+","+nume+",0,1)";
+                sql="insert into movimientoscaja (numeroUsuario,numeroSucursal,monto,tipoMovimiento,idCaja,numerocomprobante,tipocomprobante,pagado) values ("+Inicio.usuario.getNumeroId()+","+Inicio.sucursal.getNumero()+","+cajaNueva.getSaldoInicial()+",9,"+cajaNumeroAct+","+nume+",0,1)";
                 tra.guardarRegistro(sql);
                 cajaNueva.setNumero(cajaNumeroAct);
                 int pos=cajaNueva.getTipoMovimiento();

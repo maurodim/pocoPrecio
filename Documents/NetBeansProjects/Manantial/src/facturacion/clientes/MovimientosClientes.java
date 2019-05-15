@@ -294,7 +294,11 @@ public class MovimientosClientes implements Facturable, Movible, Editables {
             fila[2] = String.valueOf(cotizacion.getNumeroFactura());
 
             fila[3] = String.valueOf(cotizacion.getMontoOriginal());
+            if(cotizacion.getEstado()==0){
             fila[4] = Numeros.ConvertirNumero(cotizacion.getTotal());
+            }else{
+                fila[4] = Numeros.ConvertirNumero(cotizacion.getMontoOriginal());
+            }
             fila[5] = String.valueOf(cotizacion.getIdRemito());
             listado1.addRow(fila);
         }
@@ -444,7 +448,7 @@ public class MovimientosClientes implements Facturable, Movible, Editables {
             while (rs.next()) {
                 factura = new MovimientosClientes();
                 factura.setId(rs.getInt("id"));
-                //factura.setEstado(rs.getInt("estado"));
+                factura.setEstado(rs.getInt("pagado"));
                 factura.setFecha(rs.getDate("fecha"));
                 factura.setIdCliente(rs.getInt("numeroproveedor"));
                 factura.setIdPedido(rs.getInt("idpedido"));
@@ -506,10 +510,10 @@ public class MovimientosClientes implements Facturable, Movible, Editables {
             fila[0] = movi.numeroFactura;
             fila[1] = movi.fecha;
             fila[2] = movi.total;
-            if (movi.total < 0.00) {
+            if (movi.estado==1) {
                 fila[3] = "0.00";
             } else {
-                fila[3] = movi.saldo;
+                fila[3] = movi.total;
             }
             if (movi.tipo == 5) {
                 fila[0] = movi.idPedido;

@@ -6,30 +6,21 @@ package ClientesPantallas;
 
 import ClientesPantallas.NuevoCliente;
 import Articulos.Rubrable;
-import Conversores.Numeros;
-import Cotizaciones.IngresoDeCotizacion;
 import Excel.InformesClientes;
-import Excel.LeerExcelClientes;
 import facturacion.clientes.Clientes;
-import facturacion.pantallas.IngresoDeFacturas;
-import Pedidos.IngresoDePedidos;
 import interfaceGraficasManantial.Inicio;
 import interfaces.Adeudable;
 import interfaces.Personalizable;
 import interfacesPrograma.Busquedas;
-import interfacesPrograma.Facturar;
 import java.awt.event.KeyEvent;
 import java.beans.PropertyVetoException;
-import java.io.File;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 import javax.swing.table.TableColumn;
 import objetosR.Localidades;
 import tablas.MiModeloTablaArticulos;
@@ -81,7 +72,6 @@ public class AbmClientes extends javax.swing.JInternalFrame {
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
         jMenu5 = new javax.swing.JMenu();
-        jMenu6 = new javax.swing.JMenu();
 
         setClosable(true);
         setMaximizable(true);
@@ -166,14 +156,14 @@ public class AbmClientes extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/black_folder_search.png"))); // NOI18N
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/nuevos/consulta.png"))); // NOI18N
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/excel_icone.png"))); // NOI18N
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/nuevos/excel.png"))); // NOI18N
         jButton3.setText("Listado de Clientes");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -240,7 +230,7 @@ public class AbmClientes extends javax.swing.JInternalFrame {
                 .addGap(24, 24, 24))
         );
 
-        jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/folder_new.png"))); // NOI18N
+        jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/nuevos/clientes_nuevo.png"))); // NOI18N
         jMenu1.setText("Nuevo Cliente");
         jMenu1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -254,11 +244,16 @@ public class AbmClientes extends javax.swing.JInternalFrame {
         });
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/currency_black_dollar.png"))); // NOI18N
+        jMenu2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/nuevos/cierreCaja.png"))); // NOI18N
         jMenu2.setText("Saldo");
+        jMenu2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu2MouseClicked(evt);
+            }
+        });
         jMenuBar1.add(jMenu2);
 
-        jMenu5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/metacontact_offline.png"))); // NOI18N
+        jMenu5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/nuevos/clientes.png"))); // NOI18N
         jMenu5.setText("Perfil");
         jMenu5.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -266,15 +261,6 @@ public class AbmClientes extends javax.swing.JInternalFrame {
             }
         });
         jMenuBar1.add(jMenu5);
-
-        jMenu6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/sub_black_delete.png"))); // NOI18N
-        jMenu6.setText("Eliminar Cliente");
-        jMenu6.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jMenu6MouseClicked(evt);
-            }
-        });
-        jMenuBar1.add(jMenu6);
 
         setJMenuBar(jMenuBar1);
 
@@ -327,7 +313,7 @@ public class AbmClientes extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jMenu1ActionPerformed
 
     private void jMenu1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu1MouseClicked
-        NuevoCliente clienteNuevo=new NuevoCliente();
+        NuevoCliente clienteNuevo=new NuevoCliente(4);
         Inicio.jDesktopPane1.add(clienteNuevo);
         try {
             clienteNuevo.setMaximum(true);
@@ -356,13 +342,11 @@ miTabla.addColumn("COD CLIENTE");
 miTabla.addColumn("RAZON SOCIAL");
 miTabla.addColumn("DIRECCION");
 miTabla.addColumn("TELEFONO");
-miTabla.addColumn("LOCALIDAD");
-miTabla.addColumn("CONTACTO");
-miTabla.addColumn("NOM. FANTASIA");
-miTabla.addColumn("CELULAR");
+miTabla.addColumn("SALDO");
+miTabla.addColumn("CUIT");
 miTabla.addColumn("COND IVA");
 
-Object[] fila=new Object[9];
+Object[] fila=new Object[7];
 Clientes cliente=new Clientes();
 while(listC.hasNext()){
     cliente=(Clientes)listC.next();
@@ -370,11 +354,9 @@ while(listC.hasNext()){
 fila[1]=cliente.getRazonSocial();
 fila[2]=cliente.getDireccion();
 fila[3]=cliente.getTelefono();
-fila[4]=cliente.getLocalidad();
-fila[5]=cliente.getResponsable();
-fila[6]=cliente.getFantasia();
-fila[7]=cliente.getCelular();
-fila[8]=cliente.getCondicionIva();
+fila[4]=cliente.getSaldo();
+fila[5]=cliente.getNumeroDeCuit();
+fila[6]=cliente.getCondicionIva();
 miTabla.addRow(fila);
 }
 
@@ -410,7 +392,7 @@ columnaCodigo=this.jTable1.getColumn("COD CLIENTE");
         Clientes clienteTango=new Clientes();
         clienteTango=(Clientes)listadoClientes.get(this.jTable1.getSelectedRow());
         //NuevoCliente clienteNuevo=new NuevoCliente(clienteTango);
-        NuevoCliente clienteNuevo=new NuevoCliente();
+        NuevoCliente clienteNuevo=new NuevoCliente(4,clienteTango);
         Inicio.jDesktopPane1.add(clienteNuevo);
         clienteNuevo.setTitle(clienteTango.getRazonSocial());
         try {
@@ -438,18 +420,6 @@ columnaCodigo=this.jTable1.getColumn("COD CLIENTE");
         }
     }//GEN-LAST:event_jTextField1KeyPressed
 
-    private void jMenu6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu6MouseClicked
-        if(JOptionPane.showConfirmDialog(this,"Seguro de Eliminar este cliente?","Eliminar Cliente",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE)==1){
-            
-        }else{
-            Clientes clienteTango=new Clientes();
-            clienteTango=(Clientes)listadoClientes.get(this.jTable1.getSelectedRow());
-            Busquedas bus=new Clientes();
-            bus.eliminar(clienteTango.getCodigoId());
-            this.dispose();
-        }
-    }//GEN-LAST:event_jMenu6MouseClicked
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         Integer posic=this.jComboBox1.getSelectedIndex();
         Localidades localidad;
@@ -464,6 +434,15 @@ columnaCodigo=this.jTable1.getColumn("COD CLIENTE");
         //this.jPanel2.setVisible(true);
         cargarTabla();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jMenu2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu2MouseClicked
+        Clientes clienteTango=new Clientes();
+        clienteTango=(Clientes)listadoClientes.get(this.jTable1.getSelectedRow());
+        AbmSaldosClientes abm=new AbmSaldosClientes(clienteTango);
+        Inicio.jDesktopPane1.add(abm);
+        abm.setVisible(true);
+        abm.toFront();
+    }//GEN-LAST:event_jMenu2MouseClicked
 private void cargarTabla(){
         MiModeloTablaBuscarCliente busC=new MiModeloTablaBuscarCliente();
         this.jTable1.removeAll();
@@ -535,7 +514,6 @@ columnaCodigo=this.jTable1.getColumn("COD CLIENTE");
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu5;
-    private javax.swing.JMenu jMenu6;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;

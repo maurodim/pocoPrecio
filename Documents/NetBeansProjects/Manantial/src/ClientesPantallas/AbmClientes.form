@@ -7,7 +7,7 @@
         <Menu class="javax.swing.JMenu" name="jMenu1">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/imagen/folder_new.png"/>
+              <Image iconType="3" name="/imagen/nuevos/clientes_nuevo.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Nuevo Cliente"/>
           </Properties>
@@ -19,31 +19,23 @@
         <Menu class="javax.swing.JMenu" name="jMenu2">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/imagen/currency_black_dollar.png"/>
+              <Image iconType="3" name="/imagen/nuevos/cierreCaja.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Saldo"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jMenu2MouseClicked"/>
+          </Events>
         </Menu>
         <Menu class="javax.swing.JMenu" name="jMenu5">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/imagen/metacontact_offline.png"/>
+              <Image iconType="3" name="/imagen/nuevos/clientes.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Perfil"/>
           </Properties>
           <Events>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jMenu5MouseClicked"/>
-          </Events>
-        </Menu>
-        <Menu class="javax.swing.JMenu" name="jMenu6">
-          <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/imagen/sub_black_delete.png"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Eliminar Cliente"/>
-          </Properties>
-          <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jMenu6MouseClicked"/>
           </Events>
         </Menu>
       </SubComponents>
@@ -197,7 +189,7 @@
         <Component class="javax.swing.JButton" name="jButton2">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/imagen/black_folder_search.png"/>
+              <Image iconType="3" name="/imagen/nuevos/consulta.png"/>
             </Property>
           </Properties>
           <Events>
@@ -207,7 +199,7 @@
         <Component class="javax.swing.JButton" name="jButton3">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/imagen/excel_icone.png"/>
+              <Image iconType="3" name="/imagen/nuevos/excel.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Listado de Clientes"/>
           </Properties>

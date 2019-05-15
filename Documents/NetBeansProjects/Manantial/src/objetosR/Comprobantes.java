@@ -482,8 +482,9 @@ public class Comprobantes implements Facturar {
             System.out.println(sql);
             
         }
-        
-        sql = "insert into movimientoscaja (numeroUsuario,numeroSucursal,numeroComprobante,tipoComprobante,monto,tipoMovimiento,idCaja,idCliente,tipoCliente,pagado,idforma1,monto1,idforma2,monto2) values (" + comp.getUsuarioGenerador() + "," + comp.getIdSucursal() + "," + numeroComprobante + "," + comp.getTipoComprobante() + "," + comp.getMontoTotal() + "," + comp.getTipoMovimiento() + "," + Inicio.caja.getNumero() + "," + comp.getCliente().getCodigoId() + ",1," + comp.getPagado() + "," + comp.getIdForma1() + "," + comp.getMonto1() + "," + comp.getIdForma2() + "," + comp.getMonto2() + ")";
+        int forma=comp.getIdForma1();
+        if(comp.getPagado()==0)forma=0;
+        sql = "insert into movimientoscaja (numeroUsuario,numeroSucursal,numeroComprobante,tipoComprobante,monto,tipoMovimiento,idCaja,idCliente,tipoCliente,pagado,idforma1,monto1,idforma2,monto2) values (" + comp.getUsuarioGenerador() + "," + comp.getIdSucursal() + "," + numeroComprobante + "," + comp.getTipoComprobante() + "," + comp.getMontoTotal() + "," + comp.getTipoMovimiento() + "," + Inicio.caja.getNumero() + "," + comp.getCliente().getCodigoId() + ",1," + comp.getPagado() + "," + forma + "," + comp.getMonto1() + "," + comp.getIdForma2() + "," + comp.getMonto2() + ")";
         System.out.println(sql);
         tra.guardarRegistro(sql);
         sql = "select numero from movimientoscaja order by numero desc fetch first 1 rows only";

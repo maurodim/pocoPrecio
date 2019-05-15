@@ -287,18 +287,39 @@ public class SeleccionDeClientes1 extends javax.swing.JInternalFrame {
         cliT.setListaDePrecios(listaDePrecio);
         //System.out.println(" DESCUENTO PANTALLA CLIENTE"+desc);
         if (originario == 1) {
+            if(cliT.getCupoDeCredito()==0){
+                IngresoDeFacturas.jCheckBox2.setSelected(true);
+                IngresoDeFacturas.jCheckBox2.setEnabled(false);
+            }else{
+                IngresoDeFacturas.jCheckBox2.setSelected(false);
+                IngresoDeFacturas.jCheckBox2.setEnabled(true);
+            }
             IngresoDeFacturas.cliT = cliT;
             IngresoDeFacturas.jLabel6.setText(cliT.getRazonSocial());
             IngresoDeFacturas.jTextField1.requestFocus();
             this.dispose();
         }
         if(originario==2){
+            if(cliT.getCupoDeCredito()==0){
+                NotaDeCredito.jCheckBox2.setSelected(true);
+                NotaDeCredito.jCheckBox2.setEnabled(false);
+            }else{
+                NotaDeCredito.jCheckBox2.setSelected(false);
+                NotaDeCredito.jCheckBox2.setEnabled(true);
+            }
             NotaDeCredito.cliT = cliT;
             NotaDeCredito.jLabel6.setText(cliT.getRazonSocial());
             NotaDeCredito.jTextField1.requestFocus();
             this.dispose();
         }
         if(originario==3){
+            if(cliT.getCupoDeCredito()==0){
+                NotaDeDebito.jCheckBox2.setSelected(true);
+                NotaDeDebito.jCheckBox2.setEnabled(false);
+            }else{
+                NotaDeDebito.jCheckBox2.setSelected(false);
+                NotaDeDebito.jCheckBox2.setEnabled(true);
+            }
             NotaDeDebito.cliT = cliT;
             NotaDeDebito.jLabel6.setText(cliT.getRazonSocial());
             NotaDeDebito.jTextField1.requestFocus();

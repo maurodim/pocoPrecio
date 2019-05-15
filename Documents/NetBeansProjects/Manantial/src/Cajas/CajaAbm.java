@@ -83,6 +83,8 @@ public class CajaAbm extends javax.swing.JInternalFrame {
             fila[2] = cajj.getMontoMovimiento();
             tablaCaja.addRow(fila);
         }
+        System.out.println("labels "+cajj.getTotalVentas()+" gtos "+cajj.getTotalGastos()+" efect "+cajj.getTotalEfectivo()+" pagos "+cajj.getTotalOtrosPagos());
+        
         ModificarLabels(cajj.getTotalVentas(), cajj.getTotalGastos(), cajj.getTotalEfectivo(), cajj.getTotalOtrosPagos());
 
     }
@@ -225,6 +227,7 @@ public class CajaAbm extends javax.swing.JInternalFrame {
 
         jLabel4.setText("jLabel4");
 
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/nuevos/guardar.png"))); // NOI18N
         jButton2.setText("Guardar Movimiento");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -475,6 +478,7 @@ public class CajaAbm extends javax.swing.JInternalFrame {
                 comprobantes.setCliente(cliente);
                 comprobantes.setMontoTotal(Double.parseDouble(this.jTextField1.getText()));
                 comprobantes.setFechaEmision(Date.valueOf(Inicio.fechaDia));
+                comprobantes.setPagado(0);
                 adeu.PagarComprobante(comprobantes);
                 listadoP.clear();
                 operacionSelect = 0;
@@ -516,6 +520,7 @@ public class CajaAbm extends javax.swing.JInternalFrame {
         }
         AgregarRenglonTabla();
         this.jTextField2.setText("");
+        this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
@@ -600,7 +605,7 @@ public class CajaAbm extends javax.swing.JInternalFrame {
         listadoP = new ArrayList();
         //Adeudable ade=new FacturaProveedor();
         Busquedas ade = new Clientes();
-        listadoP = ade.listar("");
+        listadoP = ade.listarDeudores();
         Iterator ilP = listadoP.listIterator();
         while (ilP.hasNext()) {
             fact = (Clientes) ilP.next();
@@ -623,8 +628,11 @@ public class CajaAbm extends javax.swing.JInternalFrame {
         Cajas caaj = new Cajas();
         caaj = (Cajas) Cajas.getListadoCajas().get(posic);
         modelo = cajea.LeerComprobante(caaj.getNumeroDeComprobante(), caaj.getTipoDeComprobante(), caaj.getTipoMovimiento());
-
-        ListadoComprobantes listadoDeArticulos = new ListadoComprobantes(caaj.getNumeroDeComprobante(), caaj.getTipoMovimiento(), caaj.getTipoDeComprobante(),caaj.getDescripcionForma1());
+        String descripcionF=caaj.getDescripcionForma1();
+        if(caaj.getIdForma1()==0){
+            descripcionF="CTA CTE";
+        }
+        ListadoComprobantes listadoDeArticulos = new ListadoComprobantes(caaj.getNumeroDeComprobante(), caaj.getTipoMovimiento(), caaj.getTipoDeComprobante(),descripcionF);
         listadoDeArticulos.jList1.setModel(modelo);
         listadoDeArticulos.setVisible(true);
         int posicion = listadoDeArticulos.jList1.getSelectedIndex();

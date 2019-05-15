@@ -19,4 +19,5 @@ public interface Busquedas {
     public void marcarContactado(Integer item);
     public void modificarDatosCliente(Object cliente);
     public void eliminar(Integer id);
+    public ArrayList listarDeudores();
 }

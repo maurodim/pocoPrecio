@@ -179,6 +179,7 @@ public  void cargarImagen(javax.swing.JDesktopPane jDeskp,InputStream fileImagen
         jMenuItem14 = new javax.swing.JMenuItem();
         jMenuItem21 = new javax.swing.JMenuItem();
         jMenuItem11 = new javax.swing.JMenuItem();
+        jMenuItem13 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem12 = new javax.swing.JMenuItem();
@@ -248,6 +249,15 @@ public  void cargarImagen(javax.swing.JDesktopPane jDeskp,InputStream fileImagen
             }
         });
         jMenu1.add(jMenuItem11);
+
+        jMenuItem13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/nuevos/consulta.png"))); // NOI18N
+        jMenuItem13.setText("Archivos Iva");
+        jMenuItem13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem13ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem13);
 
         jMenuBar1.add(jMenu1);
 
@@ -670,6 +680,13 @@ public  void cargarImagen(javax.swing.JDesktopPane jDeskp,InputStream fileImagen
         }
     }//GEN-LAST:event_jMenu5MouseClicked
 
+    private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
+        Citi.pantallasCiti.EmisorDeInformes citi=new Citi.pantallasCiti.EmisorDeInformes();
+        Inicio.jDesktopPane1.add(citi);
+        citi.setVisible(true);
+        citi.toFront();
+    }//GEN-LAST:event_jMenuItem13ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -738,6 +755,7 @@ public  void cargarImagen(javax.swing.JDesktopPane jDeskp,InputStream fileImagen
     private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem12;
+    private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem18;
     private javax.swing.JMenuItem jMenuItem2;

@@ -6,6 +6,7 @@ package Proveedores;
 
 import Citi.objetosDao.ComprasfiscalJpaController;
 import Conversores.Numeros;
+import Proveedores.Interfaces.FacturableE;
 import Proveedores.objetos.MovimientoProveedores;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -534,26 +535,38 @@ public class IngresoFcProveedor extends javax.swing.JInternalFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         String fecha = Numeros.ConvertirFechaLeidaDeDateChooser(this.fecha_cmb.getSelectedDate());
+        String fechaM=fecha;
         int tipoComprobante = this.tipoComprobante_cmb.getSelectedIndex();
         int tipoComp=11;
+        int tipoInterno=5;
+        double multiplo=1.00;
         switch(tipoComprobante){
             case 0:
               tipoComp=1;
+              tipoInterno=5;
               break;
-            case 2:
+            case 1:
                 tipoComp=6;
+                tipoInterno=6;
+                break;
+            case 2:
+                tipoComp=11;
+                tipoInterno=7;
                 break;
             case 3:
-                tipoComp=11;
+                tipoComp=3;
+                tipoInterno=8;
+                multiplo= -1.00;
                 break;
             case 4:
-                tipoComp=3;
+                tipoComp=8;
+                tipoInterno=9;
+                multiplo= -1.00;
                 break;
             case 5:
-                tipoComp=8;
-                break;
-            case 6:
                 tipoComp=13;
+                tipoInterno=10;
+                multiplo= -1.00;
                 break;
         }
         int puntoDeVenta;
@@ -598,10 +611,21 @@ public class IngresoFcProveedor extends javax.swing.JInternalFrame {
         compras.setRazon(cliT.getNombre());
         compras.setCuit(cliT.getCuit());
         compras.setAlicuota(alicuotaIva);
-        controlador.create(compras);
+        Integer id=controlador.create(compras);
         String resultado = " Fecha: " + fecha + " tipo " + compras.getTipo() + " punto " + compras.getPto() + " numero " + compras.getNumero();
         
-        
+        MovimientoProveedores movi=new MovimientoProveedores();
+        movi.setTipoComprobante(tipoInterno);
+        movi.setIdProveedor(cliT.getNumero());
+        double mon=montoTotal * multiplo;
+        movi.setMonto(mon);
+        movi.setNumeroComprobante(compras.getPto()+"-"+compras.getNumero());
+        movi.setSubTotal(compras.getGravado());
+        movi.setFecha(fechaM);
+        movi.setSaldo(mon);
+        movi.setIdComprobante(id);
+        FacturableE factu=new MovimientoProveedores();
+        factu.guardar(movi);
         
         this.dispose();
         //JOptionPane.showMessageDialog(null, resultado);

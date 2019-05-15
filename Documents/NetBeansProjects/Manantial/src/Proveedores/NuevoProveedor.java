@@ -37,6 +37,8 @@ import objetosR.Localidades;
 public class NuevoProveedor extends javax.swing.JInternalFrame implements InternalFrameListener {
     private JInternalFrame clientes;
     private int modificacion;
+    private double saldoTotal;
+    private MovimientoProveedores movimiento;
     private Proveedores cliTa=new Proveedores();
     private ArrayList listadoL=new ArrayList();
     private ArrayList listadoIva=new ArrayList();
@@ -193,11 +195,9 @@ public class NuevoProveedor extends javax.swing.JInternalFrame implements Intern
         jPanel2 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
-        jButton10 = new javax.swing.JButton();
-        jButton14 = new javax.swing.JButton();
         jButton15 = new javax.swing.JButton();
         jButton16 = new javax.swing.JButton();
-        jButton17 = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
 
         setClosable(true);
         setMaximizable(true);
@@ -314,7 +314,7 @@ public class NuevoProveedor extends javax.swing.JInternalFrame implements Intern
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
@@ -348,29 +348,13 @@ public class NuevoProveedor extends javax.swing.JInternalFrame implements Intern
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jButton1)
-                .addContainerGap(59, Short.MAX_VALUE))
+                .addContainerGap(71, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Perfil", jPanel1);
 
         jTable3.setModel(modelo2);
         jScrollPane3.setViewportView(jTable3);
-
-        jButton10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/Currency- Dollar.png"))); // NOI18N
-        jButton10.setText("Orden de Pago");
-        jButton10.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton10ActionPerformed(evt);
-            }
-        });
-
-        jButton14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/List.png"))); // NOI18N
-        jButton14.setText("Reimprimir Orden De Pago");
-        jButton14.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton14ActionPerformed(evt);
-            }
-        });
 
         jButton15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/black_folder_search.png"))); // NOI18N
         jButton15.setText("Visualizar factura");
@@ -388,13 +372,8 @@ public class NuevoProveedor extends javax.swing.JInternalFrame implements Intern
             }
         });
 
-        jButton17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/black_folder_search.png"))); // NOI18N
-        jButton17.setText("Nota de Creito");
-        jButton17.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton17ActionPerformed(evt);
-            }
-        });
+        jLabel7.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
+        jLabel7.setText("Saldo: $");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -403,18 +382,14 @@ public class NuevoProveedor extends javax.swing.JInternalFrame implements Intern
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 1489, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jButton10)
-                        .addGap(18, 18, 18)
                         .addComponent(jButton16)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton14)
                         .addGap(18, 18, 18)
                         .addComponent(jButton15)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton17)
-                        .addGap(0, 543, Short.MAX_VALUE)))
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -422,11 +397,9 @@ public class NuevoProveedor extends javax.swing.JInternalFrame implements Intern
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton10)
-                    .addComponent(jButton14)
                     .addComponent(jButton15)
                     .addComponent(jButton16)
-                    .addComponent(jButton17))
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 530, Short.MAX_VALUE)
                 .addContainerGap())
@@ -510,78 +483,6 @@ public class NuevoProveedor extends javax.swing.JInternalFrame implements Intern
        this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
-        MovimientoProveedores mov=new MovimientoProveedores();
-        listadoFac=mov.listarFacturasProveedor(cliTa.getNumero());
-        AbmOrdenDePagos recibo=new AbmOrdenDePagos(null,true,cliTa.getSaldo(),cliTa);
-        //Inicio.jDesktopPane1.add(recibo);
-        recibo.setVisible(true);
-        recibo.toFront();
-        
-        if(recibo.guardado==1){
-            
-           listadoCot.clear();
-            FacturableE factu=new MovimientoProveedores();
-
-            listadoCot=factu.listarPorEstado(cliTa.getNumero());
-            this.jTable3.setModel(factu.mostrarListado(listadoCot));
-        }
-        
-        //Inicio.jDesktopPane1.add(recibo);
-        /*
-        ArrayList listadoParaRecibo=new ArrayList();
-        int cantidad=this.jTable3.getRowCount();
-        Double montt=0.00;
-        Facturas factura;
-        for(int a=0;a < cantidad;a++){
-            if((Boolean)this.jTable3.getValueAt(a, 0)){
-                factura=new Facturas();
-                factura=(Facturas)listadoFac.get(a);
-                listadoParaRecibo.add(factura);
-                montt=montt + factura.getTotal();
-            }
-        }
-        System.out.println("cantidad a recibir "+listadoParaRecibo.size()+" monto total: "+montt);
-        Recidable reci=new DetalleRecibo();
-        AbmOrdenDePagos abm=new AbmOrdenDePagos(listadoParaRecibo,montt,cliTa);
-        //abm.jTable1.setModel(reci.mostrarARecibir(listadoParaRecibo));
-        //AbmRecibos.listadoFc=listadoParaRecibo;
-        //AbmRecibos.montoTotal=montt;
-//        abm.setListadoFc(listadoParaRecibo);
-  //      abm.setMontoTotal(montt);
-    //    abm.setSaldo(montt);
-        
-        //AbmRecibos.jLabel2.setText(" $"+montt);
-        abm.setVisible(true);
-        abm.toFront();
-        */
-        
-        
-        
-    }//GEN-LAST:event_jButton10ActionPerformed
-
-    private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
-       int posicion=this.jTable3.getSelectedRow();
-       MovimientoProveedores mov=(MovimientoProveedores) listadoCot.get(posicion);
-       if(mov.getTipoComprobante()==2){
-           OrdenDePago recibo=new OrdenDePago();
-           Recidable reci=new OrdenDePago();
-           recibo=(OrdenDePago) reci.cargar(mov.getIdComprobante());
-           ImprimirOrdenDeTrabajo imprimir=new ImprimirOrdenDeTrabajo();
-           try {
-               imprimir.ReImprimirOrdenDeTrabajo(recibo);
-               //ArrayList lstR=reci.listar(mov.getNumeroComprobante());
-               //Iterator it=
-           } catch (IOException ex) {
-               Logger.getLogger(NuevoProveedor.class.getName()).log(Level.SEVERE, null, ex);
-           }
-           
-       }else{
-           JOptionPane.showMessageDialog(null,"Seleccione un recibo por favor");
-       }
-                
-    }//GEN-LAST:event_jButton14ActionPerformed
-
     private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton15ActionPerformed
                 MovimientoProveedores comprobante=new MovimientoProveedores();
         int posicion=this.jTable3.getSelectedRow();
@@ -624,11 +525,14 @@ public class NuevoProveedor extends javax.swing.JInternalFrame implements Intern
         
         listadoCot=factu.listarPorEstado(cliTa.getNumero());
         this.jTable3.setModel(factu.mostrarListado(listadoCot));
+        Iterator itL=listadoCot.listIterator();
+        saldoTotal=0;
+        while(itL.hasNext()){
+            movimiento=(MovimientoProveedores) itL.next();
+            saldoTotal=saldoTotal + movimiento.getMonto();
+        }
+        this.jLabel7.setText("Saldo: $"+saldoTotal);
     }//GEN-LAST:event_formInternalFrameActivated
-
-    private void jButton17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton17ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton17ActionPerformed
     private void ControlaInstancia(JInternalFrame inter){
         /*
         boolean mostrar=true;
@@ -643,11 +547,8 @@ public class NuevoProveedor extends javax.swing.JInternalFrame implements Intern
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton14;
     private javax.swing.JButton jButton15;
     private javax.swing.JButton jButton16;
-    private javax.swing.JButton jButton17;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
@@ -658,6 +559,7 @@ public class NuevoProveedor extends javax.swing.JInternalFrame implements Intern
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;

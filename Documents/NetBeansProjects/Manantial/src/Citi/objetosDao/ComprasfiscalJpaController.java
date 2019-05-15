@@ -7,6 +7,7 @@ package Citi.objetosDao;
 
 import interfaces.Transaccionable;
 import java.io.Serializable;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -40,12 +41,24 @@ public class ComprasfiscalJpaController implements Serializable {
         return emf.createEntityManager();
     }
 */
-    public void create(Comprasfiscal comprasfiscal) {
+    public Integer create(Comprasfiscal comprasfiscal) {
         //tra=new Conecciones();
         
         String sql="insert into comprasfiscal (fecha,tipo,pto,numero,gravado,alicuota,iva,total,razon,cuit,netonogravado,exentas,percepcioniva,impuestosnacionales,percepcionib,impmunicipales,impinternos,cantidadalicuotaiva,otrostributos) values ('"+comprasfiscal.getFecha()+"','"+comprasfiscal.getTipo()+"','"+comprasfiscal.getPto()+"','"+comprasfiscal.getNumero()+"',"+comprasfiscal.getGravado()+",'"+comprasfiscal.getAlicuota()+"',"+comprasfiscal.getIva()+","+comprasfiscal.getTotal()+",'"+comprasfiscal.getRazon()+"','"+comprasfiscal.getCuit()+"',"+comprasfiscal.getNetonogravado()+","+comprasfiscal.getExentas()+","+comprasfiscal.getPercepcioniva()+","+comprasfiscal.getImpuestosnacionales()+","+comprasfiscal.getPercepcionib()+","+comprasfiscal.getImpmunicipales()+","+comprasfiscal.getImpinternos()+","+comprasfiscal.getCantidadalicuotaiva()+","+comprasfiscal.getOtrostributos()+")";
         System.out.println(sql);
         tra.guardarRegistro(sql);
+        Integer id = null;
+        sql="select id from comprasfiscal order by id desc fetch first 1 rows only";
+        ResultSet rs=tra.leerConjuntoDeRegistros(sql);
+        try {
+            while(rs.next()){
+                id=rs.getInt("id");
+            }
+            rs.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(ComprasfiscalJpaController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return id;
         //tra.cerrar();
         
         /*

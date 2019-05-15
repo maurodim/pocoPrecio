@@ -106,7 +106,7 @@ public class AbmProveedores extends javax.swing.JInternalFrame {
         });
         jMenuBar1.add(jMenu1);
 
-        jMenu5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/metacontact_offline.png"))); // NOI18N
+        jMenu5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/nuevos/proveedores.png"))); // NOI18N
         jMenu5.setText("Perfil");
         jMenu5.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
