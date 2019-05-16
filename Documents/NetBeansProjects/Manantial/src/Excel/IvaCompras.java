@@ -24,10 +24,10 @@ import org.apache.poi.ss.usermodel.IndexedColors;
 
 /**
  *
- * @author mauro
+ * @author Usuario
  */
-public class IvaVentas {
-  public void GenerrarInformeIvaVentas(String desde,String hasta) throws SQLException{
+public class IvaCompras {
+    public void GenerrarInformeIvaCompras(String desde,String hasta) throws SQLException, FileNotFoundException{
         try {
             HSSFWorkbook libro=new HSSFWorkbook();
             HSSFSheet hoja=libro.createSheet("Iva Ventas");
@@ -56,7 +56,7 @@ public class IvaVentas {
             fuente.setFontName(fuente.FONT_ARIAL);
             fuente.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
             String form=null;
-            String sql="SELECT fecha,tipo,numero,razon,(gravado) as gravadoR,(impuesto) as impuestoR,(total) as totalR FROM fiscal where fechaRegistro between '"+desde+" 00:00:00.000' and '"+hasta+" 00:00:00.000' order by numero";
+            String sql="SELECT fecha,tipo,numero,razon,(gravado) as gravadoR,(iva) as impuestoR,(total) as totalR FROM comprasfiscal where fechaRegistro between '"+desde+" 00:00:00.000' and '"+hasta+" 00:00:00.000' order by numero";
             //String sql="SELECT *,round(gravado,2)as gravadoR,round(impuesto,2)as impuestoR,round(total,2)as totalR FROM fiscal where fecha like '201607%' group by numero order by numero";
             System.out.println(sql);
             Transaccionable tra=new Conecciones();
@@ -137,7 +137,7 @@ public class IvaVentas {
             
             rs.close();
             //texto+="\r\n";
-            String ruta="fiscal/"+desde+"_"+hasta+" Iva Ventas.xls";
+            String ruta="fiscal/"+desde+"_"+hasta+" Iva Compras.xls";
             try {
                 FileOutputStream elFichero=new FileOutputStream(ruta);
                 try {
@@ -145,17 +145,17 @@ public class IvaVentas {
                     elFichero.close();
                     Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler "+ruta);
                 } catch (IOException ex) {
-                    Logger.getLogger(InformeMensual.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(IvaCompras.class.getName()).log(Level.SEVERE, null, ex);
                 }
             } catch (FileNotFoundException ex) {
-                Logger.getLogger(InformeMensual.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(IvaCompras.class.getName()).log(Level.SEVERE, null, ex);
             }
             
         } catch (InstantiationException ex) {
-            Logger.getLogger(IvaVentas.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(IvaCompras.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-          Logger.getLogger(IvaVentas.class.getName()).log(Level.SEVERE, null, ex);
+          Logger.getLogger(IvaCompras.class.getName()).log(Level.SEVERE, null, ex);
       }
 
-    }  
+    }
 }

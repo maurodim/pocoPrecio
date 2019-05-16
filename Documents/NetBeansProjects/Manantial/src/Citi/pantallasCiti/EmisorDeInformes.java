@@ -6,7 +6,9 @@ package Citi.pantallasCiti;
 
 import ConversoresCiti.Numeros;
 import Excel.IvaVentas;
-import Fiscal.ArchivoCiti;
+import Citi.Fiscal.ArchivoCiti;
+import Excel.IvaCompras;
+import java.io.FileNotFoundException;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -61,7 +63,7 @@ public class EmisorDeInformes extends javax.swing.JInternalFrame {
         setResizable(true);
         setTitle("Generación de Archivos CITI");
         setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/Mlogo.png"))); // NOI18N
-        setPreferredSize(new java.awt.Dimension(374, 347));
+        setPreferredSize(new java.awt.Dimension(728, 483));
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/nuevos/nuevo.png"))); // NOI18N
         jButton4.setText("Generar alicuota citi");
@@ -186,7 +188,7 @@ public class EmisorDeInformes extends javax.swing.JInternalFrame {
         });
 
         jButton11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/nuevos/excel.png"))); // NOI18N
-        jButton11.setText("Generar Excel Iva Ventas");
+        jButton11.setText("Generar Excel Iva Compras");
         jButton11.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton11ActionPerformed(evt);
@@ -237,7 +239,7 @@ public class EmisorDeInformes extends javax.swing.JInternalFrame {
                 .addComponent(jButton9)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton11)
-                .addContainerGap(57, Short.MAX_VALUE))
+                .addContainerGap(77, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -249,7 +251,7 @@ public class EmisorDeInformes extends javax.swing.JInternalFrame {
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(158, Short.MAX_VALUE))
+                .addContainerGap(100, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -339,12 +341,22 @@ public class EmisorDeInformes extends javax.swing.JInternalFrame {
         } catch (SQLException ex) {
             Logger.getLogger(EmisorDeInformes.class.getName()).log(Level.SEVERE, null, ex);
         }
-        this.jButton6.setEnabled(false);
+        this.jButton10.setEnabled(false);
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
         //aca iva compras
-        
+        IvaCompras iva=new IvaCompras();
+        String fDesde=Numeros.ConvertirFechaLeidaDeDateChooser(this.dateChooserCombo9.getSelectedDate());
+        String fHasta=Numeros.ConvertirFechaLeidaDeDateChooser(this.dateChooserCombo10.getSelectedDate());
+        try {
+            iva.GenerrarInformeIvaCompras(fDesde,fHasta);
+        } catch (SQLException ex) {
+            Logger.getLogger(EmisorDeInformes.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(EmisorDeInformes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.jButton11.setEnabled(false);
     }//GEN-LAST:event_jButton11ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

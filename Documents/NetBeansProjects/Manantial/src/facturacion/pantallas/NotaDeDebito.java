@@ -358,7 +358,7 @@ public class NotaDeDebito extends javax.swing.JInternalFrame implements KeyListe
             }
         });
 
-        jLabel12.setText("<html>PRESIONE F1 PARA CONSULTAR POR DESCRIPCION<br>\nPRESIONE F3 PARA FILTRAR POR SUBRUBRO<br>\nPRESIONE F4 PARA IMPRIMIR\n</html>");
+        jLabel12.setText("<html>PRESIONE F1 PARA CONSULTAR POR DESCRIPCION<br> PRESION F7 PARA CARGAR CANTIDAD </html>");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -399,8 +399,7 @@ public class NotaDeDebito extends javax.swing.JInternalFrame implements KeyListe
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton3)
@@ -412,7 +411,10 @@ public class NotaDeDebito extends javax.swing.JInternalFrame implements KeyListe
                             .addComponent(jLabel7)
                             .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel12)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
@@ -447,217 +449,119 @@ public class NotaDeDebito extends javax.swing.JInternalFrame implements KeyListe
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTextField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyPressed
-        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             //System.out.println("ENTRO CON EL ENTER¡¡¡¡¡¡");
             listadoDeBusqueda.clear();
-            Facturar fart=new Articulos();
-            arti=new Articulos();
-            arti=(Articulos)fart.cargarPorCodigoDeBarra(jTextField1.getText());
-            if(arti.getCodigoDeBarra().equals("")){
+            Facturar fart = new Articulos();
+            arti = new Articulos();
+            arti = (Articulos) fart.cargarPorCodigoDeBarra(jTextField1.getText());
+            if (arti.getCodigoDeBarra().equals("")) {
                 
-             jTextField1.setText("");   
-            }else{
-            listadoDeBusqueda.add(arti);
-            //jTextField1.setText(arti.getCodigoAsignado());
-            jTextField2.setText("1");
-            this.jLabel8.setText(arti.getDescripcionArticulo());
-            if(arti.getModificaPrecio()){
-                this.jLabel7.setVisible(true);
-                this.jTextField4.setVisible(true);
-                //this.jTextField4.setEnabled(true);
-               // this.jCheckBox1.setVisible(false);
-                
-            }else{
-            
-                this.jLabel7.setVisible(false);
-                this.jTextField4.setVisible(false);
-                
-
-                if(arti.getPrecioServicio() > 0){
+                jTextField1.setText("");
+            } else {
+                listadoDeBusqueda.add(arti);
+                //jTextField1.setText(arti.getCodigoAsignado());
+                jTextField2.setText("1");
+                this.jLabel8.setText(arti.getDescripcionArticulo());
+                if (arti.getModificaPrecio()) {
                     this.jLabel7.setVisible(true);
                     this.jTextField4.setVisible(true);
+                    this.jTextField4.setText(String.valueOf(arti.getPrecioUnitarioNeto()));
+                    //this.jTextField4.setEnabled(true);
+                    // this.jCheckBox1.setVisible(false);
+
+                } else {
                     
-                    this.jTextField4.setText(Numeros.ConvertirNumero(arti.getPrecioServicio()));
-                    //this.jTextField4.setEnabled(false);
-                    this.jCheckBox1.setVisible(true);
-                    Calendar calendario=new GregorianCalendar();
-                    int hora=calendario.get(Calendar.HOUR_OF_DAY);
-                    //System.out.println("LA HORA ACTUAL ES :"+hora);
-                    if(hora >= 0 || hora < 8){
-                        if(arti.getModificaServicio()){
-                         //System.err.println("SI TIENE QUE MODIFICAR EL SERVICIO");  
-                         this.jCheckBox1.setEnabled(false);
-                        }else{
-                        //System.err.println("NO DEBE MODIFICAR EL SERVICIO");
-                            this.jCheckBox1.setEnabled(true);
-                        }
-                        }
+                    this.jLabel7.setVisible(false);
+                    this.jTextField4.setVisible(false);
+                    
                 }
-            }
-            
-            if(cliT.getCondicionDeVenta()==2)this.jCheckBox2.setEnabled(true);
-            this.jTextField2.selectAll();
-            this.jTextField2.requestFocus();
+                
+                if (cliT.getCondicionDeVenta() == 2) {
+                    this.jCheckBox2.setEnabled(true);
+                }
+                
+                //CARGAR ARTICULO AUTOMATICAMENTE
+                CargarCantidad();
+                //this.jTextField2.selectAll();
+                //this.jTextField2.requestFocus();
+                
+                
             }
         }
-        if(evt.getKeyCode()==KeyEvent.VK_F1){
+        if (evt.getKeyCode() == KeyEvent.VK_F1) {
             //System.out.println("ENTRO CON F1¡¡¡¡¡");
-            valorCargado=jTextField1.getText();
-        Facturar fart=new Articulos();
-//        this.jTable2.removeAll();
-            ModificableArticulos modiA=new Articulos();
-            Articulable modi=new ArticulosAsignados();
+            valorCargado = jTextField1.getText();
+            Facturar fart = new Articulos();
+//            this.jTable2.removeAll();
+            ModificableArticulos modiA = new Articulos();
+            Articulable modi = new ArticulosAsignados();
             listadoDeBusqueda.clear();
-            listadoDeBusqueda=modi.convertirListadoEnArticulos(modi.filtradorDeFormularios(listadoSubRubros, listadoR, cliT,this.jTextField1.getText()));
+            listadoDeBusqueda = fart.listadoBusqueda(jTextField1.getText());
             //listadoDeBusqueda=modi.filtrador(listadoSubRubros,listadoR);
+
 //            this.jTable2.setModel(modiA.mostrarListadoBusqueda(listadoDeBusqueda));
-//            columnaCodigo = this.jTable2.getColumn("Descripcion");
+//            columnaCodigo=this.jTable2.getColumn("Descripcion");
 //            columnaCodigo.setPreferredWidth(600);
 //            columnaCodigo.setMaxWidth(600);
-//            columnaCodigo = this.jTable2.getColumn("Stock");
+//            columnaCodigo=this.jTable2.getColumn("Stock");
 //            columnaCodigo.setPreferredWidth(60);
 //            columnaCodigo.setMaxWidth(60);
 //            this.jTable2.requestFocus();
-            
             // Configurando parametros de algunas columnas de interes
             List<String> columnasTabla = new ArrayList<>();
+            columnasTabla.add("Código:100:100");
             columnasTabla.add("Descripcion:600:600");
             columnasTabla.add("Stock:60:60");
 
             // Desplegando ventana emergente
-            tgp.desplegarPopUp("Seleccion Item", modiA.mostrarListadoBusqueda(listadoDeBusqueda), columnasTabla);
+            int elementoSeleccionado = tgp.desplegarPopUp("Seleccion Item", modiA.mostrarListadoBusqueda(listadoDeBusqueda), columnasTabla);
+            arti = (Articulos) listadoDeBusqueda.get(elementoSeleccionado);
+            jTextField1.setText(arti.getCodigoDeBarra());
             
         }
-        if(evt.getKeyCode()==KeyEvent.VK_F4){
-                    //verificar();
-        //Impresora imp=new Impresora();        
-        //verificar();
-        //Impresora imp=new Impresora();        
-        String cadena=cliT.getCodigoCliente()+" - "+cliT.getRazonSocial()+"\n"+cliT.getDireccion();
-        //comp.setCliente(cliT);
-        //VisorDeHojaDeRuta
+       
         
-        //comp.setVendedor(VisorDeHojaDeRuta.tG.getOperador());
-        if(this.jCheckBox1.isSelected()){
-        //    comp.setReparto(1);
-        //    comp.setEntrega(String.valueOf(this.jTextField3.getText()));
-        }
-        
-        //comp.setArticulos(detalleDelPedido);
-        DecimalFormat fr=new DecimalFormat("00");
-        Calendar c1=Calendar.getInstance();
-	Calendar c2=new GregorianCalendar();
-	String dia=Integer.toString(c2.get(Calendar.DAY_OF_MONTH));
-	String mes=Integer.toString(c2.get(Calendar.MONTH));
-	String ano=Integer.toString(c2.get(Calendar.YEAR));
-	
-        int da=Integer.parseInt(dia);
-        int me=Integer.parseInt(mes);
-        me++;
-        
-        dia=fr.format(da);
-        mes=fr.format(me);
-        String fecha=dia+"/"+mes+"/"+ano;
-        String fecha2=ano+"-"+mes+"-"+dia;
-        //comp.setFechaComprobante(fecha2);
-        //comp.setFechaComprobante(fecha);
-        int comprobanteTipo=cliT.getTipoComprobante();
-        
-        
-        Comprobantes comprobante=new Comprobantes();
-        comprobante.setFe(false);
-        comprobante.setCliente(cliT);
-        comprobante.setTipoMovimiento(1);
-        comprobante.setTipoComprobante(comprobanteTipo);
-        comprobante.setFechaEmision((Date.valueOf(fecha2)));
-        comprobante.setListadoDeArticulos(detalleDelPedido);
-        comprobante.setUsuarioGenerador(Inicio.usuario.getNumero());
-        comprobante.setIdSucursal(Inicio.sucursal.getNumero());
-        comprobante.setIdDeposito(Inicio.deposito.getNumero());
-        Integer numeroCaja=Inicio.caja.getNumero();
-        //System.out.println("EL NUMERO DE CAJA ESSSSSSSS "+numeroCaja);
-        comprobante.setIdCaja(numeroCaja);
-        if(montoTotal == 0.00){
-            String sqM="usuario :"+Inicio.usuario.getNombre()+" sucursal "+Inicio.sucursal.getNumero()+" idcaja "+Inicio.caja.getNumero();
-            JOptionPane.showMessageDialog(this,"OJO EL MONTO DE ESTE COMPROBANTE ES $ 0, AVISE PARA DETECTAR EL ERROR");
-            FileWriter fichero=null;
-            PrintWriter pw=null;
-            try {
-                fichero = new FileWriter("C:\\Gestion\\"+Inicio.fechaDia+" - errores en comprobantes.txt",true);
-                pw=new PrintWriter(fichero);
-                pw.println(sqM);
-            } catch (IOException ex1) {
-                Logger.getLogger(IngresoDePedidos.class.getName()).log(Level.SEVERE, null, ex1);
-            }finally{
-                         try {
-           // Nuevamente aprovechamos el finally para 
-           // asegurarnos que se cierra el fichero.
-           if (null != fichero)
-              fichero.close();
-           } catch (Exception e2) {
-              e2.printStackTrace();
-           }
+        if (evt.getKeyCode() == KeyEvent.VK_F7) {
+            //System.out.println("ENTRO CON EL ENTER¡¡¡¡¡¡");
+            listadoDeBusqueda.clear();
+            Facturar fart = new Articulos();
+            arti = new Articulos();
+            arti = (Articulos) fart.cargarPorCodigoDeBarra(jTextField1.getText());
+            if (arti.getCodigoDeBarra().equals("")) {
+                
+                jTextField1.setText("");
+            } else {
+                listadoDeBusqueda.add(arti);
+                //jTextField1.setText(arti.getCodigoAsignado());
+                jTextField2.setText("1");
+                this.jLabel8.setText(arti.getDescripcionArticulo());
+                if (arti.getModificaPrecio()) {
+                    this.jLabel7.setVisible(true);
+                    this.jTextField4.setVisible(true);
+                    this.jTextField4.setText(String.valueOf(arti.getPrecioUnitarioNeto()));
+                    //this.jTextField4.setEnabled(true);
+                    // this.jCheckBox1.setVisible(false);
+
+                } else {
+                    
+                    this.jLabel7.setVisible(false);
+                    this.jTextField4.setVisible(false);
+                    
+                }
+                
+                if (cliT.getCondicionDeVenta() == 2) {
+                    this.jCheckBox2.setEnabled(true);
+                }
+                
+                //CARGAR ARTICULO AUTOMATICAMENTE
+                //CargarCantidad();
+                this.jTextField2.selectAll();
+                this.jTextField2.requestFocus();
+                
+                
             }
         }
-        comprobante.setMontoTotal(montoTotal);
-        int noFacturar=0;
-        if(NotaDeDebito.jCheckBox2.isSelected()){
-            comprobante.setPagado(1);
-        }else{
-            comprobante.setPagado(0);
-            /*
-            * ACA DEBO COMPROBAR EL LIMITE DEL CLIENTE Y SI LO SUPERA LA COMPRA RECHAZAR LA VENTA
-            *
-            */
-            Double limite=cliT.getCupoDeCredito();
-            //Double saldo=cliT.getSaldo();
-            //Double totalGral=montoTotal + saldo;
-            Double totalGral=montoTotal;
-            if(limite < totalGral)noFacturar=1;
-            
-        }
-        if(noFacturar==0){
-        Facturar fat=new Comprobantes();
-        comprobante=(Comprobantes)fat.guardar(comprobante);
-        // aqui hago el envio a factura  electronica, si aprueba no imprime
-       
-                      
-        ImprimirFactura imprimir=new ImprimirFactura();
-            try {
-                imprimir.ImprimirFactura(comprobante.getNumero(),comprobante.getTipoComprobante());
-            } catch (IOException ex) {
-                Logger.getLogger(NotaDeDebito.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
-            
-       
-        /*
-         * ACA DEBO LIMPIAR TODOS LOS CAMPOS Y VARIABLES DE LA PANTALLA
-         * 
-         */
-        //comp.setTipoComprobante(comprobanteTipo);
-        //comp.setMontoTotal(montoTotal);
-        detalleDelPedido.clear();
-        agregarRenglonTabla();
-        this.jCheckBox2.setSelected(true);
-        //this.jCheckBox2.setEnabled(false);
-       // this.jTable2.removeAll();
-        listadoDeBusqueda.clear();
-        cargarLista(listadoDeBusqueda);
-        //cliT=new Clientes("99");
-        this.jLabel6.setText(cliT.getRazonSocial());
-        this.jTextField2.setText("");
-        //jTextField1.setText("");
-        jTextField1.requestFocus();
-        }else{
-            JOptionPane.showMessageDialog(this,"El cliente supera el límite de crédito, debe abonar la venta");
-            noFacturar=0;
-        }
-         
-        
-       
-        }
-        //if(evt.getKeyCode()==KeyEvent.VK_F3)this.jComboBox2.requestFocus();
     }//GEN-LAST:event_jTextField1KeyPressed
 
     private void jTextField2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField2KeyPressed
@@ -1255,6 +1159,72 @@ private void verificar(){
         //System.err.println("nimero "+ah+" decripcion "+descripcion+" limite "+cantidad);
     }
 }
+private void CargarCantidad(){
+        Double cantt = 1.00;
+            Double precioUni = 0.00;
+            
+            if (arti.getModificaPrecio()) {
+                this.jTextField4.selectAll();
+                this.jTextField4.requestFocus();
+            } else {
+                
+                Articulos articul = new Articulos();
+                articul.setCantidad(cantt);
+                articul.setCodigoAsignado(arti.getCodigoAsignado());
+                
+                articul.setCodigoDeBarra(arti.getCodigoDeBarra());
+                articul.setDescripcionArticulo(arti.getDescripcionArticulo());
+                articul.setNumeroId(arti.getNumeroId());
+                articul.setPrecioDeCosto(arti.getPrecioDeCosto());
+                articul.setPrecioUnitario(arti.getPrecioUnitarioNeto());
+                articul.setPrecioUnitarioNeto(arti.getPrecioUnitarioNeto());
+                articul.setIdCombo(arti.getIdCombo());
+                articul.setCombo(arti.getCombo());
+                
+                Comparables comparar = new Articulos();
+                Double precio = 1.00;//comparar.comparaConCotizaciones(cliT.getCodigoId(),arti.getNumeroId(),cliT.getCoeficienteListaDeprecios());
+                String precio2 = String.valueOf(arti.getPrecioUnitarioNeto());//comparar.comparaConPedidos(cliT.getCodigoId(),arti.getNumeroId());
+                // aca tengo que modificar el precio unitario segun el coeficiente del cliente y la lista
+                //Double precioU=arti.getPrecioUnitarioNeto();// * lista.getCoeficiente();
+                articul.setPrecioUnitarioNeto(arti.getPrecioUnitarioNeto());
+                // aca tengo que modificar el precio unitario segun el coeficiente del cliente y la lista
+                //Double precioU=arti.getPrecioUnitarioNeto();// * lista.getCoeficiente();
+                /*
+                    if(precio != cliT.getCoeficienteListaDeprecios()){
+                        precio=articul.getPrecioUnitarioNeto()* precio;
+                        String cartel="precio asignado: "+precio+" "+precio2;
+                        if(JOptionPane.showConfirmDialog(this, cartel)==0){
+                            articul.setPrecioUnitarioNeto(precio);
+
+                        }else{
+                            Double precioU= arti.getPrecioUnitarioNeto() * cliT.getCoeficienteListaDeprecios();
+                            articul.setPrecioUnitarioNeto(precioU);
+                        }
+                    }else{
+                        Double precioU= arti.getPrecioUnitarioNeto() * cliT.getCoeficienteListaDeprecios();
+                        articul.setPrecioUnitarioNeto(precioU);
+                    }
+                 */
+                detalleDelPedido.add(articul);
+                agregarRenglonTabla();
+                //                Double montoTotalX=(arti.getPrecioUnitario() * arti.getCantidad());
+                //                montoTotal=montoTotal + montoTotalX;
+                montrarMonto();
+                //System.err.println("MONTO TOTAL "+montoTotal);
+                this.jLabel8.setText("");
+//                    this.jTable2.removeAll();
+                this.jButton1.setVisible(true);
+                //String valorCargado;
+                jTextField1.setText(valorCargado);
+                //this.jTextField5.selectAll();
+                this.jTextField2.setText("");
+                jTextField1.selectAll();
+                jTextField1.requestFocus();
+                //this.jTextField5.requestFocus();
+                
+            }
+            
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;

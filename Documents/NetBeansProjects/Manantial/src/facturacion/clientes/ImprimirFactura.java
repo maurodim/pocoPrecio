@@ -149,7 +149,7 @@ public class ImprimirFactura {
 
             pagina.drawString("CODIGO", 20, 130);
             pagina.drawString("DESCRIPCION", 160, 130);
-            pagina.drawString("DESCUENTO", 330, 130);
+            //pagina.drawString("DESCUENTO", 330, 130);
             pagina.drawString("CANTIDAD", 400, 130);
             pagina.drawString("P. UNITARIO", 500, 130);
             int renglon = 145;
@@ -179,7 +179,7 @@ public class ImprimirFactura {
                     descuento = "0.00";
                     descuentoTotal = descuentoTotal + 0;
                 }
-                pagina.drawString(descuento, 350, renglon);
+                //pagina.drawString(descuento, 350, renglon);
 
                 pagina.drawString(String.valueOf(detalleDeCotizacion.getCantidad()), 420, renglon);
 
@@ -194,9 +194,20 @@ public class ImprimirFactura {
             String letras = NumberToLetterConverter.convertNumberToLetter(cotizacion.getTotal());
             pagina.drawString("SON PESOS: " + letras, 30, renglon);
             renglon = renglon + 15;
+            if(cotizacion.getPorcentajeDescuento() > 0.00){
+            double porc=cotizacion.getPorcentajeDescuento() * 100.0;
+            pagina.drawString("DESC. "+porc+" %", 330, renglon);
+            }else{
+                pagina.drawString("DESC. ", 330, renglon);
+            }
             pagina.drawString("TOTAL", 450, renglon);
             renglon = renglon + 10;
             pagina.drawString("DOCUMENTO NO VÁLIDO COMO FACTURA", 30, renglon);
+            if(cotizacion.getDescuento() > 0.00){
+                pagina.drawString(String.valueOf(cotizacion.getDescuento()), 330, renglon);
+            }else{
+                pagina.drawString("0.00", 330, renglon);
+            }
             pagina.drawString(String.valueOf(cotizacion.getTotal()), 450, renglon);
 
             pagina.dispose();

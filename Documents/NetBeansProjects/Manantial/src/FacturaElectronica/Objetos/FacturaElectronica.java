@@ -424,7 +424,7 @@ public class FacturaElectronica implements FacturableE, Instalable {
                             double importe = Math.round(tipoI.getImporte() * 100.0) / 100.0;
                             wsfev1.agregaIVA(tipoI.getId(), imponible, importe); // Ver Excel de referencias de codigos AFIP
                             System.out.println("importes iva // imponible: " + tipoI.getBaseImponible() + " importe: " + tipoI.getImporte());
-                            this.impuestoLiquido = this.impuestoLiquido + tipoI.getImporte();
+                            //this.impuestoLiquido = this.impuestoLiquido + tipoI.getImporte();
                             //wsfev1.agregaIVA(1, 0,0); // Ver Excel de referencias de codigos AFIP
                         }
                     }

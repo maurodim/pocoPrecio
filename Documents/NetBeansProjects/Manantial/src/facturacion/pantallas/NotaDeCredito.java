@@ -390,7 +390,7 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel12.setText("<html>PRESIONE F1 PARA CONSULTAR POR DESCRIPCION<br>\nPRESIONE F3 PARA FILTRAR POR SUBRUBRO<br>\nPRESIONE F4 PARA IMPRIMIR\n</html>");
+        jLabel12.setText("<html>PRESIONE F1 PARA CONSULTAR POR DESCRIPCION<br> PRESIONE F3 PARA SELECCIONAR FORMA DE PAGO<br> PRESIONE F4 PARA IMPRIMIR<br>PRESION F7 PARA CARGAR CANTIDAD </html>");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -424,30 +424,32 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(39, 39, 39)
-                        .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(39, 39, 39)
+                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(536, 536, 536))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton3)
-                        .addComponent(jButton5)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jCheckBox1)))
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel3)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel7)
-                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton3)
+                            .addComponent(jButton5)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jCheckBox1))
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel3)
+                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel7)
+                                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel12)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -532,8 +534,9 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
             }
             
             if(cliT.getCondicionDeVenta()==2)this.jCheckBox2.setEnabled(true);
-            this.jTextField2.selectAll();
-            this.jTextField2.requestFocus();
+            CargarCantidad();
+            //this.jTextField2.selectAll();
+            //this.jTextField2.requestFocus();
             }
         }
         if(evt.getKeyCode()==KeyEvent.VK_F1){
@@ -722,6 +725,60 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
                 
             }
             listadoFormas=slector.listadoPagos;
+        }
+        if(evt.getKeyCode()==KeyEvent.VK_F7){
+            //System.out.println("ENTRO CON EL ENTER¡¡¡¡¡¡");
+            listadoDeBusqueda.clear();
+            Facturar fart=new Articulos();
+            arti=new Articulos();
+            arti=(Articulos)fart.cargarPorCodigoDeBarra(jTextField1.getText());
+            if(arti.getCodigoDeBarra().equals("")){
+                
+             jTextField1.setText("");   
+            }else{
+            listadoDeBusqueda.add(arti);
+            //jTextField1.setText(arti.getCodigoAsignado());
+            jTextField2.setText("1");
+            this.jLabel8.setText(arti.getDescripcionArticulo());
+            if(arti.getModificaPrecio()){
+                this.jLabel7.setVisible(true);
+                this.jTextField4.setVisible(true);
+                this.jTextField4.setText(String.valueOf(arti.getPrecioUnitarioNeto()));
+                //this.jTextField4.setEnabled(true);
+               // this.jCheckBox1.setVisible(false);
+                
+            }else{
+            
+                this.jLabel7.setVisible(false);
+                this.jTextField4.setVisible(false);
+                
+
+                if(arti.getPrecioServicio() > 0){
+                    this.jLabel7.setVisible(true);
+                    this.jTextField4.setVisible(true);
+                    
+                    this.jTextField4.setText(Numeros.ConvertirNumero(arti.getPrecioServicio()));
+                    //this.jTextField4.setEnabled(false);
+                    this.jCheckBox1.setVisible(true);
+                    Calendar calendario=new GregorianCalendar();
+                    int hora=calendario.get(Calendar.HOUR_OF_DAY);
+                    //System.out.println("LA HORA ACTUAL ES :"+hora);
+                    if(hora >= 0 || hora < 8){
+                        if(arti.getModificaServicio()){
+                         //System.err.println("SI TIENE QUE MODIFICAR EL SERVICIO");  
+                         this.jCheckBox1.setEnabled(false);
+                        }else{
+                        //System.err.println("NO DEBE MODIFICAR EL SERVICIO");
+                            this.jCheckBox1.setEnabled(true);
+                        }
+                        }
+                }
+            }
+            
+            if(cliT.getCondicionDeVenta()==2)this.jCheckBox2.setEnabled(true);
+            this.jTextField2.selectAll();
+            this.jTextField2.requestFocus();
+            }
         }
     }//GEN-LAST:event_jTextField1KeyPressed
 
@@ -1161,7 +1218,7 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
             //cargarLista(detalleDelPedido);
             montrarMonto();
             agregarRenglonTabla();
-            
+            jTextField1.requestFocus();
         }
     }//GEN-LAST:event_jTextField3KeyPressed
 private void cargarLista(ArrayList lista){
@@ -1356,6 +1413,49 @@ private void verificar(){
         //System.err.println("nimero "+ah+" decripcion "+descripcion+" limite "+cantidad);
     }
 }
+private void CargarCantidad(){
+        Double cantt=1.00;
+            cantt=cantt * -1;
+            Double precioUni=0.00;
+            if(cantt < 1000){
+            if(arti.getModificaPrecio()){
+                this.jTextField4.selectAll();
+                this.jTextField4.requestFocus();
+            }else{
+                if(arti.getPrecioServicio()>0){
+                 this.jTextField4.requestFocus();   
+                }else{
+                    Articulos articul=new Articulos();
+                    articul.setCantidad(cantt);
+                    articul.setCodigoAsignado(arti.getCodigoAsignado());
+                    
+                    articul.setCodigoDeBarra(arti.getCodigoDeBarra());
+                    articul.setDescripcionArticulo(arti.getDescripcionArticulo());
+                    articul.setNumeroId(arti.getNumeroId());
+                    articul.setPrecioDeCosto(arti.getPrecioDeCosto());
+                    articul.setPrecioUnitario(arti.getPrecioUnitarioNeto());
+                    articul.setPrecioUnitarioNeto(arti.getPrecioUnitarioNeto());
+                    articul.setIdCombo(arti.getIdCombo());
+                    articul.setCombo(arti.getCombo());
+            detalleDelPedido.add(articul);
+            agregarRenglonTabla();
+//                Double montoTotalX=(arti.getPrecioUnitario() * arti.getCantidad());
+//                montoTotal=montoTotal + montoTotalX;
+                 montrarMonto();
+                 //System.err.println("MONTO TOTAL "+montoTotal);
+                 this.jLabel8.setText("");
+       //          this.jTable2.removeAll();
+                this.jButton1.setVisible(true);
+            jTextField1.setText(valorCargado);
+           // this.jTextField5.selectAll();
+            this.jTextField2.setText("");
+            //this.jTextField5.requestFocus();
+                }
+                }
+            }else{
+                JOptionPane.showMessageDialog(this,"LA CANTIDAD INGRESADA ES EXCESIVA, POR FAVOR VERIFÍQUELA");
+            }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
