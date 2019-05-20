@@ -5,6 +5,7 @@
  */
 package Extension;
 
+import com.itextpdf.text.pdf.PdfContentByte;
 import java.awt.Image;
 
 /**
@@ -18,6 +19,8 @@ public interface CodigosDeBarra {
      * @return Image Imagen resultante codificado
      */
     public Image barraCode128(String texto);
+    
+    public com.itextpdf.text.Image barraCode128Pdf(String texto, float altoBarra, float factorGrosorBarra, PdfContentByte cb);
     
     /**Este metodo permite redimensionar la imagen original a los nuevos valores de interes mediante un escalamiento Smooth 
      * 

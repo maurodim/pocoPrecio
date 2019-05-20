@@ -68,16 +68,20 @@ public class ArchivoImpl implements Archivo{
     @Override
     public Path rutaNormalizadaLocal(String nombreArchivo) throws MalformedURLException, URISyntaxException{
         String rutaOriginal = getClass().getResource("ArchivoImpl.class").getFile();
+        String rutaReal = null;
+        
         System.out.println("RutaOriginal: "+rutaOriginal);
         
-        URL urlNueva = new URL(
-                Paths.get(
-                        this.truncarRutaExtension(rutaOriginal, ".jar"), nombreArchivo
-                ).toString()
-        );
-       
-        
-        return Paths.get(urlNueva.toURI()); 
+        if(rutaOriginal.contains(".jar")){ // Desde un jar
+            rutaReal = rutaOriginal.substring(0, rutaOriginal.indexOf(".jar")).concat(nombreArchivo);
+        }else{ // desde netbeans
+            rutaReal = "file:"+rutaOriginal.substring(0, rutaOriginal.indexOf("ArchivoImpl.class")).concat(nombreArchivo);
+        }
+         
+        System.out.println("ruta nueva ->"+rutaOriginal); 
+        URL urlNueva = new URL(rutaReal);
+         
+        return Paths.get(urlNueva.toURI());  
     }
     
     @Override
