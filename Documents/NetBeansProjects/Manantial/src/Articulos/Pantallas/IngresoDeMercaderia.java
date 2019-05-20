@@ -48,6 +48,8 @@ public class IngresoDeMercaderia extends javax.swing.JInternalFrame {
         remito=new RemitosInternos();
         facturaProveedor=new FacturaProveedor();
         initComponents();
+        this.jLabel9.setText("");
+        agregarRenglonTabla();
     }
 
     /**
@@ -69,14 +71,13 @@ public class IngresoDeMercaderia extends javax.swing.JInternalFrame {
         jLabel6 = new javax.swing.JLabel();
         jTextField5 = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
-        jTextField7 = new javax.swing.JTextField();
         jButton4 = new javax.swing.JButton();
-        jCheckBox3 = new javax.swing.JCheckBox();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jLabel7 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setClosable(true);
         setMaximizable(true);
@@ -120,7 +121,7 @@ public class IngresoDeMercaderia extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel6.setText("Precio");
+        jLabel6.setText("Precio de Costo");
 
         jTextField5.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -130,14 +131,6 @@ public class IngresoDeMercaderia extends javax.swing.JInternalFrame {
 
         jLabel9.setText("equiv");
 
-        jTextField7.setEditable(false);
-        jTextField7.setText("1.00");
-        jTextField7.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jTextField7KeyPressed(evt);
-            }
-        });
-
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/nuevos/nuevo.png"))); // NOI18N
         jButton4.setText("Nuevo Articulo");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -146,38 +139,31 @@ public class IngresoDeMercaderia extends javax.swing.JInternalFrame {
             }
         });
 
-        jCheckBox3.setText("Guardar Precio de Venta ?");
-        jCheckBox3.setEnabled(false);
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTextField7)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton1)))
+                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(39, 39, 39)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1)
-                    .addComponent(jCheckBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(200, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -188,22 +174,14 @@ public class IngresoDeMercaderia extends javax.swing.JInternalFrame {
                     .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5)
                     .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1)
                     .addComponent(jLabel6)
                     .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jCheckBox3)
-                        .addContainerGap())
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton4)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel9)
-                                .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton4)
+                    .addComponent(jButton1)))
         );
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -234,6 +212,8 @@ public class IngresoDeMercaderia extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel1.setText("<html>\nPresione F1 para buscar por descripción un artículo<br>\nPuede ingresar un nuevo Artículo presionando \"Nuevo Artículo\"<br>\nConfirme los campos con ENTER<br>\nUna vez terminada la carga de los artículos que desea ingresar PRESIONE GUARDAR Y CERRAR para que los mismos impacten en el Stock\n\n\n</html>");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -244,7 +224,11 @@ public class IngresoDeMercaderia extends javax.swing.JInternalFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 789, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 357, Short.MAX_VALUE)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -255,12 +239,14 @@ public class IngresoDeMercaderia extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(20, 20, 20)
-                        .addComponent(jButton3)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 188, Short.MAX_VALUE)
+                        .addComponent(jButton3)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 346, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel7))
         );
 
@@ -280,7 +266,7 @@ public class IngresoDeMercaderia extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -298,7 +284,8 @@ public class IngresoDeMercaderia extends javax.swing.JInternalFrame {
                 
              jTextField3.setText("");   
             }else{
-            jTextField3.setText(arti.getCodigoAsignado());
+            this.jLabel9.setText(arti.getDescripcionArticulo());
+                jTextField3.setText(arti.getCodigoAsignado());
             //jTextField2.setText("1");
             this.jTextField5.setText(String.valueOf(arti.getPrecioDeCosto()));
             this.jTextField4.selectAll();
@@ -323,9 +310,27 @@ public class IngresoDeMercaderia extends javax.swing.JInternalFrame {
 
     private void jTextField5KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField5KeyPressed
         if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+          Double equiv=1.00;
+            Double precio=Double.parseDouble(this.jTextField5.getText());
+            Double cantidad=Double.parseDouble(this.jTextField4.getText());
             
-            this.jTextField7.selectAll();
-           this.jTextField7.requestFocus(); 
+            Double resultado=equiv * cantidad;
+            arti.setCantidad(resultado);
+            //precio=precio * arti.getRecargo();
+            if(equiv > 1)precio=precio / equiv;
+            //this.jTextField4.setText(String.valueOf(resultado));
+            arti.setPrecioDeCosto(precio);
+            precio=precio * arti.getRecargo();
+            arti.setPrecioUnitario(precio);
+            this.jTextField3.setText("");
+            listadoArt.add(arti);
+            
+            agregarRenglonTabla();
+            //this.jTextField7.setText("1.00");
+            this.jTextField4.setText("1.00");
+            this.jTextField5.setText("");
+            this.jLabel9.setText("");
+            this.jTextField3.requestFocus();
         }
     }//GEN-LAST:event_jTextField5KeyPressed
 
@@ -356,7 +361,7 @@ public class IngresoDeMercaderia extends javax.swing.JInternalFrame {
         
         Remitos comprobante=new Remitos();
         comprobante.setArticulos(listadoArt);
-        comprobante.setGuardaPrecioDeVenta(this.jCheckBox3.isSelected());
+        comprobante.setGuardaPrecioDeVenta(false);
         comprobante.setFechaComprobante(Date.valueOf(fecha2));
         comprobante.setFechaRecepcion(Date.valueOf(fecha2));
         
@@ -390,32 +395,8 @@ public class IngresoDeMercaderia extends javax.swing.JInternalFrame {
             agregarRenglonTabla();
             this.jTable1.removeAll();
             this.jTextField3.requestFocus();
+            this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jTextField7KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField7KeyPressed
-        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
-            Double equiv=Double.parseDouble(this.jTextField7.getText());
-            Double precio=Double.parseDouble(this.jTextField5.getText());
-            Double cantidad=Double.parseDouble(this.jTextField4.getText());
-            
-            Double resultado=equiv * cantidad;
-            arti.setCantidad(resultado);
-            //precio=precio * arti.getRecargo();
-            if(equiv > 1)precio=precio / equiv;
-            //this.jTextField4.setText(String.valueOf(resultado));
-            arti.setPrecioDeCosto(precio);
-            precio=precio * arti.getRecargo();
-            arti.setPrecioUnitario(precio);
-            this.jTextField3.setText("");
-            listadoArt.add(arti);
-            
-            agregarRenglonTabla();
-            this.jTextField7.setText("1.00");
-            this.jTextField4.setText("1.00");
-            this.jTextField5.setText("");
-            this.jTextField3.requestFocus();
-        }
-    }//GEN-LAST:event_jTextField7KeyPressed
 
     private void formFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_formFocusGained
         
@@ -453,9 +434,9 @@ private void agregarRenglonTabla(){
         busC.addColumn("CANTIDAD");
         busC.addColumn("PRECIO COSTO");
         busC.addColumn("PRECIO VTA");
-        busC.addColumn("PRECIO VTA ACT.");
+        //busC.addColumn("PRECIO VTA ACT.");
         busC.addColumn("STOCK ACT");
-        Object[] fila=new Object[7];
+        Object[] fila=new Object[6];
         Iterator irP=listadoArt.listIterator();
         Double cost=0.00;
         while(irP.hasNext()){
@@ -474,13 +455,13 @@ private void agregarRenglonTabla(){
             cost=(Double)pedidos.getPrecioDeCosto();
             fila[3]=Numeros.ConvertirNumero(cost);
             cost=pedidos.getPrecioUnitario();
-            fila[4]=Numeros.ConvertirNumero(cost);
+            //fila[4]=Numeros.ConvertirNumero(cost);
             Double cantTotal=0.00;
-            cantTotal=pedidos.getStockActual()+pedidos.getCantidad();
+            cantTotal=pedidos.getStockActual();
             //System.err.println(" actual "+pedidos.getStockActual()+" agregar "+pedidos.getCantidad()+" total "+cantTotal);
             cost=pedidos.getPrecioUnitarioNeto();
-            fila[5]=Numeros.ConvertirNumero(cost);
-            fila[6]=Numeros.ConvertirNumero(cantTotal);
+            fila[4]=Numeros.ConvertirNumero(cost);
+            fila[5]=Numeros.ConvertirNumero(cantTotal);
             busC.addRow(fila);
         }
         String total=String.valueOf(montoTotal);
@@ -529,7 +510,7 @@ private void cargarLista(){
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JCheckBox jCheckBox3;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -542,6 +523,5 @@ private void cargarLista(){
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField7;
     // End of variables declaration//GEN-END:variables
 }

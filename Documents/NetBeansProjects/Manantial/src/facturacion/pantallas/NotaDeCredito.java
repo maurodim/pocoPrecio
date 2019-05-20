@@ -390,7 +390,7 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel12.setText("<html>PRESIONE F1 PARA CONSULTAR POR DESCRIPCION<br> PRESIONE F3 PARA SELECCIONAR FORMA DE PAGO<br> PRESIONE F4 PARA IMPRIMIR<br>PRESION F7 PARA CARGAR CANTIDAD </html>");
+        jLabel12.setText("<html>PRESIONE F1 PARA CONSULTAR POR DESCRIPCION<br> PRESIONE F3 PARA SELECCIONAR FORMA DE PAGO<br> PRESION F7 PARA CARGAR CANTIDAD </html>");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -566,140 +566,7 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
             tgp.desplegarPopUp("Seleccion Item", modiA.mostrarListadoBusqueda(listadoDeBusqueda), columnasTabla);
 
         }
-        if(evt.getKeyCode()==KeyEvent.VK_F4){
-                    //verificar();
-        //Impresora imp=new Impresora();        
-        String cadena=cliT.getCodigoCliente()+" - "+cliT.getRazonSocial()+"\n"+cliT.getDireccion();
-        //comp.setCliente(cliT);
-        //VisorDeHojaDeRuta
         
-        //comp.setVendedor(VisorDeHojaDeRuta.tG.getOperador());
-        if(this.jCheckBox1.isSelected()){
-        //    comp.setReparto(1);
-        //    comp.setEntrega(String.valueOf(this.jTextField3.getText()));
-        }
-        
-        //comp.setArticulos(detalleDelPedido);
-        DecimalFormat fr=new DecimalFormat("00");
-        Calendar c1=Calendar.getInstance();
-	Calendar c2=new GregorianCalendar();
-	String dia=Integer.toString(c2.get(Calendar.DAY_OF_MONTH));
-	String mes=Integer.toString(c2.get(Calendar.MONTH));
-	String ano=Integer.toString(c2.get(Calendar.YEAR));
-	
-        int da=Integer.parseInt(dia);
-        int me=Integer.parseInt(mes);
-        me++;
-        dia=fr.format(da);
-        mes=fr.format(me);
-        String fecha=dia+"/"+mes+"/"+ano;
-        String fecha2=ano+"-"+mes+"-"+dia;
-        //comp.setFechaComprobante(fecha2);
-        //comp.setFechaComprobante(fecha);
-        int comprobanteTipo=(int) Inicio.sucursal.getTipoComprobantes().get(0);
-        //System.out.println("COMPROBANTEEEEEEE "+comprobanteTipo);
-        if(cliT.getCondicionIva().equals("RI "))comprobanteTipo=(int)Inicio.sucursal.getTipoComprobantes().get(1);
-        Comprobantes comprobante=new Comprobantes();
-        comprobante.setCliente(cliT);
-        comprobante.setTipoMovimiento(1);
-        comprobante.setTipoComprobante(28);
-        comprobante.setFechaEmision((Date.valueOf(fecha2)));
-        comprobante.setListadoDeArticulos(detalleDelPedido);
-        comprobante.setUsuarioGenerador(Inicio.usuario.getNumero());
-        comprobante.setIdSucursal(Inicio.sucursal.getNumero());
-        comprobante.setIdDeposito(Inicio.deposito.getNumero());
-        
-        
-            int indice=0;
-            int cantidadF=listadoFormas.size();
-            if(cantidadF > 0){
-            for(int aaa=0;aaa < cantidadF;aaa++){
-                formas=(FormasDePago) listadoFormas.get(aaa);
-               if(aaa==0){
-                comprobante.setIdForma1(formas.getNumeroFormaDePago());
-                comprobante.setMonto1(formas.getMonto());
-               }
-               if(aaa==1){
-                //formas=(FormasDePago) listadoFormas.get(1);
-                comprobante.setIdForma2(formas.getNumeroFormaDePago());
-                comprobante.setMonto2(formas.getMonto());
-               }
-            }
-            }else{
-                comprobante.setIdForma1(1);
-                comprobante.setMonto1(montoTotal);
-                //comprobante.setIdForma2(0);
-                //comprobante.setMonto2(0.00);
-            }
-        
-        comprobante.setIdCaja(Inicio.caja.getNumero());
-        if(montoTotal == 0.00){
-            String sqM="usuario :"+Inicio.usuario.getNombre()+" sucursal "+Inicio.sucursal.getNumero()+" idcaja "+Inicio.caja.getNumero();
-            JOptionPane.showMessageDialog(this,"OJO EL MONTO DE ESTE COMPROBANTE ES $ 0, AVISE PARA DETECTAR EL ERROR");
-            FileWriter fichero=null;
-            PrintWriter pw=null;
-            try {
-                fichero = new FileWriter("C:\\Gestion\\"+Inicio.fechaDia+" - errores en comprobantes.txt",true);
-                pw=new PrintWriter(fichero);
-                pw.println(sqM);
-            } catch (IOException ex1) {
-                Logger.getLogger(IngresoDePedidos.class.getName()).log(Level.SEVERE, null, ex1);
-            }finally{
-                         try {
-           // Nuevamente aprovechamos el finally para 
-           // asegurarnos que se cierra el fichero.
-           if (null != fichero)
-              fichero.close();
-           } catch (Exception e2) {
-              e2.printStackTrace();
-           }
-            }
-        }
-        comprobante.setMontoTotal(montoTotal);
-        int noFacturar=0;
-        if(this.jCheckBox2.isSelected()){
-            comprobante.setPagado(1);
-        }else{
-            comprobante.setPagado(0);
-            /*
-             * ACA DEBO COMPROBAR EL LIMITE DEL CLIENTE Y SI LO SUPERA LA COMPRA RECHAZAR LA VENTA
-             * 
-             */
-            Double limite=cliT.getCupoDeCredito();
-            Double saldo=cliT.getSaldo();
-            Double totalGral=montoTotal + saldo;
-            if(limite < totalGral)noFacturar=1;
-            
-        }
-        if(noFacturar==0){
-        Facturar fat=new Comprobantes();
-        fat.guardar(comprobante);
-        LicenciasControl licencia=new LicenciasControl();
-                    licencia.RestarPresupuesto();
-        /*
-         * ACA DEVO LIMPIAR TODOS LOS CAMPOS Y VARIABLES DE LA PANTALLA
-         * 
-         */
-        //comp.setTipoComprobante(comprobanteTipo);
-        //comp.setMontoTotal(montoTotal);
-        detalleDelPedido.clear();
-        agregarRenglonTabla();
-        this.jCheckBox2.setSelected(true);
-        //this.jCheckBox2.setEnabled(false);
-      //  this.jTable2.removeAll();
-        listadoDeBusqueda.clear();
-        cargarLista(listadoDeBusqueda);
-        cliT=new Clientes("999999");
-        this.jLabel6.setText(cliT.getRazonSocial());
-        this.jTextField2.setText("");
-        jTextField1.setText("");
-        jTextField1.requestFocus();
-        
-        }else{
-            JOptionPane.showMessageDialog(this,"El cliente supera el límite de crédito, debe abonar la venta");
-            noFacturar=0;
-        }
-        }
         if(evt.getKeyCode()==KeyEvent.VK_F3){
             SelectorFormaDePago slector=new SelectorFormaDePago(null,true,montoTotal);
             slector.monto_txt.setText(String.valueOf(montoTotal));
@@ -841,6 +708,10 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_formInternalFrameClosing
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        LicenciasControl control=new LicenciasControl();
+            Licencias lice=(Licencias) control.LeerActualLocal(Propiedades.getIDLICENCIA());
+            if(lice.getActualFc()> 0){
+        
         String cadena=cliT.getCodigoCliente()+" - "+cliT.getRazonSocial()+"\n"+cliT.getDireccion();
         int ok=0;
         
@@ -1101,7 +972,9 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
             ok=1;
         }
         
-        
+            }else{
+                JOptionPane.showMessageDialog(null,"NO PUEDE GENERAR MAS COMPROBANTES. POR FAVOR RENUEVE LA LICENCIA.GRACIAS");
+            }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

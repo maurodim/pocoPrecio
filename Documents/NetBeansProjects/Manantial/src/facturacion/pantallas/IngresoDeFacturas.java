@@ -4,6 +4,7 @@
  */
 package facturacion.pantallas;
 
+import Administracion.Licencias;
 import Administracion.LicenciasControl;
 import ClientesPantallas.NuevoCliente;
 import Pedidos.IngresoDePedidos;
@@ -47,6 +48,7 @@ import FacturaElectronica.Interfaces.FacturableE;
 import FacturaElectronica.Objetos.DetalleFacturas;
 import FacturaElectronica.Objetos.FacturaElectronica;
 import FacturaElectronica.Objetos.TiposIva;
+import Impresiones.ImprimirComprobantes;
 import facturacion.clientes.FormasDePago;
 import interfaces.Transaccionable;
 import java.sql.Connection;
@@ -476,6 +478,10 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
     }//GEN-LAST:event_formInternalFrameClosing
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        LicenciasControl control=new LicenciasControl();
+            Licencias lice=(Licencias) control.LeerActualLocal(Propiedades.getIDLICENCIA());
+            if(lice.getActualFc()> 0){
+        
         String cadena=cliT.getCodigoCliente()+" - "+cliT.getRazonSocial()+"\n"+cliT.getDireccion();
         
         if(this.jCheckBox1.isSelected()){
@@ -700,7 +706,9 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
                 JOptionPane.showMessageDialog(this,"El cliente supera el límite de crédito, debe abonar la venta");
                 noFacturar=0;
             }
-
+            }else{
+                JOptionPane.showMessageDialog(null,"NO PUEDE GENERAR MAS COMPROBANTES. POR FAVOR RENUEVE LA LICENCIA.GRACIAS");
+            }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -971,6 +979,9 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
             //Impresora imp=new Impresora();
             //verificar();
             //Impresora imp=new Impresora();
+            LicenciasControl control=new LicenciasControl();
+            Licencias lice=(Licencias) control.LeerActualLocal(Propiedades.getIDLICENCIA());
+            if(lice.getActualPresupuestos() > 0){
             String cadena = cliT.getCodigoCliente() + " - " + cliT.getRazonSocial() + "\n" + cliT.getDireccion();
             //comp.setCliente(cliT);
             //VisorDeHojaDeRuta
@@ -1088,9 +1099,15 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
                 comprobante = (Comprobantes) fat.guardar(comprobante);
                 // aqui hago el envio a factura  electronica, si aprueba no imprime
 
-                ImprimirFactura imprimir = new ImprimirFactura();
+                
                 try {
+                    if(Propiedades.getTIQUEADORA()==0){
+                        ImprimirFactura imprimir = new ImprimirFactura();
                     imprimir.ImprimirFactura(comprobante.getNumero(), comprobante.getTipoComprobante());
+                    }else{
+                        ImprimirComprobantes ticket=new ImprimirComprobantes();
+                        ticket.ImprimirPresupuesto(comprobante.getNumero(), comprobante.getTipoComprobante());
+                    }
                     LicenciasControl licencia=new LicenciasControl();
                     licencia.RestarPresupuesto();
                 } catch (IOException ex) {
@@ -1188,6 +1205,9 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
                 
                 
             }
+        }
+        }else{
+            JOptionPane.showMessageDialog(null,"NO PUEDE GENERAR MAS COMPROBANTES. POR FAVOR RENUEVE LA LICENCIA.GRACIAS");
         }
     }//GEN-LAST:event_jTextField1KeyPressed
 

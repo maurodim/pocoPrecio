@@ -77,7 +77,6 @@ public class Articulos implements Facturar, Editables, Comparables, ModificableA
         return listadoBarr;
     }
 
-    
     public Double getPorcentajeDeDescuento() {
         return porcentajeDeDescuento;
     }
@@ -865,7 +864,7 @@ public class Articulos implements Facturar, Editables, Comparables, ModificableA
                     articulo.setModificaServicio(rr.getBoolean("modificaServicio"));
                     String nom = rr.getString("NOMBRE");
                     articulo.setIdCombo(rr.getInt("idcombo"));
-                    
+
                     resultado.add(articulo);
                 }
                 rr.close();
@@ -986,7 +985,8 @@ public class Articulos implements Facturar, Editables, Comparables, ModificableA
         Articulos articulo = new Articulos();
 
         try {
-            String sql = "select id,nombre,idrubro,idsubrubro,barras,precio,equivalencia,costo,minimo,stock,servicio,servicio1,modificaprecio,modificaservicio,stock,recargo,idcombo,(select articulosMov.cantidad from articulosMov where articulosMov.idArticulo=articulos.ID)as sst from articulos where BARRAS like '" + codigoDeBarra + "' and INHABILITADO=0";
+            String sql = "select id,nombre,idrubro,idsubrubro,barras,precio,equivalencia,costo,minimo,stock,servicio,servicio1,modificaprecio,modificaservicio,stock,recargo,idcombo,(select sum(movimientosarticulos.cantidad) from movimientosarticulos where movimientosarticulos.idArticulo=articulos.ID)as sst from articulos where BARRAS like '" + codigoDeBarra + "' and INHABILITADO=0";
+
             System.out.println(sql);
             Transaccionable tra = null;
 
@@ -1014,7 +1014,7 @@ public class Articulos implements Facturar, Editables, Comparables, ModificableA
                 articulo.setModificaServicio(rr.getBoolean("modificaServicio"));
                 String nom = rr.getString("NOMBRE");
                 articulo.setIdCombo(rr.getInt("idcombo"));
-                
+
             }
             rr.close();
         } catch (SQLException ex) {
@@ -1050,11 +1050,10 @@ public class Articulos implements Facturar, Editables, Comparables, ModificableA
             }
             if (articulo.getCodigoDeBarra().isEmpty()) {
 
-        
-            sql = "update articulos set BARRAS='" + ultimoArt + "' where id=" + ultimoArt;
-            tra.guardarRegistro(sql);
-        }
-            
+                sql = "update articulos set BARRAS='" + ultimoArt + "' where id=" + ultimoArt;
+                tra.guardarRegistro(sql);
+            }
+
             rs.close();
         } catch (SQLException ex) {
             Logger.getLogger(Articulos.class.getName()).log(Level.SEVERE, null, ex);
@@ -1063,7 +1062,7 @@ public class Articulos implements Facturar, Editables, Comparables, ModificableA
         } catch (IllegalAccessException ex) {
             Logger.getLogger(Articulos.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         //sql="insert into actualizaciones (iddeposito,idobjeto,estado) values (1,1,3),(2,1,3),(3,1,3),(4,1,3),(5,1,3),(6,1,3),(7,1,3)";
         //tra.guardarRegistro(sql);
         /*
@@ -1076,8 +1075,7 @@ public class Articulos implements Facturar, Editables, Comparables, ModificableA
                 tra.guardarRegistro(sql);
             }
         }
-        */
-
+         */
         return ch;
     }
 
@@ -1274,7 +1272,7 @@ public class Articulos implements Facturar, Editables, Comparables, ModificableA
         } catch (IllegalAccessException ex) {
             Logger.getLogger(Articulos.class.getName()).log(Level.SEVERE, null, ex);
         }
-        */
+         */
         return precio;
     }
 
@@ -1460,7 +1458,7 @@ public class Articulos implements Facturar, Editables, Comparables, ModificableA
         Object[] fila = new Object[4];
         while (it.hasNext()) {
             articulo = (Articulos) it.next();
-            fila[0]=articulo.getCodigoDeBarra();
+            fila[0] = articulo.getCodigoDeBarra();
             fila[1] = articulo.getDescripcionArticulo();
             fila[2] = " $" + Numeros.ConvertirNumero(articulo.getPrecioUnitarioNeto());
             fila[3] = String.valueOf(articulo.getStockActual());
@@ -1623,9 +1621,11 @@ public class Articulos implements Facturar, Editables, Comparables, ModificableA
         Double porcentajeGanancia = 0.00;
         modelo.addColumn("Id");
         modelo.addColumn("Descripcion");
-        modelo.addColumn("Cantidad");
+        modelo.addColumn("Cantidad Mov");
+        modelo.addColumn("Stock Act.");
+        modelo.addColumn("Stock Result.");
 
-        Object[] fila = new Object[3];
+        Object[] fila = new Object[5];
         while (it.hasNext()) {
             articulos = (Articulos) it.next();
             //articulos.setConfirmado(false);
@@ -1633,7 +1633,8 @@ public class Articulos implements Facturar, Editables, Comparables, ModificableA
             fila[0] = articulos.getNumeroId();
             fila[1] = articulos.getDescripcionArticulo();
             fila[2] = articulos.getCantidad();
-
+            fila[3] = articulos.getStockActual();
+            fila[4] = articulos.getStockActual() + articulos.getCantidad();
             modelo.addRow(fila);
         }
         return modelo;
@@ -1641,9 +1642,18 @@ public class Articulos implements Facturar, Editables, Comparables, ModificableA
 
     @Override
     public void cargarMovimientoDeAjuste(Object articulo) {
-        Articulos arti = (Articulos) articulo;
-        String sql = "insert into movimientosarticulos (tipoMovimiento,idArticulo,cantidad,numeroDeposito,tipoComprobante,numeroComprobante,numeroCliente,numeroUsuario,precioDeCosto,precioDeVenta,precioServicio,idcaja,fechaComprobante) values (7," + arti.getNumeroId() + "," + arti.getCantidad() + ",1,0,0,0," + Inicio.usuario.getNumeroId() + ",0.00,0.00,0.00," + Inicio.caja.getNumero() + ",'" + Inicio.fechaDia + "')";
-        tra.guardarRegistro(sql);
+        try {
+            Articulos arti = (Articulos) articulo;
+            Transaccionable tra=new Conecciones();
+            String sql = "insert into movimientosarticulos (tipoMovimiento,idArticulo,cantidad,numeroDeposito,tipoComprobante,numeroComprobante,numeroCliente,numeroUsuario,precioDeCosto,precioDeVenta,precioServicio,idcaja,fechaComprobante,estado) values (14," + arti.getNumeroId() + "," + arti.getCantidad() + ",1,0,0,0," + Inicio.usuario.getNumeroId() + ",0.00,0.00,0.00," + Inicio.caja.getNumero() + ",'" + Inicio.fechaDia + "',0)";
+            tra.guardarRegistro(sql);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Articulos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(Articulos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Articulos.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
@@ -1699,38 +1709,38 @@ public class Articulos implements Facturar, Editables, Comparables, ModificableA
 
     @Override
     public void NuevoMasivo(ArrayList listado) {
-        Iterator it=listado.listIterator();
-            Articulos articulo;
-            Integer cantt=0;
-            int total=0;
+        Iterator it = listado.listIterator();
+        Articulos articulo;
+        Integer cantt = 0;
+        int total = 0;
         try {
-            
-            tra=new Conecciones();
-            String nuevo="insert into articulos (NOMBRE,COSTO,PRECIO,BARRAS) values ";
-            while(it.hasNext()){
-                articulo=(Articulos) it.next();
+
+            tra = new Conecciones();
+            String nuevo = "insert into articulos (NOMBRE,COSTO,PRECIO,BARRAS) values ";
+            while (it.hasNext()) {
+                articulo = (Articulos) it.next();
                 //AltaObjeto(artic);
-                nuevo+="('"+articulo.getDescripcionArticulo()+"',"+articulo.getPrecioDeCosto()+","+articulo.getPrecioUnitarioNeto()+",'"+articulo.getCodigoDeBarra()+"'),";
-                if(cantt==200){
-                    total=nuevo.length();
-                    total=total -1;
-                    nuevo=nuevo.substring(0,total);
+                nuevo += "('" + articulo.getDescripcionArticulo() + "'," + articulo.getPrecioDeCosto() + "," + articulo.getPrecioUnitarioNeto() + ",'" + articulo.getCodigoDeBarra() + "'),";
+                if (cantt == 200) {
+                    total = nuevo.length();
+                    total = total - 1;
+                    nuevo = nuevo.substring(0, total);
                     tra.guardarRegistro(nuevo);
-                    cantt=0;
-                    nuevo="insert into articulos (NOMBRE,COSTO,PRECIO,BARRAS) values ";
-                    total=0;
+                    cantt = 0;
+                    nuevo = "insert into articulos (NOMBRE,COSTO,PRECIO,BARRAS) values ";
+                    total = 0;
                 }
                 cantt++;
             }
-            total=nuevo.length();
-            System.out.println("TOTAL SENTENCIA "+total);
+            total = nuevo.length();
+            System.out.println("TOTAL SENTENCIA " + total);
             System.out.println(nuevo);
-            total=total -1;
-            nuevo=nuevo.substring(0,total);
-            if(nuevo.length() > 153){
+            total = total - 1;
+            nuevo = nuevo.substring(0, total);
+            if (nuevo.length() > 153) {
                 tra.guardarRegistro(nuevo);
             }
-            sql="update articulos set barras=cast(id as char(10)) where barras=''";
+            sql = "update articulos set barras=cast(id as char(10)) where barras=''";
             tra.guardarRegistro(sql);
         } catch (InstantiationException ex) {
             Logger.getLogger(Articulos.class.getName()).log(Level.SEVERE, null, ex);
@@ -1743,12 +1753,12 @@ public class Articulos implements Facturar, Editables, Comparables, ModificableA
 
     @Override
     public void ModificadoMasivo(ArrayList listado) {
-       Iterator it=listado.listIterator();
+        Iterator it = listado.listIterator();
         Articulos artic;
-        String modificar="update articulos set ";
-        String ww=" where id in(";
-        while(it.hasNext()){
-            artic=(Articulos) it.next();
+        String modificar = "update articulos set ";
+        String ww = " where id in(";
+        while (it.hasNext()) {
+            artic = (Articulos) it.next();
             ModificaionObjeto(artic);
             //modificar+="nombre=case id when "+artic.getNumeroId()+" then '"+artic.getDescripcionArticulo()+"',barras= case id when "+artic.getNumeroId()+" then '"+artic.getCodigoDeBarra()+"'";
         }

@@ -95,19 +95,8 @@ public class PlanillaStock {
             celda1.setCellValue("Descripcion");
             celda2=fila.createCell(2);
             celda2.setCellStyle(titulo);
-            celda2.setCellValue("Cantidad");
-            celda3=fila.createCell(3);
-            celda3.setCellStyle(titulo);
-            celda3.setCellValue("Cantidad");
-            celda4=fila.createCell(4);
-            celda4.setCellStyle(titulo);
-            celda4.setCellValue("Cantidad");
-            celda5=fila.createCell(5);
-            celda5.setCellStyle(titulo);
-            celda5.setCellValue("Cantidad");
-            celda6=fila.createCell(6);
-            celda6.setCellStyle(titulo);
-            celda6.setCellValue("Cantidad");
+            celda2.setCellValue("Stock Actual");
+            
             }else{
             cliente=(Articulos)listadoClientes.get(a);
             fila=hoja.createRow(a);
@@ -128,41 +117,13 @@ public class PlanillaStock {
             celda2=fila.createCell(2);
             celda2.setCellStyle(celdas);
             celda2.setCellType(HSSFCell.CELL_TYPE_STRING);
-            celda2.setCellValue("");
+            celda2.setCellValue(cliente.getStockActual());
             
-            
-            celda3=fila.createCell(3);
-            celda3.setCellStyle(celdas);
-            celda3.setCellType(HSSFCell.CELL_TYPE_STRING);
-            celda3.setCellValue("");
-            
-            
-            celda4=fila.createCell(4);
-            celda4.setCellStyle(celdas);
-            celda4.setCellType(HSSFCell.CELL_TYPE_STRING);
-            celda4.setCellValue("");
-            
-           
-            celda5=fila.createCell(5);
-            celda5.setCellStyle(celdas);            
-//celda5.setCellFormula(rs.getString("observaciones"));
-            celda5.setCellType(HSSFCell.CELL_TYPE_STRING);
-            celda5.setCellValue("");
-            //celda5.setCellValue(rs.getDate("fecha"));
-            
-            
-            celda6=fila.createCell(6);
-            //celda5.setCellFormula(rs.getString("observaciones"));
-            celda6.setCellStyle(celdas);
-            celda6.setCellType(HSSFCell.CELL_TYPE_STRING);
-            celda6.setCellValue("");
-            //listadoPorSucursal=edi.ListarPorSucursal(cliente);
-            //Iterator il=listadoPorSucursal.listIterator();
             
             }
         }
              
-                       String ruta="C://Informes//planillaStock.xls";
+                       String ruta="Informes\\planillaStock.xls";
         try {
             FileOutputStream elFichero=new FileOutputStream(ruta);
             try {

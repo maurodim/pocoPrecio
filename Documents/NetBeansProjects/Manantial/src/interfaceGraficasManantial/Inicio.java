@@ -46,6 +46,8 @@ import Proveedores.AbmProveedores;
 import facturacion.pantallas.IngresoDeFacturas;
 import facturacion.pantallas.NotaDeCredito;
 import facturacion.pantallas.NotaDeDebito;
+import java.awt.Graphics2D;
+import java.io.IOException;
 import java.io.InputStream;
 
 /**
@@ -126,8 +128,9 @@ public class Inicio extends javax.swing.JFrame {
         Image icon=new ImageIcon(getClass().getResource("/imagen/Mlogo.png")).getImage();
         this.setIconImage(icon);
         
-        int ancho=jDesktopPane1.getWidth();
-        int alto=jDesktopPane1.getHeight();
+        int ancho=jDesktopPane1.getWidth()-50;
+        int alto=jDesktopPane1.getHeight()-20;
+        System.out.println("ancho "+ancho+" alto "+alto);
         
         cargarImagen(jDesktopPane1,foto1,ancho,alto);
         System.out.println("alto "+alto+" y ancho "+ancho);
@@ -139,10 +142,25 @@ public class Inicio extends javax.swing.JFrame {
     }
 public  void cargarImagen(javax.swing.JDesktopPane jDeskp,InputStream fileImagen,int aa,int allt)
     {   
+        /*
+        Image img=new ImageIcon(this.getClass().getResource("Manantial-logo-wide.png")).getImage();
+        try{
+            Graphics2D g2d=(Graphics2D)jDeskp.getGraphics();
+            double x=img.getWidth(null);
+            double y=img.getHeight(null);
+            g2d.scale(getWidth() / x,getHeight() / y);
+            g2d.drawImage(img, 0, 0, jDeskp);
+        }catch(Exception e){
+            System.out.println("error "+e);
+        }
+        
+        */
         try{   
-            BufferedImage image = ImageIO.read(fileImagen);        
+            BufferedImage image = ImageIO.read(fileImagen);
+            
               jDeskp.setBorder(new Fondo(image)); }
-        catch (Exception e){   System.out.println("Imagen no disponible");   }        
+        catch (Exception e){   System.out.println("Imagen no disponible");   }
+       
     }
 
     /**
@@ -197,6 +215,7 @@ public  void cargarImagen(javax.swing.JDesktopPane jDeskp,InputStream fileImagen
         jMenu4 = new javax.swing.JMenu();
         jMenu6 = new javax.swing.JMenu();
         jMenu5 = new javax.swing.JMenu();
+        jMenu7 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SISITEMA DE GESTION BAMBU SOFTWARE");
@@ -422,6 +441,15 @@ public  void cargarImagen(javax.swing.JDesktopPane jDeskp,InputStream fileImagen
             }
         });
         jMenuBar1.add(jMenu5);
+
+        jMenu7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/nuevos/web.png"))); // NOI18N
+        jMenu7.setText("Web");
+        jMenu7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu7MouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(jMenu7);
 
         setJMenuBar(jMenuBar1);
 
@@ -687,6 +715,15 @@ public  void cargarImagen(javax.swing.JDesktopPane jDeskp,InputStream fileImagen
         citi.toFront();
     }//GEN-LAST:event_jMenuItem13ActionPerformed
 
+    private void jMenu7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu7MouseClicked
+        Runtime jpfBatch=Runtime.getRuntime();
+        try {
+            jpfBatch.exec("java -jar Web/Web.jar");
+        } catch (IOException ex) {
+            Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jMenu7MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -750,6 +787,7 @@ public  void cargarImagen(javax.swing.JDesktopPane jDeskp,InputStream fileImagen
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
+    private javax.swing.JMenu jMenu7;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;

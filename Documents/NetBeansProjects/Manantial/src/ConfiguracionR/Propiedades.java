@@ -66,6 +66,12 @@ public class Propiedades {
     static String CLAVEMAIL;
     static String SERVVIDORMAIL;
     static Integer PUERTOMAIL;
+    static int TIQUEADORA;
+
+    public static int getTIQUEADORA() {
+        return TIQUEADORA;
+    }
+    
 
     public static String getUSUARIOMAIL() {
         return USUARIOMAIL;
@@ -186,7 +192,7 @@ public class Propiedades {
     }
 
     public static Boolean CargarPropiedades1() throws ParseException, IOException {
-        File archivo = new File("base");
+        File archivo = new File("base/bambuPrueba.db");
         Properties p = new Properties();
         Boolean resultado = true;
         if (archivo.exists()) {
@@ -229,6 +235,7 @@ public class Propiedades {
                 MAIL=rs.getString("mail");
                 ELECTRONICA=rs.getInt("electronica");
                 PRESUPUESTOS=rs.getInt("presupuestos");
+                TIQUEADORA=rs.getInt("tiqueadora");
                 }
                 rs.close();
             } catch (InstantiationException ex) {
@@ -274,6 +281,7 @@ public class Propiedades {
              */
             //CrearDBDerby crear=new CrearDBDerby();
             //ManantialActualizador actualizador=new ManantialActualizador();
+            JOptionPane.showMessageDialog(null, "INICIANDO CONFIGURACION Y CREACION DE LA BASE DE DATOS");
             Formulario forma = new Formulario(null, true);
             forma.setVisible(true);
             Formularios formu = new Formularios();

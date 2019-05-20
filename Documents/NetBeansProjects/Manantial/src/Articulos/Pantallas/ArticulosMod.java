@@ -22,7 +22,9 @@ import Articulos.SubRubros;
 import Articulos.SubRubros;
 import Extension.CodigosDeBarra;
 import Extension.CodigosDeBarraImpl;
+import Impresiones.ImpresoraServiceImpl;
 import interfaceGraficasManantial.Combos;
+import java.awt.Image;
 import javax.swing.ImageIcon;
 import tablas.MiModeloTablaArticulos;
 
@@ -486,7 +488,14 @@ public class ArticulosMod extends javax.swing.JInternalFrame {
             codigosDeBarra.redimensionar(codigosDeBarra.barraCode128(textoTemporal), 
                     (int)etiqueta.getPreferredSize().getWidth(), 
                     (int)etiqueta.getPreferredSize().getHeight())));
+            String serialCodigoBarra = textoTemporal;
+            CodigosDeBarra codigosDeBarra = new CodigosDeBarraImpl();
+            Image imagen = codigosDeBarra.barraCode128(serialCodigoBarra);
+            imagen = codigosDeBarra.redimensionar(imagen, 100, 30);
             
+            // Imagen desde la memoria
+            ImpresoraServiceImpl impresoraServicio = new ImpresoraServiceImpl();
+            impresoraServicio.imprimirCodigoDeBarra(imagen, serialCodigoBarra);
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 

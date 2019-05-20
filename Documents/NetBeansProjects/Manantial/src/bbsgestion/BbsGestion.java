@@ -17,6 +17,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import static java.lang.Thread.sleep;
 import java.net.MalformedURLException;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -56,7 +57,8 @@ public class BbsGestion {
         }
         File folder = new File("Gestion");
         File archivos = new File("Informes");
-        File bases = new File("base");
+        File bases = new File("Facturas Electronicas");
+        File fiscal=new File("Fiscal");
         File configuracion = new File("Configuracion");
         //File imagenes=new File("C:\\Gestion\\imagenes\\saynomore.jpg");
         File bk;
@@ -65,12 +67,7 @@ public class BbsGestion {
         File archivo = null;
         FileReader fr = null;
         BufferedReader br = null;
-        if (!bases.isDirectory()) {
-            JOptionPane.showMessageDialog(null, "INICIANDO CONFIGURACION Y CREACION DE LA BASE DE DATOS");
-            //bases.mkdirs();
-            //ConeccionLocal.CrearDb();
-
-        }
+        
         if (!folder.isDirectory()) {
             //System.out.println("EXISTE EL DIRECTORIO");
             folder.mkdirs();
@@ -83,6 +80,12 @@ public class BbsGestion {
         }
         if (!configuracion.isDirectory()) {
             configuracion.mkdirs();
+        }
+        if(!bases.isDirectory()){
+            bases.mkdirs();
+        }
+        if(!fiscal.isDirectory()){
+            fiscal.mkdirs();
         }
         /*
         if(!imagenes.isFile()){
@@ -162,11 +165,18 @@ public class BbsGestion {
                 lstLic=control.ListarLicencias();
                 control.ActualizarLicencia(lstLic);
                 licenciaWeb=(Licencias) control.LeerYActualizarLicencia();
+                if(licenciaWeb != null){
                 if(Propiedades.getIDLICENCIA() != licenciaWeb.getId()){
                     control.UpdateLicenciaLocal(licenciaWeb);
                     JOptionPane.showMessageDialog(null, "LICENCIA MODIFICADA");
                 }
                 licencia=(Licencias) control.LeerActualLocal(licenciaWeb.getId());
+                Runtime jpfBatch=Runtime.getRuntime();
+                jpfBatch.exec("java -jar Web/Web.jar");
+                sleep(6000);
+                }else{
+                    licencia=(Licencias) control.LeerActualLocal(Propiedades.getIDLICENCIA());
+                }
                 System.out.println("cantidad "+licencia.getActualFc()+" presupuestos "+licencia.getActualPresupuestos()+" vencimeinto "+licencia.getFechadeVencimiento());
                 if(licencia.getActualFc() < 3 || licencia.getActualPresupuestos() < 3){
                     JOptionPane.showMessageDialog(null, "Renueve su Licencia, quedán pocos comprobantes disponibles!!");
@@ -175,6 +185,11 @@ public class BbsGestion {
                 int dias=Numeros.RestarAFechaActual(vencimiento);
                 if(dias < 5 && dias > -1){
                     JOptionPane.showMessageDialog(null, "Renueve su Licencia, quedán "+dias+" para su vencimiento!!");
+                    
+                }
+                if(dias < 0 ){
+                    JOptionPane.showMessageDialog(null, "Fecha de Licencia CADUCADA, Por favor Renueve Licencia!!");
+                    System.exit(0);
                 }
 //ACA DEBERÍA PONER LAS ALERTAS PARA QUE CARGUEN UNA NUEVA LICENCIA
                 
@@ -216,6 +231,8 @@ public class BbsGestion {
         } catch (ParserConfigurationException ex) {
             Logger.getLogger(BbsGestion.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SAXException ex) {
+            Logger.getLogger(BbsGestion.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InterruptedException ex) {
             Logger.getLogger(BbsGestion.class.getName()).log(Level.SEVERE, null, ex);
         }
 

@@ -13,8 +13,6 @@ import Conversores.Numeros;
 import ListasDePrecios.Articulable;
 import ListasDePrecios.ArticulosAsignados;
 import facturacion.clientes.Clientes;
-import static facturacion.pantallas.IngresoDeFacturas.cliT;
-import static facturacion.pantallas.IngresoDeFacturas.jTextField1;
 import interfacesPrograma.Facturar;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -23,6 +21,10 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import Articulos.ModificableArticulos;
+import Articulos.TablaGenericaProductos;
+import static facturacion.pantallas.IngresoDeFacturas.jTextField1;
+import java.util.List;
+
 
 /**
  *
@@ -44,6 +46,7 @@ public class StockAbm extends javax.swing.JInternalFrame {
     private Clientes cliT;
     private DefaultTableModel modelo;
     private ModificableArticulos modiA;
+    private TablaGenericaProductos tgp;
     
     /**
      * Creates new form StockAbm
@@ -55,6 +58,10 @@ public class StockAbm extends javax.swing.JInternalFrame {
         cliT=(Clientes) cliT.cargarPorCodigoAsignado(448);
         modelo=new DefaultTableModel();
         modiA=new Articulos();
+        articuloPadre=new Articulos();
+        articuloHijo=new Articulos();
+        tgp = new TablaGenericaProductos();
+        listadoDeBusqueda=new ArrayList();
     }
 
     
@@ -65,17 +72,13 @@ public class StockAbm extends javax.swing.JInternalFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
+        cantidad_txt = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
         jLabel7 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
-        jLabel8 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
+        articulo_txt = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
 
         setClosable(true);
         setTitle("Ajuste de Stock");
@@ -83,24 +86,15 @@ public class StockAbm extends javax.swing.JInternalFrame {
 
         jLabel1.setText("Articulo a descontar");
 
-        jLabel2.setText("Cantidad");
+        jLabel2.setText("Cantidad Actual");
 
-        jLabel3.setText("Articulo Resultante");
-
-        jLabel4.setText("Cantidad");
-
-        jTextField2.addKeyListener(new java.awt.event.KeyAdapter() {
+        cantidad_txt.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jTextField2KeyPressed(evt);
+                cantidad_txtKeyPressed(evt);
             }
         });
 
-        jTextField4.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jTextField4KeyPressed(evt);
-            }
-        });
-
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/nuevos/procesar.png"))); // NOI18N
         jButton1.setText("Procesar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -121,23 +115,15 @@ public class StockAbm extends javax.swing.JInternalFrame {
         ));
         jScrollPane1.setViewportView(jTable3);
 
-        jLabel7.setText("Rubro");
+        jLabel7.setText("Articulo a Modificar");
 
-        jTextField5.setText("jTextField5");
-        jTextField5.addKeyListener(new java.awt.event.KeyAdapter() {
+        articulo_txt.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jTextField5KeyPressed(evt);
+                articulo_txtKeyPressed(evt);
             }
         });
 
-        jLabel8.setText("Rubro");
-
-        jTextField6.setText("jTextField6");
-        jTextField6.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jTextField6KeyPressed(evt);
-            }
-        });
+        jLabel5.setText("jLabel5");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -146,33 +132,24 @@ public class StockAbm extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 709, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 550, Short.MAX_VALUE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                            .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(jTextField4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(18, 18, 18)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addContainerGap())))
+                                .addGap(171, 171, 171)
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(cantidad_txt, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(articulo_txt, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -180,27 +157,19 @@ public class StockAbm extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(articulo_txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cantidad_txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
-                .addGap(5, 5, 5)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(13, 13, 13)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton1)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 259, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 243, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -224,9 +193,15 @@ public class StockAbm extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField5KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField5KeyPressed
+    private void articulo_txtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_articulo_txtKeyPressed
         if(evt.getKeyCode()==KeyEvent.VK_ENTER){
             //listadoDeBusqueda.clear();
+            listadoDeBusqueda.clear();
+            Facturar fart = new Articulos();
+            articuloPadre = new Articulos();
+            articuloPadre = (Articulos) fart.cargarPorCodigoDeBarra(this.articulo_txt.getText());
+            
+            /*
             rubro=new Rubros();
             Rubrable subRuble=new SubRubros();
             Iterator iR=listadoR.listIterator();
@@ -245,93 +220,69 @@ public class StockAbm extends javax.swing.JInternalFrame {
             ListadoDeArticulos2.jTextField1.setText(null);
             ListadoDeArticulos2.jTextField1.requestFocus();
             articuloPadre=ListadoDeArticulos2.articulo;
+            */
             //listadoB.add(ListadoDeArticulos2.articulo);
             this.jLabel1.setText(articuloPadre.getDescripcionArticulo());
-            this.jTextField2.setText(null);
-            this.jTextField2.requestFocus();
+            this.cantidad_txt.setText(String.valueOf(articuloPadre.getStockActual()));
+            this.cantidad_txt.selectAll();
+            this.cantidad_txt.requestFocus();
             
         
-        }else{
-            String rub=this.jTextField5.getText();
-
-            listadoR=ruble.buscar(rub);
-
-            //this.jTable2.setModel(ruble.mostrarEnCombo(listadoR));
         }
-    }//GEN-LAST:event_jTextField5KeyPressed
-
-    private void jTextField6KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField6KeyPressed
-        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+        if (evt.getKeyCode() == KeyEvent.VK_F1) {
+            //System.out.println("ENTRO CON F1¡¡¡¡¡");
+            valorCargado =this.articulo_txt.getText();
+            Facturar fart = new Articulos();
+//            this.jTable2.removeAll();
+            modiA = new Articulos();
+            Articulable modi = new ArticulosAsignados();
             listadoDeBusqueda.clear();
-            rubro=new Rubros();
-            Rubrable subRuble=new SubRubros();
-            Iterator iR=listadoR.listIterator();
-            while(iR.hasNext()){
-                rubro=(Rubros)iR.next();
-                listadoSubRubros=subRuble.listarPorRubro(rubro.getId());
-            }
-            ModificableArticulos modiA=new Articulos();
-            Articulable modi=new ArticulosAsignados();
-            listadoDeBusqueda=modi.convertirListadoEnArticulos(modi.filtrador(listadoSubRubros, listadoR, cliT));
+            listadoDeBusqueda = fart.listadoBusqueda(this.articulo_txt.getText());
             //listadoDeBusqueda=modi.filtrador(listadoSubRubros,listadoR);
-            
-            ListadoDeArticulos2 listadoArt=new ListadoDeArticulos2(listadoSubRubros,listadoR,listadoDeBusqueda,cliT);
-            ListadoDeArticulos2.jTable1.setModel(modiA.mostrarListadoBusqueda(listadoDeBusqueda));
-            //this.jTable3.setModel(modiA.mostrarListadoBusqueda(listadoDeBusqueda));
-            listadoArt.setVisible(true);
-            ListadoDeArticulos2.jTextField1.setText(null);
-            ListadoDeArticulos2.jTextField1.requestFocus();
-            articuloHijo=ListadoDeArticulos2.articulo;
-            //listadoB.add(ListadoDeArticulos2.articulo);
-            this.jLabel3.setText(articuloHijo.getDescripcionArticulo());
-            this.jTextField4.setText(null);
-            this.jTextField4.requestFocus();
-            
-           
-        }else{
-            String rub=this.jTextField6.getText();
 
-            listadoR=ruble.buscar(rub);
+//            this.jTable2.setModel(modiA.mostrarListadoBusqueda(listadoDeBusqueda));
+//            columnaCodigo=this.jTable2.getColumn("Descripcion");
+//            columnaCodigo.setPreferredWidth(600);
+//            columnaCodigo.setMaxWidth(600);
+//            columnaCodigo=this.jTable2.getColumn("Stock");
+//            columnaCodigo.setPreferredWidth(60);
+//            columnaCodigo.setMaxWidth(60);
+//            this.jTable2.requestFocus();
+            // Configurando parametros de algunas columnas de interes
+            List<String> columnasTabla = new ArrayList<>();
+            columnasTabla.add("Código:100:100");
+            columnasTabla.add("Descripcion:600:600");
+            columnasTabla.add("Stock:60:60");
 
-            //this.jTable2.setModel(ruble.mostrarEnCombo(listadoR));
+            // Desplegando ventana emergente
+            int elementoSeleccionado = tgp.desplegarPopUp("Seleccion Item", modiA.mostrarListadoBusqueda(listadoDeBusqueda), columnasTabla);
+            articuloPadre = (Articulos) listadoDeBusqueda.get(elementoSeleccionado);
+            this.articulo_txt.setText(articuloPadre.getCodigoDeBarra());
+            
         }
-    }//GEN-LAST:event_jTextField6KeyPressed
+    }//GEN-LAST:event_articulo_txtKeyPressed
 
-    private void jTextField2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField2KeyPressed
+    private void cantidad_txtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cantidad_txtKeyPressed
         if(KeyEvent.VK_ENTER==evt.getKeyCode()){
             //listadoB.add(articuloPadre);
-            articuloPadre.setCantidad(Numeros.ConvertirStringADouble(this.jTextField2.getText()));
-            articuloPadre.setCantidad(articuloPadre.getCantidad() * -1);
+            articuloPadre.setCantidad(Numeros.ConvertirStringADouble(this.cantidad_txt.getText()));
+            //articuloPadre.setCantidad(articuloPadre.getCantidad());
+            double actualizado=articuloPadre.getCantidad() - articuloPadre.getStockActual();
+            articuloPadre.setCantidad(actualizado);
             listadoB.add(articuloPadre);
-            
+            System.out.println("ACTUALIZADO"+ actualizado);
             this.jTable3.setModel(modiA.mostrarModificacionStock(listadoB));
             columnaCodigo=this.jTable3.getColumn("Descripcion");
-        columnaCodigo.setPreferredWidth(580);
-        columnaCodigo.setMaxWidth(580);
-                columnaCodigo=this.jTable3.getColumn("Cantidad");
-        columnaCodigo.setPreferredWidth(70);
-        columnaCodigo.setMaxWidth(70);
-            this.jTextField6.setText(null);
-            this.jTextField6.requestFocus();
-        }
-    }//GEN-LAST:event_jTextField2KeyPressed
-
-    private void jTextField4KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField4KeyPressed
-        if(KeyEvent.VK_ENTER==evt.getKeyCode()){
+        columnaCodigo.setPreferredWidth(380);
+        columnaCodigo.setMaxWidth(380);
+                //columnaCodigo=this.jTable3.getColumn("Cantidad");
+        //columnaCodigo.setPreferredWidth(70);
+        //columnaCodigo.setMaxWidth(70);
+        this.articulo_txt.setText(null);
+        this.articulo_txt.requestFocus();
             
-            articuloHijo.setCantidad(Numeros.ConvertirStringADouble(this.jTextField4.getText()));
-            listadoB.add(articuloHijo);
-            this.jTable3.setModel(modiA.mostrarModificacionStock(listadoB));
-            columnaCodigo=this.jTable3.getColumn("Descripcion");
-        columnaCodigo.setPreferredWidth(580);
-        columnaCodigo.setMaxWidth(580);
-                columnaCodigo=this.jTable3.getColumn("Cantidad");
-        columnaCodigo.setPreferredWidth(70);
-        columnaCodigo.setMaxWidth(70);
-            this.jTextField5.selectAll();
-            this.jTextField5.requestFocus();
         }
-    }//GEN-LAST:event_jTextField4KeyPressed
+    }//GEN-LAST:event_cantidad_txtKeyPressed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         Iterator it=listadoB.listIterator();
@@ -346,19 +297,15 @@ public class StockAbm extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField articulo_txt;
+    private javax.swing.JTextField cantidad_txt;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable3;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
     // End of variables declaration//GEN-END:variables
 }

@@ -197,6 +197,7 @@ public class ImpresoraServiceImpl implements Printable, ImpresoraService{
                 g2.clearRect(0, 0, imagen.getWidth(null), imagen.getHeight(null));
                 
                // g2.rotate(angulo * Math.PI / 180.0,imagen.getWidth(null)/2,imagen.getHeight(null)/2);
+               
                 g2.drawImage(imagen, null, null);
                 g2.dispose();
                 

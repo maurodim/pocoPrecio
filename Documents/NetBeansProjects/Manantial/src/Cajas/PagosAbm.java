@@ -7,6 +7,7 @@ import interfaces.Personalizable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import Conversores.Numeros;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -109,6 +110,8 @@ public class PagosAbm extends javax.swing.JInternalFrame {
             }
         });
 
+        recargo_txt.setText("0");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -170,7 +173,10 @@ public class PagosAbm extends javax.swing.JInternalFrame {
         this.jPanel2.setVisible(true);
         this.descripcion_txt.setText(formas.getDescripcionFormaDePago());
         int seleccionada=formas.getNumeroFormaDePago();
-       this.recargo_txt.setText(String.valueOf(formas.getRecargo()));
+        double porciento=formas.getRecargo() * 100;
+        porciento=porciento - 100;
+        porciento=Math.round(porciento * 100.0) / 100.0;
+       this.recargo_txt.setText(String.valueOf(porciento));
        this.descripcion_txt.selectAll();
        this.descripcion_txt.requestFocus();
     }//GEN-LAST:event_jComboBox1ActionPerformed
@@ -184,6 +190,9 @@ public class PagosAbm extends javax.swing.JInternalFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         formas.setDescripcionFormaDePago(this.descripcion_txt.getText().toUpperCase());
+        if(this.recargo_txt.getText().equals("")){
+            JOptionPane.showMessageDialog(null,"SI SU INTENCIÓN NO ES INGRESAR UN RECARGO PARA LA FORMA DE PAGO, POR FAVOR INGRESE 0.GRACIAS");
+        }else{
         double recar=Numeros.ConvertirStringADouble(this.recargo_txt.getText()) / 100;
         recar=recar + 1;
         formas.setRecargo(Numeros.Redondear(recar));
@@ -196,6 +205,7 @@ public class PagosAbm extends javax.swing.JInternalFrame {
                 formas.ModificarForma(formas);
             this.dispose();
             }
+        }
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 

@@ -45,7 +45,7 @@ public class LicenciasControl {
             while(rs.next()){
                 //licencia2=new Licencias();
                 licencia2.setId(rs.getInt("id"));
-                licencia2.setActualFc(rs.getInt("restanpresupuesto"));
+                licencia2.setActualFc(rs.getInt("restan"));
                 licencia2.setActualPresupuestos(rs.getInt("restanpresupuesto"));
                 licencia2.setFechadeVencimiento(rs.getString("vencimiento"));
                 licencia2.setCantidadFc(rs.getInt("restan"));
@@ -64,6 +64,7 @@ public class LicenciasControl {
         try {
             Transaccionable tra = new Conecciones();
             String sql = "update licencias set restanpresupuesto=restanpresupuesto -1 where id="+Propiedades.getIDLICENCIA();
+            System.out.println("resta "+sql);
             tra.guardarRegistro(sql);
         } catch (InstantiationException ex) {
             Logger.getLogger(Licencias.class.getName()).log(Level.SEVERE, null, ex);
@@ -109,7 +110,11 @@ public class LicenciasControl {
     }
 
     public ArrayList<Licencias> ListarLicencias() throws MalformedURLException, IOException, ParserConfigurationException, SAXException {
+        
+        
         ArrayList lst = new ArrayList();
+        
+        try{
         URL url = new URL("http://www.manantialgestion.com/gestor/licencias.php");//modificar luego a config.xml
         BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));
         String entrada;
@@ -184,7 +189,9 @@ public class LicenciasControl {
                 lst.add(conf);
             }
         }
-
+        }catch(Exception e){
+            System.err.println("excepcion "+e);
+        }
         return lst;
     }
 

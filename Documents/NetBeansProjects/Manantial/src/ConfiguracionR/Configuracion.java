@@ -16,12 +16,15 @@ punto_txt punto de venta propiedades - tabla confiuracion
  */
 package ConfiguracionR;
 
+import Administracion.Licencias;
+import Administracion.LicenciasControl;
 import com.sun.glass.events.KeyEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import objetosActualizador.Iva;
 
 /**
@@ -74,7 +77,14 @@ public class Configuracion extends javax.swing.JInternalFrame {
             this.habilitar_btn.setVisible(true);
         }
         if(confi.getPresupuestos()==1)this.presu_si_rdo.setSelected(true);
-
+        if(confi.getTiqueadora()==1)this.tique_si_rdo1.setSelected(true);
+        LicenciasControl licencia=new LicenciasControl();
+        Licencias licen=(Licencias) licencia.LeerActualLocal(Propiedades.getIDLICENCIA());
+        this.descripcion_lbl.setText(licen.getDescripcion());
+        this.vencimiento_lbl.setText(licen.getFechadeVencimiento());
+        this.fc_lbl.setText(String.valueOf(licen.getActualFc())+" de "+licen.getCantidadFc());
+        this.presu_lbl.setText(String.valueOf(licen.getActualPresupuestos())+" de "+licen.getCantidadPresupuestos());
+        
     }
 
     /**
@@ -142,7 +152,6 @@ public class Configuracion extends javax.swing.JInternalFrame {
         fc_lbl = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
         presu_lbl = new javax.swing.JLabel();
-        jPanel4 = new javax.swing.JPanel();
 
         setClosable(true);
         setTitle("Configuración del Manatial Gestión");
@@ -572,19 +581,6 @@ public class Configuracion extends javax.swing.JInternalFrame {
 
         jTabbedPane1.addTab("Licencia", new javax.swing.ImageIcon(getClass().getResource("/imagen/nuevos/licencia.png")), jPanel3); // NOI18N
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 816, Short.MAX_VALUE)
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 663, Short.MAX_VALUE)
-        );
-
-        jTabbedPane1.addTab("Web", new javax.swing.ImageIcon(getClass().getResource("/imagen/nuevos/web.png")), jPanel4); // NOI18N
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -634,6 +630,7 @@ public class Configuracion extends javax.swing.JInternalFrame {
         
         control.ActualizarConfiguracion(confi);
         ActualizarCampos();
+        JOptionPane.showMessageDialog(null, "Para que los cambios tengan efecto debe Salir del Sistema. Gracias");
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -652,6 +649,7 @@ public class Configuracion extends javax.swing.JInternalFrame {
         }
         control.ActualizarConfiguracion(confi);
         ActualizarCampos();
+        JOptionPane.showMessageDialog(null, "Para que los cambios tengan efecto debe Salir del Sistema. Gracias");
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void habilitar_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_habilitar_btnActionPerformed
@@ -810,7 +808,6 @@ private void ActualizarCampos(){
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextField mail_txt;
     private javax.swing.JTextField nombre_txt;

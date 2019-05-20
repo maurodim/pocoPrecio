@@ -1,9 +1,10 @@
 package FacturaElectronica.Objetos;
 
-
+import ConfiguracionR.Propiedades;
 import Conversores.Numeros;
 import FacturaElectronica.Interfaces.FacturableE;
 import FacturaElectronica.Interfaces.Instalable;
+import Impresiones.ImprimirComprobantes;
 import feafip.bi.ClassFactory;
 import feafip.bi.IwsPadron;
 import feafip.bi.Iwsfev1;
@@ -338,13 +339,13 @@ public class FacturaElectronica implements FacturableE, Instalable {
         if (cuit.equals("1")) {
             cuit = "0";
         }
-        String fFecha=String.format("%8s", fecha).replace(' ','0');
-        String ptoVta=String.format("%05d", this.numeroPuntoDeVenta);
+        String fFecha = String.format("%8s", fecha).replace(' ', '0');
+        String ptoVta = String.format("%05d", this.numeroPuntoDeVenta);
         String sql = "insert into fiscal (fecha,tipo,pto,numero,gravado,impuesto,total,idcliente,tipoClienteId,razon,cuit,estado) values ('" + fFecha + "','" + tipo + "','" + ptoVta + "','" + numero + "'," + Numeros.Redondear(this.importeNeto) + "," + Numeros.Redondear(this.impuestoLiquido) + "," + Numeros.Redondear(this.importeTotal) + "," + this.idCliente + "," + tipoClienteId + ",'" + razonS + "','" + cuit + "',0)";
         System.out.println("fiscal: " + sql);
         try {
             st = this.conexion.prepareStatement(sql);
-            if(numero != null){
+            if (numero != null) {
                 st.execute();
             }
         } catch (SQLException ex) {
@@ -473,7 +474,21 @@ public class FacturaElectronica implements FacturableE, Instalable {
                         String nombreQr = "imagenes/" + num + "_" + this.descripcionTipoComprobante + ".gif";
                         GenerarQr qr = new GenerarQr(dato, nombreQr);
                         this.nombreQr = nombreQr;
-                        pdfsJavaGenerador pdf = new pdfsJavaGenerador(this.razonSocialVendedor, this.nombreV, this.cuitVendedor, this.condicionIvaVendedor, this.direccionV, this.telefonoV, this.ingBrutosV, this.inicioActV);
+                        pdfsJavaGenerador pdf = null;
+                        if (Propiedades.getTIQUEADORA() == 0) {
+                            pdf = new pdfsJavaGenerador(this.razonSocialVendedor, this.nombreV, this.cuitVendedor, this.condicionIvaVendedor, this.direccionV, this.telefonoV, this.ingBrutosV, this.inicioActV);
+                            //EncabezadoPdf encab=new EncabezadoPdf();
+                        pdf.setDoc(this);
+                        pdf.setPunto(this.numeroPuntoDeVenta);
+                        pdf.setNumero(nro);
+                        this.archivoPdf = pdf.run();
+                        } else {
+                            ImprimirComprobantes ticket = new ImprimirComprobantes();
+                            ticket.setDoc(this);
+                            ticket.setPunto(this.numeroPuntoDeVenta);
+                            ticket.setNumero(nro);
+                            ticket.ImprimirTicketFiscal(this.razonSocialVendedor, this.nombreV, this.cuitVendedor, this.condicionIvaVendedor, this.direccionV, this.telefonoV, this.ingBrutosV, this.inicioActV);
+                        }
 
                         //EncabezadoPdf encab=new EncabezadoPdf();
                         pdf.setDoc(this);

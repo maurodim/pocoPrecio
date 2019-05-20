@@ -139,7 +139,7 @@ public class ArticulosAbm extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel1.setText("Ingrese descripcion de articulo");
+        jLabel1.setText("Ingrese descripcion de articulo y presione F1");
 
         jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -147,7 +147,7 @@ public class ArticulosAbm extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel2.setText("Ingrese codigo de barra");
+        jLabel2.setText("Ingrese codigo de barra y preione F1");
 
         jTextField2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -471,17 +471,17 @@ public class ArticulosAbm extends javax.swing.JInternalFrame {
         modelArticulos.addColumn("STOCK MIN");
         modelArticulos.addColumn("COSTO");
         modelArticulos.addColumn("P. VENTA");
-        modelArticulos.addColumn("MAYORISTA");
-        Object[] fila = new Object[7];
+        //modelArticulos.addColumn("MAYORISTA");
+        Object[] fila = new Object[6];
         while (list.hasNext()) {
             Articulos articulos = (Articulos) list.next();
             fila[0] = articulos.getCodigoAsignado();
             fila[1] = articulos.getDescripcionArticulo();
             fila[2] = articulos.getStockActual();
             fila[3] = articulos.getStockMinimo();
-            fila[4] = articulos.getPrecioDeCosto();
-            fila[5] = articulos.getPrecioUnitarioNeto();
-            fila[6] = articulos.getPrecioServicio();
+            fila[4] = Math.round(articulos.getPrecioDeCosto() * 100.0) / 100.0;
+            fila[5] = Math.round(articulos.getPrecioUnitarioNeto() * 100.0) / 100.0;
+            //fila[6] = articulos.getPrecioServicio();
             modelArticulos.addRow(fila);
         }
         //this.updateUI();
@@ -503,17 +503,16 @@ public class ArticulosAbm extends javax.swing.JInternalFrame {
         modelArticulos.addColumn("STOCK MIN");
         modelArticulos.addColumn("COSTO");
         modelArticulos.addColumn("P. VENTA");
-        modelArticulos.addColumn("MAYORISTA");
-        Object[] fila = new Object[7];
+        //modelArticulos.addColumn("MAYORISTA");
+        Object[] fila = new Object[6];
         while (list.hasNext()) {
             Articulos articulos = (Articulos) list.next();
             fila[0] = articulos.getCodigoAsignado();
             fila[1] = articulos.getDescripcionArticulo();
             fila[2] = articulos.getStockActual();
             fila[3] = articulos.getStockMinimo();
-            fila[4] = articulos.getPrecioDeCosto();
-            fila[5] = articulos.getPrecioUnitarioNeto();
-            fila[6] = articulos.getPrecioServicio();
+            fila[4] = Math.round(articulos.getPrecioDeCosto() * 100.0) / 100.0;
+            fila[5] = Math.round(articulos.getPrecioUnitarioNeto() * 100.0) / 100.0;
             modelArticulos.addRow(fila);
         }
         System.out.println("entro en mouse");
@@ -531,8 +530,8 @@ public class ArticulosAbm extends javax.swing.JInternalFrame {
         busC.addColumn("STOCK MIN");
         busC.addColumn("COSTO");
         busC.addColumn("P VENTA");
-        busC.addColumn("SERVICIO");
-        Object[] fila = new Object[7];
+        //busC.addColumn("SERVICIO");
+        Object[] fila = new Object[6];
         Iterator irP = listadoA.listIterator();
         while (irP.hasNext()) {
             pedidos = (Articulos) irP.next();
@@ -541,9 +540,8 @@ public class ArticulosAbm extends javax.swing.JInternalFrame {
             fila[1] = pedidos.getDescripcionArticulo();
             fila[2] = pedidos.getStockActual();
             fila[3] = pedidos.getStockMinimo();
-            fila[4] = pedidos.getPrecioDeCosto();
-            fila[5] = pedidos.getPrecioUnitarioNeto();
-            fila[6] = pedidos.getPrecioServicio();
+            fila[4] = Math.round(pedidos.getPrecioDeCosto() * 100.0) / 100.0;
+            fila[5] = Math.round(pedidos.getPrecioUnitarioNeto() * 100.0) / 100.0;
             busC.addRow(fila);
         }
     }

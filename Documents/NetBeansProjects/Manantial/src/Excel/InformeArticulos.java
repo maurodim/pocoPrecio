@@ -84,18 +84,14 @@ public class InformeArticulos {
             celda2=fila.createCell(2);
             celda2.setCellStyle(titulo);
             celda2.setCellValue("Stock");
-            celda3=fila.createCell(3);
-            celda3.setCellStyle(titulo);
-            celda3.setCellValue("Stock Mínimo");
+            
             celda4=fila.createCell(4);
             celda4.setCellStyle(titulo);
             celda4.setCellValue("Costo");
             celda5=fila.createCell(5);
             celda5.setCellStyle(titulo);
             celda5.setCellValue("Precio de Venta");
-            celda6=fila.createCell(6);
-            celda6.setCellStyle(titulo);
-            celda6.setCellValue("Servicio");
+            
             }
             while(iCli.hasNext()){
                 cliente=(Articulos)iCli.next();
@@ -121,9 +117,7 @@ public class InformeArticulos {
             celda2=fila.createCell(2);
             celda2.setCellType(HSSFCell.CELL_TYPE_NUMERIC);
             celda2.setCellValue(cliente.getStockActual());
-            celda3=fila.createCell(3);
-            celda3.setCellType(HSSFCell.CELL_TYPE_NUMERIC);
-            celda3.setCellValue(cliente.getStockMinimo());
+            
             celda4=fila.createCell(4);
             celda4.setCellType(HSSFCell.CELL_TYPE_NUMERIC);
             celda4.setCellValue(cliente.getPrecioDeCosto());
@@ -134,17 +128,14 @@ public class InformeArticulos {
             celda5.setCellType(HSSFCell.CELL_TYPE_NUMERIC);
             celda5.setCellValue(cliente.getPrecioUnitarioNeto());
             //celda5.setCellValue(rs.getDate("fecha"));
-            celda6=fila.createCell(6);
-            //celda5.setCellFormula(rs.getString("observaciones"));
-            celda6.setCellType(HSSFCell.CELL_TYPE_NUMERIC);
-            celda6.setCellValue(cliente.getPrecioServicio());
+            
             
         }
           
             
         
         //texto+="\r\n";
-        String ruta="C://Informes//listadoDeArticulos.xls";
+        String ruta="Informes\\listadoDeArticulos.xls";
         try {
             FileOutputStream elFichero=new FileOutputStream(ruta);
             try {
