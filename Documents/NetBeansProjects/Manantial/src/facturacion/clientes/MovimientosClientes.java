@@ -537,7 +537,56 @@ public class MovimientosClientes implements Facturable, Movible, Editables {
 
     @Override
     public ArrayList ListarMovimientosPorFechas(Integer id, String desde, String hasta) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ArrayList listado = new ArrayList();
+        String sql = "SELECT movimientosclientes.*,tipocomprobantes.descripcion,pedidos.saldo,pedidos.idfactura,facturas.numerofactura, facturas.tipo FROM movimientosclientes left join tipocomprobantes on tipocomprobantes.id=movimientosclientes.tipocomprobante left join pedidos on pedidos.id=movimientosclientes.idpedido left JOIN facturas on facturas.id=pedidos.idfactura where movimientosclientes.fecha between '" + desde+" 00:00:00.000' and '"+hasta+" 00:00:00.000'";
+        System.out.println(sql);
+        
+        try {
+            Transaccionable tra = new Conecciones();
+        ResultSet rs = tra.leerConjuntoDeRegistros(sql);
+        MovimientosClientes factura;
+            while (rs.next()) {
+                factura = new MovimientosClientes();
+                factura.setId(rs.getInt("id"));
+                factura.setEstado(rs.getInt("pagado"));
+                factura.setFecha(rs.getDate("fecha"));
+                factura.setIdCliente(rs.getInt("numeroproveedor"));
+                factura.setIdPedido(rs.getInt("idpedido"));
+                factura.setIdUsuario(rs.getInt("idusuario"));
+                factura.setNumeroFactura(rs.getInt("numerofactura"));
+                int editado = rs.getInt("editado");
+                if (factura.numeroFactura != null) {
+
+                } else {
+
+                    factura.setNumeroFactura(rs.getInt("numerocomprobante"));
+                }
+                if (factura.numeroFactura == 0) {
+                    factura.setNumeroFactura(rs.getInt("numerocomprobante"));
+                }
+                if (editado == 1) {
+                    factura.setNumeroFactura(rs.getInt("numerocomprobante"));
+                }
+                factura.setIdRemito(rs.getInt("idremito"));
+                factura.setTipo(rs.getInt("tipocomprobante"));
+                factura.setTotal(rs.getDouble("monto"));
+                //factura.setMontoOriginal(rs.getDouble("total"));
+                factura.setSaldo(rs.getDouble("saldo"));
+                factura.setDescripcionTipo(rs.getString("descripcion"));
+                //factura.setNumeroFiscal(rs.getString("numerofactura"));
+                //factura.setSubTotal(rs.getDouble("subtotal"));
+                //factura.setDescuento(rs.getDouble("descuento"));
+                //factura.setPorcentajeDescuento(rs.getDouble("porcentajeD"));
+                listado.add(factura);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MovimientosClientes.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(MovimientosClientes.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(MovimientosClientes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listado;
     }
 
     @Override

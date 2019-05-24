@@ -63,6 +63,7 @@ public class InformesMovimientos {
         fuente.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
         String form=null;
         String sql="";
+        String saldo="";
         System.out.println(sql);
         Transaccionable tra=null;
         try {
@@ -130,7 +131,13 @@ public class InformesMovimientos {
             celda2.setCellValue(cliente.getTotal());
             celda3=fila.createCell(3);
             celda3.setCellType(HSSFCell.CELL_TYPE_NUMERIC);
-            celda3.setCellValue(cliente.getSaldo());
+            if (cliente.getEstado()==1) {
+                 saldo= "0.00";
+            } else {
+                saldo = String.valueOf(cliente.getTotal());
+            }
+            
+            celda3.setCellValue(saldo);
             celda4=fila.createCell(4);
             celda4.setCellType(HSSFCell.CELL_TYPE_STRING);
             celda4.setCellValue(cliente.getDescripcionTipo());
@@ -141,13 +148,14 @@ public class InformesMovimientos {
         }
           
         //texto+="\r\n";
-        String ruta="C://Informes//informeDeMovimientoDeClientes.xls";
+        String ruta="Informes//informeDeMovimientoDeClientes.xls";
+        
         try {
             FileOutputStream elFichero=new FileOutputStream(ruta);
             try {
                 libro.write(elFichero);
                 elFichero.close();
-                Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler "+ruta);
+                Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler "+"Informes\\informeDeMovimientoDeClientes.xls");
             } catch (IOException ex) {
                 Logger.getLogger(InformeMensual.class.getName()).log(Level.SEVERE, null, ex);
             }

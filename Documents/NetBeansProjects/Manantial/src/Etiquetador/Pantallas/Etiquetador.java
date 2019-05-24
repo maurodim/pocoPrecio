@@ -11,8 +11,11 @@ import ConfiguracionR.Propiedades;
 import Etiquetador.Interfaces.interfaceEtiquetas;
 import Etiquetador.Objetos.Etiqueta;
 import com.sun.glass.events.KeyEvent;
+import static facturacion.pantallas.IngresoDeFacturas.cliT;
+import static facturacion.pantallas.IngresoDeFacturas.jTextField1;
 import interfacesPrograma.Facturar;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 
 /**
@@ -32,6 +35,10 @@ public class Etiquetador extends javax.swing.JInternalFrame {
         articulo=new Articulos();
         listadoDeBusqueda=new ArrayList();
         initComponents();
+        Facturar fart=new Articulos();
+            ModificableArticulos modi=new Articulos();
+            this.jTable1.setModel(modi.mostrarListadoBusqueda(listadoDeBusqueda));
+            this.jLabel3.setText("CANT. SELECC.: "+listadoEtiquetas.size());
     }
 
     /**
@@ -53,6 +60,8 @@ public class Etiquetador extends javax.swing.JInternalFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        barra_ch = new javax.swing.JCheckBox();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -64,7 +73,7 @@ public class Etiquetador extends javax.swing.JInternalFrame {
         jPanel1.setMinimumSize(new java.awt.Dimension(50, 50));
         jPanel1.setPreferredSize(new java.awt.Dimension(50, 278));
 
-        jLabel1.setText("Filtrar Artículos");
+        jLabel1.setText("Ingrese Cod de Barras");
 
         jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -72,11 +81,11 @@ public class Etiquetador extends javax.swing.JInternalFrame {
             }
         });
 
-        jCheckBox1.setText("Agrega leyenda Minorista?");
+        jCheckBox1.setText("Agrega Comentario?");
 
-        jLabel2.setText("Leyenda Minorista");
+        jLabel2.setText("Comentario");
 
-        jLabel3.setText("jLabel3");
+        jLabel3.setText("--");
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/nuevos/agregar.png"))); // NOI18N
         jButton1.setText("Agregar Selección");
@@ -87,7 +96,7 @@ public class Etiquetador extends javax.swing.JInternalFrame {
         });
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/nuevos/filtrar.png"))); // NOI18N
-        jButton2.setText("Filtrar");
+        jButton2.setText("Filtrar por Descripción");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -96,11 +105,18 @@ public class Etiquetador extends javax.swing.JInternalFrame {
 
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/nuevos/impresora.png"))); // NOI18N
         jButton3.setText("Imprimir Etiquetas");
+        jButton3.setEnabled(false);
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
             }
         });
+
+        jLabel4.setText("<html>\nPara buscar por descripción de Artículos ingrese el patrón en el campo para el código de barras y presione F1<br>\nPara Seleccionar varios Artículos marquelos en la grilla (<strong>shift + click</strong> para varios seguidos o <strong>ctrl + click</strong> para un patrón y luego presione \"AGREGAR SELECCIÓN\"<br>\n</html>");
+        jLabel4.setPreferredSize(new java.awt.Dimension(240, 32));
+
+        barra_ch.setSelected(true);
+        barra_ch.setText("Imprime Cod de Barra?");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -109,9 +125,10 @@ public class Etiquetador extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jCheckBox1)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jCheckBox1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jTextField1)
@@ -120,31 +137,40 @@ public class Etiquetador extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jTextField2)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE))
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
+                    .addComponent(barra_ch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(45, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel1)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton2))
-                    .addComponent(jLabel3))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jCheckBox1)
-                    .addComponent(jLabel2)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton3))
-                .addContainerGap(33, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton2))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jCheckBox1)
+                            .addComponent(jLabel2)
+                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jButton1)
+                                .addComponent(jButton3))
+                            .addComponent(barra_ch))
+                        .addContainerGap(73, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -167,14 +193,14 @@ public class Etiquetador extends javax.swing.JInternalFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 883, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 305, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 351, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -188,22 +214,40 @@ public class Etiquetador extends javax.swing.JInternalFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTextField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyPressed
-        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+        if(evt.getKeyCode()==KeyEvent.VK_F1){
             Facturar fart=new Articulos();
             ModificableArticulos modi=new Articulos();
             listadoDeBusqueda.clear();
             listadoDeBusqueda=fart.listadoBusqueda(this.jTextField1.getText().toUpperCase());
             this.jTable1.setModel(modi.mostrarListadoBusqueda(listadoDeBusqueda));
         //cargarLista(listadoDeBusqueda);
+        }
+        if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+            //System.out.println("ENTRO CON EL ENTER¡¡¡¡¡¡");
+            listadoDeBusqueda.clear();
+            Facturar fart = new Articulos();
+            Articulos arti = new Articulos();
+            ModificableArticulos modi=new Articulos();
+            arti = (Articulos) fart.cargarPorCodigoDeBarra(jTextField1.getText());
+            if (arti.getCodigoDeBarra().equals("")) {
+                
+                jTextField1.setText("");
+            } else {
+                listadoDeBusqueda.add(arti);
+                this.jTable1.setModel(modi.mostrarListadoBusqueda(listadoDeBusqueda));
+                jTextField1.setText(null);
+                
+            }
         }
     }//GEN-LAST:event_jTextField1KeyPressed
 
@@ -219,7 +263,7 @@ public class Etiquetador extends javax.swing.JInternalFrame {
         int[] seleccionados=this.jTable1.getSelectedRows();
         int cantidad=seleccionados.length;
         int id=0;
-        
+        if(cantidad > 0){
         for(int a=0;a < cantidad;a++){
             etiqueta=new Etiqueta();
             id=seleccionados[a];
@@ -229,6 +273,7 @@ public class Etiquetador extends javax.swing.JInternalFrame {
             etiqueta.setPrecioMinorista(String.valueOf(articulo.getPrecioUnitarioNeto()));
             etiqueta.setIncluyeMayorista(false);
             etiqueta.setNombreEmpresa(Propiedades.getNOMBRECOMERCIO());
+            etiqueta.setImprimeCodBarra(this.barra_ch.isSelected());
             
             if(this.jCheckBox1.isSelected())etiqueta.setAcalracionMinorista(this.jTextField2.getText());
             listadoEtiquetas.add(etiqueta);
@@ -237,6 +282,10 @@ public class Etiquetador extends javax.swing.JInternalFrame {
             
         }
         this.jLabel3.setText("CANT. SELECC.: "+listadoEtiquetas.size());
+        this.jButton3.setEnabled(true);
+        }else{
+            JOptionPane.showMessageDialog(null, "Por favor Seleccione al menos un artículo de la Grilla. Gracias");
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -244,12 +293,16 @@ public class Etiquetador extends javax.swing.JInternalFrame {
         inter.ImprimirSeleccion(listadoEtiquetas);
         listadoEtiquetas.clear();
         this.jTextField1.setText(null);
+        this.jLabel3.setText("CANT. SELECC.: "+listadoEtiquetas.size());
         this.jTextField1.requestFocus();
+        
+        this.jButton3.setEnabled(false);
         //this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JCheckBox barra_ch;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -257,6 +310,7 @@ public class Etiquetador extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;

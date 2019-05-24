@@ -61,7 +61,7 @@ public class EmisorDeInformes extends javax.swing.JInternalFrame {
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
-        setTitle("Generación de Archivos CITI");
+        setTitle("Generación de Archivos");
         setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/Mlogo.png"))); // NOI18N
         setPreferredSize(new java.awt.Dimension(728, 483));
 

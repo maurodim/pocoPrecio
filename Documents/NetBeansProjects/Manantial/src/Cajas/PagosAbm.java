@@ -55,7 +55,7 @@ public class PagosAbm extends javax.swing.JInternalFrame {
         setClosable(true);
         setMaximizable(true);
         setResizable(true);
-        setTitle("Alta y Modificacion de Sucursales");
+        setTitle("Alta y Modificacion de Formas de Pagos");
         setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/Mlogo.png"))); // NOI18N
 
         jLabel1.setText("Seleccione Forma de Pago");

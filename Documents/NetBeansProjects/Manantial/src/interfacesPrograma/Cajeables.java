@@ -24,4 +24,5 @@ public interface Cajeables {
     public Object CargarCaja(int numeroDeUsuario, int numeroDeSucursal, String fecha);
     public Object NuevoGasto(Object factura);
     public DefaultListModel LeerComprobante(Integer idComprobante,Integer tipoComprobante,Integer tipoMovimiento);
+    public ArrayList ArquearHistoricos(String fecha,String fecha1);
 }

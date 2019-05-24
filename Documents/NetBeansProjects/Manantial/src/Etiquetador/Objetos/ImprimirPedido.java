@@ -6,16 +6,17 @@ package Etiquetador.Objetos;
  */
 
 
+import Extension.CodigosDeBarra;
+import Extension.CodigosDeBarraImpl;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Frame;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.PrintJob;
 import java.awt.Toolkit;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.Iterator;
 
 
@@ -86,7 +87,7 @@ public class ImprimirPedido {
         //pagina.drawImage(imagen,63,20,174,93,null);
         
         pagina = pj.getGraphics();
-        
+        CodigosDeBarra codigosDeBarra = codigosDeBarra=new CodigosDeBarraImpl();
         while(it.hasNext()){
             etiqueta=(Etiqueta) it.next();
             
@@ -125,31 +126,17 @@ public class ImprimirPedido {
             }
             pagina.setFont(fuente5);
             pagina.setColor(Color.black);
-            pagina.drawLine(col1, renglon, col4, renglon);
+            //pagina.drawLine(col1, renglon, col4, renglon);
             items++;
             renglon=renglon + 16;
             
             pagina.drawString(tituloProducto,col2,renglon);
             items++;
             pagina.setFont(fuente12);
-            renglon=renglon+12;
-            if(etiqueta.getIncluyeMayorista()){
-                pagina.drawString("MAYOR: $ "+etiqueta.getPrecioMayorista(), col5, renglon);
-                items++;
-                if(etiqueta.getAclaracionMayorista() != null){
-                    renglon=renglon + 10;
-                    pagina.setFont(fuente);
-                    pagina.drawString(etiqueta.getAclaracionMayorista(), col3, renglon);
-                    pagina.setFont(fuente1);
-                    renglon=renglon + 2;
-                    items++;
-                    cantItems=cantItems + 12;
-                }
-                renglon=renglon + 12;
-                cantItems=cantItems + 12;
-            }
+            renglon=renglon+15;
+            
             pagina.setFont(fuente12);
-            pagina.drawString("MENOR $ "+etiqueta.getPrecioMinorista(), col5, renglon);
+            pagina.drawString("$ "+etiqueta.getPrecioMinorista(), col5, renglon);
             items++;
                 if(etiqueta.getAcalracionMinorista() != null){
                     renglon=renglon + 10;
@@ -160,7 +147,23 @@ public class ImprimirPedido {
                     renglon=renglon + 2;
                     cantItems=cantItems + 12;
                 }
-                renglon=renglon + 12;
+                renglon=renglon + 5;
+                String serialCodigoBarra=etiqueta.getCodigo();
+                
+                
+                
+                
+                Graphics2D g2d2 = null;
+                Image imagen = codigosDeBarra.barraCode128(serialCodigoBarra);
+                imagen = codigosDeBarra.redimensionar(imagen, 100, 10);
+                
+                //BufferedImage image_c = Image.ioImage//BarcodeImageHandler.getImage(imagen);
+                //BufferedImage imagenB = ((ToolkitImage) imagen).getBufferedImage(); 
+                //BufferedImage imagenB= (BufferedImage) imagen;
+                System.out.println("columna 2 "+col2+" renglon "+renglon );
+                pagina.drawImage(imagen, col2, renglon, null);
+                //pagina.drawImage(imagen, col2,renglon,col2+10,renglon + 100,null);
+                renglon=renglon +18;
                 pagina.setFont(fuente);
                 pagina.drawString("COD.: "+etiqueta.getCodigo(), col2, renglon);
                 items++;

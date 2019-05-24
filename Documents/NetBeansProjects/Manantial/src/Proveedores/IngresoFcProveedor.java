@@ -10,6 +10,7 @@ import Proveedores.Interfaces.FacturableE;
 import Proveedores.objetos.MovimientoProveedores;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import objetosCiti.Comprasfiscal;
 
@@ -47,6 +48,12 @@ public class IngresoFcProveedor extends javax.swing.JInternalFrame {
         MovimientoProveedores pedido = new MovimientoProveedores();
         ArrayList listadoPed = new ArrayList();
         pedido = (MovimientoProveedores) ped;
+        Date dia=Numeros.ConvertirStringEnDate(pedido.getFecha());
+        this.fecha_cmb.setSelectedDate(Numeros.ConvertirStringEnCalendar(dia));
+        
+        
+        
+        
         alicuotaIva="0005";
 
         initComponents();

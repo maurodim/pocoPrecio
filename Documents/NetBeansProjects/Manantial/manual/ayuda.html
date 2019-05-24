@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Anton|Dosis:400,800" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+  </head>
+  <body>
+    <header class="site-header"  style="background-color: #2e2e2e;">
+        <div class="container">
+            <div class="row">
+                <div class="text-lg-left">
+                    <img src="img/logo-web.png" style="color:#fff;">
+                </div>
+            <div class="align-items-center">
+                
+                <div class="col">
+
+                  <h1 class="align-middle text-center text-lg-left">Manual de MANANTIAL GESTIÓN</h1>
+                  
+                </div>
+            </div>
+            </div>
+        </div>
+    </header>
+    
+    <h2 class="lecture-title text-dark">Manual de Instalación y Funcionamiento</h2>
+    
+    <main class="container">
+            <div class="row">
+                  <div class="col-8">
+                        <div id="servicios">
+                            <div class="card">
+                                    <div class="card-header" id="servicio1">
+                                        <h2 class="mb-0">
+                                            <button class="btn btn-link" data-toggle="collapse" data-target="#descripcion1" 
+                                                    aria-expanded="true" aria-controls="descripcion1" >
+                                                        Instalación
+                                            </button>
+                                        </h2>
+                                    </div><!--#servicio1-->
+                                    <div id="descripcion1" class="collapse show" aria-labelledby="servicio1" data-parent="#servicios">
+                                        <div class="card-body">
+                                            <p>El proceso de instalación consiste en descomprimir el archivo ZIP y ejecutar el archivo Setup.exe que está dentro del archivo descomprimido.<br>
+                                            Una vez hecho ésto se deberá llenar el formulario de registro para que el sistema culmine con las tareas de generación de las carpetas necesarias y <br>
+                                            parámetros para su funcionamiento.
+                                            </p>
+                                            <p><img src="img/formulario de registro.jpg" class="img-fluid">
+                                            </p>
+                                            <p>
+                                                Una vez culminado el proceso el sistema avisará que está concluido correctamente y pedirá ingresar nuevamente al sistema, ahora lo deberá hacer desde el icono creado en inicio o en su escritorio
+                                            </p>
+                                            <h3>Licencias</h3>
+                                            <p>
+                                                El sistema lee el registros e licencias y lo actualiza, como default se toma una licencia gratuita que posee una cantidad de presupuestos a emitir (impacten en caja o no) y una xx cantidad de facturas electrónicas
+                                            </p>
+                                            <p>
+                                                Si el sistema le informará al iniciarse si le quedan pocos comprobantes ( de igual modo se puede visualizar en Configuración->Licencia)
+                                            </p>
+                                            <p>
+                                                El sistema bloqueará el acceso al sistema si la fecha está caducada y no se ha renovado licencia
+                                            </p>
+                                            <h3>Configuración FACTURA ELECTRÓNICA</h3>
+                                            <p>
+                                                Como primera instancia, llenar los campos solicitados en Configuración->Factura Electrónica, tener en cuenta que para el correcto funcionamiento del módulo de factura electrónica todos loc números de CUIT se cargan sin ningún tipo de caractér especial ni espacio, simplemente todos los números de corrido
+                                            </p>
+                                            <img src="img/fElect.jpg" class="img-fluid">
+                                            <p>
+                                                Para su configuración se requieren realizar acciones tanto en el sistema como en el portal de afip para su registro y permiso de utilización por parte de AFIP. Como primera medida en el portal de AFIP deberá tener registrado o habilitado un punto de venta para "Factura Electrónica WebService"
+                                            </p>
+                                            <p>
+                                                Una vez descargados los archivos, descomprimir el archivo ZIP obtenido, dentro del mismo se encontrará con 2 archivo que van a ser necesarios para generar lso certificados en el portal de AFIP<br>
+                                                El archivo con nombre xxxxx_clave.key, renombrarlo por clave.key
+                                                El otro archivo es necesario para generar el certificado de AFIP. 
+
+                                                
+                                            </p>
+                                            <p>
+                                                Para gestionarlo se usa el Administrador de Certificados Digitales. Si el menú no existe se debe agregar mediante el Administrador de Relaciones de Clave Fiscal.<br>
+                                                Para certificados de produccion: https://www.youtube.com/watch?v=v6r4D3Ljuy8&t=230s )<br>
+                                                4 - Luego de haberlo generado y descargado el certificado procedemos a habilitar el web service. El video de este link https://www.youtube.com/watch?v=J4-Mg6aS63Y muestra como hacerlo.<br>
+                                                5 - Finalmente el archivo clave.key (la copia creada y renombrada anteriormente) y el certificado descargado, (renombrarlo como certificado.crt) son los que vamos a utilizar, los mismos deben copiarse y guardarse en la misma carpeta donde está alojado el archivo Manantial.exe. 
+                                            </p>
+                                            <p>
+                                                Una vez cumplidos éstos pasos, hacemos click derecho, ejecutar como administrador sobre el archivo registrar.bat que se encuentra junto con Manantial.exe en la carpeta, si el proceso se realizó satisfactoriamente un cartel no indicará que se han registrado las librerías o dll para la factura electrónica
+                                            </p>
+                                            <p>
+                                                Ya culminados los pasos de registro en AFIP y en el equipo, solamente resta volver al sistema y en Configuración->Factura electrónica, presionar el botón habilitar, salir del sistema y con ésto el punto de venta estará registrado
+                                            </p>
+                                        </div>
+                                    </div>
+                            </div><!--.card-->
+                            
+                            <div class="card">
+                                    <div class="card-header" id="servicio2">
+                                        <h2 class="mb-0">
+                                            <button class="btn btn-link" data-toggle="collapse" data-target="#descripcion2" 
+                                                    aria-expanded="false" aria-controls="descripcion2" >
+                                                        Administración
+                                            </button>
+                                        </h2>
+                                    </div><!--#servicio1-->
+                                    <div id="descripcion2" class="collapse" aria-labelledby="servicio2" data-parent="#servicios">
+                                        <div class="card-body">
+                                            <h3>Cajas</h3>
+                                            <p>
+                                                Muestra el listado histórico de movimientos de caja, para ellos seleccionar la fecha de caja y presionar filtrar , el sistema mostrará el listado de movimientos que corresponden a dicha fecha
+                                            </p>
+                                            <h3>Informes</h3>
+                                            <p>
+                                                En ésta pantalla el sistema permite generar por un rango de fechas 3 informes:<br>
+                                                <strong>Informe de Clientes:</strong> genera un listado de clientes con sus saldos actualizados en un rango de fechas.<br>
+                                                <strong>Informe de Proveedores:</strong> genera un listado de proveedores con sus saldos actualizados<br>
+                                                <strong>Informe de Ranking de Artículos:</strong>genera un excell con un listado decreciente de artículos más vendidos en el rango de fecha indicado
+                                            </p>
+                                            <h3>Formas de Pago</h3>
+                                            <p>
+                                                En ésta pantalla se pueden agregar nuevas formas de pago o editarlas.
+                                            </p>
+                                            <p>
+                                                <strong>Para Agregar nueva forma de pago</strong>, debe presionar el botón "Nueva Forma de Pago" y completar los campos descripción y "% recargo" si lo quiere aplicar, luego presionar el botón Guardar
+                                            </p>
+                                            <p>
+                                                <strong>Para Modificar una forma de pago</strong>, debe seleccionarla en la lista desplegable y le aparecerán los datos cargados en los campos correspondientes, modifique el dato que corresponda modificar y presione el botón de Guardar
+                                            </p>
+                                            <h3>Archivos IVA</h3>
+                                            <p>
+                                                En ésta pantalla por medio de un rango de fechas permite que se generen los archivos para el citi ventas y citi compras así como también el excel de iva ventas y compras
+                                            </p>
+                                        </div>
+                                    </div>
+                            </div><!--.card-->
+                            <div class="card">
+                                    <div class="card-header" id="servicio3">
+                                        <h2 class="mb-0">
+                                            <button class="btn btn-link" data-toggle="collapse" data-target="#descripcion3" 
+                                                    aria-expanded="false" aria-controls="descripcion3" >
+                                                        Compras
+                                            </button>
+                                        </h2>
+                                    </div><!--#servicio1-->
+                                    <div id="descripcion3" class="collapse" aria-labelledby="servicio3" data-parent="#servicios">
+                                        <div class="card-body">
+                                            <h3>Ingreso de Mercaderías</h3>
+                                            <img src="img/ingresoMerc.jpg" class="img-fluid">
+                                            <p>
+                                                Ésta pantalla permite ingresar en stock los productos, el proceso es similar al ingreso de una factura, permite generar nuevos Artículos o modificar el precio de costo de los mismos
+                                            </p>
+                                            <p>
+                                                Para comenzar con el ingreso de productos, cargueló por código de barras o bien busque por descripción ingresando parte de la misma y presionando F1, en la pantalla que se despliega seleccione el artículo que desea cargar y presione ENTER,<strong>Todos los campos se comfirman con ENTER</strong>, luego cargue la cantidad y modifique si lo desea el precio de costo.
+                                            </p>
+                                            <p>
+                                                El artículo cargado le aparecerá ingresado en la grilla inferior con los datos cargados, puede eliminarlo si lo desea.
+                                            </p>
+                                            <p>
+                                                Una vez terminada la carga o ingreso de todos los artículos que desea en la grilla inferior, presione Guardar y Cerrar para culminar el proceso y que el sistema guarde el/los movimientos que cargo en el stock
+                                            </p>
+                                            <h3>Artículos</h3>
+                                            <p>
+                                                Ésta debe ser una de las pantallas más importantes del sistema. En ella se permite visualizar todos los artículos cargados, generar nuevos, modificarlos, modificar masivamente precios de costos o ventas por rubros y porcentajes, filtrar para poder ingresar individualemente a los detalles de cada Artículo, Listar todos los artículos o Listar un resumen de Stock general
+                                            </p>
+                                            <p>
+                                                <strong>Artículos Nuevos</strong> simplemente presionar el botón "Nuevo Artículo", se abrirá una pantalla para cargar los datos del artículo a incoporar al sistema. En el campo código de barras, pase el lector y el mismo se cargará con el código correspondiente, en caso de no contar el artículo con un código de barras, déjelo en blanco, el sistema le generará automáticamente uno.
+                                            </p>  
+                                            <p>
+                                                Una vez completos todos los campos presionar "Guardar"
+                                            
+                                            </p>
+                                            <p>
+                                                <strong>Modificación de Artículos</strong> hay varias opciones para ingresar a la pantalla de modificación de artículos:<br>
+                                                -<strong>Seleccionar el Artículo de la grilla</strong> y presionar el botón "Modificar Artículo"<br>
+                                                -<strong>Filtrar el Artículo por descripción</strong> en el campo a la derecha y seleccionándolo de la pantalla emergente<br>
+                                                -<strong>Filtrar el Artículo por código de barras</strong>  en el campo a la derecha y seleccionándolo de la pantalla emergente<br>
+                                            </p>
+                                            <p>
+                                                Cualquiera de las opciones mencionadas son válidas para abrir la pantalla de modificación de Artículos, a diferencia de la pantalla de nuevo artículo en ésta nos permite generar etiquetas de código de barras en base al código cargado del artículo, solamente deberá presionar el botón y completar en las pantallas emergentes cuantos códigos desea generar (cantidad total) y cuando códigos cargar por fila. Se generará un pdf para que pueda imprimirlo y re utilizarlo
+                                            </p>
+                                            <p>
+                                                <strong>Modificaciones de precios de costos y venta masivos por rubro</strong> para ellos debe seleccionar el rubro que quiere modificar, luego cargar en el campo correspondiente (precio de costo o precio de venta) el valor numérico del porcentaje a modificar, si su intención es bajar el precio el porcentaje debe ser negativo (ej -10 para -10%), luego presione el botón correspondiente para que se realice el proceso. La grilla con el detalle se actualizará al hacer un click sobre la pantalla
+                                            </p>
+                                            <h3>Rubros</h3>
+                                            <p>
+                                                Tiene un funcionamiento similar al de administración -> Formas de Pagos.
+                                            </p>
+                                            <p>
+                                                En ésta pantalla puede cargar nuevos rubros ( para ser asignados a los Artículos luego en la pantalla de carga de nuevos artículos o modificación de los mismos. O puede  modificar la descripción de algún rubro ya cargado o asignarle un porcentaje de recargo en un modo similar a lo que se realiza en la pantalla de Artículos
+                                            </p>
+                                            <h3>Ajuste de Stock</h3>
+                                            <p>
+                                                Permite corregir errores que se generen o se detecten en el stock, consiste en cargar el artículo por código de barras (o bien buscarlo por descripción con F1), aparecerá en el campo cantidad la cantidad actual en stock, debe reemplazarla por la cantidad real de dicho stock y con ENTER confirmar. Ésto hará que se cargue la grilla inferior con el detalle del movimiento a realizar.
+                                            </p>
+                                            <p>
+                                                Para finalizar presione "Procesar" para que el sistema ajuste todas las cantidades como figuran en la grilla inferior
+                                            </p>
+                                            <h3>Importar Artículos Por Excel</h3>
+                                            <p>
+                                                Permite la carga masiva de artículos al sistema, como primera instancia debe seleccionar el archivo excel que contiene la información. Luego seleccionar las columnas del archivo que contiene la información que se consulta en la pantalla (código de barras, descripción, precio de costo, precio de venta) y presionar "Cargar", al finalizar el sistema le informará cuántos registros exitosos proceso y con ésto estarán cargados los artículos en el sistema
+                                            </p>
+                                            <h3>Generar Etiquetas</h3>
+                                            <p>
+                                                Permite la generación de Etiquetas para góndolas o muestrarios, en ella permite imprimir las etiquetas en un formato de hoja A4, ocupando 2 etiquetas de ancho.
+                                            </p>
+                                            <p>
+                                                Se debe ingresar el codigo de barras o bien buscar con F1 por descripción, en la grilla inferior aparecerán los resultados, debe seleccionarlos y agregar dicha selección con el botón "Agregar Selección". Previamente deberá ingresar si quiere incluir algún comentario y si se incluye la impresión del código de barras en la etiqueta.
+                                            </p>
+                                            <p>
+                                                Una vez cargadas las distintas selecciones (puede seguir seleccionando y cargando tanto como lo desee), presione imprimir para que la selección completa sea enviada a la impresora
+                                            </p>
+                                            
+                                        </div>
+                                    </div>
+                            </div><!--.card-->
+                            <div class="card">
+                                    <div class="card-header" id="servicio4">
+                                        <h2 class="mb-0">
+                                            <button class="btn btn-link" data-toggle="collapse" data-target="#descripcion4" 
+                                                    aria-expanded="false" aria-controls="descripcion4" >
+                                                        Ventas
+                                            </button>
+                                        </h2>
+                                    </div><!--#servicio1-->
+                                    <div id="descripcion4" class="collapse" aria-labelledby="servicio4" data-parent="#servicios">
+                                        <div class="card-body">
+                                            <h3>Facturación / Nota de Crédito / Nota de Débito</h3>
+                                            <p>
+                                                Éstas 3 pantallas si bien generan resultados diferentes el funcionamiento es idéntico. En caso de que no se haya optado por habilitar la factura electrónica la primera es la que generará los presupuestos, según su elección éstos pueden impactar o no en caja.
+                                            </p>
+                                            <p>
+                                                El método de funcionamiento consiste en:<br>
+                                                -<strong>Selección de Cliente</strong>
+                                                -<strong>Ingreso de Artículos</strong>
+                                                -<strong>Emisión de Comprobante</strong>
+                                            </p>
+                                            <p>
+                                                <strong>Selección de Cliente</strong> para ellos puede presionar el botón para cargar uno nuevo y completar los campos para su ingreso (tener en cuenta que el cuit es un valor solamente numérico por lo que no es conveniente cargar "-" o espacios).<br>
+                                                O bien asignar un cliente al comprobante, mediante el botón "Ingresar Cliente", donde se busca el cliente por razón social, se lo selecciona en la grilla de resultados y se presiona el botón inferior para volver a la carga del comprobante
+                                            </p>
+                                            <p>
+                                                <strong>Ingreso de Artículos</strong> ésta carga se realiza por medio del lector de código de barras o bien con F1 buscando por descripción del artículo y seleccionándolo dentro de la grilla de resultados en la pantalla emergente.<br>
+                                                La cantidad predeterminada en 1 pero con F3 se puede cargar la cantidad deseada
+                                            </p>
+                                            <p>
+                                                La información de los artículos cargados en el comprabante que se está generando aparece en la grilla inferior
+                                            </p>
+                                            <p>
+                                                <strong>Emisión de Comprobante</strong>, una vez cargado todo el detalle del comprobante, se puede presionar F4 para imprimir un "Presupuesto" o bien (si se ha habilitado) se puede presionar el botón de factura electrónica para que se genere la misma. En éste caso se abrirá como resultado un pdf con el documento generado y aprobado por AFIP
+                                            </p>
+                                            <h3>Arqueo de Caja</h3>
+                                            <p>
+                                                Permite visualizar e ingresar movimientos en la caja actualmente abierta
+                                            </p>
+                                            <p>
+                                                En la grilla izquierda se visualizan los distintos movimientos realizados, pudiendo al hacer click sobre alguno de los comprobantes visualizarlo y/o re imprimirlo
+                                            </p>
+                                            <p>
+                                                El selector central permite realizar los movimientos habilitados en caja, cargando según sea necesario descripción del movimiento y monto
+                                            </p>
+                                            <p>
+                                                El campo hacia la derecha es un resumen de los movimientos registrados en la caja
+                                            </p>
+                                            <h3>Cierre de Caja</h3>
+                                            <p>
+                                                Genera el cierre de caja, armando un excel con todos lo movimientos de la actual y vaciando los parámetros para iniciar una nueva al re ingresar al sistema. Es un proceso que se realiza automáticamente luego de presionar Cerrar
+                                            </p>
+                                            
+                                        </div>
+                                    </div>
+                            </div><!--.card-->
+                            <div class="card">
+                                    <div class="card-header" id="servicio5">
+                                        <h2 class="mb-0">
+                                            <button class="btn btn-link" data-toggle="collapse" data-target="#descripcion5" 
+                                                    aria-expanded="false" aria-controls="descripcion5" >
+                                                        Proveedores
+                                            </button>
+                                        </h2>
+                                    </div><!--#servicio1-->
+                                    <div id="descripcion5" class="collapse" aria-labelledby="servicio5" data-parent="#servicios">
+                                        <div class="card-body">
+                                            <p>
+                                                Aquí crearemos los perfiles de Proveedores y se realizará el seguimiento de los movimientos que se carguen, el que el proveedor esté cargado o no, no infiere en la carga de Artículos dado que son dos procesos independientes
+                                            </p>
+                                            <h3>Nuevo Proveedor</h3>
+                                            <p>
+                                                Abre una pantalla solicitando los datos del mismo, una vez completos los datos disponibles se presiona "Guardar" para que quede registrado en el sistema
+                                            </p>
+                                            <h3>Perfil</h3>
+                                            <p>
+                                                Aquí es donde se pueden visualizar los distintos datos cargados y registrar los movimientos que corresponden a la carga de facturas de compra, las mismas generarán luegos los archivos de citi compras e iva compras. 
+                                            </p>
+                                            <p>
+                                                Primero se debe seleccionar el proveedor de la grilla inferior y luego presionar "Perfil"
+                                            </p>
+                                            <p>
+                                                Ya dentro de perfil, en la pestaña "movimientos" se pueden cargar las facturas de compra presionando "Ingreso de Facturas" o visualizar las cargadas presionando "Visualizar Factura", al lado de éste último botón nos informa el sistema el saldo actualizado.
+                                            </p>
+                                            <p>
+                                                Tener en cuenta que el pago o el ingreso de los pagos se realiza por medio de los movimientos en caja
+                                            </p>
+                                        </div>
+                                    </div>
+                            </div><!--.card-->
+                            <div class="card">
+                                    <div class="card-header" id="servicio6">
+                                        <h2 class="mb-0">
+                                            <button class="btn btn-link" data-toggle="collapse" data-target="#descripcion6" 
+                                                    aria-expanded="false" aria-controls="descripcion6" >
+                                                        Clientes
+                                            </button>
+                                        </h2>
+                                    </div><!--#servicio1-->
+                                    <div id="descripcion6" class="collapse" aria-labelledby="servicio6" data-parent="#servicios">
+                                        <div class="card-body">
+                                            <p>
+                                                Muy similar en el funcionamiento a la Pantalla de Proveedores
+                                            </p>
+                                            <p>
+                                                El la grilla central no muestra los clientes registrados en el sistema y los datos más relevantes de los mismos
+                                            </p>
+                                            <h3>Nuevo Cliente</h3>
+                                            <p>
+                                                Nos permite al igual que en Facturación cargar un nuevo cliente, completando los datos del mismo
+                                            </p>
+                                            <h3>Saldo</h3>
+                                            <p>
+                                                Se debe seleccionar el cliente en la grilla inferior y presionar el botón de "Saldo" en donde nos presentará una nueva ventana con los movimientos del cliente y la opción de descargar ése detalle en un excel
+                                            </p>
+                                            <h3>Perfil</h3>
+                                            <p>
+                                                Aquí podemos modificar/completar los datos cargados del cliente
+                                            </p>
+                                        </div>
+                                    </div>
+                            </div><!--.card-->
+                            <div class="card">
+                                    <div class="card-header" id="servicio7">
+                                        <h2 class="mb-0">
+                                            <button class="btn btn-link" data-toggle="collapse" data-target="#descripcion7" 
+                                                    aria-expanded="false" aria-controls="descripcion7" >
+                                                        Configuración
+                                            </button>
+                                        </h2>
+                                    </div><!--#servicio1-->
+                                    <div id="descripcion7" class="collapse" aria-labelledby="servicio7" data-parent="#servicios">
+                                        <div class="card-body">
+                                            <p>
+                                                Ésta pantalla consta de 3 prestañas, que administran distintas parámetros del sistema y su funcionamiento
+                                            </p>
+                                            <h3>
+                                                Parámetros
+                                            </h3>
+                                            <p>
+                                                Son los parámetros del sistema en sí. Consiste en los datos que personaliza el sistema, los primeros campos son los que luego completan los datos personalizados de impresión, tanto en facturas como en presupuestos
+                                            </p>
+                                            <p>
+                                                Los datos de mail, son los que requiere el sistema para enviar el mail de cierre de caja con el resumen en excel de la misma
+                                            </p>
+                                            <h3>Factura electrónica</h3>
+                                            <p>
+                                                Corresponde a los datos cargados para la habilitación del módulo de factura electrónica
+                                            </p>
+                                            <h3>Licencia</h3>
+                                            <p>
+                                                Informa los parámetros actuales de la licencia que tiene registrada
+                                            </p>
+                                            <p>
+                                                <strong>Para que tengan efecto las modificaciones realizadas en ésta sección debera cerrar el sistema y volver a ingresar en él</strong>
+                                            </p>
+                                        </div>
+                                    </div>
+                            </div><!--.card-->
+                        </div>
+                  </div>
+            </div>
+    </main>
+    
+    
+
+    <script src="js/jquery.slim.js"></script>
+    <script src="js/tether.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/scripts.js"></script>
+  </body>
+</html>

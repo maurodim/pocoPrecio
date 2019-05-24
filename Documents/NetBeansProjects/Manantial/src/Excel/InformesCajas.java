@@ -54,9 +54,11 @@ public class InformesCajas {
         fuente.setFontName(fuente.FONT_ARIAL);
         fuente.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
         String form=null;
-        String sql="SELECT idArticulo,cantidad,(select articulos.NOMBRE from articulos where articulos.ID=movimientosarticulos.idArticulo)as descA,(sum(cantidad)* -1)as total FROM movimientosarticulos where tipoMovimiento =1 and fecha between '"+desde+"' and '"+hasta+"' group by idArticulo";
+        //String sql="SELECT idArticulo,cantidad,(select articulos.NOMBRE from articulos where articulos.ID=movimientosarticulos.idArticulo)as descA,(sum(cantidad))as total FROM movimientosarticulos where tipoMovimiento =1 and fecha between '"+desde+" 00:00:00.000' and '"+hasta+" 00:00:00.000'";
         //System.out.println(sql);
+        String sql="SELECT id,barras,nombre,(select sum(cantidad) * -1 from movimientosarticulos where movimientosarticulos.idarticulo=articulos.id and movimientosarticulos.FECHA between '"+desde+" 00:00:00.000' and '"+hasta+" 00:00:00.000') as total FROM MAURO.ARTICULOS order by nombre";
         Transaccionable tra=null;
+        String total;
         try {
             tra = new Conecciones();
         } catch (InstantiationException ex) {
@@ -100,25 +102,32 @@ public class InformesCajas {
             celda=fila.createCell(0);
             ttx=ttx;
             celda.setCellType(HSSFCell.CELL_TYPE_NUMERIC);
-            celda.setCellValue(rs.getString("idArticulo"));
+            celda.setCellValue(rs.getString("barras"));
             celda1=fila.createCell(1);
             ttx=ttx;
             celda1.setCellType(HSSFCell.CELL_TYPE_STRING);
-            celda1.setCellValue(rs.getString("descA"));
+            celda1.setCellValue(rs.getString("nombre"));
             celda2=fila.createCell(2);
             celda2.setCellType(HSSFCell.CELL_TYPE_NUMERIC);
-            celda2.setCellValue(rs.getDouble("total"));
+            if(rs.getDouble("total") > 0){
+                total=String.valueOf(rs.getDouble("total"));
+            }else{
+                total="0.00";
+            }
+            
+            
+            celda2.setCellValue(total);
         }
         
         rs.close();
         //texto+="\r\n";
-        String ruta="C://Informes//informeDeArticulos.xls";
+        String ruta="Informes//informeDeArticulos.xls";
         try {
             FileOutputStream elFichero=new FileOutputStream(ruta);
             try {
                 libro.write(elFichero);
                 elFichero.close();
-                Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler "+ruta);
+                Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler "+"Informes\\informeDeArticulos.xls");
             } catch (IOException ex) {
                 Logger.getLogger(InformeMensual.class.getName()).log(Level.SEVERE, null, ex);
             }

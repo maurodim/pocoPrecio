@@ -25,6 +25,16 @@ public class Etiqueta implements interfaceEtiquetas{
     private String imagen;
     private Boolean incluyeMayorista;
     private String nombreEmpresa;
+    private Boolean imprimeCodBarra;
+
+    public Boolean getImprimeCodBarra() {
+        return imprimeCodBarra;
+    }
+
+    public void setImprimeCodBarra(Boolean imprimeCodBarra) {
+        this.imprimeCodBarra = imprimeCodBarra;
+    }
+    
 
     public String getNombreEmpresa() {
         return nombreEmpresa;

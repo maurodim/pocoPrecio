@@ -1138,7 +1138,9 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
                 JOptionPane.showMessageDialog(this, "El cliente supera el límite de crédito, debe abonar la venta");
                 noFacturar = 0;
             }
-            
+            }else{
+            JOptionPane.showMessageDialog(null,"NO PUEDE GENERAR MAS COMPROBANTES. POR FAVOR RENUEVE LA LICENCIA.GRACIAS");
+        }
         }
         if(evt.getKeyCode()==KeyEvent.VK_F3){
             SelectorFormaDePago slector=new SelectorFormaDePago(null,true,montoTotal);
@@ -1206,9 +1208,7 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
                 
             }
         }
-        }else{
-            JOptionPane.showMessageDialog(null,"NO PUEDE GENERAR MAS COMPROBANTES. POR FAVOR RENUEVE LA LICENCIA.GRACIAS");
-        }
+        
     }//GEN-LAST:event_jTextField1KeyPressed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed

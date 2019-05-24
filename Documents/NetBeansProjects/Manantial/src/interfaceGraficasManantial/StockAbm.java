@@ -123,7 +123,7 @@ public class StockAbm extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel5.setText("jLabel5");
+        jLabel5.setText("<html>\nPresione F1 para nuscar por descripción<br>\nPresione ENTER para confirmar los campos y cargar en la grilla inferior\n</html>");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -148,7 +148,7 @@ public class StockAbm extends javax.swing.JInternalFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(articulo_txt, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel5))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(

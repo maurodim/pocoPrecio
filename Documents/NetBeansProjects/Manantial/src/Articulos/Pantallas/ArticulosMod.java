@@ -20,12 +20,24 @@ import Articulos.Rubros;
 import Articulos.Rubros;
 import Articulos.SubRubros;
 import Articulos.SubRubros;
+import Extension.Archivo;
+import Extension.ArchivoImpl;
+import Extension.ArchivoPdf;
+import Extension.ArchivoPdfImpl;
 import Extension.CodigosDeBarra;
 import Extension.CodigosDeBarraImpl;
 import Impresiones.ImpresoraServiceImpl;
 import interfaceGraficasManantial.Combos;
 import java.awt.Image;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.nio.file.Path;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import tablas.MiModeloTablaArticulos;
 
 /**
@@ -495,7 +507,53 @@ public class ArticulosMod extends javax.swing.JInternalFrame {
             
             // Imagen desde la memoria
             ImpresoraServiceImpl impresoraServicio = new ImpresoraServiceImpl();
-            impresoraServicio.imprimirCodigoDeBarra(imagen, serialCodigoBarra);
+            
+                String serialCodigoBarraImp = this.jTextField1.getText();
+                int cantidadCopias=Integer.parseInt(JOptionPane.showInputDialog("INGRESE LA CANTIDAD DE COPIAS A IMPRIMIR"));
+                int cantidaPorLinea=Integer.parseInt(JOptionPane.showInputDialog("INGRESE LA CANTIDAD DE ETIQUETAS POR LINEA QUE DESEA IMPRIMIR"));
+           /* CodigosDeBarra codigosDeBarra = new CodigosDeBarraImpl();
+            Image imagen = codigosDeBarra.barraCode128(serialCodigoBarra); // Imagen Original
+            //imagen = codigosDeBarra.redimensionar(imagen, 38, 21); // Escalamiento de la imagen (opcional)
+            
+            // Imagen desde la memoria
+           // impresoraServicio.imprimirCodigoDeBarra(imagen, serialCodigoBarra, 0, 0); // imagen, codigo, margen en X, margen en Y
+           impresoraServicio.imprimirCodigoBarraMatriz(imagen, 0, 0);*/
+        
+        Archivo archivo = new ArchivoImpl();
+        Path rutaArchivo = null;
+        try {
+            rutaArchivo = archivo.rutaNormalizadaLocal("Etiquetas-"+System.currentTimeMillis()+".pdf");
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(ArticulosMod.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(ArticulosMod.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        ArchivoPdf apdf = new ArchivoPdfImpl();
+        apdf.crearDocumento(0, 0, 5, 0);
+        apdf.nombrePdf(rutaArchivo.getFileName().toString(),  rutaArchivo.getParent()); // Ruta raiz del proyecto.
+        //apdf.nombrePdf("Etiquetas-"+System.currentTimeMillis()+".pdf", Paths.get("/home/andy/PDF")); // Ejemplo para cualquier otra ruta
+        apdf.nuevaEtiqueta(serialCodigoBarra,cantidadCopias, 0, 0);
+        //apdf.nuevaEtiqueta("865521548", 25, 0, 0);
+        //apdf.nuevaEtiqueta("967741213", 30, 0, 0);
+        //apdf.nuevaEtiqueta("885544771", 15, 0, 0);       
+        apdf.generandoGridConEtiquetas(cantidaPorLinea);
+            try {
+                /*
+                try ( //String ruta="Informes\\listadoDeArticulos.xls";
+                FileOutputStream elFichero = new FileOutputStream(apdf.getRutaArchivo())) {
+                libro.write(elFichero);
+                }
+                */
+                Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler "+apdf.getRutaArchivo());
+                
+                
+                //impresoraServicio.imprimirPDF(apdf.getRutaArchivo());
+                //    impresoraServicio.imprimirCodigoDeBarra(imagen, serialCodigoBarra,10,10);
+            } catch (IOException ex) {
+                Logger.getLogger(ArticulosMod.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 

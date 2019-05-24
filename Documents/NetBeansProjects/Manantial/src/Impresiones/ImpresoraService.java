@@ -19,5 +19,7 @@ public interface ImpresoraService {
     public void imprimirTicket(String texto);
     
     /**Este metodo permite imprimir un codigo de barra tipo 128 */
-    public void imprimirCodigoDeBarra(Image imagen, String texto);
+    public void imprimirCodigoDeBarra(Image imagen, String texto, int margenX, int margenY);
+    
+    public void imprimirCodigoBarraMatriz(Image imagen, int margenX, int margenY);
 }

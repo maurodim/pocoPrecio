@@ -1222,6 +1222,50 @@ public class Cajas extends Sucursales implements Cajeables{
        
        return modelo;
     }
+
+    @Override
+    public ArrayList ArquearHistoricos(String fecha,String hasta) {
+        if(listadoCajas.size() > 0)listadoCajas.clear();
+        
+        //Cajas cajas=(Cajas)caja;
+        Cajas cajass=null;
+        //Double saldoFinal=cajas.saldoInicial;
+        String sql="select * from movimientoscaja where fecha  between '"+fecha+" 00:00:00.000' and '"+hasta+" 00:00:00.000'";
+        System.out.println(sql);
+        
+        try {
+            Transaccionable tra=new Conecciones();
+        ResultSet rs=tra.leerConjuntoDeRegistros(sql);
+            while(rs.next()){
+                cajass=new Cajas();
+                cajass.setNumero(rs.getInt("idCaja"));
+                cajass.setNumeroDeComprobante(rs.getInt("numeroComprobante"));
+                cajass.setTipoMovimiento(rs.getInt("tipoMovimiento"));
+                cajass.setMontoMovimiento(rs.getDouble("monto"));
+                //saldoFinal= saldoFinal + rs.getDouble("monto");
+                cajass.setTipoDeComprobante(rs.getInt("tipoComprobante"));
+                //cajass.setIdMovimiento(rs.getInt("id"));
+                int pos=cajass.getTipoMovimiento() -1;
+                Operaciones operacion=(Operaciones)listOperaciones.get(pos);
+                 String desc=operacion.getDescripcion();
+                cajass.setDescripcionMovimiento(desc);
+                listadoCajas.add(cajass);
+                
+            }
+            rs.close();
+            //cajas.saldoFinal=saldoFinal;
+        } catch (SQLException ex) {
+            Logger.getLogger(Cajas.class.getName()).log(Level.SEVERE, null, ex);
+        } catch(NullPointerException ee){
+            JOptionPane.showMessageDialog(null,"Fallo en la conexion, verifique si posee conexion a Internet");
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Cajas.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(Cajas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return listadoCajas;
+    }
     
     
 }

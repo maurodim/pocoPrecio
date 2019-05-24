@@ -98,16 +98,14 @@ public class InformesClientes {
             celda3.setCellValue("Teléfono");
             celda4=fila.createCell(4);
             celda4.setCellStyle(titulo);
-            celda4.setCellValue("Localidad");
+            celda4.setCellValue("Saldo");
             celda5=fila.createCell(5);
             celda5.setCellStyle(titulo);
-            celda5.setCellValue("Celular");
+            celda5.setCellValue("Cuit");
             celda6=fila.createCell(6);
             celda6.setCellStyle(titulo);
-            celda6.setCellValue("Contacto");
-            celda7=fila.createCell(7);
-            celda7.setCellStyle(titulo);
-            celda7.setCellValue("Nombre de Fantasia");
+            celda6.setCellValue("Cond IVA");
+            
             }
             while(iCli.hasNext()){
                 cliente=(Clientes)iCli.next();
@@ -138,31 +136,29 @@ public class InformesClientes {
             celda3.setCellValue(cliente.getTelefono());
             celda4=fila.createCell(4);
             celda4.setCellType(HSSFCell.CELL_TYPE_STRING);
-            celda4.setCellValue(cliente.getLocalidad());
+            celda4.setCellValue(cliente.getSaldo());
             
            
             celda5=fila.createCell(5);
             //celda5.setCellFormula(rs.getString("observaciones"));
             celda5.setCellType(HSSFCell.CELL_TYPE_STRING);
-            celda5.setCellValue(cliente.getCelular());
+            celda5.setCellValue(cliente.getNumeroDeCuit());
             celda6=fila.createCell(6);
             celda6.setCellType(HSSFCell.CELL_TYPE_STRING);
-            celda6.setCellValue(cliente.getResponsable());
-            celda7=fila.createCell(7);
-            celda7.setCellType(HSSFCell.CELL_TYPE_STRING);
-            celda7.setCellValue(cliente.getFantasia());
+            celda6.setCellValue(cliente.getCondicionIva());
+           
             //celda5.setCellValue(rs.getDate("fecha"));
             
         }
           
         //texto+="\r\n";
-        String ruta="C://Informes//informeDeClientes.xls";
+        String ruta="Informes//informeDeClientes.xls";
         try {
             FileOutputStream elFichero=new FileOutputStream(ruta);
             try {
                 libro.write(elFichero);
                 elFichero.close();
-                Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler "+ruta);
+                Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler "+"Informes\\informeDeClientes.xls");
             } catch (IOException ex) {
                 Logger.getLogger(InformeMensual.class.getName()).log(Level.SEVERE, null, ex);
             }
