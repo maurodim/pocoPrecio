@@ -1,0 +1,10 @@
+----------------------------------------------------------------
+Thu May 23 17:38:50 ART 2019:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.2.2 - (1181258): instance a816c00e-016a-e66a-f300-000009567b60 
+on database directory C:\Gestion\DB\respaldo.db  with class loader sun.misc.Launcher$AppClassLoader@18b4aac2 
+Loaded from file:/C:/Users/Usuario/Documents/NetBeansProjects/pocoPrecio/librerias/derby.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.8.0_191-b12
+user.dir=C:\Users\Usuario\Documents\NetBeansProjects\pocoPrecio
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''

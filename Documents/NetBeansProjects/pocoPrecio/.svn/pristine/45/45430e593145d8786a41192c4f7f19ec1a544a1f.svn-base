@@ -1,0 +1,19 @@
+0200I0500448 Número de cierre X /Z según corresponda <nnnnn>
+0201I0500000 Cuenta de Documentos Fiscales Cancelados <nnnnn>
+0202I0500000 Cuenta de documentos No Fiscales Homologados (D.N.F.H) <nnnnn>
+0203I0500000 Cuenta de Documentos No Fiscales no homologados (D.N.F.) <nnnnn>
+0204I0500018 Cuenta de Comprobantes Fiscales Tique, Factura B,C o Tique-Factura B,C emitidos <nnnnn>
+0205I0500000 Cuenta de Comprobantes de Tique-Factura ‘A’ y Facturas ‘A’ emitidos. <nnnnn>
+0206I0800028253 Número de último comprobante de Tiques, Tique-Factura ‘B’ o ‘C’ y Facturas ‘B’ o ‘C’ emitidos <nnnnnnnn>
+0207N1400000000226150 Monto total Facturado <nnnnnnnnnnnn.nn>
+0208N1400000000000000 Monto total de IVA Cobrado <nnnnnnnnnnnn.nn>
+0209N1400000000000000 Importe Total de las percepciones en Facturas o Tique-Facturas <nnnnnnnnnnnn.nn>
+0210I0800000039 Número de último comprobante Tique-Factura ‘A’ o Factura ‘A’ emitido <nnnnnnnn>
+0211I0800000005 Número de último comprobante Tique-Nota de Crédito ‘A’ o Nota de Crédito ‘A’ emitido <nnnnnnnn>
+0212I0800000000 Número de último comprobante Tique-Nota de Crédito o Nota de Crédito ‘B’ o ‘C’ emitido <nnnnnnnn>.
+0213I0800000000 Número del último Remito emitido <nnnnnnnn> Disponible sólo en equipos homologados para formato Factura.
+0214N1400000000000000 Importe Total de Notas de Crédito emitidas <nnnnnnnnnnnn.nn>
+0215N1400000000000000 Importe Total de IVA de Notas de Crédito <nnnnnnnnnnnn.nn>
+0216N1400000000000000 Importe Total de las Percepciones en Notas de Crédito o Tiques-Nota de Crédito <nnnnnnnnnnnn.nn>
+5003B011 Buffer de impresora vacío
+5110B011 Impresor fiscal fiscalizado
