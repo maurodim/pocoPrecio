@@ -62,6 +62,15 @@ public class StockAbm extends javax.swing.JInternalFrame {
         articuloHijo=new Articulos();
         tgp = new TablaGenericaProductos();
         listadoDeBusqueda=new ArrayList();
+        this.jTable3.setModel(modiA.mostrarModificacionStock(listadoB));
+            columnaCodigo=this.jTable3.getColumn("Descripcion");
+        columnaCodigo.setPreferredWidth(380);
+        columnaCodigo.setMaxWidth(380);
+                //columnaCodigo=this.jTable3.getColumn("Cantidad");
+        //columnaCodigo.setPreferredWidth(70);
+        //columnaCodigo.setMaxWidth(70);
+        this.articulo_txt.setText(null);
+        this.articulo_txt.requestFocus();
     }
 
     

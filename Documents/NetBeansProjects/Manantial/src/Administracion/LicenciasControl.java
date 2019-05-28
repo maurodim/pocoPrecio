@@ -51,6 +51,7 @@ public class LicenciasControl {
                 licencia2.setCantidadFc(rs.getInt("restan"));
                 licencia2.setCantidadPresupuestos(rs.getInt("restanpresupuesto"));
                 licencia2.setDiasLicencia(rs.getInt("cantidaddias"));
+                licencia2.setPublicidad(rs.getInt("publicidad"));
                 System.out.println("vencimiento "+licencia2.getFechadeVencimiento());
             }
             rs.close();
@@ -94,7 +95,7 @@ public class LicenciasControl {
         try {
             Transaccionable tra=new Conecciones();
             Licencias licen=(Licencias) licn;
-            String sql="update licencias set cantidad="+licen.getCantidadFc()+",restan="+licen.getCantidadFc()+" - ("+licen.getCantidadFc()+" - restan),presupuestos="+licen.getCantidadPresupuestos()+",restanpresupuesto="+licen.getCantidadPresupuestos()+" - ("+licen.getCantidadPresupuestos()+" - restanpresupuesto),vencimiento='"+licen.getFechadeVencimiento()+"' where id="+licen.getId();
+            String sql="update licencias set cantidad="+licen.getCantidadFc()+",restan="+licen.getCantidadFc()+" - ("+licen.getCantidadFc()+" - restan),presupuestos="+licen.getCantidadPresupuestos()+",restanpresupuesto="+licen.getCantidadPresupuestos()+" - ("+licen.getCantidadPresupuestos()+" - restanpresupuesto),vencimiento='"+licen.getFechadeVencimiento()+"',publicidad="+licen.getPublicidad()+" where id="+licen.getId();
             System.out.println(sql);
             tra.guardarRegistro(sql);
             sql="update configuracion set idlicencia="+licen.getId();
@@ -184,6 +185,12 @@ public class LicenciasControl {
                 titulo = ((Node) tercerNombre.item(0)).getNodeValue().toString();
                 System.out.println("COMPROBAMTES : " + titulo);
                 conf.setDiasLicencia(Integer.parseInt(titulo));
+                org.w3c.dom.NodeList octavoNombreElementoLista = primerElemento.getElementsByTagName("publicidad");
+                Element octavoNombreElemento = (Element) octavoNombreElementoLista.item(0);
+                org.w3c.dom.NodeList octavoNombre = octavoNombreElemento.getChildNodes();
+                titulo = ((Node) octavoNombre.item(0)).getNodeValue().toString();
+                System.out.println("COMPROBAMTES : " + titulo);
+                conf.setPublicidad(Integer.parseInt(titulo));
                 //conf.setCantidadComprobantes(Integer.parseInt(titulo));
                 //conf.setClave(clave);
                 lst.add(conf);
@@ -206,7 +213,8 @@ public class LicenciasControl {
                 //java.util.Date fechaSql=(Date) Numeros.ConvertirStringEnDate(licencia.getFechadeVencimiento());
                 //Date ffecha=Numeros.ConvertirDateADate(fechaSql);
                 
-                    sql="update licencias set descripcion='"+licencia.getDescripcion()+"',cantidaddias="+licencia.getDiasLicencia()+",cantidad="+licencia.getCantidadFc()+",presupuestos="+licencia.getCantidadPresupuestos()+" where id="+licencia.getId();
+                    sql="update licencias set descripcion='"+licencia.getDescripcion()+"',cantidaddias="+licencia.getDiasLicencia()+",cantidad="+licencia.getCantidadFc()+",presupuestos="+licencia.getCantidadPresupuestos()+",publicidad="+licencia.getPublicidad()+" where id="+licencia.getId();
+                    System.out.println("actualizacion licencia "+sql);
                     tra.guardarRegistro(sql);
                 
             }
@@ -295,6 +303,12 @@ public class LicenciasControl {
                     titulo = ((Node) sextoNombre.item(0)).getNodeValue().toString();
                     System.out.println("COMPROBAMTES : " + titulo);
                     conf.setDiasLicencia(Integer.parseInt(titulo));
+                    org.w3c.dom.NodeList octavoNombreElementoLista = primerElemento.getElementsByTagName("publicidad");
+                Element octavoNombreElemento = (Element) octavoNombreElementoLista.item(0);
+                org.w3c.dom.NodeList octavoNombre = octavoNombreElemento.getChildNodes();
+                titulo = ((Node) octavoNombre.item(0)).getNodeValue().toString();
+                System.out.println("COMPROBAMTES : " + titulo);
+                conf.setPublicidad(Integer.parseInt(titulo));
                     //conf.setCantidadComprobantes(Integer.parseInt(titulo));
                     //conf.setClave(clave);
                     //lst.add(conf);
@@ -315,7 +329,7 @@ public class LicenciasControl {
         try {
             Transaccionable tra=new Conecciones();
             Licencias licen=(Licencias) licencia;
-            String sql="update licencias set cantidad="+licen.getCantidadFc()+",restan="+licen.getCantidadFc()+" - ("+licen.getCantidadFc()+" - restan),presupuestos="+licen.getCantidadPresupuestos()+",restanpresupuesto="+licen.getCantidadPresupuestos()+" - ("+licen.getCantidadPresupuestos()+" - restanpresupuesto),vencimiento='"+licen.getFechadeVencimiento()+"',cantidaddias="+licen.getDiasLicencia()+" where id="+licen.getId();
+            String sql="update licencias set cantidad="+licen.getCantidadFc()+",restan="+licen.getCantidadFc()+" - ("+licen.getCantidadFc()+" - restan),presupuestos="+licen.getCantidadPresupuestos()+",restanpresupuesto="+licen.getCantidadPresupuestos()+" - ("+licen.getCantidadPresupuestos()+" - restanpresupuesto),vencimiento='"+licen.getFechadeVencimiento()+"',cantidaddias="+licen.getDiasLicencia()+",publicidad="+licen.getPublicidad()+" where id="+licen.getId();
             System.out.println(sql);
             tra.guardarRegistro(sql);
             sql="update configuracion set idlicencia="+licen.getId();

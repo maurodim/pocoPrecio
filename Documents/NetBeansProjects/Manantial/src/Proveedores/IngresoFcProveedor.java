@@ -6,11 +6,13 @@ package Proveedores;
 
 import Citi.objetosDao.ComprasfiscalJpaController;
 import Conversores.Numeros;
+import FacturaElectronica.Objetos.TiposIva;
 import Proveedores.Interfaces.FacturableE;
 import Proveedores.objetos.MovimientoProveedores;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.swing.JOptionPane;
 import objetosCiti.Comprasfiscal;
 
@@ -26,8 +28,14 @@ public class IngresoFcProveedor extends javax.swing.JInternalFrame {
     public Proveedores cliT;
     private Comprasfiscal compras;
     private ComprasfiscalJpaController controlador;
-    private double montoTotal;
-    private String alicuotaIva;
+    private TiposIva tipoIva;
+    private List<TiposIva> lsstIva;
+    private List<TiposIva> lstTiposV;
+    double montoTotal;
+    String alicuota;
+    private double montoGravado;
+    private double montoIva;
+    private String detIva;
 
     public IngresoFcProveedor(Proveedores clienteTango) {
         //cliT=new Clientes();
@@ -36,10 +44,14 @@ public class IngresoFcProveedor extends javax.swing.JInternalFrame {
 //cliT=(ClientesTango)oob;
         //comp.setCliente(cliT);
         initComponents();
-        montoTotal = 0.00;
+        lsstIva=new ArrayList();
+        lstTiposV=new ArrayList();
+        lstTiposV.add(new TiposIva(5,0.0,0.0,21));
+        lstTiposV.add(new TiposIva(4,0.0,0.0,10.5));
+        lstTiposV.add(new TiposIva(6,0.0,0.0,27));
         compras = new Comprasfiscal();
         controlador = new ComprasfiscalJpaController();
-        alicuotaIva="0005";
+        detIva="";
 
     }
 
@@ -50,11 +62,11 @@ public class IngresoFcProveedor extends javax.swing.JInternalFrame {
         pedido = (MovimientoProveedores) ped;
         Date dia=Numeros.ConvertirStringEnDate(pedido.getFecha());
         this.fecha_cmb.setSelectedDate(Numeros.ConvertirStringEnCalendar(dia));
+        detIva="";
         
         
         
-        
-        alicuotaIva="0005";
+        //alicuotaIva="0005";
 
         initComponents();
 
@@ -103,6 +115,8 @@ public class IngresoFcProveedor extends javax.swing.JInternalFrame {
         jLabel17 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         total_lbl = new javax.swing.JLabel();
+        detalle_iva_lbl = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         setClosable(true);
         setIconifiable(true);
@@ -175,7 +189,7 @@ public class IngresoFcProveedor extends javax.swing.JInternalFrame {
 
         jLabel6.setText("Alícuota de IVA");
 
-        alicuota_cmb.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "IVA 21%", "IVA 10.5%", "IVA 0%" }));
+        alicuota_cmb.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "IVA 21%", "IVA 10.5%", "IVA 27%" }));
         alicuota_cmb.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 alicuota_cmbActionPerformed(evt);
@@ -184,7 +198,6 @@ public class IngresoFcProveedor extends javax.swing.JInternalFrame {
 
         jLabel9.setText("Monto IVA");
 
-        montoIva_txt.setEnabled(false);
         montoIva_txt.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 montoIva_txtKeyPressed(evt);
@@ -263,7 +276,11 @@ public class IngresoFcProveedor extends javax.swing.JInternalFrame {
             }
         });
 
-        total_lbl.setText("jLabel1");
+        total_lbl.setText("  ");
+
+        detalle_iva_lbl.setText("  ");
+
+        jLabel1.setText("<html>\nCON ENTER confirma los campos, una vez terminada o completados por favor presione GUARDAR<br>\n<strong>\nPARA CARGAR MAS DE UNA ALÍCUOTA VUELVA A CARGAR EL MONTO GRAVADO, SELECCIONE LA NUEVA ALÍCUOTA Y EL MONTO DE IVA, SIEMPRE CONFIRMANDO LOS CAMPOS CON ENTER\n</strong>\n\n</html>");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -316,8 +333,11 @@ public class IngresoFcProveedor extends javax.swing.JInternalFrame {
                             .addComponent(impuestosInternos_txt)
                             .addComponent(otros_txt))))
                 .addGap(18, 18, 18)
-                .addComponent(total_lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(351, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(total_lbl, javax.swing.GroupLayout.DEFAULT_SIZE, 1061, Short.MAX_VALUE)
+                    .addComponent(detalle_iva_lbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 626, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -341,46 +361,54 @@ public class IngresoFcProveedor extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(montoGravado_txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(alicuota_cmb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(montoIva_txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel10)
-                    .addComponent(netoNoGravado_txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel11)
-                    .addComponent(exento_txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel12)
-                    .addComponent(percepcionIva_txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6)
+                            .addComponent(alicuota_cmb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel9)
+                            .addComponent(montoIva_txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel10)
+                            .addComponent(netoNoGravado_txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel11)
+                            .addComponent(exento_txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel12)
+                            .addComponent(percepcionIva_txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(5, 5, 5)
+                        .addComponent(detalle_iva_lbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel13)
                     .addComponent(impuestosNacionales_txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel14)
-                    .addComponent(percepcionIB_txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel15)
-                    .addComponent(impuestosMunicipales_txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel16)
-                    .addComponent(impuestosInternos_txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel17)
-                    .addComponent(otros_txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel14)
+                            .addComponent(percepcionIB_txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel15)
+                            .addComponent(impuestosMunicipales_txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel16)
+                            .addComponent(impuestosInternos_txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel17)
+                            .addComponent(otros_txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(jLabel1)))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -397,9 +425,8 @@ public class IngresoFcProveedor extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(108, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 1158, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -438,13 +465,23 @@ public class IngresoFcProveedor extends javax.swing.JInternalFrame {
 
     private void montoIva_txtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_montoIva_txtKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            double gravado;
+            double gravado=Numeros.ConvertirStringADouble(this.montoGravado_txt.getText());
+            double iva;
             try {
-                gravado = Numeros.ConvertirStringADouble(this.montoIva_txt.getText());
+                iva = Numeros.ConvertirStringADouble(this.montoIva_txt.getText());
             } catch (NumberFormatException ex) {
-                gravado = 0.00;
+                iva = 0.00;
             }
-            montrarMonto(gravado);
+            int posic=this.alicuota_cmb.getSelectedIndex();
+            TiposIva tipI=lstTiposV.get(posic);
+            tipoIva=new TiposIva(tipI.getId(),gravado,iva,tipI.getAlicuota());
+            lsstIva.add(tipoIva);
+            detIva=detIva+"<br>Monto Gravado: $ "+gravado+" Monto Iva: $"+iva+" "+tipI.getDescripcion();
+            this.detalle_iva_lbl.setText("<html>"+detIva+"</html>");
+            double tot=iva + gravado;
+            montoGravado=montoGravado + gravado;
+            montoIva=montoIva + iva;
+            montrarMonto(tot);
             this.netoNoGravado_txt.requestFocus();
         }
     }//GEN-LAST:event_montoIva_txtKeyPressed
@@ -583,8 +620,8 @@ public class IngresoFcProveedor extends javax.swing.JInternalFrame {
             puntoDeVenta = 1;
         }
         String numero = this.numero_txt.getText().replace("-", "");
-        double montoGravado = Numeros.ConvertirStringADouble(this.montoGravado_txt.getText());
-        double montoIva = Numeros.ConvertirStringADouble(this.montoIva_txt.getText());
+        //double montoGravado = Numeros.ConvertirStringADouble(this.montoGravado_txt.getText());
+        //double montoIva = Numeros.ConvertirStringADouble(this.montoIva_txt.getText());
         
     double netoNoGravado=Numeros.ConvertirStringADouble(this.netoNoGravado_txt.getText());
     double exento=Numeros.ConvertirStringADouble(this.exento_txt.getText());
@@ -600,8 +637,9 @@ public class IngresoFcProveedor extends javax.swing.JInternalFrame {
         compras.setTipo(String.format("%03d", tipoComp));
         compras.setPto(String.format("%05d", puntoDeVenta));
         compras.setNumero(String.format("%0" + (20 - numero.length()) + "d%s", 0, numero));
+        alicuota=String.format("%04d",tipoIva.getId());
         compras.setGravado(montoGravado);
-        compras.setAlicuota("0005");
+        compras.setAlicuota(alicuota);
         compras.setIva(montoIva);
         compras.setNetonogravado(netoNoGravado);
         compras.setExentas(exento);
@@ -617,7 +655,9 @@ public class IngresoFcProveedor extends javax.swing.JInternalFrame {
         compras.setTipoClienteId(cliT.getCondicionDeIva());
         compras.setRazon(cliT.getNombre());
         compras.setCuit(cliT.getCuit());
-        compras.setAlicuota(alicuotaIva);
+        compras.setAlicuota(alicuota);
+        compras.setLstAlicuotas((ArrayList) lsstIva);
+        compras.setCantidadalicuotaiva((short) compras.getLstAlicuotas().size());
         Integer id=controlador.create(compras);
         String resultado = " Fecha: " + fecha + " tipo " + compras.getTipo() + " punto " + compras.getPto() + " numero " + compras.getNumero();
         
@@ -665,30 +705,32 @@ public class IngresoFcProveedor extends javax.swing.JInternalFrame {
     private void alicuota_cmbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_alicuota_cmbActionPerformed
         int posi=this.alicuota_cmb.getSelectedIndex();
         double gavado;
+        double iva;
         switch(posi){
             case 0:
                 gavado=Numeros.ConvertirStringADouble(this.montoGravado_txt.getText());
-                gavado=gavado * 0.21;
-                this.montoIva_txt.setText(String.valueOf(gavado));
-                montrarMonto(gavado);
-                alicuotaIva="0005";
-                this.netoNoGravado_txt.requestFocus();
+                iva=gavado * 0.21;
+                this.montoIva_txt.setText(String.valueOf(iva));
+                //montrarMonto(gavado);
+                //tipoIva=new TiposIva(5,gavado,)
+                //alicuotaIva="0005";
+                this.montoIva_txt.requestFocus();
                 break;
             case 1:
                 gavado=Numeros.ConvertirStringADouble(this.montoGravado_txt.getText());
-                gavado=gavado * 0.105;
-                this.montoIva_txt.setText(String.valueOf(gavado));
-                montrarMonto(gavado);
-                alicuotaIva="0004";
-                this.netoNoGravado_txt.requestFocus();
+                iva=gavado * 0.105;
+                this.montoIva_txt.setText(String.valueOf(iva));
+                //montrarMonto(gavado);
+                //alicuotaIva="0004";
+                this.montoIva_txt.requestFocus();
                 break;
             case 2:
                 gavado=Numeros.ConvertirStringADouble(this.montoGravado_txt.getText());
-                gavado=gavado * 0.0;
-                this.montoIva_txt.setText(String.valueOf(gavado));
-                montrarMonto(gavado);
-                alicuotaIva="0003";
-                this.netoNoGravado_txt.requestFocus();
+                iva=gavado * 0.27;
+                this.montoIva_txt.setText(String.valueOf(iva));
+                //montrarMonto(gavado);
+                //alicuotaIva="0003";
+                this.montoIva_txt.requestFocus();
                 break;
         }
     }//GEN-LAST:event_alicuota_cmbActionPerformed
@@ -700,9 +742,9 @@ public class IngresoFcProveedor extends javax.swing.JInternalFrame {
     private void montrarMonto(double agregar) {
         //System.err.println("DESCUENTO :"+cliT.getDescuento());
 
-        double montoGravado = Numeros.ConvertirStringADouble(this.montoGravado_txt.getText());
-        double montoIva = Numeros.ConvertirStringADouble(this.montoIva_txt.getText());
-        
+        //double montoGravado = Numeros.ConvertirStringADouble(this.montoGravado_txt.getText());
+        //double montoIva = Numeros.ConvertirStringADouble(this.montoIva_txt.getText());
+      montoTotal=0.00;  
     double netoNoGravado=Numeros.ConvertirStringADouble(this.netoNoGravado_txt.getText());
     double exento=Numeros.ConvertirStringADouble(this.exento_txt.getText());
     double percepcionIva=Numeros.ConvertirStringADouble(this.percepcionIva_txt.getText());
@@ -733,12 +775,14 @@ public class IngresoFcProveedor extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> alicuota_cmb;
+    private javax.swing.JLabel detalle_iva_lbl;
     private javax.swing.JTextField exento_txt;
     private datechooser.beans.DateChooserCombo fecha_cmb;
     private javax.swing.JTextField impuestosInternos_txt;
     private javax.swing.JTextField impuestosMunicipales_txt;
     private javax.swing.JTextField impuestosNacionales_txt;
     private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;

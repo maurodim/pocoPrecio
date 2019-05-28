@@ -20,7 +20,9 @@ import tablas.MiModeloTablaArticulos;
  * @author mauro
  */
 public class AbmProveedores extends javax.swing.JInternalFrame {
-    private ArrayList listadoProveedores=new ArrayList();
+
+    private ArrayList listadoProveedores = new ArrayList();
+
     /**
      * Creates new form AbmProveedores
      */
@@ -48,6 +50,28 @@ public class AbmProveedores extends javax.swing.JInternalFrame {
         setMaximizable(true);
         setTitle("Proveedores");
         setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/Mlogo.png"))); // NOI18N
+        addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameActivated(evt);
+            }
+            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+            }
+        });
+        addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                formMouseClicked(evt);
+            }
+        });
 
         MiModeloTablaArticulos miTabla=new MiModeloTablaArticulos();
         Personalizable bus=new Proveedores();
@@ -57,10 +81,9 @@ public class AbmProveedores extends javax.swing.JInternalFrame {
         miTabla.addColumn("RAZON SOCIAL");
         miTabla.addColumn("DIRECCION");
         miTabla.addColumn("TELEFONO");
-        miTabla.addColumn("LOCALIDAD");
         miTabla.addColumn("SALDO");
         //miTabla.addColumn("CUIT");
-        Object[] fila=new Object[6];
+        Object[] fila=new Object[5];
         Proveedores cliente=new Proveedores();
         while(listC.hasNext()){
             cliente=(Proveedores)listC.next();
@@ -68,8 +91,7 @@ public class AbmProveedores extends javax.swing.JInternalFrame {
             fila[1]=cliente.getNombre();
             fila[2]=cliente.getDireccion();
             fila[3]=cliente.getTelefono();
-            fila[4]=cliente.getDescripcionLocalidad();
-            fila[5]=Numeros.ConvertirNumero(cliente.getSaldo());
+            fila[4]=Numeros.ConvertirNumero(cliente.getSaldo());
             //fila[6]=cliente.getListaDePrecios();
             miTabla.addRow(fila);
         }
@@ -137,9 +159,9 @@ public class AbmProveedores extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenu5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu5MouseClicked
-         Proveedores clienteTango=new Proveedores();
-        clienteTango=(Proveedores)listadoProveedores.get(this.jTable1.getSelectedRow());
-        NuevoProveedor clienteNuevo=new NuevoProveedor(clienteTango);
+        Proveedores clienteTango = new Proveedores();
+        clienteTango = (Proveedores) listadoProveedores.get(this.jTable1.getSelectedRow());
+        NuevoProveedor clienteNuevo = new NuevoProveedor(clienteTango);
         Inicio.jDesktopPane1.add(clienteNuevo);
         clienteNuevo.setTitle(clienteTango.getNombre());
         try {
@@ -152,18 +174,50 @@ public class AbmProveedores extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jMenu5MouseClicked
 
     private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1ActionPerformed
-        NuevoProveedor nuevo=new NuevoProveedor();
+        NuevoProveedor nuevo = new NuevoProveedor();
         Inicio.jDesktopPane1.add(nuevo);
         nuevo.setVisible(true);
         nuevo.toFront();
     }//GEN-LAST:event_jMenu1ActionPerformed
 
     private void jMenu1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu1MouseClicked
-        NuevoProveedor nuevo=new NuevoProveedor();
+        NuevoProveedor nuevo = new NuevoProveedor();
         Inicio.jDesktopPane1.add(nuevo);
         nuevo.setVisible(true);
         nuevo.toFront();
     }//GEN-LAST:event_jMenu1MouseClicked
+
+    private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
+        System.out.println("entro en click de mouse");
+    }//GEN-LAST:event_formMouseClicked
+
+    private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameActivated
+        System.out.println("ingreso en activacion");
+        MiModeloTablaArticulos miTabla = new MiModeloTablaArticulos();
+        Personalizable bus = new Proveedores();
+        listadoProveedores = bus.listar();
+        Iterator listC = listadoProveedores.listIterator();
+        miTabla.addColumn("COD PROVEEDOR");
+        miTabla.addColumn("RAZON SOCIAL");
+        miTabla.addColumn("DIRECCION");
+        miTabla.addColumn("TELEFONO");
+        miTabla.addColumn("SALDO");
+//miTabla.addColumn("CUIT");
+        Object[] fila = new Object[5];
+        Proveedores cliente = new Proveedores();
+        while (listC.hasNext()) {
+            cliente = (Proveedores) listC.next();
+            fila[0] = cliente.getNumero();
+            fila[1] = cliente.getNombre();
+            fila[2] = cliente.getDireccion();
+            fila[3] = cliente.getTelefono();
+            //fila[4] = cliente.getDescripcionLocalidad();
+            fila[4] = Numeros.ConvertirNumero(cliente.getSaldo());
+//fila[6]=cliente.getListaDePrecios();
+            miTabla.addRow(fila);
+        }
+        this.jTable1.setModel(miTabla);
+    }//GEN-LAST:event_formInternalFrameActivated
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenu1;

@@ -14,16 +14,22 @@ public class TiposIva {
     private double baseImponible;
     private double importe;
     private String descripcion;
+    private double alicuota;
 
     public TiposIva(int id, double baseImponible, double importe,double alicuota) {
         this.id = id;
         this.baseImponible = baseImponible;
         this.importe = importe;
+        this.alicuota=alicuota;
         this.descripcion="Iva "+alicuota+"%";
     }
 
     public String getDescripcion() {
         return descripcion;
+    }
+
+    public double getAlicuota() {
+        return alicuota;
     }
     
     

@@ -110,11 +110,11 @@ public class AbmIva extends javax.swing.JInternalFrame {
 
             fichero = this.jFileChooser1.getSelectedFile();
             seleccionado=fichero.getPath();
+            System.out.println(seleccionado);
             
-            
-        }
-        System.out.println(seleccionado);
-        
+            VerArchivo ver=new VerArchivo(null,true,fichero);
+            ver.setVisible(true);
+        /*
         LeerExcel leer=new LeerExcel();
         ArrayList columm=leer.LeerColumnas(seleccionado);
         ArrayList enviarC=new ArrayList();
@@ -134,6 +134,7 @@ public class AbmIva extends javax.swing.JInternalFrame {
         Double porcentaje=0.00;
         Double bonificacion=0.00;
         int sele=0;
+        if(selC.confirmado==1){
         exCol=new ColumnasExcel();
         sele=selC.jComboBox1.getSelectedIndex();
         exCol=(ColumnasExcel) columm.get(sele);
@@ -170,6 +171,11 @@ public class AbmIva extends javax.swing.JInternalFrame {
             
             this.dispose();
         }
+        }  
+        
+        */
+        }
+        
         /*
         String period=null;
         if(JOptionPane.showConfirmDialog(this,"Procesa el archivo seleccionado?","Aplicar Origen",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE)==1){

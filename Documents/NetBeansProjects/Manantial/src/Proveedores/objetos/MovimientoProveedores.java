@@ -397,7 +397,24 @@ public class MovimientoProveedores implements FacturableE{
 
     @Override
     public void eliminar(Object fe) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        MovimientoProveedores movimiento=(MovimientoProveedores) fe;
+        try {
+            Transaccionable tra = new Conecciones();
+            String sql="delete from movimientosproveedores where id="+movimiento.getId();
+            System.out.println(sql);
+            tra.guardarRegistro(sql);
+            sql="delete from comprasfiscal where id="+movimiento.getIdComprobante();
+            tra.guardarRegistro(sql);
+            System.out.println(sql);
+            
+            
+        } catch (InstantiationException ex) {
+            Logger.getLogger(MovimientoProveedores.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(MovimientoProveedores.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(MovimientoProveedores.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override

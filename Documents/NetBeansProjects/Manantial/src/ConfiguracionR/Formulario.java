@@ -174,10 +174,13 @@ public class Formulario extends javax.swing.JDialog {
         jLabel10.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         jLabel10.setText("<html>IMPORTANTE:Los presupuestos <strong>\"NO SON DOCUMENTOS VÁLIDOS COMO FACTURA\"</strong></html>");
 
+        buttonGroup1.add(jRadioButton1);
         jRadioButton1.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
         jRadioButton1.setText("SI");
 
+        buttonGroup1.add(jRadioButton2);
         jRadioButton2.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
+        jRadioButton2.setSelected(true);
         jRadioButton2.setText("NO");
 
         jButton1.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N

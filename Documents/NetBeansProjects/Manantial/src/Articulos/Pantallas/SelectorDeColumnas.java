@@ -12,16 +12,17 @@ import java.awt.event.KeyEvent;
  */
 public class SelectorDeColumnas extends javax.swing.JDialog {
 
-    /**
-     * Creates new form ListadoDeArticulos
-     */
+    public int confirmado;
+    
     public SelectorDeColumnas(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        confirmado=0;
     }
 
     SelectorDeColumnas() {
         initComponents();
+        confirmado=0;
         
     }
 
@@ -148,6 +149,7 @@ public class SelectorDeColumnas extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        confirmado=1;
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 

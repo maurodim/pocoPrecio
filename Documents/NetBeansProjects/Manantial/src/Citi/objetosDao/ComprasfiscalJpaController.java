@@ -5,10 +5,12 @@
  */
 package Citi.objetosDao;
 
+import FacturaElectronica.Objetos.TiposIva;
 import interfaces.Transaccionable;
 import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -55,6 +57,17 @@ public class ComprasfiscalJpaController implements Serializable {
                 id=rs.getInt("id");
             }
             rs.close();
+            Iterator it=comprasfiscal.getLstAlicuotas().listIterator();
+            String codIva;
+            while(it.hasNext()){
+                TiposIva tipoIva=(TiposIva) it.next();
+                codIva=String.format("%04d", tipoIva.getId());
+                sql="insert into comprasfiscalalicuota (tipo,pto,numero,gravado,alicuota,iva,idcompras) values ('"+comprasfiscal.getTipo()+"','"+comprasfiscal.getPto()+"','"+comprasfiscal.getNumero()+"',"+tipoIva.getBaseImponible()+",'"+codIva+"',"+tipoIva.getImporte()+","+id+")";
+                System.out.println("sql" + sql);
+                System.out.println("tipo iva"+tipoIva.getId()+" gravado "+tipoIva.getBaseImponible()+" importe "+tipoIva.getImporte()+" descripcion "+tipoIva.getDescripcion());
+                tra.guardarRegistro(sql);
+                
+            }
         } catch (SQLException ex) {
             Logger.getLogger(ComprasfiscalJpaController.class.getName()).log(Level.SEVERE, null, ex);
         }

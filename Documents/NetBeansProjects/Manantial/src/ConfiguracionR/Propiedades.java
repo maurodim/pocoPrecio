@@ -67,6 +67,12 @@ public class Propiedades {
     static String SERVVIDORMAIL;
     static Integer PUERTOMAIL;
     static int TIQUEADORA;
+    static int PUBLICIDAD;
+
+    public static int getPUBLICIDAD() {
+        return PUBLICIDAD;
+    }
+    
 
     public static int getTIQUEADORA() {
         return TIQUEADORA;
@@ -208,7 +214,7 @@ public class Propiedades {
                 Serial serial = new Serial();
                 CPU = serial.LeerSerial();
                 Transaccionable tra=new Conecciones();
-                String sql="select * from configuracion";
+                String sql="select configuracion.*,licencias.publicidad from configuracion inner join licencias on licencias.id=configuracion.idlicencia";
                 ResultSet rs=tra.leerConjuntoDeRegistros(sql);
                 String fec="03052019";
                 String fFecha=String.format("%8s", fec).replace(' ','0');
@@ -236,6 +242,7 @@ public class Propiedades {
                 ELECTRONICA=rs.getInt("electronica");
                 PRESUPUESTOS=rs.getInt("presupuestos");
                 TIQUEADORA=rs.getInt("tiqueadora");
+                PUBLICIDAD=rs.getInt("publicidad");
                 }
                 rs.close();
             } catch (InstantiationException ex) {

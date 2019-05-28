@@ -16,6 +16,7 @@ import ClientesPantallas.NuevoCliente;
 import Proveedores.Interfaces.FacturableE;
 import interfaces.Personalizable;
 import interfacesPrograma.Busquedas;
+import java.awt.event.KeyEvent;
 import java.beans.PropertyVetoException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -240,7 +241,19 @@ public class NuevoProveedor extends javax.swing.JInternalFrame implements Intern
 
         jLabel1.setText("Razon Social");
 
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField1KeyPressed(evt);
+            }
+        });
+
         jLabel2.setText("Domicilio :");
+
+        jTextField2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField2KeyPressed(evt);
+            }
+        });
 
         jLabel3.setText("Cond Iva:");
 
@@ -255,7 +268,19 @@ public class NuevoProveedor extends javax.swing.JInternalFrame implements Intern
 
         jLabel4.setText("N° de CUIT:");
 
+        jTextField3.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField3KeyPressed(evt);
+            }
+        });
+
         jLabel5.setText("Telefono :");
+
+        jTextField4.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField4KeyPressed(evt);
+            }
+        });
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/nuevos/guardar.png"))); // NOI18N
         jButton1.setText("GUARDAR");
@@ -267,9 +292,27 @@ public class NuevoProveedor extends javax.swing.JInternalFrame implements Intern
 
         jLabel11.setText("Responsable :");
 
+        jTextField7.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField7KeyPressed(evt);
+            }
+        });
+
         jLabel13.setText("Celular :");
 
+        jTextField9.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField9KeyPressed(evt);
+            }
+        });
+
         jLabel16.setText("email  :");
+
+        jTextField12.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField12KeyPressed(evt);
+            }
+        });
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -356,8 +399,8 @@ public class NuevoProveedor extends javax.swing.JInternalFrame implements Intern
         jTable3.setModel(modelo2);
         jScrollPane3.setViewportView(jTable3);
 
-        jButton15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/black_folder_search.png"))); // NOI18N
-        jButton15.setText("Visualizar factura");
+        jButton15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/nuevos/eliminar_des.png"))); // NOI18N
+        jButton15.setText("Eliminar Factura");
         jButton15.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton15ActionPerformed(evt);
@@ -488,6 +531,26 @@ public class NuevoProveedor extends javax.swing.JInternalFrame implements Intern
                 MovimientoProveedores comprobante=new MovimientoProveedores();
         int posicion=this.jTable3.getSelectedRow();
         comprobante=(MovimientoProveedores)listadoCot.get(posicion);
+        
+        if (JOptionPane.showConfirmDialog(this, "Confirma la Eliminación del comprobante ?", "Eliminar Comprobante", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 1) {
+
+        } else {
+            FacturableE fac=new MovimientoProveedores();
+            fac.eliminar(comprobante);
+        }
+        listadoCot.clear();
+        FacturableE factu=new MovimientoProveedores();
+        
+        listadoCot=factu.listarPorEstado(cliTa.getNumero());
+        this.jTable3.setModel(factu.mostrarListado(listadoCot));
+        Iterator itL=listadoCot.listIterator();
+        saldoTotal=0;
+        while(itL.hasNext()){
+            movimiento=(MovimientoProveedores) itL.next();
+            saldoTotal=saldoTotal + movimiento.getMonto();
+        }
+        this.jLabel7.setText("Saldo: $"+saldoTotal);
+        /*
         IngresoFcProveedor factu=new IngresoFcProveedor(comprobante,cliTa);
         Inicio.jDesktopPane1.add(factu);
         try {
@@ -498,6 +561,7 @@ public class NuevoProveedor extends javax.swing.JInternalFrame implements Intern
         factu.setTitle("Ingreso de Factura de Proveedores - FACTURA N° "+comprobante.getNumeroComprobante().toUpperCase());
         factu.setVisible(true);
         factu.toFront();
+        */
     }//GEN-LAST:event_jButton15ActionPerformed
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
@@ -534,6 +598,34 @@ public class NuevoProveedor extends javax.swing.JInternalFrame implements Intern
         }
         this.jLabel7.setText("Saldo: $"+saldoTotal);
     }//GEN-LAST:event_formInternalFrameActivated
+
+    private void jTextField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyPressed
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER)this.jTextField2.requestFocus();
+    }//GEN-LAST:event_jTextField1KeyPressed
+
+    private void jTextField2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField2KeyPressed
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER)this.jComboBox1.requestFocus();
+    }//GEN-LAST:event_jTextField2KeyPressed
+
+    private void jTextField3KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField3KeyPressed
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER)this.jTextField4.requestFocus();
+    }//GEN-LAST:event_jTextField3KeyPressed
+
+    private void jTextField4KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField4KeyPressed
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER)this.jTextField7.requestFocus();
+    }//GEN-LAST:event_jTextField4KeyPressed
+
+    private void jTextField7KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField7KeyPressed
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER)this.jTextField9.requestFocus();
+    }//GEN-LAST:event_jTextField7KeyPressed
+
+    private void jTextField9KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField9KeyPressed
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER)this.jTextField12.requestFocus();
+    }//GEN-LAST:event_jTextField9KeyPressed
+
+    private void jTextField12KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField12KeyPressed
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER)this.jTextArea1.requestFocus();
+    }//GEN-LAST:event_jTextField12KeyPressed
     private void ControlaInstancia(JInternalFrame inter){
         /*
         boolean mostrar=true;

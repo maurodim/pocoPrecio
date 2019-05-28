@@ -41,6 +41,7 @@ import Articulos.Pantallas.ArticulosAbm;
 import Cajas.CajaHistoricos;
 import Cajas.PagosAbm;
 import ConfiguracionR.Configuracion;
+import ConfiguracionR.Propiedades;
 import Etiquetador.Pantallas.Etiquetador;
 import Look.Fondo;
 import Proveedores.AbmProveedores;
@@ -135,7 +136,15 @@ public class Inicio extends javax.swing.JFrame {
         
         cargarImagen(jDesktopPane1,foto1,ancho,alto);
         System.out.println("alto "+alto+" y ancho "+ancho);
-        //permisos(nivel);
+        Runtime jpfBatch=Runtime.getRuntime();
+        try {
+            if(Propiedades.getPUBLICIDAD()==0){
+            jpfBatch.exec("java -jar Web/Web.jar");
+            }
+            //permisos(nivel);
+        } catch (IOException ex) {
+            Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public Inicio() {
@@ -445,7 +454,7 @@ public  void cargarImagen(javax.swing.JDesktopPane jDeskp,InputStream fileImagen
         jMenuBar1.add(jMenu5);
 
         jMenu7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/nuevos/web.png"))); // NOI18N
-        jMenu7.setText("Web");
+        jMenu7.setText("Promociones");
         jMenu7.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jMenu7MouseClicked(evt);
@@ -454,7 +463,7 @@ public  void cargarImagen(javax.swing.JDesktopPane jDeskp,InputStream fileImagen
         jMenuBar1.add(jMenu7);
 
         jMenu8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/nuevos/manual.png"))); // NOI18N
-        jMenu8.setText("Manual");
+        jMenu8.setText("Ayuda");
         jMenu8.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jMenu8MouseClicked(evt);

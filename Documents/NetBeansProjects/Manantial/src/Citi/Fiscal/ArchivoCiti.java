@@ -227,7 +227,7 @@ sql="select * from fiscal where fechaRegistro between '"+fechaDesde+" 00:00:00.0
         Boolean respuesta=false;
         try {
             tra=new Conecciones();
-        String sql="select * from comprasfiscal where fechaRegistro between '"+fechaDesde+" 00:00:00.000' and '"+fechaHasta+" 00:00:00.000' order by fecha";
+        String sql="select comprasfiscal.tipo,comprasfiscal.pto,comprasfiscal.id,comprasfiscal.numero,comprasfiscal.cuit,comprasfiscalalicuota.gravado,comprasfiscalalicuota.alicuota,comprasfiscalalicuota.iva from comprasfiscal left join comprasfiscalalicuota on comprasfiscalalicuota.idcompras=comprasfiscal.id where comprasfiscal.fechaRegistro between '"+fechaDesde+" 00:00:00.000' and '"+fechaHasta+" 00:00:00.000' order by comprasfiscal.fecha";
         //String sql="select Concat(lpad(tipo,3,'0'),lpad(pto,5,'0'),lpad(numero,20,'0'),LPAD(REPLACE(format(gravado,2),'.',''),15,'0'),lpad(alicuota,4,'0'),LPAD(REPLACE(format(impuesto,2),'.',''),15,'0'))as codigo from fiscal where fecha like '201607%' group by numero order by fecha";
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
             String nombreFichero="fiscal/"+fechaDesde+"_"+fechaHasta+"_"+Numeros.ConvertirFechaFiscal()+"_alicuotaCompras.txt";
@@ -254,7 +254,7 @@ sql="select * from fiscal where fechaRegistro between '"+fechaDesde+" 00:00:00.0
                 iva=Numeros.ConvetirNumeroDosDigitos(rs.getDouble("iva")).replace(",","");
                 gravado=String.format("%0"+(15 - gravado.length())+"d%s",0,gravado);
                 iva=String.format("%0"+(15 - iva.length())+"d%s",0,iva);
-                
+                //if(alicuota)
                 sent=tipo+pto+numero+"80"+cuit+gravado+alicuota+iva;
                 reng++;
                 System.out.println("renglon "+reng+" dato:"+sent);
@@ -316,6 +316,7 @@ sql="select * from fiscal where fechaRegistro between '"+fechaDesde+" 00:00:00.0
             String iva;
             String otrosTributos;
             String espacio;
+            String cantidadAlicuota;
             
             while(rs.next()){
                 fecha=rs.getString("fecha");
@@ -343,7 +344,7 @@ sql="select * from fiscal where fechaRegistro between '"+fechaDesde+" 00:00:00.0
                 impuestosMunicipales=String.format("%0"+(15 - impuestosMunicipales.length())+"d%s",0,impuestosMunicipales);
                 impuestosInternos=Numeros.ConvetirNumeroDosDigitos(rs.getDouble("impinternos")).replace(",", "");
                 impuestosInternos=String.format("%0"+(15 - impuestosInternos.length())+"d%s",0,impuestosInternos);
-                cantidadAlicuotaIva=String.valueOf(rs.getInt("cantidadalicuotaiva"));
+                cantidadAlicuota=String.valueOf(rs.getInt("cantidadalicuotaiva"));
                 
                 iva=Numeros.ConvetirNumeroDosDigitos(rs.getDouble("iva")).replace(",","");
                 iva=String.format("%0"+(15 - iva.length())+"d%s",0,iva);
@@ -352,7 +353,7 @@ sql="select * from fiscal where fechaRegistro between '"+fechaDesde+" 00:00:00.0
                 espacio="00000000000                              000000000000000";
                 
                 
-                sent=fecha+tipo+pto+numero+"                80"+cuit+razon+total+netoNoGravado+exentas+percepcionIva+impuestosNacionales+percepcionIb+impuestosMunicipales+impuestosInternos+"PES000100000010"+iva+otrosTributos+espacio;
+                sent=fecha+tipo+pto+numero+"                80"+cuit+razon+total+netoNoGravado+exentas+percepcionIva+impuestosNacionales+percepcionIb+impuestosMunicipales+impuestosInternos+"PES0001000000"+cantidadAlicuota+"0"+iva+otrosTributos+espacio;
                 reng++;
                 System.out.println("renglon "+reng+" dato:"+sent.length());
                 System.out.println("campos "+sent.length());

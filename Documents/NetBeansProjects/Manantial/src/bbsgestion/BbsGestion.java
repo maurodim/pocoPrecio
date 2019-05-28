@@ -171,9 +171,8 @@ public class BbsGestion {
                     JOptionPane.showMessageDialog(null, "LICENCIA MODIFICADA");
                 }
                 licencia=(Licencias) control.LeerActualLocal(licenciaWeb.getId());
-                Runtime jpfBatch=Runtime.getRuntime();
-                jpfBatch.exec("java -jar Web/Web.jar");
-                sleep(6000);
+                
+                //sleep(6000);
                 }else{
                     licencia=(Licencias) control.LeerActualLocal(Propiedades.getIDLICENCIA());
                 }
@@ -230,9 +229,7 @@ public class BbsGestion {
             Logger.getLogger(BbsGestion.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ParserConfigurationException ex) {
             Logger.getLogger(BbsGestion.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SAXException ex) {
-            Logger.getLogger(BbsGestion.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InterruptedException ex) {
+        }catch (SAXException ex) {
             Logger.getLogger(BbsGestion.class.getName()).log(Level.SEVERE, null, ex);
         }
 

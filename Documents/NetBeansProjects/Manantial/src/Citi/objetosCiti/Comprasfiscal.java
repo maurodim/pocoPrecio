@@ -6,6 +6,7 @@
 package objetosCiti;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 
 
@@ -89,6 +90,7 @@ public class Comprasfiscal implements Serializable {
     //@Basic(optional = false)
     //@Column(name = "cantidadalicuotaiva")
     private short cantidadalicuotaiva;
+    private ArrayList lstAlicuotas;
     
     private double otrostributos;
 
@@ -99,7 +101,7 @@ public class Comprasfiscal implements Serializable {
         this.id = id;
     }
 
-    public Comprasfiscal(Integer id, String fecha, String tipo, String pto, String numero, double gravado, String alicuota, double iva, double total, Date fechaRegistro, int estado, int idcliente, int tipoClienteId, String razon, String cuit, double netonogravado, double exentas, double percepcioniva, double impuestosnacionales, double percepcionib, double impmunicipales, double impinternos, short cantidadalicuotaiva, double otrostributos) {
+    public Comprasfiscal(Integer id, String fecha, String tipo, String pto, String numero, double gravado, String alicuota, double iva, double total, Date fechaRegistro, int estado, int idcliente, int tipoClienteId, String razon, String cuit, double netonogravado, double exentas, double percepcioniva, double impuestosnacionales, double percepcionib, double impmunicipales, double impinternos, short cantidadalicuotaiva, double otrostributos, ArrayList lstAlicuota) {
         this.id = id;
         this.fecha = fecha;
         this.tipo = tipo;
@@ -124,12 +126,21 @@ public class Comprasfiscal implements Serializable {
         this.impinternos = impinternos;
         this.cantidadalicuotaiva = cantidadalicuotaiva;
         this.otrostributos = otrostributos;
+        this.lstAlicuotas=lstAlicuota;
     }
 
     public String getFecha() {
         return fecha;
     }
 
+    public ArrayList getLstAlicuotas() {
+        return lstAlicuotas;
+    }
+
+    public void setLstAlicuotas(ArrayList lstAlicuotas) {
+        this.lstAlicuotas = lstAlicuotas;
+    }
+    
     public void setFecha(String fecha) {
         this.fecha = fecha;
     }
