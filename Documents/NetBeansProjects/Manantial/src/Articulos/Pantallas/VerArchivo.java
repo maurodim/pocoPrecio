@@ -5,9 +5,22 @@
  */
 package Articulos.Pantallas;
 
+import Articulos.Articulos;
+import Articulos.GuardarDatosExcel;
+import Articulos.Importacion;
+import Conversores.Numeros;
 import Excel.LeerExcelXlsx;
+import interfacesPrograma.Facturar;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.JProgressBar;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 
 /**
  *
@@ -16,19 +29,45 @@ import javax.swing.table.DefaultTableModel;
 public class VerArchivo extends javax.swing.JDialog {
 
     private File archivo;
-    
+    private int campoASeleccionar;
+    private int columna1;
+    private int columna2;
+    private int columna3;
+    private int columna4;
+    private int todos;
+    private int tipo1;
+    private int tipo2;
+    private int tipo3;
+    private int tipo4;
+    private List<Importacion> selecciones;
+    private Importacion importa;
+
     public VerArchivo(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }
-    public VerArchivo(java.awt.Frame parent, boolean modal,File arch) {
+
+    public VerArchivo(java.awt.Frame parent, boolean modal, File arch) {
         super(parent, modal);
         initComponents();
-        this.archivo=arch;
-        LeerExcelXlsx leer=new LeerExcelXlsx();
-        DefaultTableModel modelo=leer.Importar(archivo, jTable1);
+        campoASeleccionar = 1;
+        todos = 0;
+        importa = new Importacion();
+        selecciones = new ArrayList();
+        this.archivo = arch;
+        LeerExcelXlsx leer = new LeerExcelXlsx();
+        DefaultTableModel modelo = leer.Importar(archivo, jTable1);
         this.jTable1.setModel(modelo);
+        this.jTextField1.setText(null);
+        this.jTextField2.setText(null);
+        this.jTextField3.setText(null);
+        this.jTextField4.setText(null);
+        tipo1 = 0;
+        tipo2 = 0;
+        tipo3 = 0;
+        tipo4 = 0;
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -39,14 +78,92 @@ public class VerArchivo extends javax.swing.JDialog {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
+        jTextField2 = new javax.swing.JTextField();
+        jTextField3 = new javax.swing.JTextField();
+        jTextField4 = new javax.swing.JTextField();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jButton6 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jButton1.setText("jButton1");
+        jLabel2.setText("Codigo de Barra");
+
+        jLabel3.setText("Descripcion");
+
+        jLabel5.setText("Precio de Costo");
+
+        jLabel6.setText("Precio de Venta");
+
+        jTextField1.setEnabled(false);
+
+        jTextField2.setEnabled(false);
+
+        jTextField3.setEnabled(false);
+
+        jTextField4.setEnabled(false);
+
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/nuevos/seleccionar.png"))); // NOI18N
+        jButton2.setText("Asignar Columna");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/nuevos/seleccionar.png"))); // NOI18N
+        jButton3.setText("Asignar Columna");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/nuevos/seleccionar.png"))); // NOI18N
+        jButton4.setText("Asignar Columna");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/nuevos/seleccionar.png"))); // NOI18N
+        jButton5.setText("Asignar Columna");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/nuevos/procesar.png"))); // NOI18N
+        jButton1.setText("Procesar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("<html>\nHaga doble click por orden en las columnas a que contengan los datos solicitados y presione \"Asignar Columna\" en cada uno para seleccionar el siguiente<br>\nEN CASO DE QUERER IGNORAR LA ASIGNACIÓN DE UNA COLUMNA, PRESIONAR EL BOTÓN CORRESPONDIENTE SIN DOBLE CLICK EN LA GRILLA, así pasar a seleccionar la siguiente columna\nSeleccione las filas manteniendo presionado \"shift\" o marque seleccionar todas<br>\nPor último presione el botón de <strong>\"Procesar\"</strong>\n\n</html>");
+
+        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/nuevos/modificar.png"))); // NOI18N
+        jButton6.setText("Seleccionar Todas las Filas");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -54,14 +171,73 @@ public class VerArchivo extends javax.swing.JDialog {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton2))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton3)))
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton5)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, 293, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton4))
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton2))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton3)))
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton5)
+                    .addComponent(jButton6))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(45, Short.MAX_VALUE))
         );
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -75,6 +251,11 @@ public class VerArchivo extends javax.swing.JDialog {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -90,7 +271,7 @@ public class VerArchivo extends javax.swing.JDialog {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 701, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 412, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -103,7 +284,7 @@ public class VerArchivo extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 13, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -113,12 +294,200 @@ public class VerArchivo extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        int columna = this.jTable1.getSelectedColumn();
+
+        TableColumnModel tcm = this.jTable1.getColumnModel();
+        //JOptionPane.showMessageDialog(null, "ESTÁ A PUNTO DE BORRAR LA COLUMNA "+columna);
+        TableColumn tColumna = tcm.getColumn(columna);
+        if (campoASeleccionar == 1) {
+            this.jTextField1.setText(this.jTable1.getColumnName(columna));
+            columna1 = columna;
+            tipo1 = 1;
+
+        }
+        if (campoASeleccionar == 2) {
+            this.jTextField2.setText(this.jTable1.getColumnName(columna));
+            columna2 = columna;
+            tipo2 = 1;
+        }
+        if (campoASeleccionar == 3) {
+            this.jTextField4.setText(this.jTable1.getColumnName(columna));
+            columna3 = columna;
+            tipo3 = 1;
+        }
+        if (campoASeleccionar == 4) {
+            this.jTextField3.setText(this.jTable1.getColumnName(columna));
+            columna4 = columna;
+            tipo4 = 1;
+        }
+        //this.jLabel1.setText(this.jTable1.getColumnName(columna));
+        //this.jTable1.removeColumn(tColumna);
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        if (this.jTextField1.getText() != null) {
+            /*
+            importa = new Importacion();
+            importa.setNumneroColumna(columna1);
+            importa.setTipoColumna(1);
+            importa.setDescripcion(this.jTextField1.getText());
+            selecciones.add(importa);
+             */
+        }
+        campoASeleccionar = 2;
+        this.jButton2.setEnabled(false);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        if (tipo2 == 0) {
+            JOptionPane.showMessageDialog(null, "DEBE SELECCIONAR COMO MÍNIMO DESCRIPCIÓN Y PRECIO PARA PODER CONTINUAR.GRACIAS");
+        } else {
+            campoASeleccionar = 3;
+            this.jButton3.setEnabled(false);
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        campoASeleccionar = 4;
+        this.jButton4.setEnabled(false);
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if (this.jButton5.isEnabled() == false && this.jButton2.isEnabled() == false && this.jButton3.isEnabled() == false && this.jButton4.isEnabled() == false) {
+            String valor;
+            List<Articulos> lstNuevos = new ArrayList();
+            List<Articulos> lstModificador = new ArrayList();
+            String barras;
+            String descripcion;
+            Articulos arti;
+            int modificador = 0;
+            double costo;
+            double precio;
+            int[] seleccionados = this.jTable1.getSelectedRows();
+            int cantidad = seleccionados.length;
+            /*
+        Ventana ventana=new Ventana(cantidad);
+        //ventana.setCantidad(cantidad);
+        ventana.setVisible(true);
+        ventana.toFront();
+             */
+ /*
+        Avanzando avanzado=new Avanzando();
+        avanzado.setBar(this.progreso_bar);
+        avanzado.setMaximo(cantidad);
+        Thread hilo=new Thread(avanzado);
+        hilo.start();
+             */
+
+            //int maximo=cantidad / 100;
+            //this.progreso_bar.setMinimum(0);
+            //this.progreso_bar.setMaximum(maximo);
+            int id = 0;
+            Facturar fart = new Articulos();
+            if (cantidad > 0) {
+                if (JOptionPane.showConfirmDialog(this, "Ésta por modificar " + cantidad + " registros de la base de datos de artículos del sistema, CONFIRMA DICHA OPERACIÓN?", "Aplicar Modificación", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 1) {
+
+                } else {
+                    for (int a = 0; a < cantidad; a++) {
+                        id = seleccionados[a];
+                        modificador = 0;
+                        arti = new Articulos();
+                        if (tipo1 == 1) {
+                            barras = String.valueOf(this.jTable1.getValueAt(a, columna1));
+                        } else {
+                            barras = null;
+                        }
+                        descripcion = String.valueOf(this.jTable1.getValueAt(a, columna2));
+                        if (tipo3 == 1) {
+                            costo = Numeros.ConvertirStringADouble(String.valueOf(this.jTable1.getValueAt(a, columna3)));
+                            costo = Numeros.Redondear(costo);
+                            arti.setPrecioDeCosto(costo);
+                        } else {
+                            if(tipo1==0){
+                                
+                            
+                            costo = 0.00;
+                            arti.setPrecioDeCosto(costo);
+                            }
+                        }
+                        precio = Numeros.ConvertirStringADouble(String.valueOf(this.jTable1.getValueAt(a, columna4)));
+                        
+                        precio = Numeros.Redondear(precio);
+                        
+
+                        arti = (Articulos) fart.cargarPorCodigoDeBarra(barras);
+                        if (arti.getCodigoDeBarra() != null) {
+                            modificador = 1;
+                        } else {
+                            arti.setCodigoDeBarra(barras);
+                        }
+                        if (descripcion.length() > 100) {
+                            descripcion = descripcion.substring(0, 100);
+                        }
+
+                        arti.setDescripcionArticulo(descripcion.toUpperCase());
+
+                        arti.setPrecioUnitarioNeto(precio);
+                        arti.setPrecioServicio(precio);
+                        arti.setModificaPrecio(false);
+                        arti.setModificaServicio(false);
+                        
+                        arti.setRecargo(1.00);
+                        //arti.setDolar(1.00);
+                        arti.setStockMinimo(0.00);
+                        //arti.setLista2(precio);
+                        //arti.setLista3(precio);
+                        //arti.setLista4(precio);
+                        //arti.setMarca(marca);
+                        //arti.setProveedor(proveedor);
+                        arti.setIdCombo(0);
+                        System.out.println("NO ESTA CARGADO " + arti.getDescripcionArticulo() + " // " + barras);
+                        //modeloL.addElement("NUEVO ARTICULO "+arti.getDescripcionArticulo()+".....");
+                        if (modificador == 0) {
+                            lstNuevos.add(arti);
+                        } else {
+                            lstModificador.add(arti);
+                        }
+                        //this.progreso_bar.setName(arti.getDescripcionArticulo());
+
+                        //this.progreso_bar.setValue(a / 100);
+                        //this.progreso_bar.updateUI();
+                    }
+                    GuardarDatosExcel guarda = new GuardarDatosExcel();
+                    guarda.setLstEdit((ArrayList) lstModificador);
+                    guarda.setLstNew((ArrayList) lstNuevos);
+                    guarda.Inicio();
+                    JOptionPane.showMessageDialog(null, cantidad + " registros modificados");
+                    this.dispose();
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Seleccione filas por favor para poder proceder. Gracias");
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "DEBEN ESTAR ASIGNADAS TODAS LAS COLUMNAS PARA PODER PROCEDER.GRACIAS");
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        todos = 1;
+        this.jTable1.selectAll();
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        if (tipo4 == 0) {
+            JOptionPane.showMessageDialog(null, "DEBE SELECCIONAR COMO MÍNIMO DESCRIPCIÓN Y PRECIO PARA PODER CONTINUAR.GRACIAS");
+        } else {
+            this.jButton5.setEnabled(false);
+        }
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -162,11 +531,58 @@ public class VerArchivo extends javax.swing.JDialog {
         });
     }
 
+    private class Avanzando implements Runnable {
+
+        JProgressBar bar;
+        private int maximo;
+
+        public JProgressBar getBar() {
+            return bar;
+        }
+
+        public void setBar(JProgressBar bar) {
+            this.bar = bar;
+        }
+
+        public void setMaximo(int maximo) {
+            this.maximo = maximo;
+        }
+
+        @Override
+        public void run() {
+            for (int i = 0; i < maximo; i++) {
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(Avanzando.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                this.bar.setValue(i);
+                if (this.bar.getValue() == maximo) {
+                    JOptionPane.showMessageDialog(null, "PROCESO REALIZADO");
+                }
+            }
+        }
+
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField jTextField4;
     // End of variables declaration//GEN-END:variables
 }

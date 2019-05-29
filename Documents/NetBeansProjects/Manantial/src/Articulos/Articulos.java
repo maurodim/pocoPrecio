@@ -1125,7 +1125,7 @@ public class Articulos implements Facturar, Editables, Comparables, ModificableA
             tra = new Conecciones();
             verif = tra.guardarRegistro(sql);
             sql = "insert into actualizaciones (iddeposito,idobjeto,estado) values (1,1,4),(2,1,4),(3,1,4),(4,1,4),(5,1,4),(6,1,4),(7,1,4)";
-            tra.guardarRegistro(sql);
+            //tra.guardarRegistro(sql);
         } catch (InstantiationException ex) {
             Logger.getLogger(Articulos.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {

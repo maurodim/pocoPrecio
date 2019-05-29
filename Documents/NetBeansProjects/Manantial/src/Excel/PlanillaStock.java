@@ -86,11 +86,7 @@ public class PlanillaStock {
         celdas.setRightBorderColor(IndexedColors.BLACK.getIndex());
         celdas.setTopBorderColor(IndexedColors.BLACK.getIndex());
          */
-        for (int a = 0; a < listadoClientes.size(); a++) {
-            int col = 0;
-            //int a=0;
-            if (a == 0) {
-                fila = hoja.createRow(a);
+        fila = hoja.createRow(0);
                 celda = fila.createCell(0);
                 celda.setCellStyle(titulo);
                 celda.setCellValue("Codigo");
@@ -103,9 +99,11 @@ public class PlanillaStock {
                 celda2 = fila.createCell(3);
                 celda2.setCellStyle(titulo);
                 celda2.setCellValue("Stock Minimo");
-
-            } else {
-                cliente = (Articulos) listadoClientes.get(a);
+        for (int b = 0; b < listadoClientes.size(); b++) {
+            int col = 0;
+            int a=b +1;
+            
+                cliente = (Articulos) listadoClientes.get(b);
 
                 fila = hoja.createRow(a);
                 celda = fila.createCell(0);
@@ -140,7 +138,7 @@ public class PlanillaStock {
                     celda2.setCellValue(cliente.getStockMinimo());
                 }
 
-            }
+            
         }
 
         String ruta = "Informes\\planillaStock.xls";

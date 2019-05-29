@@ -30,7 +30,7 @@ public class CodigosDeBarraImpl implements CodigosDeBarra{
         if(factorGrosorBarra > 0.0f) {b128.setN(factorGrosorBarra); System.out.println("modificando factor X"+factorGrosorBarra);}
         
         b128.setCode(texto);
-        b128.setCodeType(Barcode128.CODE128);
+        b128.setCodeType(Barcode128.EAN13);
         
         
         
