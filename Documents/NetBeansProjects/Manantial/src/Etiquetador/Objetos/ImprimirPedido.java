@@ -42,6 +42,7 @@ public class ImprimirPedido {
     Font fuente11=new Font("Courier",Font.BOLD,11);
     Font fuente12=new Font("Courier",Font.BOLD,14);
     Font fuente13=new Font("Courier",Font.BOLD,16);
+    Font fuente15=new Font("Courier",Font.PLAIN,12);
 	PrintJob pj;	
 	Graphics pagina;
 	
@@ -87,7 +88,7 @@ public class ImprimirPedido {
         //pagina.drawImage(imagen,63,20,174,93,null);
         
         pagina = pj.getGraphics();
-        CodigosDeBarra codigosDeBarra = codigosDeBarra=new CodigosDeBarraImpl();
+        CodigosDeBarra codigosDeBarra=new CodigosDeBarraImpl();
         while(it.hasNext()){
             etiqueta=(Etiqueta) it.next();
             
@@ -95,7 +96,7 @@ public class ImprimirPedido {
                 items=0;
                 col1=10;
                 col2=20;
-                col3=40;
+                col3=30;
                 col4=300;
                 col5=80;
                 col6=150;
@@ -107,12 +108,12 @@ public class ImprimirPedido {
                     renglon=12;
                 }
             }else{
-                
+                cantItems=cantItems + 10;
                 renglon=renglon -cantItems; 
                 System.out.println("valor derecho renglon :"+renglon+" restar "+cantItems);
                 col1=310;
                 col2=320;
-                col3=340;
+                col3=330;
                 col4=600;
                 col5=380;
                 col6=450;
@@ -124,7 +125,7 @@ public class ImprimirPedido {
             }else{
                 tituloProducto=etiqueta.getNombre();
             }
-            pagina.setFont(fuente5);
+            pagina.setFont(fuente15);
             pagina.setColor(Color.black);
             //pagina.drawLine(col1, renglon, col4, renglon);
             items++;
@@ -155,7 +156,7 @@ public class ImprimirPedido {
                 
                 Graphics2D g2d2 = null;
                 Image imagen = codigosDeBarra.barraCode128(serialCodigoBarra);
-                imagen = codigosDeBarra.redimensionar(imagen, 100, 10);
+                imagen = codigosDeBarra.redimensionar(imagen, 200, 20);
                 
                 //BufferedImage image_c = Image.ioImage//BarcodeImageHandler.getImage(imagen);
                 //BufferedImage imagenB = ((ToolkitImage) imagen).getBufferedImage(); 
@@ -163,11 +164,11 @@ public class ImprimirPedido {
                 System.out.println("columna 2 "+col2+" renglon "+renglon );
                 pagina.drawImage(imagen, col2, renglon, null);
                 //pagina.drawImage(imagen, col2,renglon,col2+10,renglon + 100,null);
-                renglon=renglon +18;
-                pagina.setFont(fuente);
+                renglon=renglon +28;
+                pagina.setFont(fuente10);
                 pagina.drawString("COD.: "+etiqueta.getCodigo(), col2, renglon);
                 items++;
-                renglon=renglon + 12;
+                //renglon=renglon + 12;
                 pagina.drawString(etiqueta.getNombreEmpresa(), col6, renglon);
                 renglon=renglon + 12;
         }

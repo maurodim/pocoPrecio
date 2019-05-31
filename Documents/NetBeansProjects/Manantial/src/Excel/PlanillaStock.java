@@ -73,7 +73,7 @@ public class PlanillaStock {
         titulo.setFillForegroundColor(IndexedColors.YELLOW.getIndex());
         titulo.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
 
-        alerta.setFillBackgroundColor(IndexedColors.RED.getIndex());
+        alerta.setFillForegroundColor(IndexedColors.ORANGE.getIndex());
         alerta.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
         HSSFCellStyle celdas = libro.createCellStyle();
         /*

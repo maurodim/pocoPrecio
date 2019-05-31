@@ -12,6 +12,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -236,6 +238,30 @@ public class Numeros {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         resulta=dateFormat.format(fecha);
         return resulta;
+    }
+    public static double CalcularSubTotal(double monto,double coeficiente){
+        List valores;
+        double subtotal;
+        double ivaCoeficiente;
+        double montoIva;
+        ivaCoeficiente=coeficiente / 100;
+        ivaCoeficiente=1+ivaCoeficiente;
+        subtotal=monto / (ivaCoeficiente);
+        //subtotal=subtotal * cantidad;
+        subtotal=Math.round(subtotal * 100.0) / 100.0;
+        return subtotal;
+        //valores=new Vector();
+        
+        
+    }
+    public static double CalcularIva(double subtotal,double coeficiente){
+        //double subtotal;
+        double ivaCoeficiente;
+        double montoIva;
+        ivaCoeficiente=coeficiente / 100;
+        montoIva=subtotal * ivaCoeficiente;
+        montoIva=Math.round(montoIva * 100.0) / 100.0;
+        return montoIva;
     }
     
 }

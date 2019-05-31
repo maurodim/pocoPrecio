@@ -617,6 +617,7 @@ public class Clientes implements Busquedas,Facturar,Adeudable{
             Clientes cli=null;
             
             String sql="select id,idtransporte,clientes.fax,dentrega,clientes.direccionfantasia,(select condicionesiva.tipocomprobante from condicionesiva where condicionesiva.id=clientes.tipo_iva)as tipocomprobante,clientes.email,clientes.celular,clientes.COD_CLIENT,clientes.fantasia,clientes.RAZON_SOCI,clientes.DOMICILIO,clientes.COND_VTA,(clientes.LISTADEPRECIO)as NRO_LISTA,(select coeficienteslistas.coeficiente from coeficienteslistas where coeficienteslistas.id=clientes.listadeprecio)as descuento,(clientes.NUMERODECUIT)as IDENTIFTRI,clientes.empresa,clientes.TELEFONO_1,clientes.coeficiente,(clientes.CUPODECREDITO) AS CUPO_CREDI,(select sum(monto) from movimientosclientes where movimientosclientes.NUMEROPROVEEDOR=clientes.id and movimientosclientes.pagado=0) as saldocli,clientes.TIPO_IVA,(select localidades.localidad from localidades where id=clientes.localidad)as localidad1,clientes.responsable,(select localidades.codigo_postal from localidades where id=clientes.localidad)as postal from clientes where razon_soci like '%"+cliente+"%' or responsable like '%"+cliente+"%' or fantasia like '%"+cliente+"%' order by razon_soci";
+            System.out.println("sleccion de cliente "+sql);
             rs=tra.leerConjuntoDeRegistros(sql);
             try {
                 while(rs.next()){
@@ -765,7 +766,7 @@ public class Clientes implements Busquedas,Facturar,Adeudable{
         Clientes cli=(Clientes)cliente;
         Boolean resultado=false;
         
-        String sql="insert into clientes (COD_CLIENT,RAZON_SOCI,DOMICILIO,LOCALIDAD,TELEFONO_1,TIPO_IVA,IDENTIFTRI,COND_VTA,NRO_LISTA,empresa,coeficiente,idtransporte) values ('"+cli.getCodigoCliente()+"','"+cli.getRazonSocial()+"','"+cli.getDireccion()+"','SANTA FE','"+cli.getTelefono()+"',"+cli.getCondicionIva()+",'"+cli.getNumeroDeCuit()+"',1,2,'"+cli.getEmpresa()+"',"+cli.getCoeficienteListaDeprecios()+","+cli.getIdTransporte()+")";
+        String sql="insert into clientes (COD_CLIENT,RAZON_SOCI,DOMICILIO,LOCALIDAD,TELEFONO_1,TIPO_IVA,IDENTIFTRI,COND_VTA,NRO_LISTA,empresa,coeficiente,idtransporte) values ('"+cli.getCodigoCliente()+"','"+cli.getRazonSocial().toUpperCase()+"','"+cli.getDireccion()+"','SANTA FE','"+cli.getTelefono()+"',"+cli.getCondicionIva()+",'"+cli.getNumeroDeCuit()+"',1,2,'"+cli.getEmpresa()+"',"+cli.getCoeficienteListaDeprecios()+","+cli.getIdTransporte()+")";
         
         resultado=tra.guardarRegistro(sql);
         //return resultado;
@@ -821,7 +822,7 @@ public class Clientes implements Busquedas,Facturar,Adeudable{
         Clientes cli=(Clientes)cliente;
         Integer resultado=0;
         
-        String sql="insert into clientes (COD_CLIENT,RAZON_SOCI,DOMICILIO,TELEFONO_1,TIPO_IVA,NUMERODECUIT,COND_VTA,LISTADEPRECIO,empresa,cupodecredito,coeficiente,responsable,fantasia,celular,localidad,fax,direccionfantasia,email,dentrega,idtransporte,saldo,saldoactual) values ('"+cli.getCodigoCliente()+"','"+cli.getRazonSocial()+"','"+cli.getDireccion()+"','"+cli.getTelefono()+"',"+cli.getTipoIva()+",'"+cli.getNumeroDeCuit()+"',1,"+cli.getListaDePrecios()+",'"+cli.getEmpresa()+"',"+cli.getCupoDeCredito()+","+cli.getCoeficienteListaDeprecios()+",'"+cli.getResponsable()+"','"+cli.getFantasia()+"','"+cli.getCelular()+"',1,'"+cli.getFax()+"','"+cli.getDireccionFantasia()+"','"+cli.getEmail()+"','"+cli.getDireccionDeEntrega()+"',0,0.00,0.00)";
+        String sql="insert into clientes (COD_CLIENT,RAZON_SOCI,DOMICILIO,TELEFONO_1,TIPO_IVA,NUMERODECUIT,COND_VTA,LISTADEPRECIO,empresa,cupodecredito,coeficiente,responsable,fantasia,celular,localidad,fax,direccionfantasia,email,dentrega,idtransporte,saldo,saldoactual) values ('"+cli.getCodigoCliente()+"','"+cli.getRazonSocial().toUpperCase()+"','"+cli.getDireccion()+"','"+cli.getTelefono()+"',"+cli.getTipoIva()+",'"+cli.getNumeroDeCuit()+"',1,"+cli.getListaDePrecios()+",'"+cli.getEmpresa()+"',"+cli.getCupoDeCredito()+","+cli.getCoeficienteListaDeprecios()+",'"+cli.getResponsable()+"','"+cli.getFantasia()+"','"+cli.getCelular()+"',1,'"+cli.getFax()+"','"+cli.getDireccionFantasia()+"','"+cli.getEmail()+"','"+cli.getDireccionDeEntrega()+"',0,0.00,0.00)";
         System.out.println(sql);
             try {
                 tra=new Conecciones();
@@ -851,7 +852,7 @@ public class Clientes implements Busquedas,Facturar,Adeudable{
         
         
         //String sql="insert into clientes (COD_CLIENT,RAZON_SOCI,DOMICILIO,LOCALIDAD,TELEFONO_1,TIPO_IVA,IDENTIFTRI,COND_VTA,NRO_LISTA,empresa) values ('"+cli.getCodigoCliente()+"','"+cli.getRazonSocial()+"','"+cli.getDireccion()+"','SANTA FE','"+cli.getTelefono()+"',"+cli.getCondicionIva()+",'"+cli.getNumeroDeCuit()+"',1,1,'"+cli.getEmpresa()+"')";
-        String sql="update clientes set RAZON_SOCI='"+cli.getRazonSocial()+"',idtransporte=0,listadeprecio=1,DOMICILIO='"+cli.getDireccion()+"',TELEFONO_1='"+cli.getTelefono()+"',localidad=1,responsable='"+cli.getResponsable()+"',numerodecuit='"+cli.getNumeroDeCuit()+"',tipo_iva="+cli.getTipoIva()+",cupodecredito="+cli.getCupoDeCredito()+",coeficiente="+cli.getCoeficienteListaDeprecios()+",fantasia='"+cli.getFantasia()+"',celular='"+cli.getCelular()+"',fax='"+cli.getFax()+"',direccionfantasia='"+cli.getDireccionFantasia()+"',email='"+cli.getEmail()+"',dentrega='"+cli.getDireccionDeEntrega()+"' where id ="+cli.getCodigoId();
+        String sql="update clientes set RAZON_SOCI='"+cli.getRazonSocial().toUpperCase()+"',idtransporte=0,listadeprecio=1,DOMICILIO='"+cli.getDireccion()+"',TELEFONO_1='"+cli.getTelefono()+"',localidad=1,responsable='"+cli.getResponsable()+"',numerodecuit='"+cli.getNumeroDeCuit()+"',tipo_iva="+cli.getTipoIva()+",cupodecredito="+cli.getCupoDeCredito()+",coeficiente="+cli.getCoeficienteListaDeprecios()+",fantasia='"+cli.getFantasia()+"',celular='"+cli.getCelular()+"',fax='"+cli.getFax()+"',direccionfantasia='"+cli.getDireccionFantasia()+"',email='"+cli.getEmail()+"',dentrega='"+cli.getDireccionDeEntrega()+"' where id ="+cli.getCodigoId();
         System.out.println("modificacion "+sql);
         resultado=tra.guardarRegistro(sql);
         cargarMap();

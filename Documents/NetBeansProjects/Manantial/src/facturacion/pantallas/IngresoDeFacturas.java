@@ -1170,16 +1170,21 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
         }
         if (evt.getKeyCode() == KeyEvent.VK_F7) {
             //System.out.println("ENTRO CON EL ENTER¡¡¡¡¡¡");
+            CargarCantidad carga=new CargarCantidad(null,true);
+            carga.setVisible(true);
+            arti=carga.arti;
+            /*
             listadoDeBusqueda.clear();
             Facturar fart = new Articulos();
             arti = new Articulos();
             arti = (Articulos) fart.cargarPorCodigoDeBarra(jTextField1.getText());
+            */
             if (arti.getCodigoDeBarra().equals("")) {
                 
                 jTextField1.setText("");
             } else {
                 listadoDeBusqueda.add(arti);
-                //jTextField1.setText(arti.getCodigoAsignado());
+                jTextField1.setText(arti.getCodigoAsignado());
                 jTextField2.setText("1");
                 this.jLabel8.setText(arti.getDescripcionArticulo());
                 if (arti.getModificaPrecio()) {
@@ -1205,8 +1210,11 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
                 this.jTextField2.selectAll();
                 this.jTextField2.requestFocus();
                 
+            
                 
-            }
+        }
+                
+            
         }
         
     }//GEN-LAST:event_jTextField1KeyPressed
@@ -1290,12 +1298,13 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
             String val = Numeros.ConvertirNumero(valor);
             valor = Numeros.Redondear(valor);
             montoTotal = montoTotal + valor;
+            //subtotal=subtotal
             //precioUnitario=precioUnitario * cliT.getCoeficienteListaDeprecios();
             //fila[2]=cant;
             precioUnitario = Numeros.Redondear(precioUnitario);
-            Double precioSIva = precioUnitario / 1.21;
+            Double precioSIva = pedidos.getSubTotal();
             precioSIva = Numeros.Redondear(precioSIva);
-            Double iva = precioUnitario - precioSIva;
+            Double iva = pedidos.getIva();
             Double pFinal = valor;
             pFinal = Numeros.Redondear(pFinal);
             fila[5] = val;
@@ -1431,6 +1440,7 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
                 articul.setPrecioUnitarioNeto(arti.getPrecioUnitarioNeto());
                 articul.setIdCombo(arti.getIdCombo());
                 articul.setCombo(arti.getCombo());
+                
                 
                 Comparables comparar = new Articulos();
                 Double precio = 1.00;//comparar.comparaConCotizaciones(cliT.getCodigoId(),arti.getNumeroId(),cliT.getCoeficienteListaDeprecios());

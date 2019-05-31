@@ -524,16 +524,21 @@ public class NotaDeDebito extends javax.swing.JInternalFrame implements KeyListe
         
         if (evt.getKeyCode() == KeyEvent.VK_F7) {
             //System.out.println("ENTRO CON EL ENTER¡¡¡¡¡¡");
+            CargarCantidad carga=new CargarCantidad(null,true);
+            carga.setVisible(true);
+            arti=carga.arti;
+            /*
             listadoDeBusqueda.clear();
             Facturar fart = new Articulos();
             arti = new Articulos();
             arti = (Articulos) fart.cargarPorCodigoDeBarra(jTextField1.getText());
+            */
             if (arti.getCodigoDeBarra().equals("")) {
                 
                 jTextField1.setText("");
             } else {
                 listadoDeBusqueda.add(arti);
-                //jTextField1.setText(arti.getCodigoAsignado());
+                jTextField1.setText(arti.getCodigoAsignado());
                 jTextField2.setText("1");
                 this.jLabel8.setText(arti.getDescripcionArticulo());
                 if (arti.getModificaPrecio()) {
@@ -559,8 +564,11 @@ public class NotaDeDebito extends javax.swing.JInternalFrame implements KeyListe
                 this.jTextField2.selectAll();
                 this.jTextField2.requestFocus();
                 
+            
                 
-            }
+        }
+                
+            
         }
     }//GEN-LAST:event_jTextField1KeyPressed
 

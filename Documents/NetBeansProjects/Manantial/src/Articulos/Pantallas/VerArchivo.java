@@ -406,10 +406,21 @@ public class VerArchivo extends javax.swing.JDialog {
                             barras = null;
                         }
                         descripcion = String.valueOf(this.jTable1.getValueAt(a, columna2));
+                        arti = (Articulos) fart.cargarPorCodigoDeBarra(barras);
+                        if (arti.getCodigoDeBarra() != null) {
+                            modificador = 1;
+                        } else {
+                            arti.setCodigoDeBarra(barras);
+                        }
+                        if (descripcion.length() > 100) {
+                            descripcion = descripcion.substring(0, 100);
+                        }
+                        
                         if (tipo3 == 1) {
                             costo = Numeros.ConvertirStringADouble(String.valueOf(this.jTable1.getValueAt(a, columna3)));
                             costo = Numeros.Redondear(costo);
                             arti.setPrecioDeCosto(costo);
+                            
                         } else {
                             if(tipo1==0){
                                 
@@ -421,17 +432,11 @@ public class VerArchivo extends javax.swing.JDialog {
                         precio = Numeros.ConvertirStringADouble(String.valueOf(this.jTable1.getValueAt(a, columna4)));
                         
                         precio = Numeros.Redondear(precio);
-                        
+                        arti.setSubTotal(Numeros.CalcularSubTotal(precio, 21.0));
+                            arti.setIva(Numeros.CalcularIva(precio, 21.0));
+                            arti.setTipoIva(5);
 
-                        arti = (Articulos) fart.cargarPorCodigoDeBarra(barras);
-                        if (arti.getCodigoDeBarra() != null) {
-                            modificador = 1;
-                        } else {
-                            arti.setCodigoDeBarra(barras);
-                        }
-                        if (descripcion.length() > 100) {
-                            descripcion = descripcion.substring(0, 100);
-                        }
+                        
 
                         arti.setDescripcionArticulo(descripcion.toUpperCase());
 

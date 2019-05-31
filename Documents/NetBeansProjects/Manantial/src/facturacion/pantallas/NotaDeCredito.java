@@ -593,59 +593,53 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
             }
             listadoFormas=slector.listadoPagos;
         }
-        if(evt.getKeyCode()==KeyEvent.VK_F7){
+        if (evt.getKeyCode() == KeyEvent.VK_F7) {
             //System.out.println("ENTRO CON EL ENTER¡¡¡¡¡¡");
+            CargarCantidad carga=new CargarCantidad(null,true);
+            carga.setVisible(true);
+            arti=carga.arti;
+            /*
             listadoDeBusqueda.clear();
-            Facturar fart=new Articulos();
-            arti=new Articulos();
-            arti=(Articulos)fart.cargarPorCodigoDeBarra(jTextField1.getText());
-            if(arti.getCodigoDeBarra().equals("")){
+            Facturar fart = new Articulos();
+            arti = new Articulos();
+            arti = (Articulos) fart.cargarPorCodigoDeBarra(jTextField1.getText());
+            */
+            if (arti.getCodigoDeBarra().equals("")) {
                 
-             jTextField1.setText("");   
-            }else{
-            listadoDeBusqueda.add(arti);
-            //jTextField1.setText(arti.getCodigoAsignado());
-            jTextField2.setText("1");
-            this.jLabel8.setText(arti.getDescripcionArticulo());
-            if(arti.getModificaPrecio()){
-                this.jLabel7.setVisible(true);
-                this.jTextField4.setVisible(true);
-                this.jTextField4.setText(String.valueOf(arti.getPrecioUnitarioNeto()));
-                //this.jTextField4.setEnabled(true);
-               // this.jCheckBox1.setVisible(false);
-                
-            }else{
-            
-                this.jLabel7.setVisible(false);
-                this.jTextField4.setVisible(false);
-                
-
-                if(arti.getPrecioServicio() > 0){
+                jTextField1.setText("");
+            } else {
+                listadoDeBusqueda.add(arti);
+                jTextField1.setText(arti.getCodigoAsignado());
+                jTextField2.setText("1");
+                this.jLabel8.setText(arti.getDescripcionArticulo());
+                if (arti.getModificaPrecio()) {
                     this.jLabel7.setVisible(true);
                     this.jTextField4.setVisible(true);
+                    this.jTextField4.setText(String.valueOf(arti.getPrecioUnitarioNeto()));
+                    //this.jTextField4.setEnabled(true);
+                    // this.jCheckBox1.setVisible(false);
+
+                } else {
                     
-                    this.jTextField4.setText(Numeros.ConvertirNumero(arti.getPrecioServicio()));
-                    //this.jTextField4.setEnabled(false);
-                    this.jCheckBox1.setVisible(true);
-                    Calendar calendario=new GregorianCalendar();
-                    int hora=calendario.get(Calendar.HOUR_OF_DAY);
-                    //System.out.println("LA HORA ACTUAL ES :"+hora);
-                    if(hora >= 0 || hora < 8){
-                        if(arti.getModificaServicio()){
-                         //System.err.println("SI TIENE QUE MODIFICAR EL SERVICIO");  
-                         this.jCheckBox1.setEnabled(false);
-                        }else{
-                        //System.err.println("NO DEBE MODIFICAR EL SERVICIO");
-                            this.jCheckBox1.setEnabled(true);
-                        }
-                        }
+                    this.jLabel7.setVisible(false);
+                    this.jTextField4.setVisible(false);
+                    
                 }
-            }
+                
+                if (cliT.getCondicionDeVenta() == 2) {
+                    this.jCheckBox2.setEnabled(true);
+                }
+                
+                //CARGAR ARTICULO AUTOMATICAMENTE
+                //CargarCantidad();
+                this.jTextField2.selectAll();
+                this.jTextField2.requestFocus();
+                
             
-            if(cliT.getCondicionDeVenta()==2)this.jCheckBox2.setEnabled(true);
-            this.jTextField2.selectAll();
-            this.jTextField2.requestFocus();
-            }
+                
+        }
+                
+            
         }
     }//GEN-LAST:event_jTextField1KeyPressed
 
