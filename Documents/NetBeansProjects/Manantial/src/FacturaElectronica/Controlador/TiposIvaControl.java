@@ -16,8 +16,8 @@ import javax.swing.DefaultComboBoxModel;
  * @author Usuario
  */
 public class TiposIvaControl {
-    public List<TiposIva> ListarTipos(){
-        List<TiposIva> listado=new ArrayList();
+    public ArrayList<TiposIva> ListarTipos(){
+        ArrayList<TiposIva> listado=new ArrayList();
         TiposIva tipo=new TiposIva(3,0.00,0.00,0);
         listado.add(tipo);
         tipo=new TiposIva(4,0.00,0.00,10.5);

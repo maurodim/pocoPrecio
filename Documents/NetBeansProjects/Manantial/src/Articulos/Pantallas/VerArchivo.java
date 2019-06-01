@@ -236,8 +236,8 @@ public class VerArchivo extends javax.swing.JDialog {
                     .addComponent(jButton5)
                     .addComponent(jButton6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(45, Short.MAX_VALUE))
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -432,8 +432,8 @@ public class VerArchivo extends javax.swing.JDialog {
                         precio = Numeros.ConvertirStringADouble(String.valueOf(this.jTable1.getValueAt(a, columna4)));
                         
                         precio = Numeros.Redondear(precio);
-                        arti.setSubTotal(Numeros.CalcularSubTotal(precio, 21.0));
-                            arti.setIva(Numeros.CalcularIva(precio, 21.0));
+                        arti.setSubTotal(Numeros.CalcularSubTotal(precio, 21));
+                            arti.setIva(Numeros.CalcularIva(arti.getSubTotal(), 21));
                             arti.setTipoIva(5);
 
                         
@@ -491,6 +491,7 @@ public class VerArchivo extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "DEBE SELECCIONAR COMO MÍNIMO DESCRIPCIÓN Y PRECIO PARA PODER CONTINUAR.GRACIAS");
         } else {
             this.jButton5.setEnabled(false);
+            campoASeleccionar=5;
         }
     }//GEN-LAST:event_jButton5ActionPerformed
 

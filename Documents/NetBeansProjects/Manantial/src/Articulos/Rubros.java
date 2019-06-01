@@ -166,8 +166,9 @@ public class Rubros implements Personalizable,Rubrable{
             Double coe=precio / 100;
             coe=coe + 1;
             System.out.println("resultado :"+coe);
-            sql="update articulos set precio=(precio * "+coe+") where idrubro="+idRubro;
+            sql="update articulos set precio=(precio * "+coe+"),subtotal=(subtotal * "+coe+"),iva=(iva * "+coe+") where idrubro="+idRubro;
             tra=new Conecciones();
+            
             System.out.println(sql);
             tra.guardarRegistro(sql);
         } catch (InstantiationException ex) {

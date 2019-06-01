@@ -4,6 +4,8 @@
  */
 package facturacion.pantallas;
 
+import Administracion.Licencias;
+import Administracion.LicenciasControl;
 import ClientesPantallas.NuevoCliente;
 import Pedidos.IngresoDePedidos;
 import Conversores.Numeros;
@@ -46,10 +48,12 @@ import objetosR.Comprobantes;
 import objetosR.Conecciones;
 import tablas.MiModeloTablaFacturacion;
 import Articulos.ModificableArticulos;
+import FacturaElectronica.Controlador.TiposIvaControl;
 import FacturaElectronica.Interfaces.FacturableE;
 import FacturaElectronica.Objetos.DetalleFacturas;
 import FacturaElectronica.Objetos.FacturaElectronica;
 import FacturaElectronica.Objetos.TiposIva;
+import facturacion.clientes.FormasDePago;
 import java.sql.Connection;
 
 
@@ -81,17 +85,30 @@ public class NotaDeDebito extends javax.swing.JInternalFrame implements KeyListe
     private Double subTotal;
     private MovimientosClientes factura;
     private TablaGenericaProductos tgp;
+    private Double montoDescuento;
+    private ArrayList listadoFormas;
+    private FormasDePago formas;
+    private ArrayList listadoIva;
+    private ArrayList listadoIvaD;
+    private Double montoIva;
+    private TiposIvaControl control;
+    private TiposIva tipoIva;
+    
+    private void desplegarPopUp() {
+
+    }
     
     public NotaDeDebito() {
         //Articulos.CargarMap();
-        cliT=new Clientes("1");
+       cliT = new Clientes("1");
         //cliT=(ClientesTango)oob;
         //comp.setCliente(cliT);
         initComponents();
         tgp = new TablaGenericaProductos();
-        
-        porcentajeDescuento=0.00;
-        subTotal=0.00;
+        listadoFormas = new ArrayList();
+        porcentajeDescuento = 0.00;
+        montoDescuento = 0.00;
+        subTotal = 0.00;
         this.jCheckBox2.setEnabled(true);
         this.jCheckBox2.isSelected();
         this.jLabel6.setText(cliT.getRazonSocial());
@@ -100,18 +117,23 @@ public class NotaDeDebito extends javax.swing.JInternalFrame implements KeyListe
         this.jCheckBox1.setVisible(false);
         this.jCheckBox2.setEnabled(false);
         this.jTextField1.requestFocus();
+        listadoIva = new ArrayList();
+        control = new TiposIvaControl();
+        listadoIva = control.ListarTipos();
         //this.jPanel2.requestFocus();
+
         
     }
     public NotaDeDebito(Object clienteTango){
-        cliT=new Clientes();
-        cliT=(Clientes)clienteTango;
-        lista=new ListasDePrecios(cliT.getListaDePrecios());
+        cliT = new Clientes();
+        cliT = (Clientes) clienteTango;
+        lista = new ListasDePrecios(cliT.getListaDePrecios());
 //cliT=(ClientesTango)oob;
         //comp.setCliente(cliT);
         initComponents();
-        porcentajeDescuento=0.00;
-        subTotal=0.00;
+        listadoFormas = new ArrayList();
+        porcentajeDescuento = 0.00;
+        subTotal = 0.00;
         this.jButton3.setVisible(false);
         this.jButton5.setVisible(false);
         //this.jCheckBox2.isSelected();
@@ -121,6 +143,9 @@ public class NotaDeDebito extends javax.swing.JInternalFrame implements KeyListe
         this.jCheckBox1.setVisible(false);
         //this.jCheckBox2.setEnabled(false);
         this.jTextField1.requestFocus();
+        listadoIva = new ArrayList();
+        control = new TiposIvaControl();
+        listadoIva = control.ListarTipos();
         //this.jPanel2.requestFocus();
     }
     /**
@@ -450,13 +475,13 @@ public class NotaDeDebito extends javax.swing.JInternalFrame implements KeyListe
 
     private void jTextField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            //System.out.println("ENTRO CON EL ENTER¡¡¡¡¡¡");
+           //System.out.println("ENTRO CON EL ENTER¡¡¡¡¡¡");
             listadoDeBusqueda.clear();
             Facturar fart = new Articulos();
             arti = new Articulos();
             arti = (Articulos) fart.cargarPorCodigoDeBarra(jTextField1.getText());
             if (arti.getCodigoDeBarra().equals("")) {
-                
+
                 jTextField1.setText("");
             } else {
                 listadoDeBusqueda.add(arti);
@@ -471,26 +496,25 @@ public class NotaDeDebito extends javax.swing.JInternalFrame implements KeyListe
                     // this.jCheckBox1.setVisible(false);
 
                 } else {
-                    
+
                     this.jLabel7.setVisible(false);
                     this.jTextField4.setVisible(false);
-                    
+
                 }
-                
+
                 if (cliT.getCondicionDeVenta() == 2) {
                     this.jCheckBox2.setEnabled(true);
                 }
-                
+
                 //CARGAR ARTICULO AUTOMATICAMENTE
                 CargarCantidad();
                 //this.jTextField2.selectAll();
                 //this.jTextField2.requestFocus();
-                
-                
+
             }
         }
         if (evt.getKeyCode() == KeyEvent.VK_F1) {
-            //System.out.println("ENTRO CON F1¡¡¡¡¡");
+             //System.out.println("ENTRO CON F1¡¡¡¡¡");
             valorCargado = jTextField1.getText();
             Facturar fart = new Articulos();
 //            this.jTable2.removeAll();
@@ -524,17 +548,17 @@ public class NotaDeDebito extends javax.swing.JInternalFrame implements KeyListe
         
         if (evt.getKeyCode() == KeyEvent.VK_F7) {
             //System.out.println("ENTRO CON EL ENTER¡¡¡¡¡¡");
-            CargarCantidad carga=new CargarCantidad(null,true);
+            CargarCantidad carga = new CargarCantidad(null, true);
             carga.setVisible(true);
-            arti=carga.arti;
+            arti = carga.arti;
             /*
             listadoDeBusqueda.clear();
             Facturar fart = new Articulos();
             arti = new Articulos();
             arti = (Articulos) fart.cargarPorCodigoDeBarra(jTextField1.getText());
-            */
+             */
             if (arti.getCodigoDeBarra().equals("")) {
-                
+
                 jTextField1.setText("");
             } else {
                 listadoDeBusqueda.add(arti);
@@ -549,69 +573,68 @@ public class NotaDeDebito extends javax.swing.JInternalFrame implements KeyListe
                     // this.jCheckBox1.setVisible(false);
 
                 } else {
-                    
+
                     this.jLabel7.setVisible(false);
                     this.jTextField4.setVisible(false);
-                    
+
                 }
-                
+
                 if (cliT.getCondicionDeVenta() == 2) {
                     this.jCheckBox2.setEnabled(true);
                 }
-                
+
                 //CARGAR ARTICULO AUTOMATICAMENTE
                 //CargarCantidad();
                 this.jTextField2.selectAll();
                 this.jTextField2.requestFocus();
-                
-            
-                
-        }
-                
+
+            }     
             
         }
     }//GEN-LAST:event_jTextField1KeyPressed
 
     private void jTextField2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField2KeyPressed
         if(evt.getKeyCode()==KeyEvent.VK_ENTER){
-            Double cantt=Double.parseDouble(this.jTextField2.getText());
-            Double precioUni=0.00;
-            
-            if(arti.getModificaPrecio()){
+            Double cantt = Double.parseDouble(this.jTextField2.getText());
+            Double precioUni = 0.00;
+
+            if (arti.getModificaPrecio()) {
+                this.jTextField4.selectAll();
                 this.jTextField4.requestFocus();
-            }else{
-                if(arti.getPrecioServicio()>0){
-                 this.jTextField4.requestFocus();   
-                }else{
-                    Articulos articul=new Articulos();
-                    articul.setCantidad(cantt);
-                    articul.setCodigoAsignado(arti.getCodigoAsignado());
-                    
-                    articul.setCodigoDeBarra(arti.getCodigoDeBarra());
-                    articul.setDescripcionArticulo(arti.getDescripcionArticulo());
-                    articul.setNumeroId(arti.getNumeroId());
-                    articul.setPrecioDeCosto(arti.getPrecioDeCosto());
-                    articul.setPrecioUnitario(arti.getPrecioUnitarioNeto());
-                    articul.setPrecioUnitarioNeto(arti.getPrecioUnitarioNeto());
-                    articul.setIdCombo(arti.getIdCombo());
-                    articul.setCombo(arti.getCombo());
-                    
-                    Comparables comparar=new Articulos();
-                    Double precio=comparar.comparaConCotizaciones(cliT.getCodigoId(),arti.getNumeroId(),cliT.getCoeficienteListaDeprecios());
-                    String precio2=comparar.comparaConPedidos(cliT.getCodigoId(),arti.getNumeroId());
-                    // aca tengo que modificar el precio unitario segun el coeficiente del cliente y la lista
-                    //Double precioU=arti.getPrecioUnitarioNeto();// * lista.getCoeficiente();
-                    articul.setPrecioUnitarioNeto(arti.getPrecioUnitarioNeto());
-                    // aca tengo que modificar el precio unitario segun el coeficiente del cliente y la lista
-                    //Double precioU=arti.getPrecioUnitarioNeto();// * lista.getCoeficiente();
-                    
-                    
+            } else {
+
+                Articulos articul = new Articulos();
+                articul.setCantidad(cantt);
+                articul.setCodigoAsignado(arti.getCodigoAsignado());
+
+                articul.setCodigoDeBarra(arti.getCodigoDeBarra());
+                articul.setDescripcionArticulo(arti.getDescripcionArticulo());
+                articul.setNumeroId(arti.getNumeroId());
+                articul.setPrecioDeCosto(arti.getPrecioDeCosto());
+                articul.setPrecioUnitario(arti.getPrecioUnitarioNeto());
+                articul.setPrecioUnitarioNeto(arti.getPrecioUnitarioNeto());
+                articul.setIdCombo(arti.getIdCombo());
+                articul.setCombo(arti.getCombo());
+                articul.setSubTotal(arti.getSubTotal());
+                articul.setIva(arti.getIva());
+                articul.setCoeficienteIva(arti.getCoeficienteIva());
+                articul.setTipoIva(arti.getTipoIva());
+
+                Comparables comparar = new Articulos();
+                Double precio = 1.00;//comparar.comparaConCotizaciones(cliT.getCodigoId(),arti.getNumeroId(),cliT.getCoeficienteListaDeprecios());
+                String precio2 = String.valueOf(arti.getPrecioUnitarioNeto());//comparar.comparaConPedidos(cliT.getCodigoId(),arti.getNumeroId());
+                // aca tengo que modificar el precio unitario segun el coeficiente del cliente y la lista
+                //Double precioU=arti.getPrecioUnitarioNeto();// * lista.getCoeficiente();
+                articul.setPrecioUnitarioNeto(arti.getPrecioUnitarioNeto());
+                // aca tengo que modificar el precio unitario segun el coeficiente del cliente y la lista
+                //Double precioU=arti.getPrecioUnitarioNeto();// * lista.getCoeficiente();
+                /*
                     if(precio != cliT.getCoeficienteListaDeprecios()){
                         precio=articul.getPrecioUnitarioNeto()* precio;
                         String cartel="precio asignado: "+precio+" "+precio2;
                         if(JOptionPane.showConfirmDialog(this, cartel)==0){
                             articul.setPrecioUnitarioNeto(precio);
-                            
+
                         }else{
                             Double precioU= arti.getPrecioUnitarioNeto() * cliT.getCoeficienteListaDeprecios();
                             articul.setPrecioUnitarioNeto(precioU);
@@ -620,24 +643,26 @@ public class NotaDeDebito extends javax.swing.JInternalFrame implements KeyListe
                         Double precioU= arti.getPrecioUnitarioNeto() * cliT.getCoeficienteListaDeprecios();
                         articul.setPrecioUnitarioNeto(precioU);
                     }
-                    
-            detalleDelPedido.add(articul);
-            agregarRenglonTabla();
-//                Double montoTotalX=(arti.getPrecioUnitario() * arti.getCantidad());
-//                montoTotal=montoTotal + montoTotalX;
-                 montrarMonto();
-                 //System.err.println("MONTO TOTAL "+montoTotal);
-                 this.jLabel8.setText("");
-                // this.jTable2.removeAll();
+                 */
+                detalleDelPedido.add(articul);
+                agregarRenglonTabla();
+                //                Double montoTotalX=(arti.getPrecioUnitario() * arti.getCantidad());
+                //                montoTotal=montoTotal + montoTotalX;
+                montrarMonto();
+                //System.err.println("MONTO TOTAL "+montoTotal);
+                this.jLabel8.setText("");
+//                    this.jTable2.removeAll();
                 this.jButton1.setVisible(true);
-                    //String valorCargado;
-            jTextField1.setText(valorCargado);
-            //this.jTextField5.selectAll();
-            this.jTextField2.setText("");
-            //this.jTextField5.requestFocus();
-                }
-                }
-            
+                //String valorCargado;
+                jTextField1.setText(valorCargado);
+                //this.jTextField5.selectAll();
+                this.jTextField2.setText("");
+                jTextField1.selectAll();
+                jTextField1.requestFocus();
+                //this.jTextField5.requestFocus();
+
+            }
+
         }
     }//GEN-LAST:event_jTextField2KeyPressed
 
@@ -654,182 +679,199 @@ public class NotaDeDebito extends javax.swing.JInternalFrame implements KeyListe
     }//GEN-LAST:event_formInternalFrameClosing
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String cadena=cliT.getCodigoCliente()+" - "+cliT.getRazonSocial()+"\n"+cliT.getDireccion();
-        
-        if(this.jCheckBox1.isSelected()){
-            //    comp.setReparto(1);
-            //    comp.setEntrega(String.valueOf(this.jTextField3.getText()));
-        }
+        LicenciasControl control = new LicenciasControl();
+        Licencias lice = (Licencias) control.LeerActualLocal(Propiedades.getIDLICENCIA());
+        if (lice.getActualFc() > 0) {
 
-        //comp.setArticulos(detalleDelPedido);
-        DecimalFormat fr=new DecimalFormat("00");
-        Calendar c1=Calendar.getInstance();
-        Calendar c2=new GregorianCalendar();
-        String dia=Integer.toString(c2.get(Calendar.DAY_OF_MONTH));
-        String mes=Integer.toString(c2.get(Calendar.MONTH));
-        String ano=Integer.toString(c2.get(Calendar.YEAR));
+            String cadena = cliT.getCodigoCliente() + " - " + cliT.getRazonSocial() + "\n" + cliT.getDireccion();
 
-        int da=Integer.parseInt(dia);
-        int me=Integer.parseInt(mes);
-        me++;
-        dia=fr.format(da);
-        mes=fr.format(me);
-        String fecha=dia+"/"+mes+"/"+ano;
-        String fecha2=ano+"-"+mes+"-"+dia;
-        //comp.setFechaComprobante(fecha2);
-        //comp.setFechaComprobante(fecha);
-        
-        int comprobanteTipo=1;
-        //cliT.setCondicionIva("1");
-        if(cliT.getCondicionIva().equals("1"))comprobanteTipo=1;
-        if(cliT.getCondicionIva().equals("2"))comprobanteTipo=2;
-        if(cliT.getCondicionIva().equals("3"))comprobanteTipo=3;
-        
-        Comprobantes comprobante=new Comprobantes();
-        comprobante.setFe(true);
-        comprobante.setCliente(cliT);
-        comprobante.setTipoMovimiento(1);
-        comprobante.setTipoComprobante(comprobanteTipo);
-        comprobante.setFechaEmision((Date.valueOf(fecha2)));
-        comprobante.setListadoDeArticulos(detalleDelPedido);
-        comprobante.setUsuarioGenerador(Inicio.usuario.getNumero());
-        comprobante.setIdSucursal(Inicio.sucursal.getNumero());
-        comprobante.setIdDeposito(Inicio.deposito.getNumero());
-        Integer numeroCaja=Inicio.caja.getNumero();
-        //System.out.println("EL NUMERO DE CAJA ESSSSSSSS "+numeroCaja);
-        comprobante.setIdCaja(numeroCaja);
-        if(montoTotal == 0.00){
-            String sqM="usuario :"+Inicio.usuario.getNombre()+" sucursal "+Inicio.sucursal.getNumero()+" idcaja "+Inicio.caja.getNumero();
-            JOptionPane.showMessageDialog(this,"OJO EL MONTO DE ESTE COMPROBANTE ES $ 0, AVISE PARA DETECTAR EL ERROR");
-            FileWriter fichero=null;
-            PrintWriter pw=null;
-            try {
-                fichero = new FileWriter("Gestion\\"+Inicio.fechaDia+" - errores en comprobantes.txt",true);
-                    pw=new PrintWriter(fichero);
+            if (this.jCheckBox1.isSelected()) {
+                //    comp.setReparto(1);
+                //    comp.setEntrega(String.valueOf(this.jTextField3.getText()));
+            }
+
+            //comp.setArticulos(detalleDelPedido);
+            DecimalFormat fr = new DecimalFormat("00");
+            Calendar c1 = Calendar.getInstance();
+            Calendar c2 = new GregorianCalendar();
+            String dia = Integer.toString(c2.get(Calendar.DAY_OF_MONTH));
+            String mes = Integer.toString(c2.get(Calendar.MONTH));
+            String ano = Integer.toString(c2.get(Calendar.YEAR));
+
+            int da = Integer.parseInt(dia);
+            int me = Integer.parseInt(mes);
+            me++;
+            dia = fr.format(da);
+            mes = fr.format(me);
+            String fecha = dia + "/" + mes + "/" + ano;
+            String fecha2 = ano + "-" + mes + "-" + dia;
+            //comp.setFechaComprobante(fecha2);
+            //comp.setFechaComprobante(fecha);
+
+            int comprobanteTipo = 31;
+            //cliT.setCondicionIva("1");
+            if (cliT.getTipoIva() == 5) {
+                comprobanteTipo = 12;
+            }
+            if (cliT.getTipoIva() == 1) {
+                comprobanteTipo = 2;
+            }
+            if (cliT.getTipoIva() == 4) {
+                comprobanteTipo = 7;
+            }
+
+            Comprobantes comprobante = new Comprobantes();
+            comprobante.setFe(true);
+            comprobante.setCliente(cliT);
+            comprobante.setTipoMovimiento(1);
+            comprobante.setTipoComprobante(comprobanteTipo);
+            comprobante.setFechaEmision((Date.valueOf(fecha2)));
+            comprobante.setListadoDeArticulos(detalleDelPedido);
+            comprobante.setUsuarioGenerador(Inicio.usuario.getNumero());
+            comprobante.setIdSucursal(Inicio.sucursal.getNumero());
+            comprobante.setIdDeposito(Inicio.deposito.getNumero());
+            Integer numeroCaja = Inicio.caja.getNumero();
+            //System.out.println("EL NUMERO DE CAJA ESSSSSSSS "+numeroCaja);
+            comprobante.setIdCaja(numeroCaja);
+            if (montoTotal == 0.00) {
+                String sqM = "usuario :" + Inicio.usuario.getNombre() + " sucursal " + Inicio.sucursal.getNumero() + " idcaja " + Inicio.caja.getNumero();
+                JOptionPane.showMessageDialog(this, "OJO EL MONTO DE ESTE COMPROBANTE ES $ 0, AVISE PARA DETECTAR EL ERROR");
+                FileWriter fichero = null;
+                PrintWriter pw = null;
+                try {
+                    fichero = new FileWriter("Gestion\\" + Inicio.fechaDia + " - errores en comprobantes.txt", true);
+                    pw = new PrintWriter(fichero);
                     pw.println(sqM);
                 } catch (IOException ex1) {
                     Logger.getLogger(IngresoDePedidos.class.getName()).log(Level.SEVERE, null, ex1);
-                }finally{
+                } finally {
                     try {
                         // Nuevamente aprovechamos el finally para
                         // asegurarnos que se cierra el fichero.
-                        if (null != fichero)
-                        fichero.close();
+                        if (null != fichero) {
+                            fichero.close();
+                        }
                     } catch (Exception e2) {
                         e2.printStackTrace();
                     }
                 }
-            }
-            montoTotal=Math.round(montoTotal * 100.0) / 100.0;
-            subTotal=montoTotal / 1.21;
-            //Double ivv=subTotal / 1.21;
-            subTotal=Math.round(subTotal * 100.0) / 100.0;
-            //Double ivv=Math.round(ivv * 100.0) / 100.0;
-            Double sub=0.00;
-            Double tot=montoTotal - subTotal;
-            tot=Math.round(tot * 100.0) /100.0;
-            porcentajeDescuento=0.00;
-            if(porcentajeDescuento > 0.00){
-                sub = subTotal * porcentajeDescuento;
-                sub= montoTotal - sub;
-            }else{
-                sub=montoTotal;
-            }
-            
-            comprobante.setMontoTotal(montoTotal);
-            comprobante.setSubTotal(subTotal);
-            comprobante.setMontoIva(tot);
-            comprobante.setMontoBruto(subTotal);
-            Double descuen=montoTotal - sub;
-            comprobante.setDescuento(descuen);
-            comprobante.setPorcentajeDescuento(porcentajeDescuento);
+            } else {
 
-            int noFacturar=0;
-            if(IngresoDePedidos.jCheckBox2.isSelected()){
-                comprobante.setPagado(1);
-            }else{
-                comprobante.setPagado(0);
+                montoTotal = Math.round(montoTotal * 100.0) / 100.0;
+                //subTotal = montoTotal / 1.21;
+                //Double ivv=subTotal / 1.21;
+                subTotal = Math.round(subTotal * 100.0) / 100.0;
+                //Double ivv=Math.round(ivv * 100.0) / 100.0;
+                Double sub = 0.00;
+                Double tot = montoTotal - subTotal;
+                tot = Math.round(tot * 100.0) / 100.0;
                 /*
+                porcentajeDescuento = 0.00;
+                if (porcentajeDescuento > 0.00) {
+                    sub = subTotal * porcentajeDescuento;
+                    sub = montoTotal - sub;
+                } else {
+                    sub = montoTotal;
+                }
+                */
+                comprobante.setMontoTotal(montoTotal);
+                comprobante.setSubTotal(subTotal);
+                comprobante.setMontoIva(montoIva);
+                comprobante.setMontoBruto(subTotal);
+                Double descuen = 0.00;
+                comprobante.setDescuento(descuen);
+                comprobante.setPorcentajeDescuento(porcentajeDescuento);
+
+                int noFacturar = 0;
+                if (this.jCheckBox2.isSelected()) {
+                    comprobante.setPagado(1);
+                } else {
+                    comprobante.setPagado(0);
+                    /*
                 * ACA DEBO COMPROBAR EL LIMITE DEL CLIENTE Y SI LO SUPERA LA COMPRA RECHAZAR LA VENTA
                 *
-                */
-                /*
+                     */
+ /*
                 Double limite=cliT.getCupoDeCredito();
                 //Double saldo=cliT.getSaldo();
                 //Double totalGral=montoTotal + saldo;
                 Double totalGral=montoTotal;
                 if(limite < totalGral)noFacturar=1;
-                */
-            }
-            if(noFacturar==0){
-                comprobante.setFiscal(1);
-                Facturar fat=new Comprobantes();
-                fat.guardar(comprobante);
-                // aqui hago el envio a factura  electronica, si aprueba no imprime
-                
-                FacturaElectronica fe=new FacturaElectronica();
-                FacturableE fact=new FacturaElectronica();
-                ArrayList listadoIva=new ArrayList();
-                Double montoIva=0.00;
-                if(montoTotal > subTotal){
-                    float subT=Float.parseFloat(String.valueOf(subTotal));
-                    float totT=Float.parseFloat(String.valueOf(tot));
-                    TiposIva iva=new TiposIva(5,subT,totT,21);
-                    listadoIva.add(iva);
-                    montoIva=tot;
-                }else{
-                    listadoIva=null;
+                     */
                 }
-                ArrayList listadoTrib=null;
-                ArrayList <DetalleFacturas> listadoDetalle=new ArrayList();
-                Iterator itD=detalleDelPedido.listIterator();
-                Articulos artic;
-                DetalleFacturas detalle;
-                double precio=0.00;
-                while(itD.hasNext()){
-                    artic=(Articulos) itD.next();
-                    detalle=new DetalleFacturas();
-                    detalle.setCodigo(artic.getCodigoAsignado());
-                    detalle.setDescripcion(artic.getDescripcionArticulo());
-                    detalle.setCantidadS(String.valueOf(artic.getCantidad()));
-                    
-                    precio=Math.round(artic.getPrecioUnitarioNeto() * 100.0) / 100.0;
-                    detalle.setPrecioUnitarioS(String.valueOf(precio));
-                    listadoDetalle.add(detalle);
-                }
-                //montoIva=tot;
-                System.out.println(Propiedades.getARCHIVOCRT());
-                int condicion=1;//Integer.parseInt(Propiedades.getCONDICIONIVA());
-                int ptoVta=Integer.parseInt(Propiedades.getPUNTODEVENTA());
-                int tipoVta=Integer.parseInt(Propiedades.getTIPODEVENTA());
-                Integer idPed=1;
-                
-                
-                //if(pedido.getId() != null)idPed=pedido.getId();
-                //System.out.println("COMPROBANTE FISCAL N° "+fact.generar(trr.obtenerConexion(), condicion, Propiedades.getARCHIVOKEY(),Propiedades.getARCHIVOCRT(),cliT.getCodigoId(), cliT.getNumeroDeCuit(), comprobante.getTipoComprobante(), montoTotal, subTotal, montoIva, ptoVta, Propiedades.getCUIT(), tipoVta, listadoIva, listadoTrib, cliT.getRazonSocial(), cliT.getDireccion(), cliT.getCondicionIva(), listadoDetalle,idPed));
-                int tipoComp=comprobante.getTipoComprobante();
-                if(comprobante.getTipoComprobante()==1){
-                    tipoComp=6;
-                }
-                if(comprobante.getTipoComprobante()==2){
-                    tipoComp=1;
-                }
-                if(comprobante.getTipoComprobante()==9){
-                    tipoComp=2;
-                }
-                if(comprobante.getTipoComprobante()==10){
-                    tipoComp=3;
-                }
-                if(comprobante.getTipoComprobante()==12){
-                    tipoComp=8;
-                }
-                if(comprobante.getTipoComprobante()==8){
-                    tipoComp=8;
-                }
-                if(comprobante.getTipoComprobante()==3){
-                    tipoComp=6;
-                }
-                
+                if (noFacturar == 0) {
+                    comprobante.setFiscal(1);
+                    Facturar fat = new Comprobantes();
+                    comprobante = (Comprobantes) fat.guardar(comprobante);
+                    // aqui hago el envio a factura  electronica, si aprueba no imprime
+
+                    FacturaElectronica fe = new FacturaElectronica();
+                    FacturableE fact = new FacturaElectronica();
+                    //listadoIva=new ArrayList();
+                    //Double montoIva = 0.00;
+
+                    int tipoComp = comprobante.getTipoComprobante();
+                    if (Propiedades.getCONDICIONIVA().equals("1")) {
+                        if (cliT.getTipoIva() == 1) {
+                            tipoComp = 2;
+                        } else {
+                            tipoComp = 7;
+                        }
+                    } else {
+                        tipoComp = 12;
+                        subTotal=montoTotal;
+                    }
+                    comprobante.setTipoComprobante(tipoComp);
+                    DecimalFormat formato1 = new DecimalFormat("#,00");
+                    if (tipoComp < 12) {
+                        Iterator it = listadoIva.listIterator();
+                        listadoIvaD = new ArrayList();
+                        while (it.hasNext()) {
+                            tipoIva = (TiposIva) it.next();
+                            if (tipoIva.getBaseImponible() == 0.00) {
+                                //sell.add(posicionL);
+                            } else {
+                                /*
+                                float subT = Float.parseFloat(formato1.format(tipoIva.getBaseImponible()));
+
+                                float totT = Float.parseFloat(formato1.format(tipoIva.getImporte()));
+                                tipoIva.setBaseImponible(subT);
+                                tipoIva.setImporte(totT);
+                                */
+                                listadoIvaD.add(tipoIva);
+                            }
+                            //posicionL++;
+                        }
+
+                        //montoIva = tot;
+                    } else {
+                        listadoIvaD = null;
+                    }
+
+                    ArrayList listadoTrib = null;
+                    ArrayList<DetalleFacturas> listadoDetalle = new ArrayList();
+                    Iterator itD = detalleDelPedido.listIterator();
+                    Articulos artic;
+                    DetalleFacturas detalle;
+                    double precio = 0.00;
+                    while (itD.hasNext()) {
+                        artic = (Articulos) itD.next();
+                        detalle = new DetalleFacturas();
+                        detalle.setCodigo(artic.getCodigoAsignado());
+                        detalle.setDescripcion(artic.getDescripcionArticulo());
+                        detalle.setCantidadS(String.valueOf(artic.getCantidad()));
+
+                        precio = Math.round(artic.getPrecioUnitarioNeto() * 100.0) / 100.0;
+                        detalle.setPrecioUnitarioS(String.valueOf(precio));
+                        listadoDetalle.add(detalle);
+                    }
+                    //montoIva=tot;
+                    System.out.println(Propiedades.getARCHIVOCRT());
+                    int condicion = 1;//Integer.parseInt(Propiedades.getCONDICIONIVA());
+                    int ptoVta = Integer.parseInt(Propiedades.getPUNTODEVENTA());
+                    int tipoVta = Integer.parseInt(Propiedades.getTIPODEVENTA());
+                    Integer idPed = 1;//SEÑALA SI ES HOMOLAGACION O PRODUCCION
+
             try {
                 Transaccionable trr=new Conecciones();
                 Conecciones conx=new Conecciones();
@@ -861,7 +903,8 @@ public class NotaDeDebito extends javax.swing.JInternalFrame implements KeyListe
                 noFacturar=0;
             }
         
-        
+            }
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -899,41 +942,43 @@ public class NotaDeDebito extends javax.swing.JInternalFrame implements KeyListe
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jTextField4KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField4KeyPressed
-        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             Double servicio;
             //Articulos articuloss=new Articulos();
-            if(this.jCheckBox1.isSelected()){
-                servicio=arti.getPrecioServicio();
-            }else{
-                servicio=0.00;
+            if (this.jCheckBox1.isSelected()) {
+                servicio = arti.getPrecioServicio();
+            } else {
+                servicio = 0.00;
             }
-            if(arti.getModificaPrecio())servicio=Numeros.ConvertirStringADouble(String.valueOf(this.jTextField4.getText()));
-            Double tota=arti.getPrecioUnitarioNeto() + servicio;
+            if (arti.getModificaPrecio()) {
+                servicio = Numeros.ConvertirStringADouble(String.valueOf(this.jTextField4.getText()));
+            }
+            Double tota = servicio;
             //arti.setPrecioUnitarioNeto(tota);
             //arti.setPrecioServicio(servicio);
-            Double cantt=Double.parseDouble(this.jTextField2.getText());
-            Articulos articul=new Articulos();
-                    articul.setCantidad(cantt);
-                    articul.setCodigoAsignado(arti.getCodigoAsignado());
-                    articul.setPrecioServicio(servicio);
-                    articul.setCodigoDeBarra(arti.getCodigoDeBarra());
-                    articul.setDescripcionArticulo(arti.getDescripcionArticulo());
-                    articul.setNumeroId(arti.getNumeroId());
-                    articul.setPrecioDeCosto(arti.getPrecioDeCosto());
-                    articul.setPrecioUnitario(arti.getPrecioUnitarioNeto());
-                    articul.setPrecioUnitarioNeto(tota);
-                    articul.setModificaPrecio(arti.getModificaPrecio());
-                    articul.setIdCombo(arti.getIdCombo());
-                    articul.setCombo(arti.getCombo());
-                        detalleDelPedido.add(articul);
+            Double cantt = Double.parseDouble(this.jTextField2.getText());
+            Articulos articul = new Articulos();
+            articul.setCantidad(cantt);
+            articul.setCodigoAsignado(arti.getCodigoAsignado());
+            articul.setPrecioServicio(servicio);
+            articul.setCodigoDeBarra(arti.getCodigoDeBarra());
+            articul.setDescripcionArticulo(arti.getDescripcionArticulo());
+            articul.setNumeroId(arti.getNumeroId());
+            articul.setPrecioDeCosto(arti.getPrecioDeCosto());
+            articul.setPrecioUnitario(arti.getPrecioUnitarioNeto());
+            articul.setPrecioUnitarioNeto(tota);
+            articul.setModificaPrecio(arti.getModificaPrecio());
+            articul.setIdCombo(arti.getIdCombo());
+            articul.setCombo(arti.getCombo());
+            detalleDelPedido.add(articul);
             agregarRenglonTabla();
-//                Double montoTotalX=(arti.getPrecioUnitario() * arti.getCantidad());
-//                montoTotal=montoTotal + montoTotalX;
-                 montrarMonto();
-                 //System.err.println("MONTO TOTAL "+montoTotal);
-                 this.jLabel8.setText("");
-                // this.jTable2.removeAll();
-                this.jButton1.setVisible(true);
+            //                Double montoTotalX=(arti.getPrecioUnitario() * arti.getCantidad());
+            //                montoTotal=montoTotal + montoTotalX;
+            montrarMonto();
+            //System.err.println("MONTO TOTAL "+montoTotal);
+            this.jLabel8.setText("");
+//            this.jTable2.removeAll();
+            this.jButton1.setVisible(true);
             this.jTextField1.setText("");
             this.jTextField2.setText("");
             this.jTextField1.requestFocus();
@@ -987,23 +1032,22 @@ public class NotaDeDebito extends javax.swing.JInternalFrame implements KeyListe
         }
     }//GEN-LAST:event_jTextField3KeyPressed
 private void cargarLista(ArrayList lista){
-    DefaultTableModel modelo=new DefaultTableModel();
-    Iterator il=lista.listIterator();
-    Articulos art=new Articulos();
-    modelo.addColumn("Descripcion");
+    DefaultTableModel modelo = new DefaultTableModel();
+        Iterator il = lista.listIterator();
+        Articulos art = new Articulos();
+        modelo.addColumn("Descripcion");
         modelo.addColumn("Precio");
         modelo.addColumn("Stock");
-        Object [] fila=new Object[3];
-        while(il.hasNext()){
-            art=(Articulos)il.next();
-            fila[0]=art.getDescripcionArticulo();
-            fila[1]=" $"+Numeros.ConvertirNumero(art.getPrecioUnitarioNeto());
-            fila[2]=String.valueOf(art.getStockActual());
+        Object[] fila = new Object[3];
+        while (il.hasNext()) {
+            art = (Articulos) il.next();
+            fila[0] = art.getDescripcionArticulo();
+            fila[1] = " $" + Numeros.ConvertirNumero(art.getPrecioUnitarioNeto());
+            fila[2] = String.valueOf(art.getStockActual());
             //modelo.addElement(articulo.getDescripcionArticulo()+" $"+Numeros.ConvertirNumero(articulo.getPrecioUnitarioNeto()));
             modelo.addRow(fila);
         }
-    
-    
+
 //    this.jTable2.setModel(modelo);
 //    columnaCodigo = this.jTable2.getColumn("Descripcion");
 //    columnaCodigo.setPreferredWidth(600);
@@ -1011,21 +1055,23 @@ private void cargarLista(ArrayList lista){
 //    columnaCodigo = this.jTable2.getColumn("Stock");
 //    columnaCodigo.setPreferredWidth(60);
 //    columnaCodigo.setMaxWidth(60);
+        // Configurando parametros de algunas columnas de interes
+        List<String> columnasTabla = new ArrayList<>();
+        columnasTabla.add("Descripcion:600:600");
+        columnasTabla.add("Stock:60:60");
 
-    // Configurando parametros de algunas columnas de interes
-    List<String> columnasTabla = new ArrayList<>();
-    columnasTabla.add("Descripcion:600:600");
-    columnasTabla.add("Stock:60:60");
-    
-    // Desplegando ventana emergente
-    tgp.desplegarPopUp("Seleccion Item", modelo, columnasTabla);
-    
-    
+        // Desplegando ventana emergente
+        tgp.desplegarPopUp("Seleccion Item", modelo, columnasTabla);
+
 }
 private void agregarRenglonTabla(){
-        MiModeloTablaFacturacion busC=new MiModeloTablaFacturacion();
+        MiModeloTablaFacturacion busC = new MiModeloTablaFacturacion();
         this.jTable1.removeAll();
-        montoTotal=0.00;
+        montoTotal = 0.00;
+        subTotal = 0.00;
+        montoIva = 0.00;
+        listadoIva=null;
+        listadoIva=control.ListarTipos();
         //ArrayList listadoPedidos=new ArrayList();
         this.jTable1.setModel(busC);
         Articulos pedidos;
@@ -1037,115 +1083,156 @@ private void agregarRenglonTabla(){
         busC.addColumn("PRECIO TOTAL");
         busC.addColumn("IVA");
         busC.addColumn("PRECIO FINAL");
-        Object[] fila=new Object[8];
-        Iterator irP=detalleDelPedido.listIterator();
-        while(irP.hasNext()){
-            pedidos=new Articulos();
-            pedidos=(Articulos) irP.next();
+        Object[] fila = new Object[8];
+        Iterator irP = detalleDelPedido.listIterator();
+        while (irP.hasNext()) {
+            pedidos = new Articulos();
+            pedidos = (Articulos) irP.next();
             //fila[0]=pedidos.getCodigo();
-            String codig=pedidos.getCodigoAsignado();
-            String desc=pedidos.getDescripcionArticulo();
-            String cant=String.valueOf(pedidos.getCantidad());
-            
-            fila[0]=codig;
-            fila[1]=desc;
-            Double precioUnitario=pedidos.getPrecioUnitarioNeto();
-            
+            String codig = pedidos.getCodigoAsignado();
+            String desc = pedidos.getDescripcionArticulo();
+            String cant = String.valueOf(pedidos.getCantidad());
+
+            fila[0] = codig;
+            fila[1] = desc;
+            Double precioUnitario = pedidos.getPrecioUnitarioNeto();
+
             //precioUnitario=precioUnitario * cliT.getCoeficienteListaDeprecios();
-            
-            Double valor=precioUnitario * pedidos.getCantidad();
+            Double valor = precioUnitario * pedidos.getCantidad();
             //precioUnitario= pedidos.getPrecioUnitario() * cliT.getCoeficienteListaDeprecios();
             //Double valor=(pedidos.getCantidad() * precioUnitario);
             //valor=valor * cliT.getCoeficienteListaDeprecios();
             pedidos.setPrecioUnitario(valor);
-            String val=Numeros.ConvertirNumero(valor);
-            montoTotal=montoTotal + valor;
+            String val = Numeros.ConvertirNumero(valor);
+            valor = Numeros.Redondear(valor);
+            montoTotal = montoTotal + valor;
+            Double subb = Numeros.CalcularSubTotal(valor, pedidos.getCoeficienteIva());
+            subTotal = subTotal + subb;
+            double ivaa = Numeros.CalcularIva(subb, pedidos.getCoeficienteIva());
+            montoIva = montoIva + ivaa;
+            Iterator it = listadoIva.listIterator();
+            while (it.hasNext()) {
+                tipoIva = (TiposIva) it.next();
+                if (tipoIva.getId() == pedidos.getTipoIva()) {
+                    double base = tipoIva.getBaseImponible() + subb;
+                    double ivva = tipoIva.getImporte() + ivaa;
+                    tipoIva.setBaseImponible(base);
+                    tipoIva.setImporte(ivva);
+                }
+            }
+
+            //subtotal=subtotal
             //precioUnitario=precioUnitario * cliT.getCoeficienteListaDeprecios();
             //fila[2]=cant;
-            
-            fila[5]=val;
-            fila[3]=Numeros.ConvertirNumero(precioUnitario);
-            fila[2]=Numeros.ConvertirNumero(pedidos.getPrecioDeCosto());
-            Double iva=valor * 0.21;
-            fila[6]=Numeros.ConvertirNumero(iva);
-            fila[4]=cant;
-            Double pFinal=valor + iva;
-            fila[7]=Numeros.ConvertirNumero(pFinal);
+            precioUnitario = Numeros.Redondear(precioUnitario);
+            Double precioSIva = pedidos.getSubTotal();
+            precioSIva = Numeros.Redondear(precioSIva);
+            Double iva = pedidos.getIva();
+            Double pFinal = valor;
+            pFinal = Numeros.Redondear(pFinal);
+            fila[5] = val;
+            fila[3] = Numeros.ConvertirNumero(precioSIva);
+            fila[2] = Numeros.ConvertirNumero(pedidos.getPrecioDeCosto());
+            //Double iva=valor / 1.21;//valor * 0.21;
+            fila[6] = Numeros.ConvertirNumero(iva);
+            fila[4] = cant;
+
+            fila[7] = Numeros.ConvertirNumero(pFinal);
             busC.addRow(fila);
         }
-        subTotal=montoTotal;
-        Double ivv=subTotal *0.21;
-        Double sub=subTotal + ivv;
-        Double tot=montoTotal + ivv;
-        if(porcentajeDescuento > 0.00){
-            sub = sub * porcentajeDescuento;
-            sub= tot - sub;
+        if (porcentajeDescuento > 0.00) {
+            Double subD = montoTotal * porcentajeDescuento;
+            montoDescuento = Numeros.Redondear(subD);
+            subTotal = subTotal * porcentajeDescuento;
+            subTotal = Numeros.Redondear(subTotal);
+            montoIva = montoIva * porcentajeDescuento;
+            montoIva = Numeros.Redondear(montoIva);
+            montoTotal = montoTotal - montoDescuento;
+            Iterator it = listadoIva.listIterator();
+            while (it.hasNext()) {
+                tipoIva = (TiposIva) it.next();
+                if (tipoIva.getBaseImponible() > 0.00) {
+                    double base = tipoIva.getBaseImponible() * porcentajeDescuento;
+                    double ivva = tipoIva.getImporte() * porcentajeDescuento;
+                    tipoIva.setBaseImponible(base);
+                    tipoIva.setImporte(ivva);
+                }
+            }
+
         }
-        fila[0]="";
-        fila[1]="<html><strong>SUBTOTAL</strong></html>";
-        fila[2]="";
-        fila[3]="";
-        fila[4]="";
-        fila[5]="";
-        fila[6]="";
-        fila[7]="<html><strong>"+Numeros.ConvertirNumero(tot)+"</strong></html>";
-        Double descuen=tot - sub;
+        //subTotal = montoTotal / 1.21;
+        //subTotal = Numeros.Redondear(subTotal);
+        Double ivv = montoIva;
+        System.out.println("iva " + ivv);
+        Double sub = subTotal;
+        Double tot = montoTotal;
+        //Double descuen = tot - sub;
+
+        fila[0] = "";
+        fila[1] = "<html><strong>SUBTOTAL</strong></html>";
+        fila[2] = "";
+        fila[3] = "";
+        fila[4] = "";
+        fila[5] = "";
+        fila[6] = "";
+        fila[7] = "<html><strong>" + Numeros.ConvertirNumero(subTotal) + "</strong></html>";
+
         busC.addRow(fila);
-        fila[0]="";
-        fila[1]="<html><strong>DESCUENTO </strong></html>";
-        fila[2]="";
-        fila[3]="";
-        fila[4]="";
-        fila[5]="";
-        fila[6]="";
-        fila[7]="<html><strong> - "+Numeros.ConvertirNumero(descuen)+"</strong></html>";
+        fila[0] = "";
+        fila[1] = "<html><strong>DESCUENTO </strong></html>";
+        fila[2] = "";
+        fila[3] = "";
+        fila[4] = "";
+        fila[5] = "";
+        fila[6] = "";
+        fila[7] = "<html><strong> - " + Numeros.ConvertirNumero(montoDescuento) + "</strong></html>";
         busC.addRow(fila);
-        fila[0]="";
-        fila[1]="<html><strong>TOTAL</strong></html>";
-        fila[2]="";
-        fila[3]="";
-        fila[4]="";
-        fila[5]="";
-        fila[6]="";
-        fila[7]="<html><strong>"+Numeros.ConvertirNumero(sub)+"</strong></html>";
+        fila[0] = "";
+        fila[1] = "<html><strong>TOTAL</strong></html>";
+        fila[2] = "";
+        fila[3] = "";
+        fila[4] = "";
+        fila[5] = "";
+        fila[6] = "";
+        fila[7] = "<html><strong>" + Numeros.ConvertirNumero(montoTotal) + "</strong></html>";
         busC.addRow(fila);
-        columnaCodigo=this.jTable1.getColumn("CODIGO");
+        columnaCodigo = this.jTable1.getColumn("CODIGO");
         columnaCodigo.setPreferredWidth(40);
         columnaCodigo.setMaxWidth(40);
-        columnaCodigo=this.jTable1.getColumn("DESCRIPCION");
+        columnaCodigo = this.jTable1.getColumn("DESCRIPCION");
         columnaCodigo.setPreferredWidth(400);
         //columnaCodigo.setMaxWidth(400);
         columnaCodigo.setMinWidth(300);
-        columnaCodigo=this.jTable1.getColumn("CANTIDAD");
+        columnaCodigo = this.jTable1.getColumn("CANTIDAD");
         columnaCodigo.setPreferredWidth(80);
         columnaCodigo.setMaxWidth(80);
-        montoTotal=montoTotal * 1.21;
-        String total=String.valueOf(montoTotal);
-        this.jLabel1.setText("TOTAL COTIZACION:  "+total);
+        //montoTotal = montoTotal * 1.21;
+        String total = String.valueOf(montoTotal);
+        this.jLabel1.setText("TOTAL COTIZACION:  " + total);
         listadoDeBusqueda.clear();
-        cargarLista(listadoDeBusqueda);
+        //cargarLista(listadoDeBusqueda);
         this.jCheckBox1.setSelected(true);
         this.jCheckBox1.setVisible(false);
-        if(detalleDelPedido.size()==0){
+        if (detalleDelPedido.size() == 0) {
             this.jButton1.setEnabled(false);
-        }else{
+        } else {
             this.jButton1.setEnabled(true);
         }
 }
 private void montrarMonto(){
     //System.err.println("DESCUENTO :"+cliT.getDescuento());
-    String total1=Numeros.ConvertirNumero(montoTotal);
-    String total="";
-    if(cliT.getTipoIva()==1){
-        String bruto=Numeros.ConvertirNumero( montoTotal /1.21);
-        String iva=Numeros.ConvertirNumero(montoTotal * 0.21);
-        total="<html>Bruto :"+bruto+" <br>IVA 21% "+iva+" <br>Neto "+total1+"</html>";
-    }else{
-        total="<html>Neto "+total1+"</html>";
-    }
-    //Double total=montoTotal * cliT.getDescuento();
-    //comp.setMontoTotal(total);
-    this.jLabel1.setText(total);
+        String total1 = Numeros.ConvertirNumero(montoTotal);
+        String total = "";
+        if (cliT.getTipoIva() == 1) {
+            String bruto = Numeros.ConvertirNumero(subTotal);
+            String iva = Numeros.ConvertirNumero(montoIva);
+            total = "<html>Bruto :" + bruto + " <br>IVA 21% " + iva + " <br>Neto " + total1 + "</html>";
+        } else {
+            total = "<html>Neto " + total1 + "</html>";
+        }
+        //Double total=montoTotal * cliT.getDescuento();
+        //comp.setMontoTotal(total);
+        this.jLabel1.setText(total);
 }
 private void verificar(){
     int cantidad=this.jTable1.getRowCount();
@@ -1169,35 +1256,39 @@ private void verificar(){
 }
 private void CargarCantidad(){
         Double cantt = 1.00;
-            Double precioUni = 0.00;
-            
-            if (arti.getModificaPrecio()) {
-                this.jTextField4.selectAll();
-                this.jTextField4.requestFocus();
-            } else {
-                
-                Articulos articul = new Articulos();
-                articul.setCantidad(cantt);
-                articul.setCodigoAsignado(arti.getCodigoAsignado());
-                
-                articul.setCodigoDeBarra(arti.getCodigoDeBarra());
-                articul.setDescripcionArticulo(arti.getDescripcionArticulo());
-                articul.setNumeroId(arti.getNumeroId());
-                articul.setPrecioDeCosto(arti.getPrecioDeCosto());
-                articul.setPrecioUnitario(arti.getPrecioUnitarioNeto());
-                articul.setPrecioUnitarioNeto(arti.getPrecioUnitarioNeto());
-                articul.setIdCombo(arti.getIdCombo());
-                articul.setCombo(arti.getCombo());
-                
-                Comparables comparar = new Articulos();
-                Double precio = 1.00;//comparar.comparaConCotizaciones(cliT.getCodigoId(),arti.getNumeroId(),cliT.getCoeficienteListaDeprecios());
-                String precio2 = String.valueOf(arti.getPrecioUnitarioNeto());//comparar.comparaConPedidos(cliT.getCodigoId(),arti.getNumeroId());
-                // aca tengo que modificar el precio unitario segun el coeficiente del cliente y la lista
-                //Double precioU=arti.getPrecioUnitarioNeto();// * lista.getCoeficiente();
-                articul.setPrecioUnitarioNeto(arti.getPrecioUnitarioNeto());
-                // aca tengo que modificar el precio unitario segun el coeficiente del cliente y la lista
-                //Double precioU=arti.getPrecioUnitarioNeto();// * lista.getCoeficiente();
-                /*
+        Double precioUni = 0.00;
+
+        if (arti.getModificaPrecio()) {
+            this.jTextField4.selectAll();
+            this.jTextField4.requestFocus();
+        } else {
+
+            Articulos articul = new Articulos();
+            articul.setCantidad(cantt);
+            articul.setCodigoAsignado(arti.getCodigoAsignado());
+
+            articul.setCodigoDeBarra(arti.getCodigoDeBarra());
+            articul.setDescripcionArticulo(arti.getDescripcionArticulo());
+            articul.setNumeroId(arti.getNumeroId());
+            articul.setPrecioDeCosto(arti.getPrecioDeCosto());
+            articul.setPrecioUnitario(arti.getPrecioUnitarioNeto());
+            articul.setPrecioUnitarioNeto(arti.getPrecioUnitarioNeto());
+            articul.setIdCombo(arti.getIdCombo());
+            articul.setCombo(arti.getCombo());
+            articul.setSubTotal(arti.getSubTotal());
+            articul.setIva(arti.getIva());
+            articul.setCoeficienteIva(arti.getCoeficienteIva());
+            articul.setTipoIva(arti.getTipoIva());
+
+            Comparables comparar = new Articulos();
+            Double precio = 1.00;//comparar.comparaConCotizaciones(cliT.getCodigoId(),arti.getNumeroId(),cliT.getCoeficienteListaDeprecios());
+            String precio2 = String.valueOf(arti.getPrecioUnitarioNeto());//comparar.comparaConPedidos(cliT.getCodigoId(),arti.getNumeroId());
+            // aca tengo que modificar el precio unitario segun el coeficiente del cliente y la lista
+            //Double precioU=arti.getPrecioUnitarioNeto();// * lista.getCoeficiente();
+            articul.setPrecioUnitarioNeto(arti.getPrecioUnitarioNeto());
+            // aca tengo que modificar el precio unitario segun el coeficiente del cliente y la lista
+            //Double precioU=arti.getPrecioUnitarioNeto();// * lista.getCoeficiente();
+            /*
                     if(precio != cliT.getCoeficienteListaDeprecios()){
                         precio=articul.getPrecioUnitarioNeto()* precio;
                         String cartel="precio asignado: "+precio+" "+precio2;
@@ -1212,25 +1303,25 @@ private void CargarCantidad(){
                         Double precioU= arti.getPrecioUnitarioNeto() * cliT.getCoeficienteListaDeprecios();
                         articul.setPrecioUnitarioNeto(precioU);
                     }
-                 */
-                detalleDelPedido.add(articul);
-                agregarRenglonTabla();
-                //                Double montoTotalX=(arti.getPrecioUnitario() * arti.getCantidad());
-                //                montoTotal=montoTotal + montoTotalX;
-                montrarMonto();
-                //System.err.println("MONTO TOTAL "+montoTotal);
-                this.jLabel8.setText("");
+             */
+            detalleDelPedido.add(articul);
+            agregarRenglonTabla();
+            //                Double montoTotalX=(arti.getPrecioUnitario() * arti.getCantidad());
+            //                montoTotal=montoTotal + montoTotalX;
+            montrarMonto();
+            //System.err.println("MONTO TOTAL "+montoTotal);
+            this.jLabel8.setText("");
 //                    this.jTable2.removeAll();
-                this.jButton1.setVisible(true);
-                //String valorCargado;
-                jTextField1.setText(valorCargado);
-                //this.jTextField5.selectAll();
-                this.jTextField2.setText("");
-                jTextField1.selectAll();
-                jTextField1.requestFocus();
-                //this.jTextField5.requestFocus();
-                
-            }
+            this.jButton1.setVisible(true);
+            //String valorCargado;
+            jTextField1.setText(valorCargado);
+            //this.jTextField5.selectAll();
+            this.jTextField2.setText("");
+            jTextField1.selectAll();
+            jTextField1.requestFocus();
+            //this.jTextField5.requestFocus();
+
+        }
             
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables

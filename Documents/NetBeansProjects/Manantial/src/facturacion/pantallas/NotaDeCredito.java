@@ -44,6 +44,7 @@ import objetosR.Comprobantes;
 import objetosR.Conecciones;
 import tablas.MiModeloTablaFacturacion;
 import Articulos.ModificableArticulos;
+import FacturaElectronica.Controlador.TiposIvaControl;
 import FacturaElectronica.Interfaces.FacturableE;
 import FacturaElectronica.Objetos.DetalleFacturas;
 import FacturaElectronica.Objetos.FacturaElectronica;
@@ -83,6 +84,11 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
     private Double montoDescuento;
     private ArrayList listadoFormas;
     private FormasDePago formas;
+    private ArrayList listadoIva;
+    private ArrayList listadoIvaD;
+    private Double montoIva;
+    private TiposIvaControl control;
+    private TiposIva tipoIva;
     
     public NotaDeCredito() {
         //Articulos.CargarMap();
@@ -102,6 +108,9 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
         this.jTextField4.setVisible(false);
         this.jCheckBox1.setVisible(false);
         this.jCheckBox2.setEnabled(false);
+        listadoIva = new ArrayList();
+        control = new TiposIvaControl();
+        listadoIva = control.ListarTipos();
         //this.jTextField5.requestFocus();
         //this.jPanel2.requestFocus();
         
@@ -161,6 +170,9 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
         this.jCheckBox1.setVisible(false);
         //this.jCheckBox2.setEnabled(false);
         this.jTextField1.requestFocus();
+        listadoIva = new ArrayList();
+        control = new TiposIvaControl();
+        listadoIva = control.ListarTipos();
         //this.jPanel2.requestFocus();
     }
     /**
@@ -774,7 +786,7 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
         }
         //montoTotal=montoTo;
             montoTotal=Math.round(montoTotal * 100.0) / 100.0;
-            subTotal=montoTotal / 1.21;
+            //subTotal=montoTotal / 1.21;
             //Double ivv=subTotal / 1.21;
             subTotal=Math.round(subTotal * 100.0) / 100.0;
             //Double ivv=Math.round(ivv * 100.0) / 100.0;
@@ -782,18 +794,19 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
             Double tot=montoTotal - subTotal;
             tot=Math.round(tot * 100.0) /100.0;
             porcentajeDescuento=0.00;
+            /*
             if(porcentajeDescuento > 0.00){
                 sub = subTotal * porcentajeDescuento;
                 sub= montoTotal - sub;
             }else{
                 sub=montoTotal;
             }
-            
+            */
             comprobante.setMontoTotal(montoTotal);
             comprobante.setSubTotal(subTotal);
-            comprobante.setMontoIva(tot);
+            comprobante.setMontoIva(montoIva);
             comprobante.setMontoBruto(subTotal);
-            Double descuen=montoTotal - sub;
+            Double descuen=0.00;//montoTotal - sub;
             comprobante.setDescuento(descuen);
             comprobante.setPorcentajeDescuento(porcentajeDescuento);
         int noFacturar=0;
@@ -814,22 +827,50 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
                 comprobante=(Comprobantes) fat.guardar(comprobante);
                 // aqui hago el envio a factura  electronica, si aprueba no imprime
                 
+                 if(subTotal < 0)subTotal=subTotal * (-1);
+                if(montoTotal < 0)montoTotal =montoTotal * (-1);
+                if(montoIva < 0)montoIva=montoIva * (-1);
+                
                 FacturaElectronica fe=new FacturaElectronica();
                 FacturableE fact=new FacturaElectronica();
-                ArrayList listadoIva=new ArrayList();
-                Double montoIva=0.00;
-                if(montoTotal < subTotal){
-                    subTotal=subTotal * (-1);
-                    tot=tot * (-1);
-                    
-                    float subT=Float.parseFloat(String.valueOf(subTotal));
-                    float totT=Float.parseFloat(String.valueOf(tot));
-                    TiposIva iva=new TiposIva(5,subT,totT,21);
-                    listadoIva.add(iva);
-                    montoIva=tot;
+                //ArrayList listadoIva=new ArrayList();
+                //Double montoIva=0.00;
+                
+                int tipoComp=comprobante.getTipoComprobante();
+                if(Propiedades.getCONDICIONIVA().equals("1")){
+                    if(cliT.getTipoIva()==1){
+                        tipoComp=3;
+                    }else{
+                        tipoComp=8;
+                    }
                 }else{
-                    listadoIva=null;
+                    tipoComp=13;
                 }
+                if(tipoComp < 13){
+                    Iterator it = listadoIva.listIterator();
+                        listadoIvaD = new ArrayList();
+                        while (it.hasNext()) {
+                            tipoIva = (TiposIva) it.next();
+                            if (tipoIva.getBaseImponible() == 0.00) {
+                                //sell.add(posicionL);
+                            } else {
+                                /*
+                                float subT = Float.parseFloat(formato1.format(tipoIva.getBaseImponible()));
+
+                                float totT = Float.parseFloat(formato1.format(tipoIva.getImporte()));
+                                tipoIva.setBaseImponible(subT);
+                                tipoIva.setImporte(totT);
+                                */
+                                listadoIvaD.add(tipoIva);
+                            }
+                            //posicionL++;
+                        }
+
+                        //montoIva = tot;
+                    } else {
+                        listadoIvaD = null;
+                        subTotal=montoTotal;
+                    }
                 ArrayList listadoTrib=null;
                 ArrayList <DetalleFacturas> listadoDetalle=new ArrayList();
                 Iterator itD=detalleDelPedido.listIterator();
@@ -853,24 +894,13 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
                 int ptoVta=Integer.parseInt(Propiedades.getPUNTODEVENTA());
                 int tipoVta=Integer.parseInt(Propiedades.getTIPODEVENTA());
                 Integer idPed=1;
-                if(subTotal < 0)subTotal=subTotal * (-1);
-                if(montoTotal < 0)montoTotal =montoTotal * (-1);
-                if(montoIva < 0)montoIva=montoIva * (-1);
+               
                 System.out.println("totales: $"+subTotal+" _ $"+montoTotal+" _ $"+montoIva);
                 
                 //if(pedido.getId() != null)idPed=pedido.getId();
                 
                 //System.out.println("COMPROBANTE FISCAL N° "+fact.generar(null, condicion, Propiedades.getARCHIVOKEY(),Propiedades.getARCHIVOCRT(),cliT.getCodigoId(), cliT.getNumeroDeCuit(), comprobante.getTipoComprobante(), montoTotal, subTotal, montoIva, ptoVta, Propiedades.getCUIT(), tipoVta, listadoIva, listadoTrib, cliT.getRazonSocial(), cliT.getDireccion(), cliT.getCondicionIva(), listadoDetalle,idPed));
-                int tipoComp=comprobante.getTipoComprobante();
-                if(Propiedades.getCONDICIONIVA().equals("1")){
-                    if(cliT.getTipoIva()==1){
-                        tipoComp=3;
-                    }else{
-                        tipoComp=8;
-                    }
-                }else{
-                    tipoComp=13;
-                }
+                
                 comprobante.setTipoComprobante(tipoComp);
                 /*
                 if(comprobante.getTipoComprobante()==1){
@@ -900,7 +930,7 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
                 conx = new Conecciones();
                 Connection conexion=conx.obtenerConexion();
                 Integer numeFc=0;
-        numeFc=fact.generar(conexion, condicion, Propiedades.getARCHIVOKEY(), Propiedades.getARCHIVOCRT(), cliT.getCodigoId(), cliT.getNumeroDeCuit(), tipoComp, montoTotal, subTotal, montoIva, ptoVta, Propiedades.getCUIT(), tipoVta, listadoIva, listadoTrib, cliT.getRazonSocial(), cliT.getDireccion(), cliT.getCondicionIva(), listadoDetalle,idPed,Propiedades.getNOMBRECOMERCIO(),Propiedades.getNOMBRECOMERCIO(),"resp inscripto",Propiedades.getDIRECCION(),Propiedades.getTELEFONO(),Propiedades.getINGBRUTOS(),Propiedades.getINICIOACT());
+        numeFc=fact.generar(conexion, condicion, Propiedades.getARCHIVOKEY(), Propiedades.getARCHIVOCRT(), cliT.getCodigoId(), cliT.getNumeroDeCuit(), tipoComp, montoTotal, subTotal, montoIva, ptoVta, Propiedades.getCUIT(), tipoVta, listadoIvaD, listadoTrib, cliT.getRazonSocial(), cliT.getDireccion(), cliT.getCondicionIva(), listadoDetalle,idPed,Propiedades.getNOMBRECOMERCIO(),Propiedades.getNOMBRECOMERCIO(),"resp inscripto",Propiedades.getDIRECCION(),Propiedades.getTELEFONO(),Propiedades.getINGBRUTOS(),Propiedades.getINICIOACT());
         comprobante.GuardarNumeroFiscalEnCaja(numeFc, comprobante.getNumeroRegistro(),tipoComp);
         LicenciasControl licencia=new LicenciasControl();
                     licencia.RestarFc();
@@ -1032,6 +1062,10 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
                     articul.setModificaPrecio(arti.getModificaPrecio());
                     articul.setIdCombo(arti.getIdCombo());
                     articul.setCombo(arti.getCombo());
+                    articul.setSubTotal(arti.getSubTotal());
+            articul.setIva(arti.getIva());
+            articul.setCoeficienteIva(arti.getCoeficienteIva());
+            articul.setTipoIva(arti.getTipoIva());
                         detalleDelPedido.add(articul);
             agregarRenglonTabla();
 //                Double montoTotalX=(arti.getPrecioUnitario() * arti.getCantidad());
@@ -1129,7 +1163,11 @@ private void cargarLista(ArrayList lista){
 private void agregarRenglonTabla(){
         MiModeloTablaFacturacion busC=new MiModeloTablaFacturacion();
         this.jTable1.removeAll();
-        montoTotal=0.00;
+        montoTotal = 0.00;
+        subTotal = 0.00;
+        montoIva = 0.00;
+        listadoIva=null;
+        listadoIva=control.ListarTipos();
         //ArrayList listadoPedidos=new ArrayList();
         this.jTable1.setModel(busC);
         Articulos pedidos;
@@ -1163,14 +1201,27 @@ private void agregarRenglonTabla(){
             //valor=valor * cliT.getCoeficienteListaDeprecios();
             pedidos.setPrecioUnitario(valor);
             String val=Numeros.ConvertirNumero(valor);
-            montoTotal=montoTotal + valor;
-            //precioUnitario=precioUnitario * cliT.getCoeficienteListaDeprecios();
-            //fila[2]=cant;
-            
+            montoTotal = montoTotal + valor;
+            Double subb = Numeros.CalcularSubTotal(valor, pedidos.getCoeficienteIva());
+            subTotal = subTotal + subb;
+            double ivaa = Numeros.CalcularIva(subb, pedidos.getCoeficienteIva());
+            montoIva = montoIva + ivaa;
+            Iterator it = listadoIva.listIterator();
+            while (it.hasNext()) {
+                tipoIva = (TiposIva) it.next();
+                if (tipoIva.getId() == pedidos.getTipoIva()) {
+                    subb=subb * -1;
+                    double base = tipoIva.getBaseImponible() + subb;
+                    ivaa=ivaa * -1;
+                    double ivva = tipoIva.getImporte() + ivaa;
+                    tipoIva.setBaseImponible(base);
+                    tipoIva.setImporte(ivva);
+                }
+            }
             precioUnitario = Numeros.Redondear(precioUnitario);
-            Double precioSIva = precioUnitario / 1.21;
+            Double precioSIva = pedidos.getSubTotal();
             precioSIva = Numeros.Redondear(precioSIva);
-            Double iva = precioUnitario - precioSIva;
+            Double iva = pedidos.getIva();
             Double pFinal = valor;
             pFinal = Numeros.Redondear(pFinal);
             
@@ -1186,12 +1237,27 @@ private void agregarRenglonTabla(){
         }
         if (porcentajeDescuento > 0.00) {
             Double subD = montoTotal * porcentajeDescuento;
-            montoDescuento=Numeros.Redondear(subD);
+            montoDescuento = Numeros.Redondear(subD);
+            subTotal = subTotal * porcentajeDescuento;
+            subTotal = Numeros.Redondear(subTotal);
+            montoIva = montoIva * porcentajeDescuento;
+            montoIva = Numeros.Redondear(montoIva);
             montoTotal = montoTotal - montoDescuento;
+            Iterator it = listadoIva.listIterator();
+            while (it.hasNext()) {
+                tipoIva = (TiposIva) it.next();
+                if (tipoIva.getBaseImponible() > 0.00) {
+                    double base = tipoIva.getBaseImponible() * porcentajeDescuento;
+                    double ivva = tipoIva.getImporte() * porcentajeDescuento;
+                    tipoIva.setBaseImponible(base);
+                    tipoIva.setImporte(ivva);
+                }
+            }
+
         }
-        subTotal = montoTotal / 1.21;
-        subTotal = Numeros.Redondear(subTotal);
-        Double ivv = Numeros.Redondear(subTotal * 0.21);
+       // subTotal = montoTotal / 1.21;
+       // subTotal = Numeros.Redondear(subTotal);
+        Double ivv = montoIva;
         Double sub = subTotal;
         Double tot = montoTotal;
         fila[0]="";
@@ -1250,8 +1316,8 @@ private void montrarMonto(){
     String total1=Numeros.ConvertirNumero(montoTotal);
     String total="";
     if(cliT.getTipoIva()==1){
-        String bruto=Numeros.ConvertirNumero( montoTotal /1.21);
-        String iva=Numeros.ConvertirNumero(montoTotal * 0.21);
+        String bruto=Numeros.ConvertirNumero( subTotal);
+        String iva=Numeros.ConvertirNumero(montoIva);
         total="<html>Bruto :"+bruto+" <br>IVA 21% "+iva+" <br>Neto "+total1+"</html>";
     }else{
         total="<html>Neto "+total1+"</html>";
@@ -1304,6 +1370,10 @@ private void CargarCantidad(){
                     articul.setPrecioUnitarioNeto(arti.getPrecioUnitarioNeto());
                     articul.setIdCombo(arti.getIdCombo());
                     articul.setCombo(arti.getCombo());
+                    articul.setSubTotal(arti.getSubTotal());
+            articul.setIva(arti.getIva());
+            articul.setCoeficienteIva(arti.getCoeficienteIva());
+            articul.setTipoIva(arti.getTipoIva());
             detalleDelPedido.add(articul);
             agregarRenglonTabla();
 //                Double montoTotalX=(arti.getPrecioUnitario() * arti.getCantidad());

@@ -1,0 +1,2 @@
+usuario :administrador sucursal 1 idcaja 1
+usuario :administrador sucursal 1 idcaja 1

@@ -118,8 +118,8 @@ public class ArticulosMod extends javax.swing.JInternalFrame {
         
         //this.jTextField2.setText(String.valueOf(totalActual));
         this.jTextField3.setText(String.valueOf(arti.getStockMinimo()));
-        this.jTextField4.setText(String.valueOf(arti.getPrecioDeCosto()));
-        this.jTextField5.setText(String.valueOf(arti.getPrecioUnitarioNeto()));
+        this.jTextField4.setText(String.valueOf(Numeros.Redondear(arti.getPrecioDeCosto())));
+        this.jTextField5.setText(String.valueOf(Numeros.Redondear(arti.getPrecioUnitarioNeto())));
         this.jTextField7.setText(String.valueOf(arti.getCodigoDeBarra()));
         //this.jTextField6.setText(String.valueOf(arti.getPrecioServicio()));
        // this.jTextField9.setText(String.valueOf(arti.getPrecioServicio1()));

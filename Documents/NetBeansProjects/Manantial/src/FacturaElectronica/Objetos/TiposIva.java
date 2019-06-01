@@ -44,6 +44,26 @@ public class TiposIva {
     public double getImporte() {
         return importe;
     }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setBaseImponible(double baseImponible) {
+        this.baseImponible = baseImponible;
+    }
+
+    public void setImporte(double importe) {
+        this.importe = importe;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public void setAlicuota(double alicuota) {
+        this.alicuota = alicuota;
+    }
     
     
 }
