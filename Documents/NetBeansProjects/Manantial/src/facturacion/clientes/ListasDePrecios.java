@@ -22,7 +22,7 @@ public class ListasDePrecios implements Personalizable{
     private String descripcionLista;
     private Double porcentaje;
     private String sql;
-    private static Transaccionable tra;
+    private Transaccionable tra;
         
     private static ResultSet rs;
 

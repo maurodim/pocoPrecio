@@ -154,7 +154,7 @@ public class InformeDiarioStock {
             // hoja 2
             
         form=null;
-        sql="SELECT cantidad,preciodecosto,preciodeventa,precioservicio,fecha,numerocomprobante,(select clientes.RAZON_SOCI from clientes where clientes.id=movimientosarticulos.numeroCliente)as nombreC,(select articulos.NOMBRE from articulos where articulos.ID=movimientosarticulos.idArticulo)as descA,(select usuarios.nombre from usuarios where usuarios.id=movimientosarticulos.numeroUsuario) as nombreU FROM movimientosarticulos where tipoMovimiento =1 and idcaja="+Inicio.caja.getNumero();
+        sql="SELECT numero,numerousuario,fecha,numerocomprobante,pagado,tipocomprobante,monto,tipomovimiento,idcaja,cantidad,idcliente,tipocliente,observaciones,(select usuarios.nombre from usuarios where usuarios.id=movimientoscaja.numeroUsuario)as nombreUsuario,(select clientes.RAZON_SOCI from clientes where clientes.id=movimientoscaja.idCliente)as nombreCliente,(select tipocomprobantes.descripcion from tipocomprobantes where tipocomprobantes.id=movimientoscaja.tipoComprobante)as nombreComprobante,(select tipomovimientos.DESCRIPCION from tipomovimientos where tipomovimientos.ID=movimientoscaja.tipoMovimiento)as nombreMov FROM movimientoscaja where idcaja="+Inicio.caja.getNumero();
         //System.out.println(sql);
         //tra=new Conecciones();
         rs=tra.leerConjuntoDeRegistros(sql);
@@ -173,29 +173,29 @@ public class InformeDiarioStock {
             celda.setCellValue("Cajero");
             celda1=fila.createCell(1);
             celda1.setCellStyle(titulo);
-            celda1.setCellValue("Descripcion Articulo");
+            celda1.setCellValue("Cliente");
             celda2=fila.createCell(2);
             celda2.setCellStyle(titulo);
-            celda2.setCellValue("Cantidad");
+            celda2.setCellValue("Comprobante Numero");
             celda3=fila.createCell(3);
             celda3.setCellStyle(titulo);
-            celda3.setCellValue("Precio de Costo");
+            celda3.setCellValue("Tipo Comprobante");
             celda4=fila.createCell(4);
             celda4.setCellStyle(titulo);
-            celda4.setCellValue("Precio de Venta");
+            celda4.setCellValue("Monto");
             celda5=fila.createCell(5);
             celda5.setCellStyle(titulo);
             celda5.setCellValue("Fecha");
             celda6=fila.createCell(6);
             celda6.setCellStyle(titulo);
-            celda6.setCellValue("Precio de Servicio");
+            celda6.setCellValue("Tipo de Movimiento");
             celda7=fila.createCell(7);
             celda7.setCellStyle(titulo);
-            celda7.setCellValue("comprobante");
+            celda7.setCellValue("Condicion");
 
             celda8=fila.createCell(8);
             celda8.setCellStyle(titulo);
-            celda8.setCellValue("Cliente");
+            celda8.setCellValue("idMovimiento");
             
             
             }
@@ -214,20 +214,20 @@ public class InformeDiarioStock {
             celda=fila.createCell(0);
             ttx=ttx;
             celda.setCellType(HSSFCell.CELL_TYPE_STRING);
-            celda.setCellValue(rs.getString("nombreU"));
+            celda.setCellValue(rs.getString("nombreUsuario"));
             celda1=fila.createCell(1);
             ttx=ttx;
             celda1.setCellType(HSSFCell.CELL_TYPE_STRING);
-            celda1.setCellValue(rs.getString("descA"));
+            celda1.setCellValue(rs.getString("nombreCliente"));
             celda2=fila.createCell(2);
             celda2.setCellType(HSSFCell.CELL_TYPE_NUMERIC);
-            celda2.setCellValue(rs.getDouble("cantidad"));
+            celda2.setCellValue(rs.getInt("numeroComprobante"));
             celda3=fila.createCell(3);
-            celda3.setCellType(HSSFCell.CELL_TYPE_NUMERIC);
-            celda3.setCellValue(rs.getDouble("precioDeCosto"));
+            celda3.setCellType(HSSFCell.CELL_TYPE_STRING);
+            celda3.setCellValue(rs.getString("nombreComprobante"));
             celda4=fila.createCell(4);
             celda4.setCellType(HSSFCell.CELL_TYPE_NUMERIC);
-            celda4.setCellValue(rs.getDouble("precioDeVenta"));
+            celda4.setCellValue(rs.getDouble("monto"));
             
            
             celda5=fila.createCell(5);
@@ -236,22 +236,25 @@ public class InformeDiarioStock {
             celda5.setCellValue(" "+rs.getDate("fecha"));
             //celda5.setCellValue(rs.getDate("fecha"));
             celda6=fila.createCell(6);
-            celda6.setCellType(HSSFCell.CELL_TYPE_NUMERIC);
-            celda6.setCellValue(rs.getDouble("precioServicio"));
+            celda6.setCellType(HSSFCell.CELL_TYPE_STRING);
+            celda6.setCellValue(rs.getString("nombreMov"));
             celda7=fila.createCell(7);
-            celda7.setCellType(HSSFCell.CELL_TYPE_NUMERIC);
-            celda7.setCellValue(rs.getInt("numeroComprobante"));
+            String pagado="PAGADO";
+            if(rs.getInt("pagado")==0 && rs.getInt("tipoMovimiento")==1)pagado="CTA CTE";
+            celda7.setCellType(HSSFCell.CELL_TYPE_STRING);
+            celda7.setCellValue(pagado);
             
             celda8=fila.createCell(8);
-            celda8.setCellType(HSSFCell.CELL_TYPE_STRING);
-            celda8.setCellValue(rs.getString("nombreC"));
-            
+            celda8.setCellType(HSSFCell.CELL_TYPE_NUMERIC);
+            celda8.setCellValue(rs.getInt("numero"));
         }
+            
+            
             rs.close();
         
 
 //texto+="\r\n";
-        String ruta="C://Informes//"+Inicio.fechaDia+"_"+Inicio.usuario.getNombre()+" - informeDeStock.xls";
+        String ruta="Informes\\"+Inicio.fechaDia+"_"+Inicio.usuario.getNombre()+" - informeDeStock.xls";
         String nombree=Inicio.fechaDia+"_"+Inicio.usuario.getNombre()+" - informeDeStock.xls";
         try {
             FileOutputStream elFichero=new FileOutputStream(ruta);

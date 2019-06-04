@@ -102,6 +102,8 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
         //cliT=(ClientesTango)oob;
         //comp.setCliente(cliT);
         initComponents();
+        lista = new ListasDePrecios(cliT.getListaDePrecios());
+        cliT.setCoeficienteListaDeprecios(lista.getCoeficiente());
         tgp = new TablaGenericaProductos();
         listadoFormas = new ArrayList();
         porcentajeDescuento = 0.00;
@@ -129,6 +131,7 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
 //cliT=(ClientesTango)oob;
         //comp.setCliente(cliT);
         initComponents();
+        cliT.setCoeficienteListaDeprecios(lista.getCoeficiente());
         listadoFormas = new ArrayList();
         porcentajeDescuento = 0.00;
         subTotal = 0.00;
@@ -952,7 +955,7 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
             listadoDeBusqueda.clear();
             Facturar fart = new Articulos();
             arti = new Articulos();
-            arti = (Articulos) fart.cargarPorCodigoDeBarra(jTextField1.getText());
+            arti = (Articulos) fart.cargarPorCodigoDeBarraFacturacion(jTextField1.getText(),cliT.getCoeficienteListaDeprecios());
             if (arti.getCodigoDeBarra().equals("")) {
 
                 jTextField1.setText("");
@@ -994,7 +997,7 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
             ModificableArticulos modiA = new Articulos();
             Articulable modi = new ArticulosAsignados();
             listadoDeBusqueda.clear();
-            listadoDeBusqueda = fart.listadoBusqueda(jTextField1.getText());
+            listadoDeBusqueda = fart.listadoBusquedaFacturacion(jTextField1.getText(),cliT.getCoeficienteListaDeprecios());
             //listadoDeBusqueda=modi.filtrador(listadoSubRubros,listadoR);
 
 //            this.jTable2.setModel(modiA.mostrarListadoBusqueda(listadoDeBusqueda));
@@ -1213,6 +1216,7 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
         if (evt.getKeyCode() == KeyEvent.VK_F7) {
             //System.out.println("ENTRO CON EL ENTER¡¡¡¡¡¡");
             CargarCantidad carga = new CargarCantidad(null, true);
+            carga.setCoefi(cliT.getCoeficienteListaDeprecios());
             carga.setVisible(true);
             arti = carga.arti;
             /*

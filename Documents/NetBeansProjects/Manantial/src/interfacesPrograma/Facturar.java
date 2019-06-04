@@ -24,5 +24,8 @@ public interface Facturar {
     public Object cargarPorCodigoDeBarra(String codigoDeBarra);
     public Integer leerNumeroDeComprobanteSiguiente(Integer numeroComprobante);
     public Object cargarPorCodigoAsignado(Integer id);
+    public ArrayList listadoBusquedaFacturacion(String criterio,Double coeficiente);
+    public Object cargarPorCodigoDeBarraFacturacion(String cordigoDeBarra,double coeficiente);
+    public Object cargarPorCodigoAsignadoFacturacion(Integer id,double coeficiente);
     
 }

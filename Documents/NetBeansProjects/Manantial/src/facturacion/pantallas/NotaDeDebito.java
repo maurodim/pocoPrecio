@@ -35,7 +35,6 @@ import ConfiguracionR.Propiedades;
 import ListasDePrecios.Articulable;
 import ListasDePrecios.ArticulosAsignados;
 import Sucursales.ListasDePrecios;
-import facturacion.clientes.ImprimirFactura;
 import facturacion.clientes.MovimientosClientes;
 import interfaces.Comparables;
 import interfaces.Transaccionable;
@@ -479,7 +478,7 @@ public class NotaDeDebito extends javax.swing.JInternalFrame implements KeyListe
             listadoDeBusqueda.clear();
             Facturar fart = new Articulos();
             arti = new Articulos();
-            arti = (Articulos) fart.cargarPorCodigoDeBarra(jTextField1.getText());
+            arti = (Articulos) fart.cargarPorCodigoDeBarraFacturacion(jTextField1.getText(),cliT.getCoeficienteListaDeprecios());
             if (arti.getCodigoDeBarra().equals("")) {
 
                 jTextField1.setText("");
@@ -521,7 +520,7 @@ public class NotaDeDebito extends javax.swing.JInternalFrame implements KeyListe
             ModificableArticulos modiA = new Articulos();
             Articulable modi = new ArticulosAsignados();
             listadoDeBusqueda.clear();
-            listadoDeBusqueda = fart.listadoBusqueda(jTextField1.getText());
+            listadoDeBusqueda = fart.listadoBusquedaFacturacion(jTextField1.getText(),cliT.getCoeficienteListaDeprecios());
             //listadoDeBusqueda=modi.filtrador(listadoSubRubros,listadoR);
 
 //            this.jTable2.setModel(modiA.mostrarListadoBusqueda(listadoDeBusqueda));
@@ -549,6 +548,7 @@ public class NotaDeDebito extends javax.swing.JInternalFrame implements KeyListe
         if (evt.getKeyCode() == KeyEvent.VK_F7) {
             //System.out.println("ENTRO CON EL ENTER¡¡¡¡¡¡");
             CargarCantidad carga = new CargarCantidad(null, true);
+            carga.setCoefi(cliT.getCoeficienteListaDeprecios());
             carga.setVisible(true);
             arti = carga.arti;
             /*

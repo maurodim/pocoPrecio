@@ -121,6 +121,7 @@ public class DetalleFacturas implements Facturable{
         DetalleFacturas detalle;
         ArrayList listadoDetalle=new ArrayList();
         String sql="select id,idarticulo,cantidad,preciounitario,cantidadremitida,(select articulos.nombre from articulos where articulos.id=detallefacturas.idarticulo)as descripcion from detallefacturas where idfactura="+idPed;
+        System.out.println("SQL "+sql);
         Transaccionable tra=null;
         try {
             tra = new Conecciones();

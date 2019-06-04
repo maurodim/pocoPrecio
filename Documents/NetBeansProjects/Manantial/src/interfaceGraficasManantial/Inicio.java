@@ -45,6 +45,7 @@ import ConfiguracionR.Propiedades;
 import Etiquetador.Pantallas.Etiquetador;
 import Look.Fondo;
 import Proveedores.AbmProveedores;
+import ClientesPantallas.ListasDePreciosAbm;
 import facturacion.pantallas.IngresoDeFacturas;
 import facturacion.pantallas.NotaDeCredito;
 import facturacion.pantallas.NotaDeDebito;
@@ -208,6 +209,7 @@ public  void cargarImagen(javax.swing.JDesktopPane jDeskp,InputStream fileImagen
         jMenuItem21 = new javax.swing.JMenuItem();
         jMenuItem11 = new javax.swing.JMenuItem();
         jMenuItem13 = new javax.swing.JMenuItem();
+        jMenuItem15 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem12 = new javax.swing.JMenuItem();
@@ -288,6 +290,15 @@ public  void cargarImagen(javax.swing.JDesktopPane jDeskp,InputStream fileImagen
             }
         });
         jMenu1.add(jMenuItem13);
+
+        jMenuItem15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/nuevos/lista.png"))); // NOI18N
+        jMenuItem15.setText("Listas de Precios");
+        jMenuItem15.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem15ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem15);
 
         jMenuBar1.add(jMenu1);
 
@@ -753,6 +764,13 @@ public  void cargarImagen(javax.swing.JDesktopPane jDeskp,InputStream fileImagen
         }
     }//GEN-LAST:event_jMenu8MouseClicked
 
+    private void jMenuItem15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem15ActionPerformed
+        ListasDePreciosAbm lst=new ListasDePreciosAbm();
+        Inicio.jDesktopPane1.add(lst);
+        lst.setVisible(true);
+        lst.toFront();
+    }//GEN-LAST:event_jMenuItem15ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -825,6 +843,7 @@ public  void cargarImagen(javax.swing.JDesktopPane jDeskp,InputStream fileImagen
     private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem14;
+    private javax.swing.JMenuItem jMenuItem15;
     private javax.swing.JMenuItem jMenuItem18;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem21;

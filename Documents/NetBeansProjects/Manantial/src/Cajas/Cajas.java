@@ -1050,8 +1050,8 @@ public class Cajas extends Sucursales implements Cajeables{
         switch (tipoMovimiento){
            case 1:
                //ventas -- leo en articulos para sacar el detalle, devuelvo un objeto comprobantes
-               sql="select * from movimientosarticulos where tipoComprobante="+tipoComprobante+" and numeroComprobante="+idComprobante+" and numerousuario="+Inicio.usuario.getNumeroId()+" and tipoMovimiento=1";
-               //System.out.println(sql);
+               sql="select * from movimientosarticulos where tipoComprobante="+tipoComprobante+" and numeroComprobante="+idComprobante+" and tipoMovimiento=1";
+               System.out.println(sql);
                rs=tra.leerConjuntoDeRegistros(sql);
                Comprobantes comprobante=new Comprobantes();
                Clientes cliente;

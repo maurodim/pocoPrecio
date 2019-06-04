@@ -452,6 +452,21 @@ public class FacturaProveedor implements Comprobable,Facturar,Adeudable{
     public ArrayList ListarPorLocalidad(Integer idLocalidad) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public ArrayList listadoBusquedaFacturacion(String criterio, Double coeficiente) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Object cargarPorCodigoDeBarraFacturacion(String cordigoDeBarra, double coeficiente) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Object cargarPorCodigoAsignadoFacturacion(Integer id, double coeficiente) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     
 }

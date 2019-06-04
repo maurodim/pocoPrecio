@@ -18,6 +18,12 @@ import java.util.List;
 public class CargarCantidad extends javax.swing.JDialog {
 private List<Articulos> listadoDeBusquedas1;
 public Articulos arti;
+private double coefi;
+
+    public void setCoefi(double coefi) {
+        this.coefi = coefi;
+    }
+
     
     public CargarCantidad(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -99,7 +105,7 @@ public Articulos arti;
             listadoDeBusquedas1.clear();
             Facturar fart = new Articulos();
             arti = new Articulos();
-            arti = (Articulos) fart.cargarPorCodigoDeBarra(jTextField1.getText());
+            arti = (Articulos) fart.cargarPorCodigoDeBarraFacturacion(jTextField1.getText(),coefi);
             if (arti.getCodigoDeBarra().equals("")) {
                 
                 jTextField1.setText("");

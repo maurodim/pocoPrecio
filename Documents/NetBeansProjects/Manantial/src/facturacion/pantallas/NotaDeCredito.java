@@ -129,7 +129,7 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
         //factura.setIdPedido(pedido.getId());
         cliT=new Clientes();
         //ListasDePrecios lista=new ListasDePrecios(cliT.getListaDePrecios());
-        cliT=(Clientes)fact.cargarPorCodigoAsignado(factura.getIdCliente());
+        cliT=(Clientes)fact.cargarPorCodigoAsignadoFacturacion(factura.getIdCliente(),cliT.getCoeficienteListaDeprecios());
         listadoPed=detP.cargarDetallefactura(factura.getId());
         detalleDelPedido=detP.convertirAArticulos(listadoPed);
         
@@ -501,7 +501,7 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
             listadoDeBusqueda.clear();
             Facturar fart=new Articulos();
             arti=new Articulos();
-            arti=(Articulos)fart.cargarPorCodigoDeBarra(jTextField1.getText());
+            arti=(Articulos)fart.cargarPorCodigoDeBarraFacturacion(jTextField1.getText(),cliT.getCoeficienteListaDeprecios());
             if(arti.getCodigoDeBarra().equals("")){
                 
              jTextField1.setText("");   
@@ -558,7 +558,7 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
             ModificableArticulos modiA=new Articulos();
             Articulable modi=new ArticulosAsignados();
             listadoDeBusqueda.clear();
-            listadoDeBusqueda=modi.convertirListadoEnArticulos(modi.filtradorDeFormularios(listadoSubRubros, listadoR, cliT,this.jTextField1.getText()));
+            listadoDeBusqueda=fart.listadoBusquedaFacturacion(this.jTextField1.getText(),cliT.getCoeficienteListaDeprecios());
             //listadoDeBusqueda=modi.filtrador(listadoSubRubros,listadoR);
 //            this.jTable2.setModel(modiA.mostrarListadoBusqueda(listadoDeBusqueda));
 //            columnaCodigo = this.jTable2.getColumn("Precio");
@@ -608,6 +608,7 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
         if (evt.getKeyCode() == KeyEvent.VK_F7) {
             //System.out.println("ENTRO CON EL ENTER¡¡¡¡¡¡");
             CargarCantidad carga=new CargarCantidad(null,true);
+            carga.setCoefi(cliT.getCoeficienteListaDeprecios());
             carga.setVisible(true);
             arti=carga.arti;
             /*

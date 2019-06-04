@@ -118,7 +118,7 @@ public class ImprimirFactura {
 
             }
             pagina.setFont(fuente1);
-            pagina.drawString("PRESUPUESTO " + numero, 240, 25);
+            pagina.drawString(cotizacion.getDescripcionTipo().toUpperCase()+" " + numero, 240, 25);
 
             /*
         StringBuffer numero=new StringBuffer();

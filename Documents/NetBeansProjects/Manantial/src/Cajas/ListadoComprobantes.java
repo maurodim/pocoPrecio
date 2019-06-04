@@ -16,9 +16,11 @@ import java.util.logging.Logger;
  * @author mauro
  */
 public class ListadoComprobantes extends javax.swing.JDialog {
+
     private Integer idComp;
     private Integer tipoMov;
     private Integer idMov;
+
     /**
      * Creates new form ListadoComprobantes
      */
@@ -27,12 +29,12 @@ public class ListadoComprobantes extends javax.swing.JDialog {
         initComponents();
     }
 
-    ListadoComprobantes(Integer idComprobante,Integer tipoMovimiento,Integer idMovimiento,String formaDePago) {
-        idComp=idComprobante;
-        tipoMov=tipoMovimiento;
-        idMov=idMovimiento;
-       initComponents();
-       this.setTitle("Comprobante pagado con "+formaDePago);
+    ListadoComprobantes(Integer idComprobante, Integer tipoMovimiento, Integer idMovimiento, String formaDePago) {
+        idComp = idComprobante;
+        tipoMov = tipoMovimiento;
+        idMov = idMovimiento;
+        initComponents();
+        this.setTitle("Comprobante pagado con " + formaDePago);
     }
 
     /**
@@ -105,20 +107,27 @@ public class ListadoComprobantes extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       
-                        
-           try {
-               if(Propiedades.getTIQUEADORA()==0){
-               ImprimirFactura imprimir = new ImprimirFactura();
-               imprimir.ImprimirFactura(idComp, tipoMov);
-               }else{
-                        ImprimirComprobantes ticket=new ImprimirComprobantes();
-                        ticket.ImprimirPresupuesto(idComp, tipoMov);
-                    }
-           } catch (IOException ex) {
-               Logger.getLogger(ListadoComprobantes.class.getName()).log(Level.SEVERE, null, ex);
-           }
-                    
+
+        try {
+            if (Propiedades.getTIQUEADORA() == 0) {
+
+                if (idMov == 28) {
+
+                    ImprimirFactura imprimir = new ImprimirFactura();
+                    imprimir.ImprimirFactura(tipoMov, idMov);
+                } else {
+                    ImprimirFactura imprimir = new ImprimirFactura();
+                    imprimir.ImprimirFactura(idComp, tipoMov);
+                }
+            } else {
+                ImprimirComprobantes ticket = new ImprimirComprobantes();
+                ticket.ImprimirPresupuesto(idMov, tipoMov);
+
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(ListadoComprobantes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

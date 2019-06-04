@@ -5,6 +5,7 @@
 package facturacion.pantallas;
 
 import Cotizaciones.IngresoDeCotizacion;
+import Sucursales.ListasDePrecios;
 import facturacion.clientes.Clientes;
 import interfacesPrograma.Busquedas;
 import java.awt.event.KeyEvent;
@@ -284,7 +285,9 @@ public class SeleccionDeClientes1 extends javax.swing.JInternalFrame {
         int listaDePrecio = Integer.parseInt(this.jTextField2.getText());
         cliT.setDescuento(desc);
         cliT.setCondicionDeVenta(condicionVta);
-        cliT.setListaDePrecios(listaDePrecio);
+        //cliT.setListaDePrecios(listaDePrecio);
+        ListasDePrecios lista=new ListasDePrecios(cliT.getListaDePrecios());
+        cliT.setCoeficienteListaDeprecios(lista.getCoeficiente());
         //System.out.println(" DESCUENTO PANTALLA CLIENTE"+desc);
         if (originario == 1) {
             if(cliT.getCupoDeCredito()==0){

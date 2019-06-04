@@ -954,42 +954,7 @@ public class Articulos implements Facturar, Editables, Comparables, ModificableA
             } catch (SQLException ex) {
                 Logger.getLogger(Articulos.class.getName()).log(Level.SEVERE, null, ex);
             }
-            /*
-            Transaccionable tra=null;
-        try {
-            tra = new Conecciones();
-        } catch (InstantiationException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
-        }
-            ArrayList resultado=new ArrayList();
-            Articulos articulo=null;
-            String sql="select *,(select stockart.stock from stockart where stockart.id=articulos.ID)as stock,(select rubros.recargo from rubros where rubros.id=articulos.idRubro)as recargo from articulos where NOMBRE like '"+criterio+"%' and INHABILITADO=0";
-            ResultSet rr=tra.leerConjuntoDeRegistros(sql);
-            try {
-            while(rr.next()){
-            articulo=new Articulos();
-            articulo.setCodigoAsignado(rr.getString("ID"));
-            articulo.setDescripcionArticulo(rr.getString("NOMBRE"));
-            articulo.setNumeroId(rr.getInt("ID"));
-            articulo.setCodigoDeBarra(rr.getString("BARRAS"));
-            articulo.setRecargo(rr.getDouble("recargo"));
-            articulo.setPrecioUnitarioNeto(rr.getDouble("PRECIO"));
-            articulo.setEquivalencia(rr.getDouble("equivalencia"));
-            articulo.setPrecioDeCosto(rr.getDouble("COSTO"));
-            articulo.setStockMinimo(rr.getDouble("MINIMO"));
-            articulo.setStockActual(rr.getDouble("stock"));
-            articulo.setPrecioServicio(rr.getDouble("SERVICIO"));
-            articulo.setModificaPrecio(rr.getBoolean("modificaPrecio"));
-            resultado.add(articulo);
-            }
-            } catch (SQLException ex) {
-            Logger.getLogger(Articulos.class.getName()).log(Level.SEVERE, null, ex);
-            }
-             */
+            
 
         } catch (InstantiationException ex) {
             Logger.getLogger(Articulos.class.getName()).log(Level.SEVERE, null, ex);
@@ -1916,6 +1881,239 @@ public class Articulos implements Facturar, Editables, Comparables, ModificableA
             ModificaionObjeto(artic);
             //modificar+="nombre=case id when "+artic.getNumeroId()+" then '"+artic.getDescripcionArticulo()+"',barras= case id when "+artic.getNumeroId()+" then '"+artic.getCodigoDeBarra()+"'";
         }
+    }
+
+    @Override
+    public ArrayList listadoBusquedaFacturacion(String criterio, Double coeficiente) {
+        ArrayList<Articulos> resultado = new ArrayList();
+        try {
+
+            Articulos articulo = null;
+            criterio = criterio.toUpperCase();
+            String sql = "select id,nombre,barras,idsubrubro,idrubro,precio,equivalencia,costo,minimo,stock,servicio,servicio1,modificaprecio,modificaservicio,stock,recargo,idcombo,subtotal,iva,tipoiva,(select sum(movimientosarticulos.cantidad) from movimientosarticulos where movimientosarticulos.idArticulo=articulos.ID)as sst from articulos where nombre like '%" + criterio + "%'";
+            Transaccionable tra = null;
+
+            tra = new Conecciones();
+
+            ResultSet rr = tra.leerConjuntoDeRegistros(sql);
+            try {
+                while (rr.next()) {
+                    articulo = new Articulos();
+
+                    articulo.setCodigoAsignado(rr.getString("ID"));
+                    articulo.setDescripcionArticulo(rr.getString("NOMBRE"));
+                    articulo.setNumeroId(rr.getInt("ID"));
+                    articulo.setCodigoDeBarra(rr.getString("BARRAS"));
+                    articulo.setRecargo(rr.getDouble("recargo"));
+                    articulo.setPrecioUnitarioNeto(Numeros.Redondear(rr.getDouble("PRECIO") * coeficiente));
+                    articulo.setEquivalencia(rr.getDouble("equivalencia"));
+                    articulo.setPrecioDeCosto(rr.getDouble("COSTO"));
+                    articulo.setStockMinimo(rr.getDouble("MINIMO"));
+                    articulo.setStockActual(rr.getDouble("sst"));
+                    articulo.setRubroId(rr.getInt("idrubro"));
+                    articulo.setIdSubRubro(rr.getInt("idsubrubro"));
+                    try {
+                        if (Inicio.sucursal.getDireccion().equals("1")) {
+                            articulo.setPrecioServicio(rr.getDouble("SERVICIO"));
+                        } else {
+                            articulo.setPrecioServicio(rr.getDouble("SERVICIO1"));
+                        }
+                    } catch (NullPointerException nEx) {
+                        articulo.setPrecioServicio(rr.getDouble("SERVICIO"));
+                        articulo.setPrecioServicio1(rr.getDouble("SERVICIO1"));
+                    }
+                    articulo.setModificaPrecio(rr.getBoolean("modificaPrecio"));
+                    articulo.setModificaServicio(rr.getBoolean("modificaServicio"));
+                    String nom = rr.getString("NOMBRE");
+                    articulo.setIdCombo(rr.getInt("idcombo"));
+                    articulo.setSubTotal(Numeros.Redondear(rr.getDouble("subtotal") * coeficiente));
+                    articulo.setIva(Numeros.Redondear(rr.getDouble("iva") * coeficiente));
+                    articulo.setTipoIva(rr.getInt("tipoiva"));
+                    switch(rr.getInt("tipoiva")){
+                        case 1:
+                            articulo.setCoeficienteIva(0.00);
+                            break;
+                        case 2:
+                            articulo.setCoeficienteIva(0.00);
+                            break;
+                        case 3:
+                            articulo.setCoeficienteIva(0.00);
+                            break;
+                        case 4:
+                            articulo.setCoeficienteIva(10.5);
+                            break;
+                        case 5:
+                            articulo.setCoeficienteIva(21.0);
+                            break;
+                        case 6:
+                            articulo.setCoeficienteIva(27.0);
+                            break;
+                    }
+
+                    resultado.add(articulo);
+                }
+                rr.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(Articulos.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Articulos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(Articulos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Articulos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return resultado;
+    }
+
+    @Override
+    public Object cargarPorCodigoDeBarraFacturacion(String codigoDeBarra, double coeficiente) {
+        Articulos articulo = new Articulos();
+
+        try {
+            String sql = "select id,nombre,idrubro,idsubrubro,barras,precio,equivalencia,costo,minimo,stock,servicio,servicio1,modificaprecio,modificaservicio,stock,recargo,idcombo,subtotal,iva,tipoiva,(select sum(movimientosarticulos.cantidad) from movimientosarticulos where movimientosarticulos.idArticulo=articulos.ID)as sst from articulos where BARRAS like '" + codigoDeBarra + "' and INHABILITADO=0";
+
+            System.out.println(sql);
+            Transaccionable tra = null;
+
+            tra = new Conecciones();
+
+            ResultSet rr = tra.leerConjuntoDeRegistros(sql);
+
+            while (rr.next()) {
+
+                articulo.setCodigoAsignado(rr.getString("ID"));
+                articulo.setDescripcionArticulo(rr.getString("NOMBRE"));
+                articulo.setNumeroId(rr.getInt("ID"));
+                articulo.setCodigoDeBarra(rr.getString("BARRAS"));
+                articulo.setRecargo(rr.getDouble("recargo"));
+                articulo.setPrecioUnitarioNeto(Numeros.Redondear(rr.getDouble("PRECIO") * coeficiente));
+                articulo.setEquivalencia(rr.getDouble("equivalencia"));
+                articulo.setPrecioDeCosto(rr.getDouble("COSTO"));
+                articulo.setStockMinimo(rr.getDouble("MINIMO"));
+                articulo.setStockActual(rr.getDouble("sst"));
+                articulo.setRubroId(rr.getInt("idrubro"));
+                articulo.setIdSubRubro(rr.getInt("idsubrubro"));
+                articulo.setPrecioServicio(rr.getDouble("SERVICIO"));
+
+                articulo.setModificaPrecio(rr.getBoolean("modificaPrecio"));
+                articulo.setModificaServicio(rr.getBoolean("modificaServicio"));
+                String nom = rr.getString("NOMBRE");
+                articulo.setIdCombo(rr.getInt("idcombo"));
+                articulo.setSubTotal(Numeros.Redondear(rr.getDouble("subtotal") * coeficiente));
+                    articulo.setIva(Numeros.Redondear(rr.getDouble("iva") * coeficiente));
+                    articulo.setTipoIva(rr.getInt("tipoiva"));
+                    switch(rr.getInt("tipoiva")){
+                        case 1:
+                            articulo.setCoeficienteIva(0.00);
+                            break;
+                        case 2:
+                            articulo.setCoeficienteIva(0.00);
+                            break;
+                        case 3:
+                            articulo.setCoeficienteIva(0.00);
+                            break;
+                        case 4:
+                            articulo.setCoeficienteIva(10.5);
+                            break;
+                        case 5:
+                            articulo.setCoeficienteIva(21.0);
+                            break;
+                        case 6:
+                            articulo.setCoeficienteIva(27.0);
+                            break;
+                    }
+
+            }
+            rr.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(Articulos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Articulos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(Articulos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return articulo;
+    }
+
+    @Override
+    public Object cargarPorCodigoAsignadoFacturacion(Integer id, double coeficiente) {
+        sql = "";
+        Articulos articulo = null;
+        /*
+        if(listadoBarr.size()==0){
+            tra=new Conecciones();
+            sql="select *,(select stockart.stock from stockart where stockart.id=articulos.ID)as stock,(select rubros.recargo from rubros where rubros.id=articulos.idRubro)as recargo from articulos where INHABILITADO=0";
+            
+        }else{
+         */
+
+        sql = "select articulos.ID,articulos.idrubro,articulos.idsubrubro,articulos.NOMBRE,articulos.BARRAS,articulos.recargo,articulos.PRECIO,articulos.equivalencia,articulos.COSTO,articulos.MINIMO,articulos.subtotal,articulos.iva,articulos.tipoiva,(select sum(movimientosarticulos.cantidad) from movimientosarticulos where movimientosarticulos.idArticulo=articulos.ID)as sst,articulos.SERVICIO, articulos.modificaPrecio,articulos.modificaServicio,articulos.SERVICIO1,articulos.idcombo from articulos where id=" + id;
+
+        //}
+        try {
+            tra = new Conecciones();
+            ResultSet rr = tra.leerConjuntoDeRegistros(sql);
+            String codA = "";
+            while (rr.next()) {
+                articulo = new Articulos();
+
+                articulo.setCodigoAsignado(rr.getString("ID"));
+                articulo.setDescripcionArticulo(rr.getString("NOMBRE"));
+                articulo.setNumeroId(rr.getInt("ID"));
+                articulo.setCodigoDeBarra(rr.getString("BARRAS"));
+                articulo.setRecargo(rr.getDouble("recargo"));
+                articulo.setPrecioUnitarioNeto(Numeros.Redondear(rr.getDouble("PRECIO") * coeficiente));
+                articulo.setEquivalencia(rr.getDouble("equivalencia"));
+                articulo.setPrecioDeCosto(rr.getDouble("COSTO"));
+                articulo.setStockMinimo(rr.getDouble("MINIMO"));
+                articulo.setStockActual(rr.getDouble("sst"));
+                articulo.setPrecioServicio(rr.getDouble("SERVICIO"));
+                articulo.setModificaPrecio(rr.getBoolean("modificaPrecio"));
+                articulo.setModificaServicio(rr.getBoolean("modificaServicio"));
+                articulo.setPrecioServicio1(rr.getDouble("servicio1"));
+                articulo.setIdCombo(rr.getInt("idcombo"));
+                articulo.setRubroId(rr.getInt("idrubro"));
+                articulo.setIdSubRubro(rr.getInt("idsubrubro"));
+                articulo.setSubTotal(Numeros.Redondear(rr.getDouble("subtotal") * coeficiente));
+                    articulo.setIva(Numeros.Redondear(rr.getDouble("iva") * coeficiente));
+                    articulo.setTipoIva(rr.getInt("tipoiva"));
+                    switch(rr.getInt("tipoiva")){
+                        case 1:
+                            articulo.setCoeficienteIva(0.00);
+                            break;
+                        case 2:
+                            articulo.setCoeficienteIva(0.00);
+                            break;
+                        case 3:
+                            articulo.setCoeficienteIva(0.00);
+                            break;
+                        case 4:
+                            articulo.setCoeficienteIva(10.5);
+                            break;
+                        case 5:
+                            articulo.setCoeficienteIva(21.0);
+                            break;
+                        case 6:
+                            articulo.setCoeficienteIva(27.0);
+                            break;
+                    }
+                //resultado.add(articulo);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Articulos.class.getName()).log(Level.SEVERE, null, ex);
+            //System.out.println("ACA DEBE LEER EN LE ARCHIVO");
+
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Articulos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(Articulos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return articulo;
     }
 
 }

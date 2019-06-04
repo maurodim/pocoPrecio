@@ -4,7 +4,7 @@
  */
 package ClientesPantallas;
 
-import Conversores.Numeros;
+import Sucursales.ListasDePrecios;
 import facturacion.clientes.Clientes;
 import facturacion.pantallas.IngresoDeFacturas;
 import facturacion.pantallas.NotaDeCredito;
@@ -12,6 +12,7 @@ import facturacion.pantallas.NotaDeDebito;
 import interfacesPrograma.Facturar;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  *
@@ -23,53 +24,89 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
     private int originario;
     private Clientes cli;
     private int modificacion;
+    private ArrayList listadoPrecios;
+    private ListasDePrecios lista;
 
     /**
      * Creates new form NuevoCliente
      */
     public NuevoCliente() {
         initComponents();
-        modificacion=0;
+        modificacion = 0;
+        listadoPrecios = new ArrayList();
+
+        listadoPrecios = ListasDePrecios.Listado();
+        Iterator itL = listadoPrecios.listIterator();
+        while (itL.hasNext()) {
+            lista = (ListasDePrecios) itL.next();
+            this.lst_precios_comb.addItem(lista.getDesccripcion());
+        }
     }
 
     public NuevoCliente(int origen) {
         initComponents();
         originario = origen;
-        cli=new Clientes();
-        modificacion=0;
+        cli = new Clientes();
+        modificacion = 0;
+        listadoPrecios = new ArrayList();
+
+        listadoPrecios = ListasDePrecios.Listado();
+        Iterator itL = listadoPrecios.listIterator();
+        int posi=0;
+        int selecP=0;
+        while (itL.hasNext()) {
+            lista = (ListasDePrecios) itL.next();
+            this.lst_precios_comb.addItem(lista.getDesccripcion());
+            
+        }
+        
     }
-    public NuevoCliente(int origen,Clientes cliente) {
+
+    public NuevoCliente(int origen, Clientes cliente) {
         initComponents();
         originario = origen;
-        cli=cliente;
+        cli = cliente;
         this.jTextField1.setText(cli.getRazonSocial());
         this.jTextField2.setText(cli.getDireccion());
         this.jTextField3.setText(cli.getNumeroDeCuit());
         this.jTextField4.setText(cli.getTelefono());
-        if(cli.getCupoDeCredito()==0){
+        if (cli.getCupoDeCredito() == 0) {
             this.jCheckBox1.setSelected(false);
-        }else{
+        } else {
             this.jCheckBox1.setSelected(true);
         }
-        modificacion=1;
-        int posicion=0;
-        int tipo=cli.getTipoIva();
+        modificacion = 1;
+        int posicion = 0;
+        int tipo = cli.getTipoIva();
         switch (tipo) {
             case 5:
-                posicion=0;
+                posicion = 0;
                 break;
             case 1:
-                posicion=1;
+                posicion = 1;
                 break;
             case 4:
-                posicion=2;
+                posicion = 2;
                 break;
             case 6:
-                posicion=3;
+                posicion = 3;
                 break;
-                
+
         }
         this.jComboBox2.setSelectedIndex(posicion);
+         listadoPrecios = new ArrayList();
+
+        listadoPrecios = ListasDePrecios.Listado();
+        Iterator itL = listadoPrecios.listIterator();
+        int posi=0;
+        int selecP=0;
+        while (itL.hasNext()) {
+            lista = (ListasDePrecios) itL.next();
+            this.lst_precios_comb.addItem(lista.getDesccripcion());
+            if(cli.getListaDePrecios()==lista.getId())selecP=posi;
+            posi++;
+        }
+        this.lst_precios_comb.setSelectedIndex(selecP);
     }
 
     /**
@@ -94,6 +131,8 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
         jLabel6 = new javax.swing.JLabel();
         jComboBox2 = new javax.swing.JComboBox();
         jCheckBox1 = new javax.swing.JCheckBox();
+        jLabel7 = new javax.swing.JLabel();
+        lst_precios_comb = new javax.swing.JComboBox();
 
         setClosable(true);
         setResizable(true);
@@ -148,6 +187,8 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
 
         jCheckBox1.setText("Habilita Cta Cte ?");
 
+        jLabel7.setText("Lista de Precio");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -162,14 +203,16 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
                             .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE))
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jTextField1)
                             .addComponent(jTextField2)
                             .addComponent(jTextField3)
                             .addComponent(jTextField4)
-                            .addComponent(jComboBox2, 0, 297, Short.MAX_VALUE))))
+                            .addComponent(jComboBox2, 0, 297, Short.MAX_VALUE)
+                            .addComponent(lst_precios_comb, 0, 297, Short.MAX_VALUE))))
                 .addGap(18, 18, 18)
                 .addComponent(jCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(87, Short.MAX_VALUE))
@@ -199,6 +242,10 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
                     .addComponent(jLabel6)
                     .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(lst_precios_comb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addComponent(jButton1)
                 .addContainerGap(158, Short.MAX_VALUE))
         );
@@ -224,7 +271,7 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
+
         //cli.setCodigoCliente(title);
         cli.setRazonSocial(this.jTextField1.getText());
         cli.setDireccion(this.jTextField2.getText());
@@ -254,13 +301,12 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
         }
         condicion = String.valueOf(tipoIva);
         //ListasDePrecios lista=new ListasDePrecios();
-        int posLista = 0;
-        if (posLista < 0) {
-            posLista = 0;
-        }
-        //lista=(ListasDePrecios)listadoL.get(posLista);
+        int posLista = this.lst_precios_comb.getSelectedIndex();
+        
+        lista=(ListasDePrecios)listadoPrecios.get(posLista);
         //lista=new 
-        cli.setListaDePrecios(1);
+        cli.setListaDePrecios(lista.getId());
+        cli.setCoeficienteListaDeprecios(lista.getCoeficiente());
         /*
        if(cli.getCupoDeCredito() > 0.00){
            cli.setCondicionDeVenta(2);
@@ -268,7 +314,7 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
         cli.setCondicionDeVenta(1);
        }
          */
-        cli.setCoeficienteListaDeprecios(1.00);
+        //cli.setCoeficienteListaDeprecios(1.00);
         cli.setCondicionIva(condicion);
         cli.setTipoIva(tipoIva);
         if (this.jCheckBox1.isSelected()) {
@@ -279,9 +325,9 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
         cli.setNumeroDeCuit(this.jTextField3.getText().replace("-", "").trim());
         cli.setTelefono(this.jTextField4.getText());
         Facturar fact = new Clientes();
-        if(modificacion==0){
-        cli.setCodigoId(fact.guardarNuevoCliente(cli));
-        }else{
+        if (modificacion == 0) {
+            cli.setCodigoId(fact.guardarNuevoCliente(cli));
+        } else {
             fact.modificarDatosDelCliente(cli);
         }
         cli.setCodigoCliente(String.valueOf(cli.getCodigoId()));
@@ -361,10 +407,12 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
+    private javax.swing.JComboBox lst_precios_comb;
     // End of variables declaration//GEN-END:variables
 }
