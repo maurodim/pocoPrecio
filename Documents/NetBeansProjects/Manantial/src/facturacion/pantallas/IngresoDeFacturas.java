@@ -718,7 +718,7 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
                         Connection conexion = conx.obtenerConexion();
                         Integer numeFc = 0;
                         System.out.println("subtotal "+subTotal+" total "+montoTotal+" iva "+montoIva);
-                        numeFc = fact.generar(conexion, condicion, Propiedades.getARCHIVOKEY(), Propiedades.getARCHIVOCRT(), cliT.getCodigoId(), cliT.getNumeroDeCuit(), tipoComp, montoTotal, subTotal, montoIva, ptoVta, Propiedades.getCUIT(), tipoVta, listadoIvaD, listadoTrib, cliT.getRazonSocial(), cliT.getDireccion(), String.valueOf(cliT.getTipoIva()), listadoDetalle, idPed, Propiedades.getNOMBRECOMERCIO(), Propiedades.getNOMBRECOMERCIO(), "resp inscripto", Propiedades.getDIRECCION(), Propiedades.getTELEFONO(), Propiedades.getINGBRUTOS(), Propiedades.getINICIOACT());
+                        numeFc = fact.generar(conexion, condicion, Propiedades.getARCHIVOKEY(), Propiedades.getARCHIVOCRT(), cliT.getCodigoId(), cliT.getNumeroDeCuit(), tipoComp, montoTotal, subTotal, montoIva, ptoVta, Propiedades.getCUIT(), tipoVta, listadoIvaD, listadoTrib, cliT.getRazonSocial(), cliT.getDireccion(), String.valueOf(cliT.getTipoIva()), listadoDetalle, idPed, Propiedades.getNOMBRECOMERCIO(), Propiedades.getNOMBRECOMERCIO(), "resp inscripto", Propiedades.getDIRECCION(), Propiedades.getTELEFONO(), Propiedades.getINGBRUTOS(), Propiedades.getINICIOACT(),cliT.getEmail());
                         //comprobante.setNumero(numeFc);
                         comprobante.GuardarNumeroFiscalEnCaja(numeFc, comprobante.getNumeroRegistro(), tipoComp);
                         LicenciasControl licencia = new LicenciasControl();
@@ -1371,9 +1371,9 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
             pFinal = Numeros.Redondear(pFinal);
             fila[5] = val;
             fila[3] = Numeros.ConvertirNumero(precioSIva);
-            fila[2] = Numeros.ConvertirNumero(pedidos.getPrecioDeCosto());
+            fila[2] = Numeros.ConvertirNumero(Numeros.Redondear(pedidos.getPrecioDeCosto()));
             //Double iva=valor / 1.21;//valor * 0.21;
-            fila[6] = Numeros.ConvertirNumero(iva);
+            fila[6] = Numeros.ConvertirNumero(ivaa);
             fila[4] = cant;
 
             fila[7] = Numeros.ConvertirNumero(pFinal);
@@ -1466,7 +1466,7 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
         if (cliT.getTipoIva() == 1) {
             String bruto = Numeros.ConvertirNumero(subTotal);
             String iva = Numeros.ConvertirNumero(montoIva);
-            total = "<html>Bruto :" + bruto + " <br>IVA 21% " + iva + " <br>Neto " + total1 + "</html>";
+            total = "<html>Bruto :" + bruto + " <br>IVA " + iva + " <br>Neto " + total1 + "</html>";
         } else {
             total = "<html>Neto " + total1 + "</html>";
         }

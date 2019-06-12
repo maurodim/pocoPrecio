@@ -443,9 +443,10 @@ public class ArticulosAbm extends javax.swing.JInternalFrame {
         if (JOptionPane.showConfirmDialog(this, "Ajusta Valores de los precios de Costo en los Articulos en un " + porc + "%?", "Modificar Costo", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 1) {
 
         } else {
-
+            /*
             porc = porc / 100;
             porc = 1 + porc;
+*/
             if(rubro.getId() != null){
                 
             }else{
@@ -462,9 +463,10 @@ public class ArticulosAbm extends javax.swing.JInternalFrame {
         if (JOptionPane.showConfirmDialog(this, "Ajusta Valores de los precios de VENTA en los Articulos en un " + porc + "%?", "Modificar Costo", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 1) {
 
         } else {
-
+            /*
             porc = porc / 100;
             porc = 1 + porc;
+*/
             if(rubro.getId() != null){
                 
             }else{

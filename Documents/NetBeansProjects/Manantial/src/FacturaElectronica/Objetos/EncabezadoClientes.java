@@ -15,13 +15,15 @@ public class EncabezadoClientes {
     private final String direccion;
     private final String tipoDocumento;
     private final String numeroDocumento;
+    private final String mailC;
 
-    public EncabezadoClientes(String razonSocial, String condicionIva, String direccion, String tipoDocumento, String numeroDocumento) {
+    public EncabezadoClientes(String razonSocial, String condicionIva, String direccion, String tipoDocumento, String numeroDocumento,String mailC) {
         this.razonSocial = razonSocial;
         this.condicionIva = condicionIva;
         this.direccion = direccion;
         this.tipoDocumento = tipoDocumento;
         this.numeroDocumento = numeroDocumento;
+        this.mailC=mailC;
     }
     
     
@@ -43,6 +45,10 @@ public class EncabezadoClientes {
 
     public String getNumeroDocumento() {
         return numeroDocumento;
+    }
+
+    public String getMailC() {
+        return mailC;
     }
     
     

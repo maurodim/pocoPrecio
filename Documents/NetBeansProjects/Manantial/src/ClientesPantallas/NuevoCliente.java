@@ -70,6 +70,7 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
         this.jTextField2.setText(cli.getDireccion());
         this.jTextField3.setText(cli.getNumeroDeCuit());
         this.jTextField4.setText(cli.getTelefono());
+        this.jTextField5.setText(cli.getEmail());
         if (cli.getCupoDeCredito() == 0) {
             this.jCheckBox1.setSelected(false);
         } else {
@@ -133,6 +134,8 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
         jCheckBox1 = new javax.swing.JCheckBox();
         jLabel7 = new javax.swing.JLabel();
         lst_precios_comb = new javax.swing.JComboBox();
+        jLabel8 = new javax.swing.JLabel();
+        jTextField5 = new javax.swing.JTextField();
 
         setClosable(true);
         setResizable(true);
@@ -172,6 +175,11 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
                 jTextField4ActionPerformed(evt);
             }
         });
+        jTextField4.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField4KeyPressed(evt);
+            }
+        });
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/nuevos/guardar.png"))); // NOI18N
         jButton1.setText("GUARDAR");
@@ -189,6 +197,14 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
 
         jLabel7.setText("Lista de Precio");
 
+        jLabel8.setText("Mail");
+
+        jTextField5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField5ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -204,7 +220,8 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
                             .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jTextField1)
@@ -212,7 +229,8 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
                             .addComponent(jTextField3)
                             .addComponent(jTextField4)
                             .addComponent(jComboBox2, 0, 297, Short.MAX_VALUE)
-                            .addComponent(lst_precios_comb, 0, 297, Short.MAX_VALUE))))
+                            .addComponent(lst_precios_comb, 0, 297, Short.MAX_VALUE)
+                            .addComponent(jTextField5))))
                 .addGap(18, 18, 18)
                 .addComponent(jCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(87, Short.MAX_VALUE))
@@ -239,6 +257,10 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
                     .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
@@ -247,7 +269,7 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
                     .addComponent(lst_precios_comb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jButton1)
-                .addContainerGap(158, Short.MAX_VALUE))
+                .addContainerGap(221, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -263,8 +285,8 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -275,6 +297,7 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
         //cli.setCodigoCliente(title);
         cli.setRazonSocial(this.jTextField1.getText());
         cli.setDireccion(this.jTextField2.getText());
+        cli.setEmail(this.jTextField5.getText());
         String condicion = "1";
         //Double limite=Numeros.ConvertirStringADouble(this.jTextField5.getText());
         //cli.setCupoDeCredito(limite);
@@ -398,6 +421,14 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_jTextField3KeyPressed
 
+    private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField5ActionPerformed
+
+    private void jTextField4KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField4KeyPressed
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER)this.jTextField5.requestFocus();
+    }//GEN-LAST:event_jTextField4KeyPressed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JCheckBox jCheckBox1;
@@ -408,11 +439,13 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField jTextField5;
     private javax.swing.JComboBox lst_precios_comb;
     // End of variables declaration//GEN-END:variables
 }

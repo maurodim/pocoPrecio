@@ -208,15 +208,28 @@ public class LicenciasControl {
             Iterator it=lst.listIterator();
             Licencias licencia;
             String sql;
+            sql="select count(*) as cantidad from licencias";
+            ResultSet rs=tra.leerConjuntoDeRegistros(sql);
+            int cantidad=1;
+            while(rs.next()){
+                cantidad=rs.getInt("cantidad");
+            }
+            rs.close();
+            int contador=1;
             while(it.hasNext()){
                 licencia=(Licencias) it.next();
                 //java.util.Date fechaSql=(Date) Numeros.ConvertirStringEnDate(licencia.getFechadeVencimiento());
                 //Date ffecha=Numeros.ConvertirDateADate(fechaSql);
-                
+                if(contador > cantidad){
+                    sql="insert into licencias (id,descripcion,cantidaddias,cantidad,presupuestos,publicidad) values ("+licencia.getId()+",'"+licencia.getDescripcion()+"',"+licencia.getDiasLicencia()+","+licencia.getCantidadFc()+","+licencia.getCantidadPresupuestos()+","+licencia.getPublicidad()+")";
+                    System.out.println("actualizacion licencia "+sql);
+                    tra.guardarRegistro(sql);
+                }else{
                     sql="update licencias set descripcion='"+licencia.getDescripcion()+"',cantidaddias="+licencia.getDiasLicencia()+",cantidad="+licencia.getCantidadFc()+",presupuestos="+licencia.getCantidadPresupuestos()+",publicidad="+licencia.getPublicidad()+" where id="+licencia.getId();
                     System.out.println("actualizacion licencia "+sql);
                     tra.guardarRegistro(sql);
-                
+                }
+                contador++;
             }
         } catch (InstantiationException ex) {
             Logger.getLogger(Licencias.class.getName()).log(Level.SEVERE, null, ex);
@@ -230,6 +243,7 @@ public class LicenciasControl {
         Licencias conf=null;
         try {
             String direccion="http://www.manantialgestion.com/gestor/cliente.php?id="+Propiedades.getIDREMOTO()+"&cpu="+Propiedades.getCpu();
+            System.out.println("direccion "+direccion);
             URL url = new URL(direccion);//modificar luego a config.xml
             BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));
             String entrada;
@@ -329,7 +343,7 @@ public class LicenciasControl {
         try {
             Transaccionable tra=new Conecciones();
             Licencias licen=(Licencias) licencia;
-            String sql="update licencias set cantidad="+licen.getCantidadFc()+",restan="+licen.getCantidadFc()+" - ("+licen.getCantidadFc()+" - restan),presupuestos="+licen.getCantidadPresupuestos()+",restanpresupuesto="+licen.getCantidadPresupuestos()+" - ("+licen.getCantidadPresupuestos()+" - restanpresupuesto),vencimiento='"+licen.getFechadeVencimiento()+"',cantidaddias="+licen.getDiasLicencia()+",publicidad="+licen.getPublicidad()+" where id="+licen.getId();
+            String sql="update licencias set cantidad="+licen.getCantidadFc()+",restan="+licen.getCantidadFc()+",presupuestos="+licen.getCantidadPresupuestos()+",restanpresupuesto="+licen.getCantidadPresupuestos()+",vencimiento='"+licen.getFechadeVencimiento()+"',cantidaddias="+licen.getDiasLicencia()+",publicidad="+licen.getPublicidad()+" where id="+licen.getId();
             System.out.println(sql);
             tra.guardarRegistro(sql);
             sql="update configuracion set idlicencia="+licen.getId();

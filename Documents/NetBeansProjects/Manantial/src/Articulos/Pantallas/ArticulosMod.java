@@ -29,6 +29,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -579,7 +580,8 @@ public class ArticulosMod extends javax.swing.JInternalFrame {
         
         ArchivoPdf apdf = new ArchivoPdfImpl();
         apdf.crearDocumento(0, 0, 5, 0);
-        apdf.nombrePdf(rutaArchivo.getFileName().toString(),  rutaArchivo.getParent()); // Ruta raiz del proyecto.
+        apdf.nombrePdf(rutaArchivo.getFileName().toString(),Paths.get("Etiquetas"));
+        //apdf.nombrePdf(rutaArchivo.getFileName().toString(),  rutaArchivo.getParent()); // Ruta raiz del proyecto.
         //apdf.nombrePdf("Etiquetas-"+System.currentTimeMillis()+".pdf", Paths.get("/home/andy/PDF")); // Ejemplo para cualquier otra ruta
         apdf.nuevaEtiqueta(serialCodigoBarra,cantidadCopias, 0, 0);
         //apdf.nuevaEtiqueta("865521548", 25, 0, 0);

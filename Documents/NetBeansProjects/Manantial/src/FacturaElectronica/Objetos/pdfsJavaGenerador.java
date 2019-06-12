@@ -25,6 +25,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.mail.MessagingException;
+import objetosR.Mail;
 
 /**
  *
@@ -58,7 +60,7 @@ public class pdfsJavaGenerador {
     DetalleFacturas saldo;
     Iterator itl;
     int copia;
-    
+
     private PreparedStatement st1;
     private String nombreVendedor;
     private String cVendedor;
@@ -86,10 +88,10 @@ public class pdfsJavaGenerador {
         this.doc = doc;
     }
 
-    public pdfsJavaGenerador(String razonSocialVendedor,String nombreVendedor, String cVendedor, String cIva, String direccionVendedor, String telefonoVendedor, String iBrutos, String incioActividades) {
-        this.razonSocialVendedor=razonSocialVendedor;
+    public pdfsJavaGenerador(String razonSocialVendedor, String nombreVendedor, String cVendedor, String cIva, String direccionVendedor, String telefonoVendedor, String iBrutos, String incioActividades) {
+        this.razonSocialVendedor = razonSocialVendedor;
         this.nombreVendedor = nombreVendedor;
-        
+
         this.cVendedor = cVendedor;
         this.cIva = cIva;
         this.direccionVendedor = direccionVendedor;
@@ -97,9 +99,6 @@ public class pdfsJavaGenerador {
         this.iBrutos = iBrutos;
         this.incioActividades = incioActividades;
     }
-
-    
-    
 
     public String run() {
         documento = new Document();
@@ -120,10 +119,10 @@ public class pdfsJavaGenerador {
         FileOutputStream fichero;
 
         try {
-            
-            encabezado = new EncabezadoPdf(nombreVendedor,razonSocialVendedor, direccionVendedor, telefonoVendedor, this.punto, this.numero, cVendedor, iBrutos, incioActividades, cIva);
 
-            cliente = new EncabezadoClientes(doc.getRazonSocial(), doc.getCondicionIvaCliente(), doc.getDireccionCliente(), doc.getCustomerTypeDoc(), doc.getCustomerId());
+            encabezado = new EncabezadoPdf(nombreVendedor, razonSocialVendedor, direccionVendedor, telefonoVendedor, this.punto, this.numero, cVendedor, iBrutos, incioActividades, cIva);
+
+            cliente = new EncabezadoClientes(doc.getRazonSocial(), doc.getCondicionIvaCliente(), doc.getDireccionCliente(), doc.getCustomerTypeDoc(), doc.getCustomerId(),doc.getMailCliente());
             saldo = new DetalleFacturas();
             //Facturable cotizable=new DetalleFacturas();
             listado = new ArrayList();
@@ -199,6 +198,14 @@ public class pdfsJavaGenerador {
             if (f.exists()) {
 
                 Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + arch);
+                if (cliente.getMailC().isEmpty()) {
+
+                } else {
+                    Mail mail = new Mail();
+                    mail.setDireccionFile(arch);
+                    mail.setDetalleListado(doc.getDescripcionTipoComprobante() + " " + num+".pdf");
+                    mail.enviarMailFacturaElectronica(cliente.getMailC(), doc.getDescripcionTipoComprobante() + " " + num);
+                }
             }
             int confirmacion = 0;
             /*
@@ -217,6 +224,8 @@ public class pdfsJavaGenerador {
             Logger.getLogger(pdfsJavaGenerador.class.getName()).log(Level.SEVERE, null, ex);
 
         } catch (DocumentException | IOException ex) {
+            Logger.getLogger(pdfsJavaGenerador.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (MessagingException ex) {
             Logger.getLogger(pdfsJavaGenerador.class.getName()).log(Level.SEVERE, null, ex);
         }
         return arch;
@@ -308,8 +317,10 @@ public class pdfsJavaGenerador {
             }
             cb.setFontAndSize(bf, 19);
             cb.setTextMatrix(25, 770);
-            String nombreCom=encabezado.getNombreComercio();
-            if(nombreCom.length() > 21)nombreCom=encabezado.getNombreComercio().substring(0,19);
+            String nombreCom = encabezado.getNombreComercio();
+            if (nombreCom.length() > 21) {
+                nombreCom = encabezado.getNombreComercio().substring(0, 19);
+            }
             cb.showText(nombreCom);
             //cb.setTextMatrix(90,750);
             //cb.showText("ANTONIO");
@@ -326,12 +337,20 @@ public class pdfsJavaGenerador {
             cb.setTextMatrix(25, 720);
             cb.showText("Telefono: " + encabezado.getTelefono());
             cb.setTextMatrix(25, 710);
-            String condIvaTxt="";
-            if(encabezado.getCondicionIva().equals("1"))condIvaTxt="Resp. Inscripto";
-            if(encabezado.getCondicionIva().equals("4"))condIvaTxt="Sujeto Exento";
-            if(encabezado.getCondicionIva().equals("5"))condIvaTxt="Cons Final";
-            if(encabezado.getCondicionIva().equals("6"))condIvaTxt="Resp. Monotributo";
-           
+            String condIvaTxt = "";
+            if (encabezado.getCondicionIva().equals("1")) {
+                condIvaTxt = "Resp. Inscripto";
+            }
+            if (encabezado.getCondicionIva().equals("4")) {
+                condIvaTxt = "Sujeto Exento";
+            }
+            if (encabezado.getCondicionIva().equals("5")) {
+                condIvaTxt = "Cons Final";
+            }
+            if (encabezado.getCondicionIva().equals("6")) {
+                condIvaTxt = "Resp. Monotributo";
+            }
+
             cb.showText("Condición frente la IVA: " + condIvaTxt);
 
             //cb.showText("de Rivadeneira Enrique y Rivadeneira Jorge S.H.");
@@ -475,11 +494,11 @@ public class pdfsJavaGenerador {
             //bf = BaseFont.createFont(BaseFont.COURIER,BaseFont.CP1252,BaseFont.NOT_EMBEDDED);
             cb.setFontAndSize(bf, 9);
             cb.setTextMatrix(360, 745);
-            String fechaCae=doc.getFechaCae();
-            String ano=fechaCae.substring(0,4);
-            String mes=fechaCae.substring(4,6);
-            String dia=fechaCae.substring(6);
-            fechaCae=dia+"/"+mes+"/"+ano;
+            String fechaCae = doc.getFechaCae();
+            String ano = fechaCae.substring(0, 4);
+            String mes = fechaCae.substring(4, 6);
+            String dia = fechaCae.substring(6);
+            fechaCae = dia + "/" + mes + "/" + ano;
             cb.showText("Fecha de emisión: " + fechaCae);
             cb.setTextMatrix(360, 730);
             cb.showText("CUIT: " + encabezado.getCuit());
@@ -492,7 +511,7 @@ public class pdfsJavaGenerador {
             bf = BaseFont.createFont(BaseFont.HELVETICA, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
             cb.setFontAndSize(bf, 9);
             cb.setTextMatrix(25, 685);
-            
+
             cb.showText("Período Facturado Desde: " + fechaCae);
             cb.setTextMatrix(240, 685);
             cb.showText("Hasta: " + fechaCae);

@@ -166,6 +166,7 @@ public class BbsGestion {
                 control.ActualizarLicencia(lstLic);
                 licenciaWeb=(Licencias) control.LeerYActualizarLicencia();
                 if(licenciaWeb != null){
+                    System.out.println("Licencia actual cargada en propiedades "+Propiedades.getIDLICENCIA()+" -- licencia web "+licenciaWeb.getId());
                 if(Propiedades.getIDLICENCIA() != licenciaWeb.getId()){
                     control.UpdateLicenciaLocal(licenciaWeb);
                     JOptionPane.showMessageDialog(null, "LICENCIA MODIFICADA");

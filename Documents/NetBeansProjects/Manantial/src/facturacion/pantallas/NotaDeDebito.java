@@ -876,7 +876,7 @@ public class NotaDeDebito extends javax.swing.JInternalFrame implements KeyListe
                 Transaccionable trr=new Conecciones();
                 Conecciones conx=new Conecciones();
         Connection conexion=conx.obtenerConexion();
-        fact.generar(conexion, condicion, Propiedades.getARCHIVOKEY(), Propiedades.getARCHIVOCRT(), cliT.getCodigoId(), cliT.getNumeroDeCuit(), tipoComp, montoTotal, subTotal, montoIva, ptoVta, Propiedades.getCUIT(), tipoVta, listadoIva, listadoTrib, cliT.getRazonSocial(), cliT.getDireccion(), cliT.getCondicionIva(), listadoDetalle,idPed,Propiedades.getNOMBRECOMERCIO(),Propiedades.getNOMBRECOMERCIO(),"resp inscripto",Propiedades.getDIRECCION(),Propiedades.getTELEFONO(),Propiedades.getINGBRUTOS(),Propiedades.getINICIOACT());
+        fact.generar(conexion, condicion, Propiedades.getARCHIVOKEY(), Propiedades.getARCHIVOCRT(), cliT.getCodigoId(), cliT.getNumeroDeCuit(), tipoComp, montoTotal, subTotal, montoIva, ptoVta, Propiedades.getCUIT(), tipoVta, listadoIva, listadoTrib, cliT.getRazonSocial(), cliT.getDireccion(), cliT.getCondicionIva(), listadoDetalle,idPed,Propiedades.getNOMBRECOMERCIO(),Propiedades.getNOMBRECOMERCIO(),"resp inscripto",Propiedades.getDIRECCION(),Propiedades.getTELEFONO(),Propiedades.getINGBRUTOS(),Propiedades.getINICIOACT(),cliT.getEmail());
                 
             } catch (InstantiationException ex) {
                 Logger.getLogger(IngresoDeFacturas.class.getName()).log(Level.SEVERE, null, ex);
@@ -1226,7 +1226,7 @@ private void montrarMonto(){
         if (cliT.getTipoIva() == 1) {
             String bruto = Numeros.ConvertirNumero(subTotal);
             String iva = Numeros.ConvertirNumero(montoIva);
-            total = "<html>Bruto :" + bruto + " <br>IVA 21% " + iva + " <br>Neto " + total1 + "</html>";
+            total = "<html>Bruto :" + bruto + " <br>IVA " + iva + " <br>Neto " + total1 + "</html>";
         } else {
             total = "<html>Neto " + total1 + "</html>";
         }

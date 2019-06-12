@@ -80,15 +80,26 @@ public class Mail {
             System.err.println("EL MENSAJE NO SE PUDO ENVIAR "+me);
         }
     }
-   public void enviarMailRepartoCerrado(String descripcionVehiculo,String fecha) throws MessagingException{
+   public void enviarMailFacturaElectronica(String mailCliente,String numeroComprobante) throws MessagingException{
         init();
         try{
+            asunto=Propiedades.getNOMBRECOMERCIO()+" le envía su comprobante electrónico: "+numeroComprobante;
             MimeMessage mensaje=new MimeMessage(sesion);
             mensaje.setFrom(new InternetAddress((String)propiedades.get("mail.smtp.mail.sender")));
-            mensaje.addRecipient(Message.RecipientType.TO,new InternetAddress("hernangonzalez@sidercon.com"));
-            mensaje.addRecipient(Message.RecipientType.CC,new InternetAddress("rgonzalez@sidercon.com"));
-            mensaje.setSubject("REPARTO CERRADO");
-            mensaje.setText("El reparto del vehiculo "+descripcionVehiculo+" esta cerrado para el reparto del dia "+fecha+". Motivo :CAPACIDAD DE REPARTO COMPLETA");
+            mensaje.addRecipient(Message.RecipientType.TO,new InternetAddress(mailCliente));
+            //mensaje.addRecipient(Message.RecipientType.CC,new InternetAddress("comercial@sidercon.com"));
+            mensaje.setSubject(asunto);
+            System.out.println("mail en envio "+asunto+" clave: "+password);
+            BodyPart texto=new MimeBodyPart();
+            texto.setText(Propiedades.getNOMBRECOMERCIO()+" le agradece su compra   \n Saludos");
+            BodyPart adjunto=new MimeBodyPart();
+            adjunto.setDataHandler(new DataHandler(new FileDataSource(direccionFile)));
+            adjunto.setFileName(detalleListado);
+            MimeMultipart multiParte=new MimeMultipart();
+            multiParte.addBodyPart(texto);
+            multiParte.addBodyPart(adjunto);
+            //mensaje.setText("El reparto del vehiculo esta cerrado para el reparto. Motivo :CAPACIDAD DE CARGA COMPLETADA");
+            mensaje.setContent(multiParte);
             Transport t=sesion.getTransport("smtp");
             t.connect((String)propiedades.get("mail.smtp.user"), password);
             t.sendMessage(mensaje,mensaje.getAllRecipients());

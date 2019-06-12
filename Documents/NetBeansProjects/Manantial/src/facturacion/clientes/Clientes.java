@@ -221,7 +221,7 @@ public class Clientes implements Busquedas,Facturar,Adeudable{
             }else{
              
                 tra=new Conecciones();
-                sql="select id,idtransporte,clientes.fax,clientes.celular,clientes.COD_CLIENT,clientes.fantasia,clientes.RAZON_SOCI,clientes.DOMICILIO,clientes.COND_VTA,(clientes.LISTADEPRECIO)as NRO_LISTA,(select coeficienteslistas.coeficiente from coeficienteslistas where coeficienteslistas.id=clientes.listadeprecio)as descuento,(clientes.NUMERODECUIT)as IDENTIFTRI,clientes.empresa,clientes.TELEFONO_1,clientes.coeficiente,(clientes.CUPODECREDITO) AS CUPO_CREDI,clientes.saldo,clientes.TIPO_IVA,(select condicionesiva.descripcion from condicionesiva where id=clientes.tipo_iva)as tipo_iva2,(select condicionesiva.tipocomprobante from condicionesiva where condicionesiva.id=clientes.tipo_iva)as tipocomprobante,(select localidades.localidad from localidades where id=clientes.localidad)as localidad1,clientes.responsable,(select localidades.codigo_postal from localidades where id=clientes.localidad)as postal from clientes order by RAZON_SOCI";
+                sql="select id,idtransporte,clientes.email,clientes.fax,clientes.celular,clientes.COD_CLIENT,clientes.fantasia,clientes.RAZON_SOCI,clientes.DOMICILIO,clientes.COND_VTA,(clientes.LISTADEPRECIO)as NRO_LISTA,(select coeficienteslistas.coeficiente from coeficienteslistas where coeficienteslistas.id=clientes.listadeprecio)as descuento,(clientes.NUMERODECUIT)as IDENTIFTRI,clientes.empresa,clientes.TELEFONO_1,clientes.coeficiente,(clientes.CUPODECREDITO) AS CUPO_CREDI,clientes.saldo,clientes.TIPO_IVA,(select condicionesiva.descripcion from condicionesiva where id=clientes.tipo_iva)as tipo_iva2,(select condicionesiva.tipocomprobante from condicionesiva where condicionesiva.id=clientes.tipo_iva)as tipocomprobante,(select localidades.localidad from localidades where id=clientes.localidad)as localidad1,clientes.responsable,(select localidades.codigo_postal from localidades where id=clientes.localidad)as postal from clientes order by RAZON_SOCI";
             }
             //sql="select *,(select coeficienteslistas.coeficiente from coeficienteslistas where coeficienteslistas.id=clientes.NRO_LISTA)as coeficiente,(select sum(movimientosclientes.monto) from movimientosclientes where pagado=0 and movimientosclientes.numeroProveedor=clientes.id)as saldo from clientes";
             //System.out.println("CLIENTES "+sql);
@@ -265,6 +265,7 @@ public class Clientes implements Busquedas,Facturar,Adeudable{
                 cli.setCodigoPostal(rs.getString("postal"));
                 cli.setTipoComprobante(rs.getInt("tipocomprobante"));
                 cli.setIdTransporte(rs.getInt("idtransporte"));
+                cli.setEmail(rs.getString("email"));
                // if(Inicio.usuario.getNivelDeAutorizacion()==1){
                 //System.out.println("ACTUALIZACION :"+Inicio.actualizacionesClientes);
                 
@@ -326,7 +327,7 @@ public class Clientes implements Busquedas,Facturar,Adeudable{
                     this.saldo=clientesTango.getSaldo();
                     this.direccionDeEntrega=clientesTango.getDireccionDeEntrega();
                     this.tipoIva=clientesTango.getTipoIva();
-                    
+                    this.email=clientesTango.getEmail();
                     if(Propiedades.getCONDICIONIVA().equals("4")){
                         this.tipoComprobante=1;
                     }
@@ -766,7 +767,7 @@ public class Clientes implements Busquedas,Facturar,Adeudable{
         Clientes cli=(Clientes)cliente;
         Boolean resultado=false;
         
-        String sql="insert into clientes (COD_CLIENT,RAZON_SOCI,DOMICILIO,LOCALIDAD,TELEFONO_1,TIPO_IVA,IDENTIFTRI,COND_VTA,NRO_LISTA,empresa,coeficiente,idtransporte) values ('"+cli.getCodigoCliente()+"','"+cli.getRazonSocial().toUpperCase()+"','"+cli.getDireccion()+"','SANTA FE','"+cli.getTelefono()+"',"+cli.getCondicionIva()+",'"+cli.getNumeroDeCuit()+"',1,2,'"+cli.getEmpresa()+"',"+cli.getCoeficienteListaDeprecios()+","+cli.getIdTransporte()+")";
+        String sql="insert into clientes (COD_CLIENT,RAZON_SOCI,DOMICILIO,LOCALIDAD,TELEFONO_1,TIPO_IVA,IDENTIFTRI,COND_VTA,NRO_LISTA,empresa,coeficiente,idtransporte,email) values ('"+cli.getCodigoCliente()+"','"+cli.getRazonSocial().toUpperCase()+"','"+cli.getDireccion()+"','SANTA FE','"+cli.getTelefono()+"',"+cli.getCondicionIva()+",'"+cli.getNumeroDeCuit()+"',1,2,'"+cli.getEmpresa()+"',"+cli.getCoeficienteListaDeprecios()+","+cli.getIdTransporte()+",'"+cli.getEmail()+"')";
         
         resultado=tra.guardarRegistro(sql);
         //return resultado;
@@ -930,6 +931,7 @@ public class Clientes implements Busquedas,Facturar,Adeudable{
                     cli.setCelular(rs.getString("celular"));
                     cli.setFax(rs.getString("fax"));
                     cli.setTipoComprobante(rs.getInt("tipocomprobante"));
+                    cli.setEmail(rs.getString("email"));
                     //cli.setIdTransporte(rs.getInt("idtransporte"));
                     // if(Inicio.usuario.getNivelDeAutorizacion()==1){
                     System.out.println("ACTUALIZACION :"+Inicio.actualizacionesClientes);
@@ -1035,6 +1037,7 @@ public class Clientes implements Busquedas,Facturar,Adeudable{
                     cli.setCelular(rs.getString("celular"));
                     cli.setFax(rs.getString("fax"));
                     cli.setTipoComprobante(rs.getInt("tipocomprobante"));
+                    cli.setEmail(rs.getString("email"));
                     cli.setIdTransporte(rs.getInt("idtransporte"));
                     listadoP.add(cli);
                 }

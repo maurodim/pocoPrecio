@@ -757,7 +757,7 @@ public  void cargarImagen(javax.swing.JDesktopPane jDeskp,InputStream fileImagen
 
     private void jMenu8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu8MouseClicked
         try {
-            String url="manual\\ayuda.html";//JOptionPane.showInputDialog("Ingrese destino");//"manual\\ayuda.html";
+            String url="http://ayuda.manantialgestion.com";//JOptionPane.showInputDialog("Ingrese destino");//"manual\\ayuda.html";
             Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + url);
         } catch (IOException ex) {
             Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);

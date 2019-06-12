@@ -8,6 +8,7 @@ package Etiquetador.Pantallas;
 import Articulos.Articulos;
 import Articulos.ModificableArticulos;
 import ConfiguracionR.Propiedades;
+import Conversores.Numeros;
 import Etiquetador.Interfaces.interfaceEtiquetas;
 import Etiquetador.Objetos.Etiqueta;
 import com.sun.glass.events.KeyEvent;
@@ -270,7 +271,7 @@ public class Etiquetador extends javax.swing.JInternalFrame {
             articulo=(Articulos) listadoDeBusqueda.get(id);
             etiqueta.setCodigo(articulo.getCodigoDeBarra());
             etiqueta.setNombre(articulo.getDescripcionArticulo());
-            etiqueta.setPrecioMinorista(String.valueOf(articulo.getPrecioUnitarioNeto()));
+            etiqueta.setPrecioMinorista(String.valueOf(Numeros.Redondear(articulo.getPrecioUnitarioNeto())));
             etiqueta.setIncluyeMayorista(false);
             etiqueta.setNombreEmpresa(Propiedades.getNOMBRECOMERCIO());
             etiqueta.setImprimeCodBarra(this.barra_ch.isSelected());

@@ -931,7 +931,7 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
                 conx = new Conecciones();
                 Connection conexion=conx.obtenerConexion();
                 Integer numeFc=0;
-        numeFc=fact.generar(conexion, condicion, Propiedades.getARCHIVOKEY(), Propiedades.getARCHIVOCRT(), cliT.getCodigoId(), cliT.getNumeroDeCuit(), tipoComp, montoTotal, subTotal, montoIva, ptoVta, Propiedades.getCUIT(), tipoVta, listadoIvaD, listadoTrib, cliT.getRazonSocial(), cliT.getDireccion(), cliT.getCondicionIva(), listadoDetalle,idPed,Propiedades.getNOMBRECOMERCIO(),Propiedades.getNOMBRECOMERCIO(),"resp inscripto",Propiedades.getDIRECCION(),Propiedades.getTELEFONO(),Propiedades.getINGBRUTOS(),Propiedades.getINICIOACT());
+        numeFc=fact.generar(conexion, condicion, Propiedades.getARCHIVOKEY(), Propiedades.getARCHIVOCRT(), cliT.getCodigoId(), cliT.getNumeroDeCuit(), tipoComp, montoTotal, subTotal, montoIva, ptoVta, Propiedades.getCUIT(), tipoVta, listadoIvaD, listadoTrib, cliT.getRazonSocial(), cliT.getDireccion(), cliT.getCondicionIva(), listadoDetalle,idPed,Propiedades.getNOMBRECOMERCIO(),Propiedades.getNOMBRECOMERCIO(),"resp inscripto",Propiedades.getDIRECCION(),Propiedades.getTELEFONO(),Propiedades.getINGBRUTOS(),Propiedades.getINICIOACT(),cliT.getEmail());
         comprobante.GuardarNumeroFiscalEnCaja(numeFc, comprobante.getNumeroRegistro(),tipoComp);
         LicenciasControl licencia=new LicenciasControl();
                     licencia.RestarFc();
@@ -1319,7 +1319,7 @@ private void montrarMonto(){
     if(cliT.getTipoIva()==1){
         String bruto=Numeros.ConvertirNumero( subTotal);
         String iva=Numeros.ConvertirNumero(montoIva);
-        total="<html>Bruto :"+bruto+" <br>IVA 21% "+iva+" <br>Neto "+total1+"</html>";
+        total="<html>Bruto :"+bruto+" <br>IVA "+iva+" <br>Neto "+total1+"</html>";
     }else{
         total="<html>Neto "+total1+"</html>";
     }

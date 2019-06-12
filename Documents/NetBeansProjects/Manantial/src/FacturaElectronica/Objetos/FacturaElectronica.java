@@ -74,6 +74,12 @@ public class FacturaElectronica implements FacturableE, Instalable {
     private String ingBrutosV;
     private String inicioActV;
     private String razonSocialVendedor;
+    private String mailCliente;
+
+    public String getMailCliente() {
+        return mailCliente;
+    }
+    
 
     public String getCuitVendedor() {
         return cuitVendedor;
@@ -624,7 +630,7 @@ public class FacturaElectronica implements FacturableE, Instalable {
     }
 
     @Override
-    public Integer generar(Connection conexion, int Condicion, String archivoKey, String archivoCrt, Integer idCliente, String cuitCliente, int tipoComprobante, Double montoTotal, Double montoBruto, Double montoIva, int ptoDeVenta, String cuitVendedor, int tipoV, ArrayList lstI, ArrayList lstT, String razonSocial, String direccion, String condicionIvaCliente, ArrayList lstDetalle, Integer idPedido, String nombreVendedor, String razonSocialVend, String condIvaVendedor, String direccionVendedor, String telefonoVendedor, String ingBrutosVendedor, String inicioActVendedor) {
+    public Integer generar(Connection conexion, int Condicion, String archivoKey, String archivoCrt, Integer idCliente, String cuitCliente, int tipoComprobante, Double montoTotal, Double montoBruto, Double montoIva, int ptoDeVenta, String cuitVendedor, int tipoV, ArrayList lstI, ArrayList lstT, String razonSocial, String direccion, String condicionIvaCliente, ArrayList lstDetalle, Integer idPedido, String nombreVendedor, String razonSocialVend, String condIvaVendedor, String direccionVendedor, String telefonoVendedor, String ingBrutosVendedor, String inicioActVendedor,String mailCliente) {
         FacturaElectronica fE = new FacturaElectronica();
         fE.listadoIva = new ArrayList();
         fE.listadoTributos = new ArrayList();
@@ -633,6 +639,7 @@ public class FacturaElectronica implements FacturableE, Instalable {
         fE.archivoKey = archivoKey;
         fE.archivoCrt = archivoCrt;
         fE.idPedido = idPedido;
+        fE.mailCliente=mailCliente;
         //fE.archivoKey="clave.key";
         //fE.archivoCrt="certificado.crt";
         //fE.idPedido = 1;

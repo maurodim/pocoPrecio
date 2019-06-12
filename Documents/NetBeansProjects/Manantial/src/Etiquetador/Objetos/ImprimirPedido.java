@@ -6,6 +6,7 @@ package Etiquetador.Objetos;
  */
 
 
+import Conversores.Numeros;
 import Extension.CodigosDeBarra;
 import Extension.CodigosDeBarraImpl;
 import java.awt.Color;
