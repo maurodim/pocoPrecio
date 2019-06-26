@@ -39,4 +39,22 @@ public class TiposIvaControl {
         
         return modelo;
     }
+    public Object CargarIva(int id){
+        TiposIva tipo = null;
+        switch(id){
+            case 3:
+             tipo=new TiposIva(3,0.00,0.00,0);
+             break;
+            case 4:
+                tipo=new TiposIva(4,0.00,0.00,10.5);
+                break;
+            case 5:
+                tipo=new TiposIva(5,0.00,0.00,21);
+                break;
+            case 6:
+                tipo=new TiposIva(6,0.00,0.00,27);
+                break;
+        }
+        return tipo;
+    }
 }

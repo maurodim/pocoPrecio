@@ -108,7 +108,7 @@ public class Formulario extends javax.swing.JDialog {
         });
 
         jLabel2.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
-        jLabel2.setText("Apellido y Nombre");
+        jLabel2.setText("Nombre Fantasía");
 
         nombre_txt.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
         nombre_txt.addKeyListener(new java.awt.event.KeyAdapter() {

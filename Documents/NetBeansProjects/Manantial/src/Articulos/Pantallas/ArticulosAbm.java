@@ -126,6 +126,8 @@ public class ArticulosAbm extends javax.swing.JInternalFrame {
         jTable1.setModel(tabla);
         jScrollPane1.setViewportView(jTable1);
 
+        jPanel2.setAutoscrolls(true);
+
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/nuevos/nuevo.png"))); // NOI18N
         jButton1.setText("Nuevo Articulo");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -348,7 +350,7 @@ public class ArticulosAbm extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 

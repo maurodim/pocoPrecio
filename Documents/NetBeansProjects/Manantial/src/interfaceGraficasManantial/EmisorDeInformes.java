@@ -262,7 +262,7 @@ public class EmisorDeInformes extends javax.swing.JInternalFrame {
         listadoC=movC.ListarMovimientosPorFechas(0, fecha1, fecha2);
         try {
             
-            informes.GenerarInforme(listadoC);
+            informes.GenerarInforme(listadoC,null);
         } catch (SQLException ex) {
             Logger.getLogger(EmisorDeInformes.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -493,8 +493,8 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
     }//GEN-LAST:event_formInternalFrameClosing
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        LicenciasControl control = new LicenciasControl();
-        Licencias lice = (Licencias) control.LeerActualLocal(Propiedades.getIDLICENCIA());
+        LicenciasControl control1 = new LicenciasControl();
+        Licencias lice = (Licencias) control1.LeerActualLocal(Propiedades.getIDLICENCIA());
         if (lice.getActualFc() > 0) {
 
             String cadena = cliT.getCodigoCliente() + " - " + cliT.getRazonSocial() + "\n" + cliT.getDireccion();
@@ -668,15 +668,20 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
                     Articulos artic;
                     DetalleFacturas detalle;
                     double precio = 0.00;
+                    TiposIva alicuota;
                     while (itD.hasNext()) {
                         artic = (Articulos) itD.next();
                         detalle = new DetalleFacturas();
                         detalle.setCodigo(artic.getCodigoAsignado());
                         detalle.setDescripcion(artic.getDescripcionArticulo());
                         detalle.setCantidadS(String.valueOf(artic.getCantidad()));
-
+                        alicuota=(TiposIva) control.CargarIva(artic.getTipoIva());
+                        detalle.setAlicuota(alicuota.getAlicuota()+"%");
                         precio = Math.round(artic.getPrecioUnitarioNeto() * 100.0) / 100.0;
+                        
                         detalle.setPrecioUnitarioS(String.valueOf(precio));
+                        precio=Math.round(artic.getSubTotal() * 100.0) / 100.0;
+                        detalle.setPrecioGravadoArticulo(precio);
                         listadoDetalle.add(detalle);
                     }
                     //montoIva=tot;
@@ -717,8 +722,15 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
                         Conecciones conx = new Conecciones();
                         Connection conexion = conx.obtenerConexion();
                         Integer numeFc = 0;
+                        FormasDePago formaP = new FormasDePago();
+                        if(listadoFormas.size() > 0){
+                        formaP=(FormasDePago) listadoFormas.get(0);
+                        }else{
+                           formaP=(FormasDePago) formaP.CargarForma(1);
+                        }
+                        
                         System.out.println("subtotal "+subTotal+" total "+montoTotal+" iva "+montoIva);
-                        numeFc = fact.generar(conexion, condicion, Propiedades.getARCHIVOKEY(), Propiedades.getARCHIVOCRT(), cliT.getCodigoId(), cliT.getNumeroDeCuit(), tipoComp, montoTotal, subTotal, montoIva, ptoVta, Propiedades.getCUIT(), tipoVta, listadoIvaD, listadoTrib, cliT.getRazonSocial(), cliT.getDireccion(), String.valueOf(cliT.getTipoIva()), listadoDetalle, idPed, Propiedades.getNOMBRECOMERCIO(), Propiedades.getNOMBRECOMERCIO(), "resp inscripto", Propiedades.getDIRECCION(), Propiedades.getTELEFONO(), Propiedades.getINGBRUTOS(), Propiedades.getINICIOACT(),cliT.getEmail());
+                        numeFc = fact.generar(conexion, condicion, Propiedades.getARCHIVOKEY(), Propiedades.getARCHIVOCRT(), cliT.getCodigoId(), cliT.getNumeroDeCuit(), tipoComp, montoTotal, subTotal, montoIva, ptoVta, Propiedades.getCUIT(), tipoVta, listadoIvaD, listadoTrib, cliT.getRazonSocial(), cliT.getDireccion(), String.valueOf(cliT.getTipoIva()), listadoDetalle, idPed, Propiedades.getNOMBRECOMERCIO(), Propiedades.getNOMBRECOMERCIO(), "resp inscripto", Propiedades.getDIRECCION(), Propiedades.getTELEFONO(), Propiedades.getINGBRUTOS(), Propiedades.getINICIOACT(),cliT.getEmail(),formaP.getNumeroFormaDePago());
                         //comprobante.setNumero(numeFc);
                         comprobante.GuardarNumeroFiscalEnCaja(numeFc, comprobante.getNumeroRegistro(), tipoComp);
                         LicenciasControl licencia = new LicenciasControl();

@@ -75,11 +75,15 @@ public class FacturaElectronica implements FacturableE, Instalable {
     private String inicioActV;
     private String razonSocialVendedor;
     private String mailCliente;
+    private int condicionDeVenta;
+
+    public int getCondicionDeVenta() {
+        return condicionDeVenta;
+    }
 
     public String getMailCliente() {
         return mailCliente;
     }
-    
 
     public String getCuitVendedor() {
         return cuitVendedor;
@@ -430,7 +434,7 @@ public class FacturaElectronica implements FacturableE, Instalable {
                             double imponible = Math.round(tipoI.getBaseImponible() * 100.0) / 100.0;
                             double importe = Math.round(tipoI.getImporte() * 100.0) / 100.0;
                             wsfev1.agregaIVA(tipoI.getId(), imponible, importe); // Ver Excel de referencias de codigos AFIP
-                            System.out.println("importes iva // imponible: " + tipoI.getBaseImponible() + " importe: " + tipoI.getImporte()+" tipo "+tipoI.getId());
+                            System.out.println("importes iva // imponible: " + tipoI.getBaseImponible() + " importe: " + tipoI.getImporte() + " tipo " + tipoI.getId());
                             //this.impuestoLiquido = this.impuestoLiquido + tipoI.getImporte();
                             //wsfev1.agregaIVA(1, 0,0); // Ver Excel de referencias de codigos AFIP
                         }
@@ -484,75 +488,104 @@ public class FacturaElectronica implements FacturableE, Instalable {
                         if (Propiedades.getTIQUEADORA() == 0) {
                             pdf = new pdfsJavaGenerador(this.razonSocialVendedor, this.nombreV, this.cuitVendedor, this.condicionIvaVendedor, this.direccionV, this.telefonoV, this.ingBrutosV, this.inicioActV);
                             //EncabezadoPdf encab=new EncabezadoPdf();
-                        pdf.setDoc(this);
-                        pdf.setPunto(this.numeroPuntoDeVenta);
-                        pdf.setNumero(nro);
-                        this.archivoPdf = pdf.run();
+                            pdf.setDoc(this);
+                            pdf.setPunto(this.numeroPuntoDeVenta);
+                            pdf.setNumero(nro);
+                            this.archivoPdf = pdf.run();
                         } else {
+                            pdf = new pdfsJavaGenerador(this.razonSocialVendedor, this.nombreV, this.cuitVendedor, this.condicionIvaVendedor, this.direccionV, this.telefonoV, this.ingBrutosV, this.inicioActV);
+                            //EncabezadoPdf encab=new EncabezadoPdf();
+                            pdf.setDoc(this);
+                            pdf.setPunto(this.numeroPuntoDeVenta);
+                            pdf.setNumero(nro);
+                            this.archivoPdf = pdf.run();
                             ImprimirComprobantes ticket = new ImprimirComprobantes();
+
                             ticket.setDoc(this);
                             ticket.setPunto(this.numeroPuntoDeVenta);
                             ticket.setNumero(nro);
-                            ticket.ImprimirTicketFiscal(this.razonSocialVendedor, this.nombreV, this.cuitVendedor, this.condicionIvaVendedor, this.direccionV, this.telefonoV, this.ingBrutosV, this.inicioActV);
+                            if (this.tipoComprobante.equals("tcFacturaA") || this.tipoComprobante.equals("tcNotaDebitoA") || this.tipoComprobante.equals("tcNotaCreditoA")) {
+                                ticket.ImprimirTicketFiscalA(this.razonSocialVendedor, this.nombreV, this.cuitVendedor, this.condicionIvaVendedor, this.direccionV, this.telefonoV, this.ingBrutosV, this.inicioActV);
+                            } else {
+                                ticket.ImprimirTicketFiscal(this.razonSocialVendedor, this.nombreV, this.cuitVendedor, this.condicionIvaVendedor, this.direccionV, this.telefonoV, this.ingBrutosV, this.inicioActV);
+                            }
                         }
 
-                        //EncabezadoPdf encab=new EncabezadoPdf();
-                        /*
+                            //EncabezadoPdf encab=new EncabezadoPdf();
+                            /*
                         pdf.setDoc(this);
                         pdf.setPunto(this.numeroPuntoDeVenta);
                         pdf.setNumero(nro);
                         this.archivoPdf = pdf.run();
-                        */
-                        return nro;
-                        //return this.guardarEnFiscal();
-                    } else {
+                             */
+                            return nro;
+                            //return this.guardarEnFiscal();
+                        }else {
                         JOptionPane.showMessageDialog(null, wsfev1.autorizarRespuestaObs(0));
                     }
+                    }
                 }
-            }
-        } else {
+            }else {
             JOptionPane.showMessageDialog(null, wsfev1.errorDesc());
         }
 
-        return this;
-    }
+            return this;
+        }
 
-    @Override
-    public Object recuperar(Object Fe) {
+        @Override
+        public Object recuperar
+        (Object Fe
+        
+            ) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+        }
 
-    @Override
-    public Integer guardar(Object Fe) {
+        @Override
+        public Integer guardar
+        (Object Fe
+        
+            ) {
         Integer id = 0;
 
-        return id;
-    }
+            return id;
+        }
 
-    @Override
-    public Object modificar(Object Fe) {
+        @Override
+        public Object modificar
+        (Object Fe
+        
+            ) {
         FacturaElectronica fE = new FacturaElectronica();
 
-        return fE;
-    }
+            return fE;
+        }
 
-    @Override
-    public ArrayList listarPorEstado(Integer estado) {
+        @Override
+        public ArrayList listarPorEstado
+        (Integer estado
+        
+            ) {
         ArrayList listado = new ArrayList();
 
-        return listado;
-    }
+            return listado;
+        }
 
-    @Override
-    public Object cargar(Integer id) {
+        @Override
+        public Object cargar
+        (Integer id
+        
+            ) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+        }
 
-    @Override
-    public DefaultTableModel mostrarListado(ArrayList listadoC) {
+        @Override
+        public DefaultTableModel mostrarListado
+        (ArrayList listadoC
+        
+            ) {
         DefaultTableModel listado = new DefaultTableModel();
 
-        /*
+            /*
         FacturaElectronica cotizacion;
         ClientesTango cliente;
         Facturar bus=new ClientesTango();
@@ -578,223 +611,256 @@ public class FacturaElectronica implements FacturableE, Instalable {
             fila[4]=cotizacion.getAfipPlastId();
             listado.addRow(fila);
         }
-         */
-        return listado;
-    }
+             */
+            return listado;
+        }
 
-    @Override
-    public Object reEnviar(Object fe) {
+        @Override
+        public Object reEnviar
+        (Object fe
+        
+            ) {
         FacturaElectronica fE = new FacturaElectronica();
 
-        return fE;
+            return fE;
 
-    }
+        }
 
-    @Override
-    public void eliminar(Object fe) {
+        @Override
+        public void eliminar
+        (Object fe
+        
+            ) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+        }
 
-    @Override
-    public String reimprimir(Object fe) {
+        @Override
+        public String reimprimir
+        (Object fe
+        
+            ) {
 
         return null;
 
-    }
+        }
 
-    @Override
-    public String imprimir(Object fe) {
+        @Override
+        public String imprimir
+        (Object fe
+        
+            ) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+        }
 
-    @Override
-    public Boolean InstalarTablas() {
+        @Override
+        public Boolean InstalarTablas
+        
+            () {
         //creacion de tabla facturaelectronica
 
         Boolean ver = true;
-        /*
+            /*
         Transaccionable tra=new Conecciones();
         tra.guardarRegistro("CREATE TABLE facturaelectronica (id int(11) NOT NULL,cae varchar (20),cae_vto varchar(8),fecha_cae varchar(20),afipqty varchar(4),afipplastid varchar(20),afipplastcbte varchar(10),idfactura int(11) not null,idcliente int(11) not null,estado int(11) not null default '0',customerid varchar (11),customertypedoc varchar(2),tipo_comprobante varchar(1),importe_total varchar(30),importe_neto varchar(25),impto_liq varchar(25),fecha timestamp not null default current_timestamp)ENGINE=InnoDB DEFAULT CHARSET=utf8"); //(idcliente,total,tipo,idusuario,idpedido,idremito,numerofactura,estado,saldo,subtotal,descuento,porcentajeD)
         tra.guardarRegistro("ALTER TABLE facturaelectronica ADD PRIMARY KEY (id)");
         tra.guardarRegistro("ALTER TABLE facturaelectronica MODIFY id int(11) NOT NULL AUTO_INCREMENT");
         tra.guardarRegistro("alter table facturaelectronica modify tipo_comprobante varchar(2)");
         
-         */
-        //String sql="insert into facturaelectronica (cae,cae_vto,fecha_cae,afipqty,afipplastid,afipplastcbte,idfactura,idcliente,estado,customerid,customertypedoc,tipo_comprobante,importe_total,importe_neto,impto_liq) values ('"+ffE.getCae()+"','"+ffE.getCaeVto()+"','"+ffE.getFechaCae()+"','"+ffE.getAfipQty()+"','"+ffE.getAfipPlastId()+"','"+ffE.getAfipPlastCbte()+"',"+ffE.getIdFactura()+","+ffE.getIdCliente()+","+estado+",'"+ffE.getCustomerId()+"','"+ffE.getCustomerTypeDoc()+"','"+ffE.getTipoComprobante()+"','"+ffE.getImporteTotal()+"','"+ffE.getImporteNeto()+"','"+ffE.getImpuestoLiquido()+"')";
-        return ver;
-    }
+             */
+            //String sql="insert into facturaelectronica (cae,cae_vto,fecha_cae,afipqty,afipplastid,afipplastcbte,idfactura,idcliente,estado,customerid,customertypedoc,tipo_comprobante,importe_total,importe_neto,impto_liq) values ('"+ffE.getCae()+"','"+ffE.getCaeVto()+"','"+ffE.getFechaCae()+"','"+ffE.getAfipQty()+"','"+ffE.getAfipPlastId()+"','"+ffE.getAfipPlastCbte()+"',"+ffE.getIdFactura()+","+ffE.getIdCliente()+","+estado+",'"+ffE.getCustomerId()+"','"+ffE.getCustomerTypeDoc()+"','"+ffE.getTipoComprobante()+"','"+ffE.getImporteTotal()+"','"+ffE.getImporteNeto()+"','"+ffE.getImpuestoLiquido()+"')";
+            return ver;
+        }
 
-    @Override
-    public Boolean ActualizarTablas() {
+        @Override
+        public Boolean ActualizarTablas
+        
+            () {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+        }
 
-    @Override
-    public Integer generar(Connection conexion, int Condicion, String archivoKey, String archivoCrt, Integer idCliente, String cuitCliente, int tipoComprobante, Double montoTotal, Double montoBruto, Double montoIva, int ptoDeVenta, String cuitVendedor, int tipoV, ArrayList lstI, ArrayList lstT, String razonSocial, String direccion, String condicionIvaCliente, ArrayList lstDetalle, Integer idPedido, String nombreVendedor, String razonSocialVend, String condIvaVendedor, String direccionVendedor, String telefonoVendedor, String ingBrutosVendedor, String inicioActVendedor,String mailCliente) {
+        @Override
+        public Integer generar
+        (Connection conexion, int Condicion, String archivoKey
+        , String archivoCrt, Integer idCliente
+        , String cuitCliente, int tipoComprobante, Double montoTotal
+        , Double montoBruto, Double montoIva
+        , int ptoDeVenta, String cuitVendedor
+        , int tipoV, ArrayList lstI
+        , ArrayList lstT, String razonSocial
+        , String direccion, String condicionIvaCliente
+        , ArrayList lstDetalle, Integer idPedido
+        , String nombreVendedor, String razonSocialVend
+        , String condIvaVendedor, String direccionVendedor
+        , String telefonoVendedor, String ingBrutosVendedor
+        , String inicioActVendedor, String mailCliente
+        ,int condicionVta
+        
+            ) {
         FacturaElectronica fE = new FacturaElectronica();
-        fE.listadoIva = new ArrayList();
-        fE.listadoTributos = new ArrayList();
-        fE.conexion = conexion;
-        fE.condicionIvaVendedor = String.valueOf(Condicion);
-        fE.archivoKey = archivoKey;
-        fE.archivoCrt = archivoCrt;
-        fE.idPedido = idPedido;
-        fE.mailCliente=mailCliente;
-        //fE.archivoKey="clave.key";
-        //fE.archivoCrt="certificado.crt";
-        //fE.idPedido = 1;
-        fE.idCliente = idCliente;
-        fE.nombreV = nombreVendedor;
-        fE.razonSocialVendedor = razonSocialVend;
-        fE.cIvaV = condIvaVendedor;
-        fE.direccionV = direccionVendedor;
-        fE.telefonoV = telefonoVendedor;
-        fE.ingBrutosV = ingBrutosVendedor;
-        fE.inicioActV = inicioActVendedor;
-        //System.out.println("cantidad " + cuitCliente.length());
-        if (cuitCliente.length() == 8 || cuitCliente.length() == 11 || cuitCliente.length() == 1 || cuitCliente.length() == 7) {
-            if (cuitCliente.length() == 1) {
-                cuitCliente = "0";
+            fE.listadoIva = new ArrayList();
+            fE.listadoTributos = new ArrayList();
+            fE.conexion = conexion;
+            fE.condicionIvaVendedor = String.valueOf(Condicion);
+            fE.archivoKey = archivoKey;
+            fE.archivoCrt = archivoCrt;
+            fE.idPedido = idPedido;
+            fE.mailCliente = mailCliente;
+            fE.condicionDeVenta = condicionVta;
+            //fE.archivoKey="clave.key";
+            //fE.archivoCrt="certificado.crt";
+            //fE.idPedido = 1;
+            fE.idCliente = idCliente;
+            fE.nombreV = nombreVendedor;
+            fE.razonSocialVendedor = razonSocialVend;
+            fE.cIvaV = condIvaVendedor;
+            fE.direccionV = direccionVendedor;
+            fE.telefonoV = telefonoVendedor;
+            fE.ingBrutosV = ingBrutosVendedor;
+            fE.inicioActV = inicioActVendedor;
+            //System.out.println("cantidad " + cuitCliente.length());
+            if (cuitCliente.length() == 8 || cuitCliente.length() == 11 || cuitCliente.length() == 1 || cuitCliente.length() == 7) {
+                if (cuitCliente.length() == 1) {
+                    cuitCliente = "0";
+                }
+            } else {
+
+                cuitCliente = JOptionPane.showInputDialog(null, "Ingrese numero de CUIT/CUIL o DNI Sin puntos ni guiones ", cuitCliente);
+                if (idCliente.equals("0")) {
+                    cuitCliente = "0";
+                }
             }
-        } else {
+            cuitCliente = cuitCliente.replace("-", "");
+            cuitCliente = cuitCliente.trim();
+            Integer cantCuit = cuitCliente.length();
+            int tipDocumento = 0;
+            switch (cantCuit) {
+                case 1:
+                    cuitCliente = "0";
+                    tipDocumento = 99;//SIN INDETIFICAR
+                    break;
+                case 11:
 
-            cuitCliente = JOptionPane.showInputDialog(null, "Ingrese numero de CUIT/CUIL o DNI Sin puntos ni guiones ", cuitCliente);
-            if (idCliente.equals("0")) {
-                cuitCliente = "0";
+                    tipDocumento = 80;//CUIT
+
+                    break;
+                case 8:
+                    tipDocumento = 96;//DNI
+                    break;
+                case 7:
+                    tipDocumento = 96;//DNI
+                    break;
             }
-        }
-        cuitCliente = cuitCliente.replace("-", "");
-        cuitCliente = cuitCliente.trim();
-        Integer cantCuit = cuitCliente.length();
-        int tipDocumento = 0;
-        switch (cantCuit) {
-            case 1:
-                cuitCliente = "0";
-                tipDocumento = 99;//SIN INDETIFICAR
-                break;
-            case 11:
+            String tipoDocumentoCliente = String.valueOf(tipDocumento);
 
-                tipDocumento = 80;//CUIT
+            fE.customerId = cuitCliente;
+            fE.customerTypeDoc = String.valueOf(tipoDocumentoCliente);
+            fE.numeroPuntoDeVenta = ptoDeVenta;
+            fE.importeTotal = montoTotal;
+            fE.importeNeto = montoBruto;
+            fE.impuestoLiquido = montoIva;
+            fE.tipoCompro = tipoComprobante;
+            fE.cuitVendedor = cuitVendedor;
+            fE.tipoVta = tipoV;
+            fE.listadoIva = lstI;
+            fE.listadoTributos = lstT;
+            fE.razonSocial = razonSocial;
+            fE.direccionCliente = direccion;
+            fE.condicionIvaCliente = condicionIvaCliente;
+            fE.listadoDetalle = lstDetalle;
+            //if (fE.condicionIvaVendedor.equals("1") || fE.condicionIvaVendedor.equals("4")) { //segun tabla de tipos de contribuyentes - resp inscripto
 
-                break;
-            case 8:
-                tipDocumento = 96;//DNI
-                break;
-            case 7:
-                tipDocumento = 96;//DNI
-                break;
-        }
-        String tipoDocumentoCliente = String.valueOf(tipDocumento);
-
-        fE.customerId = cuitCliente;
-        fE.customerTypeDoc = String.valueOf(tipoDocumentoCliente);
-        fE.numeroPuntoDeVenta = ptoDeVenta;
-        fE.importeTotal = montoTotal;
-        fE.importeNeto = montoBruto;
-        fE.impuestoLiquido = montoIva;
-        fE.tipoCompro = tipoComprobante;
-        fE.cuitVendedor = cuitVendedor;
-        fE.tipoVta = tipoV;
-        fE.listadoIva = lstI;
-        fE.listadoTributos = lstT;
-        fE.razonSocial = razonSocial;
-        fE.direccionCliente = direccion;
-        fE.condicionIvaCliente = condicionIvaCliente;
-        fE.listadoDetalle = lstDetalle;
-        //if (fE.condicionIvaVendedor.equals("1") || fE.condicionIvaVendedor.equals("4")) { //segun tabla de tipos de contribuyentes - resp inscripto
-
-        if (fE.tipoCompro == 6) {//antes 1
-            fE.tipoComp = TipoComprobante.tcFacturaB;//factura B a consumidor final
-        }
-        if (fE.tipoCompro == 1) {//antes 2
-            fE.tipoComp = TipoComprobante.tcFacturaA;//1 FACTURA A 
-        }
-        if (fE.tipoCompro == 2) {//antes 9
-            fE.tipoComp = TipoComprobante.tcNotaDebitoA;//2
-        }
-        if (fE.tipoCompro == 3) {// antes 10
-            fE.tipoComp = TipoComprobante.tcNotaCreditoA;//3 NOTA DE CREDITO A
-        }
-        if (fE.tipoCompro == 7) { // antes 11
-            fE.tipoComp = TipoComprobante.tcNotaDebitoB;
-        }
-        if (fE.tipoCompro == 8) { // antes 12
-            fE.tipoComp = TipoComprobante.tcNotaCreditoB;//tipComprobante=8;
-        }
-        if (fE.tipoCompro == 8) { // antes 8
-            fE.tipoComp = TipoComprobante.tcNotaCreditoB;//NTA DE CREDITO B A CONS FINAL y exento
-        }
-        if (fE.tipoCompro == 6) { // antes 3
-            fE.tipoComp = TipoComprobante.tcFacturaB;// factura B A EXENTO
-        }
-        // } else {
-        if (fE.tipoCompro == 11) { // antes 1
-            fE.tipoComp = TipoComprobante.tcFacturaC;
-        }
-        /*
+            if (fE.tipoCompro == 6) {//antes 1
+                fE.tipoComp = TipoComprobante.tcFacturaB;//factura B a consumidor final
+            }
+            if (fE.tipoCompro == 1) {//antes 2
+                fE.tipoComp = TipoComprobante.tcFacturaA;//1 FACTURA A 
+            }
+            if (fE.tipoCompro == 2) {//antes 9
+                fE.tipoComp = TipoComprobante.tcNotaDebitoA;//2
+            }
+            if (fE.tipoCompro == 3) {// antes 10
+                fE.tipoComp = TipoComprobante.tcNotaCreditoA;//3 NOTA DE CREDITO A
+            }
+            if (fE.tipoCompro == 7) { // antes 11
+                fE.tipoComp = TipoComprobante.tcNotaDebitoB;
+            }
+            if (fE.tipoCompro == 8) { // antes 12
+                fE.tipoComp = TipoComprobante.tcNotaCreditoB;//tipComprobante=8;
+            }
+            if (fE.tipoCompro == 8) { // antes 8
+                fE.tipoComp = TipoComprobante.tcNotaCreditoB;//NTA DE CREDITO B A CONS FINAL y exento
+            }
+            if (fE.tipoCompro == 6) { // antes 3
+                fE.tipoComp = TipoComprobante.tcFacturaB;// factura B A EXENTO
+            }
+            // } else {
+            if (fE.tipoCompro == 11) { // antes 1
+                fE.tipoComp = TipoComprobante.tcFacturaC;
+            }
+            /*
             if (fE.tipoCompro == 11) { // antes 2
                 fE.tipoComp = TipoComprobante.tcFacturaC;//1
             }
-         */
-        if (fE.tipoCompro == 12) { // antes 9
-            fE.tipoComp = TipoComprobante.tcNotaDebitoC;//2
-        }
-        if (fE.tipoCompro == 13) { // antes 10
-            fE.tipoComp = TipoComprobante.tcNotaCreditoC;//3
-        }
-        /*
+             */
+            if (fE.tipoCompro == 12) { // antes 9
+                fE.tipoComp = TipoComprobante.tcNotaDebitoC;//2
+            }
+            if (fE.tipoCompro == 13) { // antes 10
+                fE.tipoComp = TipoComprobante.tcNotaCreditoC;//3
+            }
+            /*
             if (fE.tipoCompro == 11) { // antes 11
                 fE.tipoComp = TipoComprobante.tcNotaDebitoC;
             }
             if (fE.tipoCompro == 12) { // antes 12
                 fE.tipoComp = TipoComprobante.tcNotaCreditoC;
             }
-         */
-        //}
-        if (fE.tipoComp.equals(TipoComprobante.tcFacturaA)) {
-            fE.numeroTipoComprobante = 1;
-        }
-        if (fE.tipoComp.equals(TipoComprobante.tcNotaDebitoA)) {
-            fE.numeroTipoComprobante = 2;
-        }
-        if (fE.tipoComp.equals(TipoComprobante.tcNotaCreditoA)) {
-            fE.numeroTipoComprobante = 3;
-        }
-        if (fE.tipoComp.equals(TipoComprobante.tcFacturaB)) {
-            fE.numeroTipoComprobante = 6;
-        }
-        if (fE.tipoComp.equals(TipoComprobante.tcNotaDebitoB)) {
-            fE.numeroTipoComprobante = 7;
-        }
-        if (fE.tipoComp.equals(TipoComprobante.tcNotaCreditoB)) {
-            fE.numeroTipoComprobante = 8;
-        }
-        if (fE.tipoComp.equals(TipoComprobante.tcFacturaC)) {
-            fE.numeroTipoComprobante = 11;
-        }
-        if (fE.tipoComp.equals(TipoComprobante.tcNotaDebitoC)) {
-            fE.numeroTipoComprobante = 12;
-        }
-        if (fE.tipoComp.equals(TipoComprobante.tcNotaCreditoC)) {
-            fE.numeroTipoComprobante = 13;
+             */
+            //}
+            if (fE.tipoComp.equals(TipoComprobante.tcFacturaA)) {
+                fE.numeroTipoComprobante = 1;
+            }
+            if (fE.tipoComp.equals(TipoComprobante.tcNotaDebitoA)) {
+                fE.numeroTipoComprobante = 2;
+            }
+            if (fE.tipoComp.equals(TipoComprobante.tcNotaCreditoA)) {
+                fE.numeroTipoComprobante = 3;
+            }
+            if (fE.tipoComp.equals(TipoComprobante.tcFacturaB)) {
+                fE.numeroTipoComprobante = 6;
+            }
+            if (fE.tipoComp.equals(TipoComprobante.tcNotaDebitoB)) {
+                fE.numeroTipoComprobante = 7;
+            }
+            if (fE.tipoComp.equals(TipoComprobante.tcNotaCreditoB)) {
+                fE.numeroTipoComprobante = 8;
+            }
+            if (fE.tipoComp.equals(TipoComprobante.tcFacturaC)) {
+                fE.numeroTipoComprobante = 11;
+            }
+            if (fE.tipoComp.equals(TipoComprobante.tcNotaDebitoC)) {
+                fE.numeroTipoComprobante = 12;
+            }
+            if (fE.tipoComp.equals(TipoComprobante.tcNotaCreditoC)) {
+                fE.numeroTipoComprobante = 13;
+            }
+
+            fE.descripcionTipoComprobante = fE.tipoComp.name();
+
+            //System.out.println("Descripcion tipo de comprobante " + fE.tipoComp.name());
+            fE.leer();
+            return fE.guardarEnFiscal();
         }
 
-        fE.descripcionTipoComprobante = fE.tipoComp.name();
-
-        //System.out.println("Descripcion tipo de comprobante " + fE.tipoComp.name());
-        fE.leer();
-        return fE.guardarEnFiscal();
-    }
-
-    @Override
-    public String solicitarCertificado(String cuit1) {
+        @Override
+        public String solicitarCertificado(String cuit1) {
         IwsPadron padron = ClassFactory.createwsPadron();
-        double cuit = 20229053834.0;
-        if (padron.descargarConstancia(cuit, "c:\\datos\\constancia.pdf")) {
-            //System.out.println("Constancia descargada con éxito");
-        } else {
-            //System.out.println(padron.errorDesc());
+            double cuit = 20229053834.0;
+            if (padron.descargarConstancia(cuit, "Constancias\\constancia.pdf")) {
+                //System.out.println("Constancia descargada con éxito");
+            } else {
+                //System.out.println(padron.errorDesc());
+            }
+            return "Constancias\\" + cuit + "_constancia.pdf";
         }
-        return "Constancias\\" + cuit + "_constancia.pdf";
     }
-}

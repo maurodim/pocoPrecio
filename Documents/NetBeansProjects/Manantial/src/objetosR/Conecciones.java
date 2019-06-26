@@ -52,7 +52,7 @@ public class Conecciones implements Transaccionable{
  File miDir=new File(".");
  String directorio=miDir.getAbsolutePath();
         System.out.println(directorio);
-               String strUrl = "jdbc:derby:C://Users//Usuario//Documents//Manatial Gestion//base//bambuPrueba.db";//"jdbc:derby:base//bambuPrueba.db";
+               String strUrl = "jdbc:derby:base//bambuPrueba.db";
         
         try {
             Class.forName(driver1).newInstance();

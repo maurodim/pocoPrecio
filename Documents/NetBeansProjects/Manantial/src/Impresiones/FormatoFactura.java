@@ -22,6 +22,12 @@ public class FormatoFactura {
     private String subTotal;
     private String iva;
     private String montoIva;
+    private String iva1;
+    private String montoIva1;
+    private String iva2;
+    private String montoIva2;
+    private String iva3;
+    private String montoIva3;
     private String total;
     private String suPago;
     private String sumaSuPago;
@@ -118,6 +124,62 @@ public class FormatoFactura {
 
     public void setNoGravados(String noGravados) {
         this.noGravados = noGravados;
+    }
+
+    public LocalDateTime getLdt() {
+        return ldt;
+    }
+
+    public void setLdt(LocalDateTime ldt) {
+        this.ldt = ldt;
+    }
+
+    public String getIva1() {
+        return iva1;
+    }
+
+    public void setIva1(String iva1) {
+        this.iva1 = iva1;
+    }
+
+    public String getMontoIva1() {
+        return montoIva1;
+    }
+
+    public void setMontoIva1(String montoIva1) {
+        this.montoIva1 = montoIva1;
+    }
+
+    public String getIva2() {
+        return iva2;
+    }
+
+    public void setIva2(String iva2) {
+        this.iva2 = iva2;
+    }
+
+    public String getMontoIva2() {
+        return montoIva2;
+    }
+
+    public void setMontoIva2(String montoIva2) {
+        this.montoIva2 = montoIva2;
+    }
+
+    public String getIva3() {
+        return iva3;
+    }
+
+    public void setIva3(String iva3) {
+        this.iva3 = iva3;
+    }
+
+    public String getMontoIva3() {
+        return montoIva3;
+    }
+
+    public void setMontoIva3(String montoIva3) {
+        this.montoIva3 = montoIva3;
     }
 
     @Override

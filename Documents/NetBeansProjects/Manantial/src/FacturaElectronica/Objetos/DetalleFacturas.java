@@ -24,6 +24,25 @@ public class DetalleFacturas{
     private Double descuento;
     private Double precioTotal;
     private Integer idArticulo;
+    private String alicuota;
+    private Double precioGravadoArticulo;
+
+    public Double getPrecioGravadoArticulo() {
+        return precioGravadoArticulo;
+    }
+
+    public void setPrecioGravadoArticulo(Double precioGravadoArticulo) {
+        this.precioGravadoArticulo = precioGravadoArticulo;
+    }
+    
+    public String getAlicuota() {
+        return alicuota;
+    }
+
+    public void setAlicuota(String alicuota) {
+        this.alicuota = alicuota;
+    }
+    
 
     public String getDescripcion() {
         return descripcion;

@@ -571,11 +571,14 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
             
             // Configurando parametros de algunas columnas de interes
             List<String> columnasTabla = new ArrayList<>();
-            columnasTabla.add("Precio:60:60");
+            columnasTabla.add("Código:100:100");
+            columnasTabla.add("Descripcion:600:600");
             columnasTabla.add("Stock:60:60");
 
             // Desplegando ventana emergente
-            tgp.desplegarPopUp("Seleccion Item", modiA.mostrarListadoBusqueda(listadoDeBusqueda), columnasTabla);
+            int elementoSeleccionado = tgp.desplegarPopUp("Seleccion Item", modiA.mostrarListadoBusqueda(listadoDeBusqueda), columnasTabla);
+            arti = (Articulos) listadoDeBusqueda.get(elementoSeleccionado);
+            jTextField1.setText(arti.getCodigoDeBarra());
 
         }
         
@@ -715,8 +718,8 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_formInternalFrameClosing
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        LicenciasControl control=new LicenciasControl();
-            Licencias lice=(Licencias) control.LeerActualLocal(Propiedades.getIDLICENCIA());
+        LicenciasControl control1=new LicenciasControl();
+            Licencias lice=(Licencias) control1.LeerActualLocal(Propiedades.getIDLICENCIA());
             if(lice.getActualFc()> 0){
         
         String cadena=cliT.getCodigoCliente()+" - "+cliT.getRazonSocial()+"\n"+cliT.getDireccion();
@@ -878,15 +881,20 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
                 Articulos artic;
                 DetalleFacturas detalle;
                 double precio=0.00;
+                 TiposIva alicuota;
                 while(itD.hasNext()){
                     artic=(Articulos) itD.next();
                     detalle=new DetalleFacturas();
                     detalle.setCodigo(artic.getCodigoAsignado());
                     detalle.setDescripcion(artic.getDescripcionArticulo());
                     detalle.setCantidadS(String.valueOf(artic.getCantidad() * -1));
-                    
-                    precio=Math.round((artic.getPrecioUnitarioNeto()) * 100.0) / 100.0;
-                    detalle.setPrecioUnitarioS(String.valueOf(precio));
+                    alicuota=(TiposIva) control.CargarIva(artic.getTipoIva());
+                        detalle.setAlicuota(alicuota.getAlicuota()+"%");
+                        precio = Math.round(artic.getPrecioUnitarioNeto() * 100.0) / 100.0;
+                        
+                        detalle.setPrecioUnitarioS(String.valueOf(precio));
+                        precio=Math.round(artic.getSubTotal() * 100.0) / 100.0;
+                        detalle.setPrecioGravadoArticulo(precio);
                     listadoDetalle.add(detalle);
                 }
                 //montoIva=tot;
@@ -930,8 +938,14 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
             try {
                 conx = new Conecciones();
                 Connection conexion=conx.obtenerConexion();
+                FormasDePago formaP = new FormasDePago();
+                        if(listadoFormas.size() > 0){
+                        formaP=(FormasDePago) listadoFormas.get(0);
+                        }else{
+                           formaP=(FormasDePago) formaP.CargarForma(1);
+                        }
                 Integer numeFc=0;
-        numeFc=fact.generar(conexion, condicion, Propiedades.getARCHIVOKEY(), Propiedades.getARCHIVOCRT(), cliT.getCodigoId(), cliT.getNumeroDeCuit(), tipoComp, montoTotal, subTotal, montoIva, ptoVta, Propiedades.getCUIT(), tipoVta, listadoIvaD, listadoTrib, cliT.getRazonSocial(), cliT.getDireccion(), cliT.getCondicionIva(), listadoDetalle,idPed,Propiedades.getNOMBRECOMERCIO(),Propiedades.getNOMBRECOMERCIO(),"resp inscripto",Propiedades.getDIRECCION(),Propiedades.getTELEFONO(),Propiedades.getINGBRUTOS(),Propiedades.getINICIOACT(),cliT.getEmail());
+        numeFc=fact.generar(conexion, condicion, Propiedades.getARCHIVOKEY(), Propiedades.getARCHIVOCRT(), cliT.getCodigoId(), cliT.getNumeroDeCuit(), tipoComp, montoTotal, subTotal, montoIva, ptoVta, Propiedades.getCUIT(), tipoVta, listadoIvaD, listadoTrib, cliT.getRazonSocial(), cliT.getDireccion(), cliT.getCondicionIva(), listadoDetalle,idPed,Propiedades.getNOMBRECOMERCIO(),Propiedades.getNOMBRECOMERCIO(),"resp inscripto",Propiedades.getDIRECCION(),Propiedades.getTELEFONO(),Propiedades.getINGBRUTOS(),Propiedades.getINICIOACT(),cliT.getEmail(),formaP.getNumeroFormaDePago());
         comprobante.GuardarNumeroFiscalEnCaja(numeFc, comprobante.getNumeroRegistro(),tipoComp);
         LicenciasControl licencia=new LicenciasControl();
                     licencia.RestarFc();

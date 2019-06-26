@@ -20,6 +20,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -453,7 +454,7 @@ public class Comprobantes implements Facturar {
         comp.setIdFactura(factura.getId());
         DetalleFacturas detalle = new DetalleFacturas();
         Facturable ffD = new DetalleFacturas();
-
+        Boolean impacta = true;
         Boolean verif = false;
         String sql = "";
         while (iComp.hasNext()) {
@@ -482,7 +483,16 @@ public class Comprobantes implements Facturar {
             if (comp.getTipoComprobante() == 28 && Propiedades.getPRESUPUESTOS() == 0) {
 
             } else {
-                tra.guardarRegistro(sql);
+                if (comp.getTipoComprobante() == 28) {
+                    if (JOptionPane.showConfirmDialog(null, "Confirma que éste PRESUPUESTO impacta en CAJA?", "Emisión de Prsupuesto", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 1) {
+                        impacta = false;
+                    } else {
+                        impacta = true;
+                        tra.guardarRegistro(sql);
+                    }
+                } else {
+                    tra.guardarRegistro(sql);
+                }
             }
             System.out.println(sql);
 
@@ -494,21 +504,24 @@ public class Comprobantes implements Facturar {
         if (comp.getTipoComprobante() == 28 && Propiedades.getPRESUPUESTOS() == 0) {
 
         } else {
-            sql = "insert into movimientoscaja (numeroUsuario,numeroSucursal,numeroComprobante,tipoComprobante,monto,tipoMovimiento,idCaja,idCliente,tipoCliente,pagado,idforma1,monto1,idforma2,monto2) values (" + comp.getUsuarioGenerador() + "," + comp.getIdSucursal() + "," + numeroComprobante + "," + comp.getTipoComprobante() + "," + comp.getMontoTotal() + "," + comp.getTipoMovimiento() + "," + Inicio.caja.getNumero() + "," + comp.getCliente().getCodigoId() + ",1," + comp.getPagado() + "," + forma + "," + comp.getMonto1() + "," + comp.getIdForma2() + "," + comp.getMonto2() + ")";
-            System.out.println(sql);
-            tra.guardarRegistro(sql);
-            sql = "select numero from movimientoscaja order by numero desc fetch first 1 rows only";
-            ResultSet rs = tra.leerConjuntoDeRegistros(sql);
-            try {
-                while (rs.next()) {
-                    comp.setNumeroRegistro(rs.getInt("numero"));
+            if (impacta) {
+
+                sql = "insert into movimientoscaja (numeroUsuario,numeroSucursal,numeroComprobante,tipoComprobante,monto,tipoMovimiento,idCaja,idCliente,tipoCliente,pagado,idforma1,monto1,idforma2,monto2) values (" + comp.getUsuarioGenerador() + "," + comp.getIdSucursal() + "," + numeroComprobante + "," + comp.getTipoComprobante() + "," + comp.getMontoTotal() + "," + comp.getTipoMovimiento() + "," + Inicio.caja.getNumero() + "," + comp.getCliente().getCodigoId() + ",1," + comp.getPagado() + "," + forma + "," + comp.getMonto1() + "," + comp.getIdForma2() + "," + comp.getMonto2() + ")";
+                System.out.println(sql);
+                tra.guardarRegistro(sql);
+                sql = "select numero from movimientoscaja order by numero desc fetch first 1 rows only";
+                ResultSet rs = tra.leerConjuntoDeRegistros(sql);
+                try {
+                    while (rs.next()) {
+                        comp.setNumeroRegistro(rs.getInt("numero"));
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(Comprobantes.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            } catch (SQLException ex) {
-                Logger.getLogger(Comprobantes.class.getName()).log(Level.SEVERE, null, ex);
+                sql = "insert into movimientosclientes (numeroProveedor,monto,pagado,numeroComprobante,idUsuario,idCaja,idSucursal,tipoComprobante) values (" + comp.getCliente().getCodigoId() + "," + comp.getMontoTotal() + "," + comp.getPagado() + ",'" + numeroComprobante + "'," + Inicio.usuario.getNumeroId() + "," + Inicio.caja.getNumero() + "," + Inicio.sucursal.getNumero() + "," + comp.getTipoComprobante() + ")";
+                System.out.println(sql);
+                tra.guardarRegistro(sql);
             }
-            sql = "insert into movimientosclientes (numeroProveedor,monto,pagado,numeroComprobante,idUsuario,idCaja,idSucursal,tipoComprobante) values (" + comp.getCliente().getCodigoId() + "," + comp.getMontoTotal() + "," + comp.getPagado() + ",'" + numeroComprobante + "'," + Inicio.usuario.getNumeroId() + "," + Inicio.caja.getNumero() + "," + Inicio.sucursal.getNumero() + "," + comp.getTipoComprobante() + ")";
-            System.out.println(sql);
-            tra.guardarRegistro(sql);
         }
         System.out.println("SE RECEPCIONO BARBARO");
         sql = "update tipocomprobantes set numeroActivo=" + numeroComprobante + " where id=" + idComp;

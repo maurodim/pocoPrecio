@@ -55,29 +55,28 @@ import FacturaElectronica.Objetos.TiposIva;
 import facturacion.clientes.FormasDePago;
 import java.sql.Connection;
 
-
 /**
  *
  * @author hernan
  */
-public class NotaDeDebito extends javax.swing.JInternalFrame implements KeyListener{
+public class NotaDeDebito extends javax.swing.JInternalFrame implements KeyListener {
 
     /**
      * Creates new form IngresoDePedidos
      */
     public static Clientes cliT;
-    private ArrayList detalleDelPedido=new ArrayList();
+    private ArrayList detalleDelPedido = new ArrayList();
     private Articulos arti;
-    private static ArrayList listadoDeBusqueda=new ArrayList();
-    private static Double montoTotal=0.00;
-    private static Comprobantes comp=new Comprobantes();
+    private static ArrayList listadoDeBusqueda = new ArrayList();
+    private static Double montoTotal = 0.00;
+    private static Comprobantes comp = new Comprobantes();
     private ListasDePrecios lista;
-    private Rubros rubro=new Rubros();
+    private Rubros rubro = new Rubros();
     private SubRubros subRubro;
     private ArrayList listadoSubRubros;
-    private Rubrable ruble=new Rubros();
-    private ArrayList listadoR=new ArrayList();
-    private DefaultComboBoxModel combox=new DefaultComboBoxModel();
+    private Rubrable ruble = new Rubros();
+    private ArrayList listadoR = new ArrayList();
+    private DefaultComboBoxModel combox = new DefaultComboBoxModel();
     private TableColumn columnaCodigo;
     private String valorCargado;
     private Double porcentajeDescuento;
@@ -92,14 +91,14 @@ public class NotaDeDebito extends javax.swing.JInternalFrame implements KeyListe
     private Double montoIva;
     private TiposIvaControl control;
     private TiposIva tipoIva;
-    
+
     private void desplegarPopUp() {
 
     }
-    
+
     public NotaDeDebito() {
         //Articulos.CargarMap();
-       cliT = new Clientes("1");
+        cliT = new Clientes("1");
         //cliT=(ClientesTango)oob;
         //comp.setCliente(cliT);
         initComponents();
@@ -121,9 +120,9 @@ public class NotaDeDebito extends javax.swing.JInternalFrame implements KeyListe
         listadoIva = control.ListarTipos();
         //this.jPanel2.requestFocus();
 
-        
     }
-    public NotaDeDebito(Object clienteTango){
+
+    public NotaDeDebito(Object clienteTango) {
         cliT = new Clientes();
         cliT = (Clientes) clienteTango;
         lista = new ListasDePrecios(cliT.getListaDePrecios());
@@ -147,6 +146,7 @@ public class NotaDeDebito extends javax.swing.JInternalFrame implements KeyListe
         listadoIva = control.ListarTipos();
         //this.jPanel2.requestFocus();
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -474,11 +474,11 @@ public class NotaDeDebito extends javax.swing.JInternalFrame implements KeyListe
 
     private void jTextField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-           //System.out.println("ENTRO CON EL ENTER¡¡¡¡¡¡");
+            //System.out.println("ENTRO CON EL ENTER¡¡¡¡¡¡");
             listadoDeBusqueda.clear();
             Facturar fart = new Articulos();
             arti = new Articulos();
-            arti = (Articulos) fart.cargarPorCodigoDeBarraFacturacion(jTextField1.getText(),cliT.getCoeficienteListaDeprecios());
+            arti = (Articulos) fart.cargarPorCodigoDeBarraFacturacion(jTextField1.getText(), cliT.getCoeficienteListaDeprecios());
             if (arti.getCodigoDeBarra().equals("")) {
 
                 jTextField1.setText("");
@@ -513,14 +513,14 @@ public class NotaDeDebito extends javax.swing.JInternalFrame implements KeyListe
             }
         }
         if (evt.getKeyCode() == KeyEvent.VK_F1) {
-             //System.out.println("ENTRO CON F1¡¡¡¡¡");
+            //System.out.println("ENTRO CON F1¡¡¡¡¡");
             valorCargado = jTextField1.getText();
             Facturar fart = new Articulos();
 //            this.jTable2.removeAll();
             ModificableArticulos modiA = new Articulos();
             Articulable modi = new ArticulosAsignados();
             listadoDeBusqueda.clear();
-            listadoDeBusqueda = fart.listadoBusquedaFacturacion(jTextField1.getText(),cliT.getCoeficienteListaDeprecios());
+            listadoDeBusqueda = fart.listadoBusquedaFacturacion(jTextField1.getText(), cliT.getCoeficienteListaDeprecios());
             //listadoDeBusqueda=modi.filtrador(listadoSubRubros,listadoR);
 
 //            this.jTable2.setModel(modiA.mostrarListadoBusqueda(listadoDeBusqueda));
@@ -541,10 +541,9 @@ public class NotaDeDebito extends javax.swing.JInternalFrame implements KeyListe
             int elementoSeleccionado = tgp.desplegarPopUp("Seleccion Item", modiA.mostrarListadoBusqueda(listadoDeBusqueda), columnasTabla);
             arti = (Articulos) listadoDeBusqueda.get(elementoSeleccionado);
             jTextField1.setText(arti.getCodigoDeBarra());
-            
+
         }
-       
-        
+
         if (evt.getKeyCode() == KeyEvent.VK_F7) {
             //System.out.println("ENTRO CON EL ENTER¡¡¡¡¡¡");
             CargarCantidad carga = new CargarCantidad(null, true);
@@ -588,13 +587,13 @@ public class NotaDeDebito extends javax.swing.JInternalFrame implements KeyListe
                 this.jTextField2.selectAll();
                 this.jTextField2.requestFocus();
 
-            }     
-            
+            }
+
         }
     }//GEN-LAST:event_jTextField1KeyPressed
 
     private void jTextField2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField2KeyPressed
-        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             Double cantt = Double.parseDouble(this.jTextField2.getText());
             Double precioUni = 0.00;
 
@@ -669,18 +668,18 @@ public class NotaDeDebito extends javax.swing.JInternalFrame implements KeyListe
     private void formComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentHidden
         detalleDelPedido.clear();
         listadoDeBusqueda.clear();
-        montoTotal=0.00;
+        montoTotal = 0.00;
     }//GEN-LAST:event_formComponentHidden
 
     private void formInternalFrameClosing(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameClosing
         detalleDelPedido.clear();
         listadoDeBusqueda.clear();
-        montoTotal=0.00;
+        montoTotal = 0.00;
     }//GEN-LAST:event_formInternalFrameClosing
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        LicenciasControl control = new LicenciasControl();
-        Licencias lice = (Licencias) control.LeerActualLocal(Propiedades.getIDLICENCIA());
+        LicenciasControl control1 = new LicenciasControl();
+        Licencias lice = (Licencias) control1.LeerActualLocal(Propiedades.getIDLICENCIA());
         if (lice.getActualFc() > 0) {
 
             String cadena = cliT.getCodigoCliente() + " - " + cliT.getRazonSocial() + "\n" + cliT.getDireccion();
@@ -773,7 +772,7 @@ public class NotaDeDebito extends javax.swing.JInternalFrame implements KeyListe
                 } else {
                     sub = montoTotal;
                 }
-                */
+                 */
                 comprobante.setMontoTotal(montoTotal);
                 comprobante.setSubTotal(subTotal);
                 comprobante.setMontoIva(montoIva);
@@ -819,7 +818,7 @@ public class NotaDeDebito extends javax.swing.JInternalFrame implements KeyListe
                         }
                     } else {
                         tipoComp = 12;
-                        subTotal=montoTotal;
+                        subTotal = montoTotal;
                     }
                     comprobante.setTipoComprobante(tipoComp);
                     DecimalFormat formato1 = new DecimalFormat("#,00");
@@ -837,7 +836,7 @@ public class NotaDeDebito extends javax.swing.JInternalFrame implements KeyListe
                                 float totT = Float.parseFloat(formato1.format(tipoIva.getImporte()));
                                 tipoIva.setBaseImponible(subT);
                                 tipoIva.setImporte(totT);
-                                */
+                                 */
                                 listadoIvaD.add(tipoIva);
                             }
                             //posicionL++;
@@ -854,15 +853,20 @@ public class NotaDeDebito extends javax.swing.JInternalFrame implements KeyListe
                     Articulos artic;
                     DetalleFacturas detalle;
                     double precio = 0.00;
+                    TiposIva alicuota;
                     while (itD.hasNext()) {
                         artic = (Articulos) itD.next();
                         detalle = new DetalleFacturas();
                         detalle.setCodigo(artic.getCodigoAsignado());
                         detalle.setDescripcion(artic.getDescripcionArticulo());
                         detalle.setCantidadS(String.valueOf(artic.getCantidad()));
-
+                        alicuota = (TiposIva) control.CargarIva(artic.getTipoIva());
+                        detalle.setAlicuota(alicuota.getAlicuota() + "%");
                         precio = Math.round(artic.getPrecioUnitarioNeto() * 100.0) / 100.0;
+
                         detalle.setPrecioUnitarioS(String.valueOf(precio));
+                        precio = Math.round(artic.getSubTotal() * 100.0) / 100.0;
+                        detalle.setPrecioGravadoArticulo(precio);
                         listadoDetalle.add(detalle);
                     }
                     //montoIva=tot;
@@ -872,43 +876,49 @@ public class NotaDeDebito extends javax.swing.JInternalFrame implements KeyListe
                     int tipoVta = Integer.parseInt(Propiedades.getTIPODEVENTA());
                     Integer idPed = 1;//SEÑALA SI ES HOMOLAGACION O PRODUCCION
 
-            try {
-                Transaccionable trr=new Conecciones();
-                Conecciones conx=new Conecciones();
-        Connection conexion=conx.obtenerConexion();
-        fact.generar(conexion, condicion, Propiedades.getARCHIVOKEY(), Propiedades.getARCHIVOCRT(), cliT.getCodigoId(), cliT.getNumeroDeCuit(), tipoComp, montoTotal, subTotal, montoIva, ptoVta, Propiedades.getCUIT(), tipoVta, listadoIva, listadoTrib, cliT.getRazonSocial(), cliT.getDireccion(), cliT.getCondicionIva(), listadoDetalle,idPed,Propiedades.getNOMBRECOMERCIO(),Propiedades.getNOMBRECOMERCIO(),"resp inscripto",Propiedades.getDIRECCION(),Propiedades.getTELEFONO(),Propiedades.getINGBRUTOS(),Propiedades.getINICIOACT(),cliT.getEmail());
-                
-            } catch (InstantiationException ex) {
-                Logger.getLogger(IngresoDeFacturas.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IllegalAccessException ex) {
-                Logger.getLogger(IngresoDeFacturas.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (SQLException ex) {
-                Logger.getLogger(IngresoDeFacturas.class.getName()).log(Level.SEVERE, null, ex);
-            }
-                
-                detalleDelPedido.clear();
-                agregarRenglonTabla();
-                this.jCheckBox2.setSelected(true);
-                //this.jCheckBox2.setEnabled(false);
-                //this.jTable2.removeAll();
-                listadoDeBusqueda.clear();
-                //cargarLista(listadoDeBusqueda);
-                //cliT=new Clientes("99");
-                this.jLabel6.setText(cliT.getRazonSocial());
-                this.jTextField2.setText("");
-                jTextField1.setText("");
-                jTextField1.requestFocus();
-            }else{
-                JOptionPane.showMessageDialog(this,"El cliente supera el límite de crédito, debe abonar la venta");
-                noFacturar=0;
-            }
-        
+                    try {
+                        Transaccionable trr = new Conecciones();
+                        Conecciones conx = new Conecciones();
+                        Connection conexion = conx.obtenerConexion();
+                        FormasDePago formaP = new FormasDePago();
+                        if(listadoFormas.size() > 0){
+                        formaP=(FormasDePago) listadoFormas.get(0);
+                        }else{
+                           formaP=(FormasDePago) formaP.CargarForma(1);
+                        }
+                        fact.generar(conexion, condicion, Propiedades.getARCHIVOKEY(), Propiedades.getARCHIVOCRT(), cliT.getCodigoId(), cliT.getNumeroDeCuit(), tipoComp, montoTotal, subTotal, montoIva, ptoVta, Propiedades.getCUIT(), tipoVta, listadoIva, listadoTrib, cliT.getRazonSocial(), cliT.getDireccion(), cliT.getCondicionIva(), listadoDetalle, idPed, Propiedades.getNOMBRECOMERCIO(), Propiedades.getNOMBRECOMERCIO(), "resp inscripto", Propiedades.getDIRECCION(), Propiedades.getTELEFONO(), Propiedades.getINGBRUTOS(), Propiedades.getINICIOACT(), cliT.getEmail(),formaP.getNumeroFormaDePago());
+
+                    } catch (InstantiationException ex) {
+                        Logger.getLogger(IngresoDeFacturas.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IllegalAccessException ex) {
+                        Logger.getLogger(IngresoDeFacturas.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(IngresoDeFacturas.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                    detalleDelPedido.clear();
+                    agregarRenglonTabla();
+                    this.jCheckBox2.setSelected(true);
+                    //this.jCheckBox2.setEnabled(false);
+                    //this.jTable2.removeAll();
+                    listadoDeBusqueda.clear();
+                    //cargarLista(listadoDeBusqueda);
+                    //cliT=new Clientes("99");
+                    this.jLabel6.setText(cliT.getRazonSocial());
+                    this.jTextField2.setText("");
+                    jTextField1.setText("");
+                    jTextField1.requestFocus();
+                } else {
+                    JOptionPane.showMessageDialog(this, "El cliente supera el límite de crédito, debe abonar la venta");
+                    noFacturar = 0;
+                }
+
             }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        int posicion=this.jTable1.getSelectedRow();
+        int posicion = this.jTable1.getSelectedRow();
         detalleDelPedido.remove(posicion);
         //detalleDelPedido.clear();
         agregarRenglonTabla();
@@ -916,11 +926,11 @@ public class NotaDeDebito extends javax.swing.JInternalFrame implements KeyListe
         jTextField1.requestFocus();
         //listadoDeBusqueda.clear();
         //montoTotal=0.00;        
-        
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        SeleccionDeClientes1 selCli=new SeleccionDeClientes1(3);
+        SeleccionDeClientes1 selCli = new SeleccionDeClientes1(3);
         Inicio.jDesktopPane1.add(selCli);
         selCli.setVisible(true);
         selCli.toFront();
@@ -935,7 +945,7 @@ public class NotaDeDebito extends javax.swing.JInternalFrame implements KeyListe
     }//GEN-LAST:event_formComponentShown
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        NuevoCliente nCli=new NuevoCliente(3);
+        NuevoCliente nCli = new NuevoCliente(3);
         Inicio.jDesktopPane1.add(nCli);
         nCli.setVisible(true);
         nCli.toFront();
@@ -988,7 +998,7 @@ public class NotaDeDebito extends javax.swing.JInternalFrame implements KeyListe
     }//GEN-LAST:event_jTextField4KeyPressed
 
     private void jCheckBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBox1ItemStateChanged
-       this.jTextField4.requestFocus();
+        this.jTextField4.requestFocus();
     }//GEN-LAST:event_jCheckBox1ItemStateChanged
 
     private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
@@ -1000,39 +1010,39 @@ public class NotaDeDebito extends javax.swing.JInternalFrame implements KeyListe
     }//GEN-LAST:event_jTextField2ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-    //MODIFICAR PRECIO
-      int posicion=this.jTable1.getSelectedRow();
-      Articulos pedidos;
-        pedidos=(Articulos)detalleDelPedido.get(posicion);
-        Double precio=Double.parseDouble(JOptionPane.showInputDialog("Ingrese el nuevo valor unitario s/iva",pedidos.getPrecioUnitarioNeto()));
+        //MODIFICAR PRECIO
+        int posicion = this.jTable1.getSelectedRow();
+        Articulos pedidos;
+        pedidos = (Articulos) detalleDelPedido.get(posicion);
+        Double precio = Double.parseDouble(JOptionPane.showInputDialog("Ingrese el nuevo valor unitario s/iva", pedidos.getPrecioUnitarioNeto()));
         pedidos.setPrecioUnitarioNeto(precio);
 //detalleDelPedido.clear();
         agregarRenglonTabla();
-        System.out.println("total "+montoTotal);
+        System.out.println("total " + montoTotal);
         montrarMonto();
         jTextField1.setText("");
         jTextField1.requestFocus();
-          
+
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
-        
-        
+
+
     }//GEN-LAST:event_formKeyPressed
 
     private void jTextField3KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField3KeyPressed
-        if(KeyEvent.VK_ENTER==evt.getKeyCode()){
-            Double descuentoGral=Numeros.ConvertirStringADouble(this.jTextField3.getText());
-            descuentoGral=descuentoGral / 100;
-            porcentajeDescuento=descuentoGral;
+        if (KeyEvent.VK_ENTER == evt.getKeyCode()) {
+            Double descuentoGral = Numeros.ConvertirStringADouble(this.jTextField3.getText());
+            descuentoGral = descuentoGral / 100;
+            porcentajeDescuento = descuentoGral;
             //cargarLista(detalleDelPedido);
             montrarMonto();
             agregarRenglonTabla();
-            
+
         }
     }//GEN-LAST:event_jTextField3KeyPressed
-private void cargarLista(ArrayList lista){
-    DefaultTableModel modelo = new DefaultTableModel();
+    private void cargarLista(ArrayList lista) {
+        DefaultTableModel modelo = new DefaultTableModel();
         Iterator il = lista.listIterator();
         Articulos art = new Articulos();
         modelo.addColumn("Descripcion");
@@ -1063,15 +1073,16 @@ private void cargarLista(ArrayList lista){
         // Desplegando ventana emergente
         tgp.desplegarPopUp("Seleccion Item", modelo, columnasTabla);
 
-}
-private void agregarRenglonTabla(){
+    }
+
+    private void agregarRenglonTabla() {
         MiModeloTablaFacturacion busC = new MiModeloTablaFacturacion();
         this.jTable1.removeAll();
         montoTotal = 0.00;
         subTotal = 0.00;
         montoIva = 0.00;
-        listadoIva=null;
-        listadoIva=control.ListarTipos();
+        listadoIva = null;
+        listadoIva = control.ListarTipos();
         //ArrayList listadoPedidos=new ArrayList();
         this.jTable1.setModel(busC);
         Articulos pedidos;
@@ -1218,9 +1229,10 @@ private void agregarRenglonTabla(){
         } else {
             this.jButton1.setEnabled(true);
         }
-}
-private void montrarMonto(){
-    //System.err.println("DESCUENTO :"+cliT.getDescuento());
+    }
+
+    private void montrarMonto() {
+        //System.err.println("DESCUENTO :"+cliT.getDescuento());
         String total1 = Numeros.ConvertirNumero(montoTotal);
         String total = "";
         if (cliT.getTipoIva() == 1) {
@@ -1233,28 +1245,30 @@ private void montrarMonto(){
         //Double total=montoTotal * cliT.getDescuento();
         //comp.setMontoTotal(total);
         this.jLabel1.setText(total);
-}
-private void verificar(){
-    int cantidad=this.jTable1.getRowCount();
-    Articulos art=new Articulos();
-    cantidad=cantidad - 1;
-    for(int ah=0;ah < cantidad;ah++){
-        
-        art=(Articulos)detalleDelPedido.get(ah);
-        //ah++;
-        String descripcion=(String) this.jTable1.getValueAt(ah,1);
-        art.setDescripcionArticulo(descripcion);
-        String cant=String.valueOf(this.jTable1.getValueAt(ah, 2));
-        Double cantida=Double.valueOf(cant).doubleValue();
-        art.setCantidad(cantida);
-        Double precioUni=(Double) this.jTable1.getValueAt(ah,3);
-        Double tot=precioUni;
-        art.setPrecioUnitario(tot);
-        //montoTotal=montoTotal + tot;
-        //System.err.println("nimero "+ah+" decripcion "+descripcion+" limite "+cantidad);
     }
-}
-private void CargarCantidad(){
+
+    private void verificar() {
+        int cantidad = this.jTable1.getRowCount();
+        Articulos art = new Articulos();
+        cantidad = cantidad - 1;
+        for (int ah = 0; ah < cantidad; ah++) {
+
+            art = (Articulos) detalleDelPedido.get(ah);
+            //ah++;
+            String descripcion = (String) this.jTable1.getValueAt(ah, 1);
+            art.setDescripcionArticulo(descripcion);
+            String cant = String.valueOf(this.jTable1.getValueAt(ah, 2));
+            Double cantida = Double.valueOf(cant).doubleValue();
+            art.setCantidad(cantida);
+            Double precioUni = (Double) this.jTable1.getValueAt(ah, 3);
+            Double tot = precioUni;
+            art.setPrecioUnitario(tot);
+            //montoTotal=montoTotal + tot;
+            //System.err.println("nimero "+ah+" decripcion "+descripcion+" limite "+cantidad);
+        }
+    }
+
+    private void CargarCantidad() {
         Double cantt = 1.00;
         Double precioUni = 0.00;
 
@@ -1322,7 +1336,7 @@ private void CargarCantidad(){
             //this.jTextField5.requestFocus();
 
         }
-            
+
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

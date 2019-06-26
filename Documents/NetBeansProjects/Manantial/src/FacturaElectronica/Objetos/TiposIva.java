@@ -23,7 +23,7 @@ public class TiposIva {
         this.alicuota=alicuota;
         this.descripcion="Iva "+alicuota+"%";
     }
-
+    
     public String getDescripcion() {
         return descripcion;
     }

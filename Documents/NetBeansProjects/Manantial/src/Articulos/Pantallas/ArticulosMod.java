@@ -455,7 +455,7 @@ public class ArticulosMod extends javax.swing.JInternalFrame {
         cant=Numeros.ConvertirStringADouble(this.jTextField4.getText());
         arti.setPrecioDeCosto(cant);
         cant=Numeros.ConvertirStringADouble(this.jTextField5.getText());
-        arti.setPrecioUnitarioNeto(cant);
+        
         //cant=Numeros.ConvertirStringADouble(this.jTextField6.getText());
         arti.setPrecioServicio(0.0000);
         //cant=Numeros.ConvertirStringADouble(this.jTextField9.getText());
@@ -466,6 +466,8 @@ public class ArticulosMod extends javax.swing.JInternalFrame {
         arti.setSubTotal(Numeros.CalcularSubTotal(cant,tipoIva.getAlicuota()));
         arti.setIva(Numeros.CalcularIva(arti.getSubTotal(), tipoIva.getAlicuota()));
         arti.setTipoIva(tipoIva.getId());
+        cant=arti.getSubTotal() + arti.getIva();
+        arti.setPrecioUnitarioNeto(cant);
         //arti.setModificaPrecio(this.jCheckBox1.isSelected());
         //arti.setModificaServicio(this.jCheckBox2.isSelected());
         

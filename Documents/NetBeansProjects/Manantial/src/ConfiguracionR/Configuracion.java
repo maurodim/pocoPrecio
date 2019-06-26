@@ -157,7 +157,7 @@ public class Configuracion extends javax.swing.JInternalFrame {
         setTitle("Configuración del Manatial Gestión");
         setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/Mlogo.png"))); // NOI18N
 
-        jLabel1.setText("Nombre");
+        jLabel1.setText("Nombre Fantasía");
 
         nombre_txt.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {

@@ -5,6 +5,7 @@
  */
 package FacturaElectronica.Objetos;
 
+import ConfiguracionR.Propiedades;
 import Conversores.Numeros;
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
@@ -15,6 +16,7 @@ import com.lowagie.text.pdf.Barcode128;
 import com.lowagie.text.pdf.BaseFont;
 import com.lowagie.text.pdf.PdfContentByte;
 import com.lowagie.text.pdf.PdfWriter;
+import facturacion.clientes.FormasDePago;
 import java.awt.Color;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -122,7 +124,7 @@ public class pdfsJavaGenerador {
 
             encabezado = new EncabezadoPdf(nombreVendedor, razonSocialVendedor, direccionVendedor, telefonoVendedor, this.punto, this.numero, cVendedor, iBrutos, incioActividades, cIva);
 
-            cliente = new EncabezadoClientes(doc.getRazonSocial(), doc.getCondicionIvaCliente(), doc.getDireccionCliente(), doc.getCustomerTypeDoc(), doc.getCustomerId(),doc.getMailCliente());
+            cliente = new EncabezadoClientes(doc.getRazonSocial(), doc.getCondicionIvaCliente(), doc.getDireccionCliente(), doc.getCustomerTypeDoc(), doc.getCustomerId(), doc.getMailCliente());
             saldo = new DetalleFacturas();
             //Facturable cotizable=new DetalleFacturas();
             listado = new ArrayList();
@@ -148,7 +150,7 @@ public class pdfsJavaGenerador {
             vencimiento1 = "Fecha de Vto. C.A.E.: " + dd + "/" + mm + "/" + ano;
             bf = BaseFont.createFont(BaseFont.HELVETICA_BOLD, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
             //cb.setFontAndSize(bf,16);
-            for (int aa = 0; aa < 3; aa++) {
+            for (int aa = 0; aa < 1; aa++) {
                 copia = aa;
                 if (aa > 0) {
                     documento.newPage();
@@ -173,6 +175,10 @@ public class pdfsJavaGenerador {
                 cb.showText("COD");
                 cb.setTextMatrix(70, renglon);
                 cb.showText("DESCRIPCION");
+                if (comF == 1 || comF == 2 || comF == 3) {
+                    cb.showText("ALICUOTA");
+                    cb.setTextMatrix(270, renglon);
+                }
                 cb.setTextMatrix(330, renglon);
                 cb.showText("CANT.");
                 cb.setTextMatrix(370, renglon);
@@ -196,14 +202,15 @@ public class pdfsJavaGenerador {
 
             File f = new File(arch);
             if (f.exists()) {
-
-                Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + arch);
+                if (Propiedades.getTIQUEADORA() == 0) {
+                    Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + arch);
+                }
                 if (cliente.getMailC().isEmpty()) {
 
                 } else {
                     Mail mail = new Mail();
                     mail.setDireccionFile(arch);
-                    mail.setDetalleListado(doc.getDescripcionTipoComprobante() + " " + num+".pdf");
+                    mail.setDetalleListado(doc.getDescripcionTipoComprobante() + " " + num + ".pdf");
                     mail.enviarMailFacturaElectronica(cliente.getMailC(), doc.getDescripcionTipoComprobante() + " " + num);
                 }
             }
@@ -258,6 +265,11 @@ public class pdfsJavaGenerador {
             cb.showText("COD");
             cb.setTextMatrix(70, renglon);
             cb.showText("DESCRIPCION");
+            if (comF == 1 || comF == 2 || comF == 3) {
+                cb.showText("ALICUOTA");
+                cb.setTextMatrix(270, renglon);
+            }
+
             cb.setTextMatrix(330, renglon);
             cb.showText("CANT.");
             cb.setTextMatrix(370, renglon);
@@ -523,11 +535,11 @@ public class pdfsJavaGenerador {
             cb.showText("Razon Social :" + cliente.getRazonSocial());
             cb.setTextMatrix(380, 660);
             String condV = "";
-            if (doc.getEstado() == 1) {
-                condV = "CONTADO";
-            } else {
-                condV = "CTA CTE";
-            }
+            FormasDePago forma = new FormasDePago();
+            forma = (FormasDePago) forma.CargarForma(doc.getCondicionDeVenta());
+
+            condV = forma.getDescripcionFormaDePago();
+
             cb.showText("Cond. Vta: " + condV);
             cb.setTextMatrix(380, 650);
             try {
@@ -584,6 +596,129 @@ public class pdfsJavaGenerador {
     }
 
     private void imprimirCuerpo() {
+        try {
+            String descripcion;
+            String monto;
+            String recargo;
+            String total;
+            String totalFinal;
+            Double tot = 0.00;
+            Double sinIva = 0.00;
+            Double totalD = 0.00;
+            Double grav = 0.00;
+            Double totalS = 0.00;
+            bf = BaseFont.createFont(BaseFont.HELVETICA, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
+            cb.setFontAndSize(bf, 8);
+
+            String descripcionArt = null;
+            int items = 0;
+            Integer renItem = 1;
+            while (itl.hasNext()) {
+                saldo = (DetalleFacturas) itl.next();
+                //vencimiento=saldo.getVencimientoString();
+
+                descripcion = "Numero Resumen de cta ";
+
+                monto = Numeros.ConvertirNumero(saldo.getPrecioUnitario());
+                recargo = "";
+                total = "nada";
+                //recargo=String.valueOf(saldo.getRecargo());
+                //tot=tot + saldo.getTotal();
+                //total=String.valueOf(saldo.getTotal());
+
+                if (saldo.getIdArticulo() == 0) {
+                    items = 1;
+                }
+                if (items == 1) {
+                    cb.setTextMatrix(70, renglon);
+
+                    if (saldo.getDescripcion().length() > 40) {
+                        descripcionArt = saldo.getDescripcion().substring(0, 40);
+                    } else {
+                        descripcionArt = saldo.getDescripcion();
+                    }
+                    cb.showText(descripcionArt);
+                    renglon = renglon - 10;
+                } else {
+                    cb.setTextMatrix(40, renglon);
+
+                    cb.showText(String.valueOf(saldo.getIdArticulo()));
+                    cb.setTextMatrix(70, renglon);
+                    if (saldo.getDescripcion() != null) {
+                        if (saldo.getDescripcion().length() > 40) {
+                            descripcionArt = saldo.getDescripcion().substring(0, 40);
+                        } else {
+                            descripcionArt = saldo.getDescripcion();
+                        }
+                    } else {
+                        descripcionArt = "";
+                    }
+                    cb.showText(descripcionArt);
+                    cb.setTextMatrix(330, renglon);
+                    cb.showText(String.valueOf(saldo.getCantidad()));
+                    tot = saldo.getCantidad() * saldo.getPrecioUnitario();
+                    sinIva = saldo.getCantidad() * saldo.getPrecioGravadoArticulo();
+                    //tot=tot * 1.21;
+                    if (comF == 1 || comF == 2 || comF == 3) {
+                        cb.setTextMatrix(280, renglon);
+                        cb.showText(saldo.getAlicuota());
+                        cb.setTextMatrix(370, renglon);
+                        cb.showText(Numeros.ConvertirNumero(saldo.getPrecioGravadoArticulo()));
+                        cb.setTextMatrix(450, renglon);
+                        if (saldo.getDescuento() != null) {
+                            cb.showText(String.valueOf(saldo.getDescuento()));
+                            totalD = totalD + saldo.getDescuento();
+                        } else {
+                            cb.showText("0.00");
+                        }
+                        cb.setTextMatrix(500, renglon);
+
+                        cb.showText(Numeros.ConvertirNumero(sinIva));
+                        grav = grav + tot;
+                        totalS = totalS + (tot);
+                        //cb.setTextMatrix(440,renglon);
+
+                        //cb.showText(Numeros.ConvertirNumero(tot));
+                        renglon = renglon - 10;
+                        //System.out.println("renglon " + renglon);
+
+                    } else {
+                        //tot=tot * 1.21;
+                        cb.setTextMatrix(370, renglon);
+                        cb.showText(Numeros.ConvertirNumero(saldo.getPrecioUnitario()));
+                        cb.setTextMatrix(450, renglon);
+                        if (saldo.getDescuento() != null) {
+                            cb.showText(String.valueOf(saldo.getDescuento()));
+                            totalD = totalD + saldo.getDescuento();
+                        } else {
+                            cb.showText("0.00");
+                        }
+                        cb.setTextMatrix(500, renglon);
+                        cb.showText(Numeros.ConvertirNumero(tot));
+                        grav = grav + tot;
+                        totalS = totalS + (tot);
+                        //cb.setTextMatrix(440,renglon);
+
+                        //cb.showText(Numeros.ConvertirNumero(tot));
+                        renglon = renglon - 10;
+                        //System.out.println("renglon " + renglon);
+                    }
+                }
+                items = 0;
+                if (renItem == 25) {
+                    nuevaPagina();
+                    renItem = 0;
+                }
+
+                renItem++;
+
+            }
+        } catch (DocumentException | IOException ex) {
+            Logger.getLogger(pdfsJavaGenerador.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void imprimirCuerpoA() {
         try {
             String descripcion;
             String monto;

@@ -67,7 +67,30 @@ public class FormasDePago {
     public void setDescripcionFormaDePago(String descripcionFormaDePago) {
         this.descripcionFormaDePago = descripcionFormaDePago;
     }
-
+    public Object CargarForma(int id){
+        FormasDePago forma = null;
+        try {
+            Transaccionable tra = new Conecciones();
+            
+            String sql = "select * from formasdepago where id="+id;
+            ResultSet rs = tra.leerConjuntoDeRegistros(sql);
+            while (rs.next()) {
+                forma = new FormasDePago();
+                forma.numeroFormaDePago = rs.getInt("id");
+                forma.descripcionFormaDePago = rs.getString("descripcion");
+                forma.recargo = rs.getDouble("recargo");
+                forma.ctacte = rs.getInt("destino");
+                //lst.add(forma);
+            }
+        } catch (InstantiationException ex) {
+            Logger.getLogger(FormasDePago.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(FormasDePago.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(FormasDePago.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return forma;
+    }
     public int NuevaForma(Object nueva) {
         int id = 0;
         FormasDePago forma = (FormasDePago) nueva;

@@ -146,7 +146,7 @@ public class AbmSaldosClientes extends javax.swing.JInternalFrame {
         
         
         try {
-            informes.GenerarInforme(listadoMov);
+            informes.GenerarInforme(listadoMov,cli.getRazonSocial());
         } catch (SQLException ex) {
             Logger.getLogger(AbmSaldosClientes.class.getName()).log(Level.SEVERE, null, ex);
         }
