@@ -176,8 +176,9 @@ public class pdfsJavaGenerador {
                 cb.setTextMatrix(70, renglon);
                 cb.showText("DESCRIPCION");
                 if (comF == 1 || comF == 2 || comF == 3) {
-                    cb.showText("ALICUOTA");
                     cb.setTextMatrix(270, renglon);
+                    cb.showText("ALICUOTA");
+                    
                 }
                 cb.setTextMatrix(330, renglon);
                 cb.showText("CANT.");
@@ -266,8 +267,8 @@ public class pdfsJavaGenerador {
             cb.setTextMatrix(70, renglon);
             cb.showText("DESCRIPCION");
             if (comF == 1 || comF == 2 || comF == 3) {
-                cb.showText("ALICUOTA");
                 cb.setTextMatrix(270, renglon);
+                    cb.showText("ALICUOTA");
             }
 
             cb.setTextMatrix(330, renglon);

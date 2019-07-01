@@ -218,12 +218,13 @@ public class ImprimirComprobantes {
         FormatoFactura formatoFactura = new FormatoFactura();
         
         // Rellenando cada instancia con los valores de interes
-        formatoComerciante.setNombreDelLocal(razonSocialVendedor);
+        formatoComerciante.setNombreDelLocal(nombreVendedor);
+        formatoComerciante.setRazonSocial(razonSocialVendedor);
         formatoComerciante.setCuitLocal(cVendedor);
         formatoComerciante.setIngresosBrutos(iBrutos);
         formatoComerciante.setTelefono(telefonoVendedor);
         formatoComerciante.setDireccion(direccionVendedor);
-        formatoComerciante.setRazonSocial(condIvaTxt);
+        formatoComerciante.setCondicionIva(condIvaTxt);
         
         formatoCliente.setNombreCliente(doc.getRazonSocial());
         formatoCliente.setCuitCliente(doc.getCustomerId());
@@ -405,12 +406,14 @@ public class ImprimirComprobantes {
         FormatoFactura formatoFactura = new FormatoFactura();
         
         // Rellenando cada instancia con los valores de interes
-        formatoComerciante.setNombreDelLocal(razonSocialVendedor);
+        formatoComerciante.setNombreDelLocal(nombreVendedor);
+        formatoComerciante.setRazonSocial(razonSocialVendedor);
+        
         formatoComerciante.setCuitLocal(cVendedor);
         formatoComerciante.setIngresosBrutos(iBrutos);
         formatoComerciante.setTelefono(telefonoVendedor);
         formatoComerciante.setDireccion(direccionVendedor);
-        formatoComerciante.setRazonSocial(condIvaTxt);
+        formatoComerciante.setCondicionIva(condIvaTxt);
         
         formatoCliente.setNombreCliente(doc.getRazonSocial());
         formatoCliente.setCuitCliente(doc.getCustomerId());
@@ -421,7 +424,7 @@ public class ImprimirComprobantes {
         String totalF = Numeros.ConvertirNumero(doc.getImporteTotal());
         Double sub = doc.getImporteNeto();
                 Double iva = doc.getImpuestoLiquido();
-                String subTotal="$ " + Numeros.ConvertirNumero(sub);
+                String subTotal=Numeros.ConvertirNumero(sub);
         String ivaS="$ " + Numeros.ConvertirNumero(iva);
         
         if (doc.getListadoIva() != null) {

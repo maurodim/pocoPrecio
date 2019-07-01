@@ -886,7 +886,7 @@ public class NotaDeDebito extends javax.swing.JInternalFrame implements KeyListe
                         }else{
                            formaP=(FormasDePago) formaP.CargarForma(1);
                         }
-                        fact.generar(conexion, condicion, Propiedades.getARCHIVOKEY(), Propiedades.getARCHIVOCRT(), cliT.getCodigoId(), cliT.getNumeroDeCuit(), tipoComp, montoTotal, subTotal, montoIva, ptoVta, Propiedades.getCUIT(), tipoVta, listadoIva, listadoTrib, cliT.getRazonSocial(), cliT.getDireccion(), cliT.getCondicionIva(), listadoDetalle, idPed, Propiedades.getNOMBRECOMERCIO(), Propiedades.getNOMBRECOMERCIO(), "resp inscripto", Propiedades.getDIRECCION(), Propiedades.getTELEFONO(), Propiedades.getINGBRUTOS(), Propiedades.getINICIOACT(), cliT.getEmail(),formaP.getNumeroFormaDePago());
+                        fact.generar(conexion, condicion, Propiedades.getARCHIVOKEY(), Propiedades.getARCHIVOCRT(), cliT.getCodigoId(), cliT.getNumeroDeCuit(), tipoComp, montoTotal, subTotal, montoIva, ptoVta, Propiedades.getCUIT(), tipoVta, listadoIva, listadoTrib, cliT.getRazonSocial(), cliT.getDireccion(), cliT.getCondicionIva(), listadoDetalle, idPed, Propiedades.getNOMBRECOMERCIO(), Propiedades.getRAZONSOCIAL(), "resp inscripto", Propiedades.getDIRECCION(), Propiedades.getTELEFONO(), Propiedades.getINGBRUTOS(), Propiedades.getINICIOACT(), cliT.getEmail(),formaP.getNumeroFormaDePago());
 
                     } catch (InstantiationException ex) {
                         Logger.getLogger(IngresoDeFacturas.class.getName()).log(Level.SEVERE, null, ex);

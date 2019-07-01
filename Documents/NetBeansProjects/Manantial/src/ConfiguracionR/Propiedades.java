@@ -56,7 +56,7 @@ public class Propiedades {
     static Integer IDREMOTO;
     static String CPU;
     static int IDLICENCIA;
-    static String NOMBRE;
+    static String RAZONSOCIAL;
     static String MAIL;
     static int ELECTRONICA;
     static int PRESUPUESTOS;
@@ -66,6 +66,13 @@ public class Propiedades {
     static Integer PUERTOMAIL;
     static int TIQUEADORA;
     static int PUBLICIDAD;
+    static int ACLARACIONPIE;
+
+    public static int getACLARACIONPIE() {
+        return ACLARACIONPIE;
+    }
+    
+    
     
     public static int getPUBLICIDAD() {
         return PUBLICIDAD;
@@ -103,8 +110,8 @@ public class Propiedades {
         return MAIL;
     }
     
-    public static String getNOMBRE() {
-        return NOMBRE;
+    public static String getRAZONSOCIAL() {
+        return RAZONSOCIAL;
     }
     
     public static int getIDLICENCIA() {
@@ -204,7 +211,7 @@ public class Propiedades {
                 Serial serial = new Serial();
                 CPU = serial.LeerSerial();
                 Transaccionable tra = new Conecciones();
-                String sql = "select configuracion.*,licencias.publicidad from configuracion inner join licencias on licencias.id=configuracion.idlicencia";
+                String sql = "select configuracion.*,licencias.publicidad,licencias.pie from configuracion inner join licencias on licencias.id=configuracion.idlicencia";
                 ResultSet rs = tra.leerConjuntoDeRegistros(sql);
                 String fec = "03052019";
                 String fFecha = String.format("%8s", fec).replace(' ', '0');
@@ -226,7 +233,7 @@ public class Propiedades {
                     IDREMOTO = rs.getInt("idclienteremoto");
                     //CPU=rs.getString("cpu");
                     IDLICENCIA = rs.getInt("idlicencia");
-                    NOMBRE = rs.getString("nombre");
+                    RAZONSOCIAL = rs.getString("nombre");
                     MAIL = rs.getString("mail");
                     ELECTRONICA = rs.getInt("electronica");
                     PRESUPUESTOS = rs.getInt("presupuestos");
@@ -237,6 +244,7 @@ public class Propiedades {
                     CLAVEMAIL = rs.getString("clavemail");
                     SERVVIDORMAIL = rs.getString("servidormail");
                     PUERTOMAIL = rs.getInt("puertomail");
+                    ACLARACIONPIE=rs.getInt("pie");
                     
                 }
                 rs.close();

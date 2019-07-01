@@ -5,6 +5,7 @@
  */
 package Impresiones;
 
+import ConfiguracionR.Propiedades;
 import Conversores.Numeros;
 import Extension.CodigosDeBarraImpl;
 import java.awt.Image;
@@ -203,11 +204,12 @@ public class ModeloTicket {
         String contenido
                 = "                $com.local               \n"
                 + "                                         \n"
+                + "RAZON SOCIAL: $com.razon_social          \n"
                 + "CUIT Nro.: $com.cuit                     \n"
                 + "IIBB: $com.ingresos                      \n"
                 + "TEL.: $com.telefono                      \n"
                 + "DIR.:$com.direccion                      \n"
-                + "$com.razon_social                        \n"
+                + "COND IVA:$com.condicion                  \n"
                 + "=========================================\n"
                 + "TIQUE FACTURA          Nro. $fact.nro    \n"
                 + "                       Fecha: $fact.fecha\n"
@@ -226,10 +228,10 @@ public class ModeloTicket {
                 + "=========================================\n"
                 + "                                         \n"
                 + "SUBTOTAL:                       $fact.sub\n"
-                + "IVA: 0.00%                     $fact.Miva\n"
-                + "IVA: 10.5%                    $fact.1Miva\n"
-                + "IVA: 21.0%                    $fact.2Miva\n"
-                + "IVA: 27.0%                    $fact.3Miva\n"
+                + "IVA:  0.0%                      $fact.Miv\n"
+                + "IVA: 10.5%                      $fact.1Mi\n"
+                + "IVA: 21.0%                      $fact.2Mi\n"
+                + "IVA: 27.0%                      $fact.3Mi\n"
                 + "                                         \n"
                 + "TOTAL                           $fact.tot\n"
                 + "                                         \n"
@@ -279,11 +281,12 @@ public class ModeloTicket {
         String contenido
                 = "                $com.local               \n"
                 + "                                         \n"
+                + "RAZON SOCIAL: $com.razon_social          \n"
                 + "CUIT Nro.: $com.cuit                     \n"
                 + "IIBB: $com.ingresos                      \n"
                 + "TEL.: $com.telefono                      \n"
                 + "DIR.:$com.direccion                      \n"
-                + "$com.razon_social                        \n"
+                + "COND IVA:$com.condicion                  \n"
                 + "=========================================\n"
                 + "TIQUE FACTURA          Nro. $fact.nro    \n"
                 + "                       Fecha: $fact.fecha\n"
@@ -301,7 +304,7 @@ public class ModeloTicket {
                 + "                                         \n"
                 + "=========================================\n"
                 + "                                         \n"
-                + "SUBTOTAL: $fact.iva             $fact.sub\n"
+                + "SUBTOTAL:                       $fact.sub\n"
                 + "                                         \n"
                 + "TOTAL                           $fact.tot\n"
                 + "                                         \n"
@@ -361,7 +364,7 @@ public class ModeloTicket {
                 + ")"
                 + "\n"
                 + items.getDescripcion()
-                + "     "
+                + "    $ "
                 + items.getMontoTotal()
                 + "\n"
                 ).collect(Collectors.joining(""));
@@ -374,7 +377,7 @@ public class ModeloTicket {
                 + items.getPrecioUnitario()
                 + "\n"
                 + items.getDescripcion()
-                + "     "
+                + "    $ "
                 + items.getMontoTotal()
                 + "\n"
                 ).collect(Collectors.joining(""));
@@ -410,6 +413,7 @@ public class ModeloTicket {
     private String procesamiento(String contenido) {
 
         contenido = contenido.replace("$com.local", formatoComerciante.getNombreDelLocal());
+        
         if(formatoComerciante.getCuitLocal()!=null){
         contenido = contenido.replace("$com.cuit", formatoComerciante.getCuitLocal());
         }else{
@@ -460,15 +464,15 @@ public class ModeloTicket {
         contenido = contenido.replace("$fact.Niva", formatoFactura.getTotalSinIva());
         }
         if(formatoFactura.getSubTotal()!=null){
-        contenido = contenido.replace("$fact.sub", formatoFactura.getSubTotal());
+        contenido = contenido.replace("$fact.sub", "$ "+formatoFactura.getSubTotal());
         }
         if(formatoFactura.getNoGravados() !=null){
-        contenido = contenido.replace("$fact.ng", formatoFactura.getNoGravados());
+        contenido = contenido.replace("$fact.ng", "$ "+formatoFactura.getNoGravados());
         }
         if(formatoFactura.getMontoIva()!=null){
-        contenido = contenido.replace("$fact.Miva", formatoFactura.getMontoIva());
+        contenido = contenido.replace("$fact.Miv", "$ "+formatoFactura.getMontoIva());
         }
-        contenido = contenido.replace("$fact.tot", formatoFactura.getTotal());
+        contenido = contenido.replace("$fact.tot", "$ "+formatoFactura.getTotal());
         /*
         contenido = contenido.replace("$fact.val1", formatoFactura.getSuPago());
         contenido = contenido.replace("$fact.val2", formatoFactura.getSumaSuPago());
@@ -477,6 +481,10 @@ public class ModeloTicket {
         contenido = contenido.replace("$fact.pie", this.piePagina);
 
         //System.out.println(contenido);
+        if(Propiedades.getACLARACIONPIE()==1){
+            contenido = contenido.replace("Factura electrónica emitida con", "");
+            contenido = contenido.replace("manantialgestion.com", "");
+        }
 
         return contenido;
     }
@@ -484,11 +492,13 @@ public class ModeloTicket {
     private String procesamientoFc(String contenido) {
 
         contenido = contenido.replace("$com.local", formatoComerciante.getNombreDelLocal());
+        
         contenido = contenido.replace("$com.cuit", formatoComerciante.getCuitLocal());
         contenido = contenido.replace("$com.ingresos", formatoComerciante.getIngresosBrutos());
         contenido = contenido.replace("$com.telefono", formatoComerciante.getTelefono());
         contenido = contenido.replace("$com.direccion", formatoComerciante.getDireccion());
         contenido = contenido.replace("$com.razon_social", formatoComerciante.getRazonSocial());
+        contenido = contenido.replace("$com.condicion", formatoComerciante.getCondicionIva());
 
         contenido = contenido.replace("$fact.nro", formatoFactura.getNroFactura());
         contenido = contenido.replace("$fact.fecha", formatoFactura.getFecha());
@@ -508,35 +518,39 @@ public class ModeloTicket {
         contenido = contenido.replace("$productos", this.estructuracionArticulos());
 
         //contenido = contenido.replace("$fact.Niva", formatoFactura.getTotalSinIva());
-        contenido = contenido.replace("$fact.sub", formatoFactura.getSubTotal());
+        contenido = contenido.replace("$fact.sub","$ "+String.format("%9s", formatoFactura.getSubTotal()));
         //contenido = contenido.replace("$fact.ng", formatoFactura.getNoGravados());
         if(formatoFactura.getMontoIva()!=null){
-        contenido = contenido.replace("$fact.Miva", String.format("%9s",formatoFactura.getMontoIva()));
+        contenido = contenido.replace("$fact.Miv", "$ "+String.format("%9s",formatoFactura.getMontoIva()));
         }else{
-            contenido = contenido.replace("$fact.Miva", String.format("%9s","0.00"));
+            contenido = contenido.replace("$fact.Miv", "$ "+String.format("%9s","0.00"));
         }
         if(formatoFactura.getMontoIva1()!=null){
-        contenido = contenido.replace("$fact.1Miva", String.format("%9s",formatoFactura.getMontoIva1()));
+        contenido = contenido.replace("$fact.1Mi", "$ "+String.format("%9s",formatoFactura.getMontoIva1()));
         }else{
-            contenido = contenido.replace("$fact.1Miva",  String.format("%9s","0.00"));
+            contenido = contenido.replace("$fact.1Mi",  "$ "+String.format("%9s","0.00"));
         }
         if(formatoFactura.getMontoIva2()!=null){
-        contenido = contenido.replace("$fact.2Miva", String.format("%9s",formatoFactura.getMontoIva2()));
+        contenido = contenido.replace("$fact.2Mi", "$ "+String.format("%9s",formatoFactura.getMontoIva2()));
         }else{
-            contenido = contenido.replace("$fact.2Miva",  String.format("%9s","0.00"));
+            contenido = contenido.replace("$fact.2Mi",  "$ "+String.format("%9s","0.00"));
         }
         if(formatoFactura.getMontoIva3()!=null){
-        contenido = contenido.replace("$fact.3Miva", String.format("%9s",formatoFactura.getMontoIva3()));
+        contenido = contenido.replace("$fact.3Mi", "$ "+String.format("%9s",formatoFactura.getMontoIva3()));
         }else{
-            contenido = contenido.replace("$fact.3Miva",  String.format("%9s","0.00"));
+            contenido = contenido.replace("$fact.3Mi",  "$ "+String.format("%9s","0.00"));
         }
         
-        contenido = contenido.replace("$fact.tot", formatoFactura.getTotal());
+        contenido = contenido.replace("$fact.tot", "$ "+String.format("%9s",formatoFactura.getTotal()));
         //contenido = contenido.replace("$fact.val1", formatoFactura.getSuPago());
         //contenido = contenido.replace("$fact.val2", formatoFactura.getSumaSuPago());
         //contenido = contenido.replace("$fact.val3", formatoFactura.getSuVuelto());
         contenido = contenido.replace("$fact.pie", this.piePagina);
         contenido = contenido.replace("$fact.vtoc", this.piePagina1);
+        if(Propiedades.getACLARACIONPIE()==1){
+            contenido = contenido.replace("Factura electrónica emitida con", "");
+            contenido = contenido.replace("manantialgestion.com", "");
+        }
         //System.out.println(contenido);
 
         return contenido;
@@ -544,11 +558,13 @@ public class ModeloTicket {
     private String procesamientoFcB(String contenido) {
 
         contenido = contenido.replace("$com.local", formatoComerciante.getNombreDelLocal());
+        
         contenido = contenido.replace("$com.cuit", formatoComerciante.getCuitLocal());
         contenido = contenido.replace("$com.ingresos", formatoComerciante.getIngresosBrutos());
         contenido = contenido.replace("$com.telefono", formatoComerciante.getTelefono());
         contenido = contenido.replace("$com.direccion", formatoComerciante.getDireccion());
         contenido = contenido.replace("$com.razon_social", formatoComerciante.getRazonSocial());
+        contenido = contenido.replace("$com.condicion", formatoComerciante.getCondicionIva());
 
         contenido = contenido.replace("$fact.nro", formatoFactura.getNroFactura());
         contenido = contenido.replace("$fact.fecha", formatoFactura.getFecha());
@@ -568,7 +584,7 @@ public class ModeloTicket {
         contenido = contenido.replace("$productos", this.estructuracionArticulosB());
 
         //contenido = contenido.replace("$fact.Niva", formatoFactura.getTotalSinIva());
-        contenido = contenido.replace("$fact.sub", formatoFactura.getSubTotal());
+        contenido = contenido.replace("$fact.sub", "$ "+formatoFactura.getSubTotal());
         //contenido = contenido.replace("$fact.ng", formatoFactura.getNoGravados());
         /*
         contenido = contenido.replace("$fact.Miva", formatoFactura.getMontoIva());
@@ -576,12 +592,16 @@ public class ModeloTicket {
         contenido = contenido.replace("$fact.Miva2", formatoFactura.getMontoIva2());
         contenido = contenido.replace("$fact.Miva3", formatoFactura.getMontoIva3());
         */
-        contenido = contenido.replace("$fact.tot", formatoFactura.getTotal());
+        contenido = contenido.replace("$fact.tot", "$ "+formatoFactura.getTotal());
         //contenido = contenido.replace("$fact.val1", formatoFactura.getSuPago());
         //contenido = contenido.replace("$fact.val2", formatoFactura.getSumaSuPago());
         //contenido = contenido.replace("$fact.val3", formatoFactura.getSuVuelto());
         contenido = contenido.replace("$fact.pie", this.piePagina);
         contenido = contenido.replace("$fact.vtoc", this.piePagina1);
+        if(Propiedades.getACLARACIONPIE()==1){
+            contenido = contenido.replace("Factura electrónica emitida con", "");
+            contenido = contenido.replace("manantialgestion.com", "");
+        }
         //System.out.println(contenido);
 
         return contenido;

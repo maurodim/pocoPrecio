@@ -16,6 +16,16 @@ public class FormatoComerciante {
     private String telefono;
     private String cuitLocal;
     private String ingresosBrutos;
+    private String condicionIva;
+
+    public String getCondicionIva() {
+        return condicionIva;
+    }
+
+    public void setCondicionIva(String condicionIva) {
+        this.condicionIva = condicionIva;
+    }
+    
 
     public FormatoComerciante() {
     }

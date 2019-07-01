@@ -97,7 +97,7 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
         //comp.setCliente(cliT);
         initComponents();
         tgp = new TablaGenericaProductos();
-        
+        listadoFormas=new ArrayList();
         porcentajeDescuento=0.00;
         montoDescuento=0.00;
         subTotal=0.00;
@@ -136,6 +136,7 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
 //cliT=(ClientesTango)oob;
         //comp.setCliente(cliT);
         initComponents();
+        listadoFormas=new ArrayList();
         //porcentajeDescuento=pedido.getPorcentajeDescuento();
         subTotal=0.00;
         Iterator irP=detalleDelPedido.listIterator();
@@ -945,7 +946,7 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
                            formaP=(FormasDePago) formaP.CargarForma(1);
                         }
                 Integer numeFc=0;
-        numeFc=fact.generar(conexion, condicion, Propiedades.getARCHIVOKEY(), Propiedades.getARCHIVOCRT(), cliT.getCodigoId(), cliT.getNumeroDeCuit(), tipoComp, montoTotal, subTotal, montoIva, ptoVta, Propiedades.getCUIT(), tipoVta, listadoIvaD, listadoTrib, cliT.getRazonSocial(), cliT.getDireccion(), cliT.getCondicionIva(), listadoDetalle,idPed,Propiedades.getNOMBRECOMERCIO(),Propiedades.getNOMBRECOMERCIO(),"resp inscripto",Propiedades.getDIRECCION(),Propiedades.getTELEFONO(),Propiedades.getINGBRUTOS(),Propiedades.getINICIOACT(),cliT.getEmail(),formaP.getNumeroFormaDePago());
+        numeFc=fact.generar(conexion, condicion, Propiedades.getARCHIVOKEY(), Propiedades.getARCHIVOCRT(), cliT.getCodigoId(), cliT.getNumeroDeCuit(), tipoComp, montoTotal, subTotal, montoIva, ptoVta, Propiedades.getCUIT(), tipoVta, listadoIvaD, listadoTrib, cliT.getRazonSocial(), cliT.getDireccion(), String.valueOf(cliT.getTipoIva()), listadoDetalle,idPed,Propiedades.getNOMBRECOMERCIO(),Propiedades.getRAZONSOCIAL(),"resp inscripto",Propiedades.getDIRECCION(),Propiedades.getTELEFONO(),Propiedades.getINGBRUTOS(),Propiedades.getINICIOACT(),cliT.getEmail(),formaP.getNumeroFormaDePago());
         comprobante.GuardarNumeroFiscalEnCaja(numeFc, comprobante.getNumeroRegistro(),tipoComp);
         LicenciasControl licencia=new LicenciasControl();
                     licencia.RestarFc();

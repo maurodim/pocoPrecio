@@ -119,16 +119,18 @@ public class InformesMovimientos {
         celda1 = fila.createCell(1);
         celda1.setCellStyle(titulo1);
         celda1.setCellValue("fecha");
-        celda2 = fila.createCell(2);
+        celda2 = fila.createCell(3);
         celda2.setCellStyle(titulo1);
         celda2.setCellValue("Monto");
-        celda3 = fila.createCell(3);
+        celda3 = fila.createCell(4);
         celda3.setCellStyle(titulo1);
         celda3.setCellValue("Saldo");
-        celda4 = fila.createCell(4);
+        celda4 = fila.createCell(5);
         celda4.setCellStyle(titulo1);
         celda4.setCellValue("Tipo de Comprobante");
-
+        celda5 = fila.createCell(2);
+        celda5.setCellStyle(titulo1);
+        celda5.setCellValue("Razon Social");
         while (iCli.hasNext()) {
             cliente = (MovimientosClientes) iCli.next();
             a++;
@@ -152,10 +154,10 @@ public class InformesMovimientos {
             Calendar fecha = Numeros.ConvertirStringEnCalendar(cliente.getFecha());
             String ffchh = Numeros.ConvertirFechaCalendarEnString(fecha);
             celda1.setCellValue(ffchh);
-            celda2 = fila.createCell(2);
+            celda2 = fila.createCell(3);
             celda2.setCellType(HSSFCell.CELL_TYPE_NUMERIC);
             celda2.setCellValue(cliente.getTotal());
-            celda3 = fila.createCell(3);
+            celda3 = fila.createCell(4);
             celda3.setCellType(HSSFCell.CELL_TYPE_NUMERIC);
             if (cliente.getEstado() == 1) {
                 saldo = "0.00";
@@ -164,9 +166,12 @@ public class InformesMovimientos {
             }
 
             celda3.setCellValue(saldo);
-            celda4 = fila.createCell(4);
+            celda4 = fila.createCell(5);
             celda4.setCellType(HSSFCell.CELL_TYPE_STRING);
             celda4.setCellValue(cliente.getDescripcionTipo());
+            celda5 = fila.createCell(2);
+            celda5.setCellType(HSSFCell.CELL_TYPE_STRING);
+            celda5.setCellValue(cliente.getNombreCliente());
 
         }
 

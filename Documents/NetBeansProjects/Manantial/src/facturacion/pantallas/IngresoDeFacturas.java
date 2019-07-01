@@ -730,7 +730,7 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
                         }
                         
                         System.out.println("subtotal "+subTotal+" total "+montoTotal+" iva "+montoIva);
-                        numeFc = fact.generar(conexion, condicion, Propiedades.getARCHIVOKEY(), Propiedades.getARCHIVOCRT(), cliT.getCodigoId(), cliT.getNumeroDeCuit(), tipoComp, montoTotal, subTotal, montoIva, ptoVta, Propiedades.getCUIT(), tipoVta, listadoIvaD, listadoTrib, cliT.getRazonSocial(), cliT.getDireccion(), String.valueOf(cliT.getTipoIva()), listadoDetalle, idPed, Propiedades.getNOMBRECOMERCIO(), Propiedades.getNOMBRECOMERCIO(), "resp inscripto", Propiedades.getDIRECCION(), Propiedades.getTELEFONO(), Propiedades.getINGBRUTOS(), Propiedades.getINICIOACT(),cliT.getEmail(),formaP.getNumeroFormaDePago());
+                        numeFc = fact.generar(conexion, condicion, Propiedades.getARCHIVOKEY(), Propiedades.getARCHIVOCRT(), cliT.getCodigoId(), cliT.getNumeroDeCuit(), tipoComp, montoTotal, subTotal, montoIva, ptoVta, Propiedades.getCUIT(), tipoVta, listadoIvaD, listadoTrib, cliT.getRazonSocial(), cliT.getDireccion(), String.valueOf(cliT.getTipoIva()), listadoDetalle, idPed, Propiedades.getNOMBRECOMERCIO(), Propiedades.getRAZONSOCIAL(), "resp inscripto", Propiedades.getDIRECCION(), Propiedades.getTELEFONO(), Propiedades.getINGBRUTOS(), Propiedades.getINICIOACT(),cliT.getEmail(),formaP.getNumeroFormaDePago());
                         //comprobante.setNumero(numeFc);
                         comprobante.GuardarNumeroFiscalEnCaja(numeFc, comprobante.getNumeroRegistro(), tipoComp);
                         LicenciasControl licencia = new LicenciasControl();

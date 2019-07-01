@@ -25,6 +25,16 @@ public class Licencias {
     private int diasRestantes;
     private Boolean alerta;
     private int publicidad;
+    private int pie;
+
+    public int getPie() {
+        return pie;
+    }
+
+    public void setPie(int pie) {
+        this.pie = pie;
+    }
+    
 
     public int getPublicidad() {
         return publicidad;

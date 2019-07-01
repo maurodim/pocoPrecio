@@ -52,6 +52,7 @@ public class LicenciasControl {
                 licencia2.setCantidadPresupuestos(rs.getInt("restanpresupuesto"));
                 licencia2.setDiasLicencia(rs.getInt("cantidaddias"));
                 licencia2.setPublicidad(rs.getInt("publicidad"));
+                licencia2.setPie(rs.getInt("pie"));
                 System.out.println("vencimiento "+licencia2.getFechadeVencimiento());
             }
             rs.close();
@@ -95,7 +96,7 @@ public class LicenciasControl {
         try {
             Transaccionable tra=new Conecciones();
             Licencias licen=(Licencias) licn;
-            String sql="update licencias set cantidad="+licen.getCantidadFc()+",restan="+licen.getCantidadFc()+" - ("+licen.getCantidadFc()+" - restan),presupuestos="+licen.getCantidadPresupuestos()+",restanpresupuesto="+licen.getCantidadPresupuestos()+" - ("+licen.getCantidadPresupuestos()+" - restanpresupuesto),vencimiento='"+licen.getFechadeVencimiento()+"',publicidad="+licen.getPublicidad()+" where id="+licen.getId();
+            String sql="update licencias set cantidad="+licen.getCantidadFc()+",restan="+licen.getCantidadFc()+" - ("+licen.getCantidadFc()+" - restan),presupuestos="+licen.getCantidadPresupuestos()+",restanpresupuesto="+licen.getCantidadPresupuestos()+" - ("+licen.getCantidadPresupuestos()+" - restanpresupuesto),vencimiento='"+licen.getFechadeVencimiento()+"',publicidad="+licen.getPublicidad()+",pie="+licen.getPie()+" where id="+licen.getId();
             System.out.println(sql);
             tra.guardarRegistro(sql);
             sql="update configuracion set idlicencia="+licen.getId();
@@ -191,6 +192,12 @@ public class LicenciasControl {
                 titulo = ((Node) octavoNombre.item(0)).getNodeValue().toString();
                 System.out.println("COMPROBAMTES : " + titulo);
                 conf.setPublicidad(Integer.parseInt(titulo));
+                org.w3c.dom.NodeList novenoNombreElementoLista = primerElemento.getElementsByTagName("pie");
+                Element novenoNombreElemento = (Element) novenoNombreElementoLista.item(0);
+                org.w3c.dom.NodeList novenoNombre = novenoNombreElemento.getChildNodes();
+                titulo = ((Node) novenoNombre.item(0)).getNodeValue().toString();
+                System.out.println("COMPROBAMTES : " + titulo);
+                conf.setPie(Integer.parseInt(titulo));
                 //conf.setCantidadComprobantes(Integer.parseInt(titulo));
                 //conf.setClave(clave);
                 lst.add(conf);
@@ -221,11 +228,11 @@ public class LicenciasControl {
                 //java.util.Date fechaSql=(Date) Numeros.ConvertirStringEnDate(licencia.getFechadeVencimiento());
                 //Date ffecha=Numeros.ConvertirDateADate(fechaSql);
                 if(contador > cantidad){
-                    sql="insert into licencias (id,descripcion,cantidaddias,cantidad,presupuestos,publicidad) values ("+licencia.getId()+",'"+licencia.getDescripcion()+"',"+licencia.getDiasLicencia()+","+licencia.getCantidadFc()+","+licencia.getCantidadPresupuestos()+","+licencia.getPublicidad()+")";
+                    sql="insert into licencias (id,descripcion,cantidaddias,cantidad,presupuestos,publicidad,pie) values ("+licencia.getId()+",'"+licencia.getDescripcion()+"',"+licencia.getDiasLicencia()+","+licencia.getCantidadFc()+","+licencia.getCantidadPresupuestos()+","+licencia.getPublicidad()+","+licencia.getPie()+")";
                     System.out.println("actualizacion licencia "+sql);
                     tra.guardarRegistro(sql);
                 }else{
-                    sql="update licencias set descripcion='"+licencia.getDescripcion()+"',cantidaddias="+licencia.getDiasLicencia()+",cantidad="+licencia.getCantidadFc()+",presupuestos="+licencia.getCantidadPresupuestos()+",publicidad="+licencia.getPublicidad()+" where id="+licencia.getId();
+                    sql="update licencias set descripcion='"+licencia.getDescripcion()+"',cantidaddias="+licencia.getDiasLicencia()+",cantidad="+licencia.getCantidadFc()+",presupuestos="+licencia.getCantidadPresupuestos()+",publicidad="+licencia.getPublicidad()+",pie="+licencia.getPie()+" where id="+licencia.getId();
                     System.out.println("actualizacion licencia "+sql);
                     tra.guardarRegistro(sql);
                 }
@@ -323,6 +330,12 @@ public class LicenciasControl {
                 titulo = ((Node) octavoNombre.item(0)).getNodeValue().toString();
                 System.out.println("COMPROBAMTES : " + titulo);
                 conf.setPublicidad(Integer.parseInt(titulo));
+                org.w3c.dom.NodeList novenoNombreElementoLista = primerElemento.getElementsByTagName("pie");
+                Element novenoNombreElemento = (Element) novenoNombreElementoLista.item(0);
+                org.w3c.dom.NodeList novenoNombre = novenoNombreElemento.getChildNodes();
+                titulo = ((Node) novenoNombre.item(0)).getNodeValue().toString();
+                System.out.println("COMPROBAMTES : " + titulo);
+                conf.setPie(Integer.parseInt(titulo));
                     //conf.setCantidadComprobantes(Integer.parseInt(titulo));
                     //conf.setClave(clave);
                     //lst.add(conf);
@@ -343,7 +356,7 @@ public class LicenciasControl {
         try {
             Transaccionable tra=new Conecciones();
             Licencias licen=(Licencias) licencia;
-            String sql="update licencias set cantidad="+licen.getCantidadFc()+",restan="+licen.getCantidadFc()+",presupuestos="+licen.getCantidadPresupuestos()+",restanpresupuesto="+licen.getCantidadPresupuestos()+",vencimiento='"+licen.getFechadeVencimiento()+"',cantidaddias="+licen.getDiasLicencia()+",publicidad="+licen.getPublicidad()+" where id="+licen.getId();
+            String sql="update licencias set cantidad="+licen.getCantidadFc()+",restan="+licen.getCantidadFc()+",presupuestos="+licen.getCantidadPresupuestos()+",restanpresupuesto="+licen.getCantidadPresupuestos()+",vencimiento='"+licen.getFechadeVencimiento()+"',cantidaddias="+licen.getDiasLicencia()+",publicidad="+licen.getPublicidad()+",pie="+licen.getPie()+" where id="+licen.getId();
             System.out.println(sql);
             tra.guardarRegistro(sql);
             sql="update configuracion set idlicencia="+licen.getId();
